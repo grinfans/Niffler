@@ -111,7 +111,7 @@ export default {
           this.checkRunning()
           this.$log.debug('start listen running?'+this.running)
           if(!this.running){
-            this.errors.push(this.$t('msg.httpSend.failed'))
+            this.errors.push(this.$t('msg.httpReceive.failed'))
           }
           }, 500)
         }
