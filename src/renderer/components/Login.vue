@@ -59,12 +59,12 @@ export default {
     }
   },
   mounted(){
-    this.$log.info('isfirst(login.vue)?'+isFirstTime())
+    this.$log.info('isfirst(login.vue)? '+isFirstTime())
     this.firstTime = isFirstTime()
   },
   methods: {
     tryLogin(){
-      this.resetErrors();
+      this.resetErrors()
       this.$walletService.start(this.password)
       setTimeout(()=>{
         this.$walletService.getNodeHeight().then(
@@ -73,7 +73,7 @@ export default {
           }).catch((error) => {
             return this.error = true
         })}, 250)
-      this.resetErrors();
+      this.resetErrors()
       },
     resetErrors(){
       this.error = false;

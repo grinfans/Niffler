@@ -10,15 +10,8 @@ import { messageBus } from '../renderer/messagebus'
 
 let ownerAPI
 let listenProcess
+let client
 const wallet_host = 'http://localhost:3420'
-
-const client = axios.create({
-    baseURL: wallet_host,
-    auth: {
-        username: 'grin',
-        password: fs.readFileSync(apiSecretPath).toString()
-    },
-})
 
 function enableForeignApi(){
     const re = /owner_api_include_foreign(\s)*=(\s)*false/
@@ -31,6 +24,17 @@ function enableForeignApi(){
 }
 
 class WalletSerice {
+    static initClient() {
+        if(fs.existsSync(apiSecretPath)){
+            client = axios.create({
+                baseURL: wallet_host,
+                auth: {
+                    username: 'grin',
+                    password: fs.readFileSync(apiSecretPath).toString()
+                },
+            })
+        }
+    }
     static getNodeHeight(){
         return client.get('/v1/wallet/owner/node_height')
     }
@@ -148,4 +152,5 @@ class WalletSerice {
         })
     }
 }
+WalletSerice.initClient()
 export default WalletSerice

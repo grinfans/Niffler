@@ -124,8 +124,8 @@
     }},
     mounted() {
       this.checkNewVersion()
-      this.checkOwnerApi()
-      this.getHeight()
+      //this.checkOwnerApi()
+      //this.getHeight()
       if(this.$walletService.isExist()){
         this.walletExist = true
       }
@@ -151,6 +151,7 @@
       })
       messageBus.$on('logined', ()=>{
         this.$log.info('app.vue got user logined event')
+        this.$walletService.initClient()
         this.ownerApiRunning = true
         this.getHeight()
       })

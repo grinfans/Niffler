@@ -19,7 +19,7 @@
             <a class="button is-link is-inverted is-outlined" @click="finish">{{ $t('msg.new_.backupFinish') }}</a>
           </div>
               
-          <div v-else class="column is-6" >
+          <div v-else class="column is-8" >
             <h1 class="title">{{ $t('msg.title') }}</h1>
             <form class="box">
               <!--<div class="field has-text-centered">
@@ -73,6 +73,7 @@ export default {
   created(){
     messageBus.$on('walletCreated', (seed)=>{
       this.$log.debug('new.vue got walletCreated event.')
+      this.$walletService.initClient()
       this.walletCreated = true
       this.seeds = seed.split(' ')
     })
