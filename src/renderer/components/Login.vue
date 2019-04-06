@@ -12,7 +12,7 @@
           <div class="column"  v-bind:class="{'is-8': firstTime, 'is-6': !firstTime }">
             <div class="message is-warning is-small" v-show="firstTime" >
               <div class="message-header">
-                <p>{{ $t("msg.login.welcome") }}</p>
+                <p>{{ $t("msg.welcome") }}</p>
                 <button class="delete" aria-label="delete" @click="firstTime=false"></button>
               </div>
               <div class="message-body">

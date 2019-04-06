@@ -19,14 +19,15 @@ const messages = {
 
     cancel:'撤销',
     save: '保存',
+    welcome: '欢迎使用Niffler钱包',
 
     login: {
-      welcome: '欢迎使用Niffler钱包',
       walletExist: '发现已有Grin钱包存在；请用原有的密码登陆吧 :-)',
     },
     
     new_:{
       seedPhrase: '助记词',
+      toNewMsg: '没有找到已有钱包, 新建一个吧 :)',
       newWallet: '新建钱包',
       backupNote: '重要！请务必备份助记词，用于恢复钱包',
       backupFinish: '备份完成，登录钱包',

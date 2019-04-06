@@ -21,6 +21,16 @@
               
           <div v-else class="column is-8" >
             <h1 class="title">{{ $t('msg.title') }}</h1>
+            
+            <div class="message is-warning is-small">
+              <div class="message-header">
+                <p>{{ $t("msg.welcome") }}</p>
+              </div>
+              <div class="message-body">
+                <p>{{ $t("msg.new_.toNewMsg") }}</p>
+              </div>
+            </div>
+
             <form class="box">
               <!--<div class="field has-text-centered">
                 <img src="../assets/logo.png">

@@ -20,13 +20,15 @@ const messages = {
     cancel:'Cancel',
     save: 'Save',
 
+    welcome: 'Welcome to use Niffler wallet',
+
     login: {
-      welcome: 'Welcome to use Niffler wallet',
       walletExist: 'Found grin wallet data exists; login with original password :-)',
     },
     
     new_:{
       seedPhrase: 'Seed Phrase',
+      toNewMsg: 'No wallet exists Found. Create a New One.',
       newWallet: 'Create new wallet',
       backupNote: 'Import！Please backup your seed phrase to restore your wallet',
       backupFinish: 'Ok, I backed up my seed phrase. Login my wallet',
