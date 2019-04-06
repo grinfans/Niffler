@@ -32,7 +32,7 @@ const binariesPath =
 
 export const grinPath = path.join(binariesPath, 'grin')
 export const chainType = 'main'
-export const grinNode = "http://grin-fans.org:3413"
+export const grinNode = "http://node.niffler.org:3413"
 export const seedPath = path.join(APP.getPath('home'), '.grin', chainType, 'wallet_data/wallet.seed')
 export const walletTOMLPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-wallet.toml')
 export const apiSecretPath = path.join(APP.getPath('home'), '.grin', chainType, '.api_secret')
