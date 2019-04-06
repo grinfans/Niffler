@@ -17,8 +17,8 @@
     "postinstall": ""
   },
   "build": {
-    "productName": "niffler",
-    "appId": "org.grin-fans.niffler",
+    "productName": "Niffler",
+    "appId": "org.niffler",
     "directories": {
       "output": "build"
     },
