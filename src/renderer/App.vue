@@ -235,8 +235,8 @@
           }, (res, checkboxChecked) => {
           if (res === 0) { 
             this.$electron.shell.openExternal(downloadUrl)
-            this.$log.debug('User chosed to update. now quit app.')
-            ipcRenderer.send('quit.')
+            this.$log.debug('User choose to update. now quit app.')
+            ipcRenderer.send('quit')
           }else{
             this.$log.info('User chosed to don not update.')
           }})
