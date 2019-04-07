@@ -12,19 +12,16 @@ Currenct, mac version realesed, download from [here](https://github.com/grinfans
 
 ## Screenshot
 
-#### New
+#### Create new wallet
 
-Create new wallet
 ![create new wallet](https://media.giphy.com/media/IeuEOtJvxCLqqiCCyr/giphy.gif)
 
-#### Send
+#### Send grin
 
-Send grin
+
 ![send grin](https://media.giphy.com/media/LO2sAR3HmocCdbTwEh/giphy.gif)
 
-#### Receive
-
-Receive grin
+#### Receive grin
 ![receive grin](https://media.giphy.com/media/iFbSw9rhh5fGVSzyZf/giphy.gif)
 
 
