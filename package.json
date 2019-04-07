@@ -1,9 +1,9 @@
 {
   "name": "Niffler",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "xiaojay <xiaojay@gmail.com>",
   "description": "Niffler, a grin gui wallet",
-  "license": "pache-2.0",
+  "license": "apache-2.0",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
