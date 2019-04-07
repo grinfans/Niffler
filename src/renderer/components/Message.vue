@@ -4,7 +4,7 @@
     <div class="modal-content" style="width:400px">
      <article class="message" v-bind:class="msgClass" >
       <div class="message-header">
-        <p>Hello World</p>
+        <p>{{ $t("msg.msg") }}</p>
         <button class="delete" aria-label="delete" @click="closeMsg"></button>
       </div>
       <div class="message-body">

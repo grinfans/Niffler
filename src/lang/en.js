@@ -21,6 +21,8 @@ const messages = {
     save: 'Save',
 
     welcome: 'Welcome to use Niffler wallet',
+    
+    msg: 'Message',
 
     login: {
       walletExist: 'Found grin wallet data exists; login with original password :-)',

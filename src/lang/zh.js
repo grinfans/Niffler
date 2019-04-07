@@ -20,6 +20,7 @@ const messages = {
     cancel:'撤销',
     save: '保存',
     welcome: '欢迎使用Niffler钱包',
+    msg: '消息',
 
     login: {
       walletExist: '发现已有Grin钱包存在；请用原有的密码登陆吧 :-)',
