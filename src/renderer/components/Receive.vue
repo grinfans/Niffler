@@ -89,7 +89,7 @@ export default {
                   let resp = error.response      
                   this.$log.error(`resp.data:${resp.data}; status:${resp.status};headers:${resp.headers}`)
                 }
-                let e1 = this.$t('msg.fileReceive.errorCreateFailed')
+                let e1 = this.$t('msg.fileReceive.CreateFailed')
                 this.errors.push(e1)
               })
         }else{
