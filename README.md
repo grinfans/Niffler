@@ -49,7 +49,9 @@ Code pull request is always welcome.
 
 ~~More specific, it will be much appreciate if any designer from community could make a **logo** for Niffler :-)~~
 
-We now have a wonderful logo <img src="/src/renderer/assets/logo.png" width="32">
+We now have a wonderful logo <img src="/src/renderer/assets/logo.png" width="64"> from chinese grin community.
+
+Logo made by [@Duoasa](https://weibo.com/u/3197271025), and also thanks [@机械师区块链](https://weibo.com/u/6318956004)
 
 Translate to other languages is wanted, too. checkout [lang folder](https://github.com/grinfans/niffler/tree/master/src/lang).
 
