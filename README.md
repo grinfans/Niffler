@@ -49,6 +49,8 @@ Code pull request is always welcome.
 
 ~~More specific, it will be much appreciate if any designer from community could make a **logo** for Niffler :-)~~
 
+We now have a wonderful logo ![logo](/src/renderer/assets/logo.png)
+
 Translate to other languages is wanted, too. checkout [lang folder](https://github.com/grinfans/niffler/tree/master/src/lang).
 
 ## Contact
