@@ -4,7 +4,8 @@
       <div class="container">
         <div class="columns is-mobile is-centered">
           <div class="column is-6" >
-            <h1 class="title">{{ $t("msg.title") }}</h1>
+            <img src="../assets/logo.png" style="width:64px" class="is-pulled-left">
+            <h2 class="title" style="margin-top: 24px; margin-left:70px" >{{ $t("msg.title") }}</h2>
           </div>
         </div>
 
@@ -20,9 +21,6 @@
               </div>
             </div>
             <form class="box">
-              <!--<div class="field has-text-centered">
-                <img src="../assets/logo.png">
-              </div>-->
               <div class="field">
                 <label class="label">{{ $t("msg.password") }}</label>
                 <div class="control">

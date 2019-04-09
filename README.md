@@ -47,7 +47,7 @@ npm run build
 
 Code pull request is always welcome.
 
-More specific, it will be much appreciate if any designer from community could make a **logo** for Niffler :-)
+~~ More specific, it will be much appreciate if any designer from community could make a **logo** for Niffler :-) ~~
 
 Translate to other languages is wanted, too. checkout [lang folder](https://github.com/grinfans/niffler/tree/master/src/lang).
 
