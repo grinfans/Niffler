@@ -124,8 +124,8 @@
     }},
     mounted() {
       this.checkNewVersion()
-      //this.checkOwnerApi()
-      //this.getHeight()
+      this.checkOwnerApi()
+      this.getHeight()
       if(this.$walletService.isExist()){
         this.walletExist = true
       }

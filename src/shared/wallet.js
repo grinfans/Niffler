@@ -72,12 +72,13 @@ class WalletSerice {
     }
 
     static start(password){
+        WalletSerice.stop()
         enableForeignApi()
         const cmd = `${grinPath} wallet -r ${grinNode} owner_api`
         ownerAPI =  exec(cmd)
         ownerAPI.stdout.on('data', (data)=>{
             ownerAPI.stdin.write(password+'\n')
-            //localStorage.setItem('OwnerAPIPID', ownerAPI.pid)
+            localStorage.setItem('OwnerAPIPID', ownerAPI.pid)
         })
         ownerAPI.stderr.on('data', (data) => {
             log.error('start owner_api got stderr: ' + data)
@@ -89,17 +90,24 @@ class WalletSerice {
             ownerAPI.kill('SIGKILL')
             log.debug('kill owner_api')
         }
-        //else{
-        //  const pid = localStorage.getItem('OwnerAPIPID')
-        //  if(pid) process.kill(pid, 'SIGKILL')
-        //}
+        const pid = localStorage.getItem('OwnerAPIPID')
+        localStorage.removeItem('OwnerAPIPID')
+        if(pid) {
+            try{
+                process.kill(pid, 'SIGKILL')
+            }catch(e){
+                log.error(`error when kill ownerApi ${pid}: ${e}` )
+            }
+        }
     }
     
     static startListen(password){
+        WalletSerice.stopListen()
         const cmd = `${grinPath} wallet -e listen`
         listenProcess =  exec(cmd)
         listenProcess.stdout.on('data', (data)=>{
             listenProcess.stdin.write(password+'\n')
+            localStorage.setItem('listenProcessPID', listenProcess.pid)
         })
         listenProcess.stderr.on('data', (data) => {
             log.error('start wallet listen got stderr: ' + data)
@@ -110,6 +118,15 @@ class WalletSerice {
         if(listenProcess){
             listenProcess.kill('SIGKILL')
             log.debug('kill wallet listen process')
+        }
+        const pid = localStorage.getItem('listenProcessPID')
+        localStorage.removeItem('listenProcessPID')
+        if(pid) {
+            try{
+                process.kill(pid, 'SIGKILL')
+            }catch(e){
+                log.error(`error when kill listen process ${pid}: ${e}` )
+            }
         }
     }
     static stopAll(){
