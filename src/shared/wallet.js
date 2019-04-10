@@ -74,7 +74,7 @@ class WalletSerice {
     static start(password){
         WalletSerice.stop()
         enableForeignApi()
-        const cmd = `${grinPath} wallet -r ${grinNode} owner_api`
+        const cmd = `${grinPath} -r ${grinNode} owner_api`
         ownerAPI =  exec(cmd)
         ownerAPI.stdout.on('data', (data)=>{
             ownerAPI.stdin.write(password+'\n')
@@ -103,7 +103,7 @@ class WalletSerice {
     
     static startListen(password){
         WalletSerice.stopListen()
-        const cmd = `${grinPath} wallet -e listen`
+        const cmd = `${grinPath} -e listen`
         listenProcess =  exec(cmd)
         listenProcess.stdout.on('data', (data)=>{
             listenProcess.stdin.write(password+'\n')
@@ -138,7 +138,7 @@ class WalletSerice {
     }
 
     static new(password){
-        const cmd = `${grinPath} wallet -r ${grinNode} init`
+        const cmd = `${grinPath} -r ${grinNode} init`
         let createProcess = exec(cmd)
         createProcess.stdout.on('data', (data) => {
             var output = data.toString()

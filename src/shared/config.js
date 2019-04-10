@@ -30,7 +30,8 @@ const binariesPath =
     ? path.join(process.resourcesPath, 'bin', platform)
     : path.join(root, 'resources', 'bin', platform);
 
-export const grinPath = path.join(binariesPath, 'grin')
+const grinBinaries = platform==='win'?'grin-wallet.exe':'grin-wallet'
+export const grinPath = path.join(binariesPath, grinBinaries)
 export const chainType = 'main'
 export const grinNode = "http://node.niffler.org:3413"
 export const seedPath = path.join(APP.getPath('home'), '.grin', chainType, 'wallet_data/wallet.seed')
