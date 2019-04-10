@@ -141,7 +141,7 @@
       processCommits(cts){
         let nodeHeight = this.nodeHeight
         let cts_processed = cts.map(function(ct){
-          let c = ct[0]
+          let c = ct['output']
           if( c.status === 'Unspent' && nodeHeight>0){
             c.confirmed_count = nodeHeight - c.height + 1
             if(c.confirmed_count < 10){
