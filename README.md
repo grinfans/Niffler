@@ -1,6 +1,8 @@
 # Niffler Wallet
 
-Niffler is a user-friendly gui [Grin](https://github.com/mimblewimble/grin) wallet.
+English | [简体中文](./README.zh-CN.md)
+
+Niffler is a out-of-the box user-friendly gui [Grin](https://github.com/mimblewimble/grin) wallet.
 The name 'Niffler' comes from ["harry potter"](https://harrypotter.fandom.com/wiki/Niffler).
 
 Currently, mac version was released for beta test, download from [here](https://github.com/grinfans/niffler/releases)
@@ -28,9 +30,12 @@ Currently, mac version was released for beta test, download from [here](https://
 ![receive grin](https://media.giphy.com/media/iFbSw9rhh5fGVSzyZf/giphy.gif)
 
 
-##### Build Setup
+## Build Setup
 
 ``` bash
+# clone
+git clone https://github.com/grinfans/niffler.git && cd niffler
+
 # install dependencies
 npm install
 
@@ -60,3 +65,5 @@ Translate to other languages is wanted, too. checkout [lang folder](https://gith
 ## Contact
 
 Contact me: xiaojay@gmail.com
+
+Gitter room: https://gitter.im/niffler-wallet/community
