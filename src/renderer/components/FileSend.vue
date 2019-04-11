@@ -86,7 +86,8 @@ export default {
           "dest": fn_output,
           "max_outputs": 500,
           "num_change_outputs": 1,
-          "selection_strategy_is_use_all": true
+          "selection_strategy_is_use_all": true,
+          //"target_slate_version": 0
         }
         this.$walletService.issueSendTransaction(tx_data).then(
           (res) => {

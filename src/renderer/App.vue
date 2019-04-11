@@ -207,9 +207,9 @@
           })
       },
       getHeight(){
-        this.$walletService.getNodeHeight().then(
+        this.$walletService.getNodeHeight2().then(
           (res) =>{
-            this.height = res.data[0]
+            this.height = parseInt(res.data.result.Ok.height)
           }).catch((error)=>{})
       },
       logout(){

@@ -116,7 +116,8 @@ export default {
           "dest": this.address,
           "max_outputs": 500,
           "num_change_outputs": 1,
-          "selection_strategy_is_use_all": true
+          "selection_strategy_is_use_all": true,
+          //"target_slate_version": 1
         }
         
         let send = async function(){

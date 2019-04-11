@@ -12,6 +12,7 @@ let ownerAPI
 let listenProcess
 let client
 const wallet_host = 'http://localhost:3420'
+const jsonRPCUrl = 'http://localhost:3420/v2/owner'
 
 function enableForeignApi(){
     const re = /owner_api_include_foreign(\s)*=(\s)*false/
@@ -23,7 +24,7 @@ function enableForeignApi(){
     }
 }
 
-class WalletSerice {
+class WalletService {
     static initClient() {
         if(fs.existsSync(apiSecretPath)){
             client = axios.create({
@@ -35,9 +36,28 @@ class WalletSerice {
             })
         }
     }
+    
+    static jsonRPC(method, params){
+        const headers = {
+            'Content-Type': 'application/json'
+        }
+        const body = {
+            jsonrpc: "2.0",
+            id: +new Date(),
+            method: method,
+            params: params,
+        }
+        return client.post(jsonRPCUrl, body, headers)
+    }
+    
     static getNodeHeight(){
         return client.get('/v1/wallet/owner/node_height')
     }
+
+    static getNodeHeight2(){
+        return WalletService.jsonRPC('node_height', [])
+    }
+    
     static getSummaryInfo(minimum_confirmations){
         const url = `/v1/wallet/owner/retrieve_summary_info?refresh&minimum_confirmations=${minimum_confirmations}`
         return client.get(url)
@@ -72,7 +92,7 @@ class WalletSerice {
     }
 
     static start(password){
-        WalletSerice.stop()
+        WalletService.stop()
         enableForeignApi()
         const cmd = `${grinPath} -r ${grinNode} owner_api`
         ownerAPI =  exec(cmd)
@@ -102,7 +122,7 @@ class WalletSerice {
     }
     
     static startListen(password){
-        WalletSerice.stopListen()
+        WalletService.stopListen()
         const cmd = `${grinPath} -e listen`
         listenProcess =  exec(cmd)
         listenProcess.stdout.on('data', (data)=>{
@@ -130,8 +150,8 @@ class WalletSerice {
         }
     }
     static stopAll(){
-        WalletSerice.stopListen()
-        WalletSerice.stop()
+        WalletService.stopListen()
+        WalletService.stop()
     }
     static isExist(){
         return fs.existsSync(seedPath)?true:false
@@ -169,5 +189,5 @@ class WalletSerice {
         })
     }
 }
-WalletSerice.initClient()
-export default WalletSerice
+WalletService.initClient()
+export default WalletService
