@@ -165,7 +165,7 @@ class WalletService {
     static stopListen(){
         const pid = localStorage.getItem('listenProcessPID')
         localStorage.removeItem('listenProcessPID')
-        
+
         if(platform==='win'&&pid){
             return exec(`taskkill /pid ${pid} /f /t`)
         }
@@ -183,8 +183,8 @@ class WalletService {
         }
     }
     static stopAll(){
-        WalletService.stopListen()
         WalletService.stop()
+        WalletService.stopListen()
     }
     static isExist(){
         return fs.existsSync(seedPath)?true:false
