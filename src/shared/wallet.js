@@ -1,11 +1,12 @@
 import fs from 'fs'
+const path = require('path');
 import {exec} from 'child_process'
 
 import axios from 'axios'
 require('promise.prototype.finally').shim();
 
 import log from './logger'
-import {grinPath, seedPath, grinNode, chainType, apiSecretPath, walletTOMLPath} from './config'
+import {platform, grinPath, seedPath, grinNode, chainType, apiSecretPath, walletTOMLPath} from './config'
 import { messageBus } from '../renderer/messagebus'
 
 let ownerAPI
@@ -97,10 +98,12 @@ class WalletService {
     static start(password){
         WalletService.stop()
         enableForeignApi()
-        const cmd = `${grinPath} -r ${grinNode} owner_api`
+        const cmd = platform==='win'? `${path.resolve(grinPath)} -r ${grinNode} --pass ${password} owner_api`:
+                                      `${grinPath} -r ${grinNode} owner_api`
+        log.debug(`platform: ${platform}; start owner api cmd: ${cmd}`)
         ownerAPI =  exec(cmd)
         ownerAPI.stdout.on('data', (data)=>{
-            ownerAPI.stdin.write(password+'\n')
+            if(platform!='win'){ownerAPI.stdin.write(password+'\n')}
             localStorage.setItem('OwnerAPIPID', ownerAPI.pid)
         })
         ownerAPI.stderr.on('data', (data) => {
@@ -161,7 +164,9 @@ class WalletService {
     }
 
     static new(password){
-        const cmd = `${grinPath} -r ${grinNode} init`
+        const cmd = platform==='win'? `${path.resolve(grinPath)} -r ${grinNode} --pass ${password} init`:
+                                      `${grinPath} -r ${grinNode} init`
+        log.debug(`platform: ${platform}; int wallet cmd: ${cmd}`)
         let createProcess = exec(cmd)
         createProcess.stdout.on('data', (data) => {
             var output = data.toString()
