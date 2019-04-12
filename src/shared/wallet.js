@@ -81,6 +81,9 @@ class WalletService {
     static issueSendTransaction(tx_data){
         return client.post('/v1/wallet/owner/issue_send_tx', tx_data)
     }
+    static issueSendTransaction2(tx_data){
+        return WalletService.jsonRPC('initiate_tx', tx_data)
+    }
     static finalizeTransaction(tx_data){
         return client.post('/v1/wallet/owner/finalize_tx', tx_data)
     }
