@@ -98,10 +98,17 @@ class WalletService {
     static start(password){
         WalletService.stop()
         enableForeignApi()
+
         const cmd = platform==='win'? `${path.resolve(grinPath)} -r ${grinNode} --pass ${password} owner_api`:
                                       `${grinPath} -r ${grinNode} owner_api`
         log.debug(`platform: ${platform}; start owner api cmd: ${cmd}`)
+
         ownerAPI =  exec(cmd)
+
+        if(platform==='win'){
+            localStorage.setItem('OwnerAPIPID', ownerAPI.pid)
+        }
+
         ownerAPI.stdout.on('data', (data)=>{
             if(platform!='win'){ownerAPI.stdin.write(password+'\n')}
             localStorage.setItem('OwnerAPIPID', ownerAPI.pid)
@@ -112,12 +119,17 @@ class WalletService {
     }
 
     static stop(){
+        const pid = localStorage.getItem('OwnerAPIPID')
+        localStorage.removeItem('OwnerAPIPID')
+        if(platform==='win'&&pid){
+            return exec(`taskkill /pid ${pid} /f /t`)
+        }
+
         if(ownerAPI){
             ownerAPI.kill('SIGKILL')
             log.debug('kill owner_api')
         }
-        const pid = localStorage.getItem('OwnerAPIPID')
-        localStorage.removeItem('OwnerAPIPID')
+      
         if(pid) {
             try{
                 process.kill(pid, 'SIGKILL')
@@ -128,11 +140,21 @@ class WalletService {
     }
     
     static startListen(password){
-        WalletService.stopListen()
-        const cmd = `${grinPath} -e listen`
+        WalletService.stopListen()        
+        const cmd = platform==='win'? `${path.resolve(grinPath)} -e --pass ${password} listen`:
+                                      `${grinPath} -e listen`
+        log.debug(`platform: ${platform}; start listen cmd: ${cmd}`)
+
         listenProcess =  exec(cmd)
+        
+        if(platform==='win'){
+            localStorage.setItem('listenProcessPID', listenProcess.pid)
+        }
+
         listenProcess.stdout.on('data', (data)=>{
-            listenProcess.stdin.write(password+'\n')
+            if(platform!='win'){
+                listenProcess.stdin.write(password+'\n')
+            }
             localStorage.setItem('listenProcessPID', listenProcess.pid)
         })
         listenProcess.stderr.on('data', (data) => {
@@ -141,12 +163,17 @@ class WalletService {
     }
 
     static stopListen(){
+        const pid = localStorage.getItem('listenProcessPID')
+        localStorage.removeItem('listenProcessPID')
+        
+        if(platform==='win'&&pid){
+            return exec(`taskkill /pid ${pid} /f /t`)
+        }
+        
         if(listenProcess){
             listenProcess.kill('SIGKILL')
             log.debug('kill wallet listen process')
         }
-        const pid = localStorage.getItem('listenProcessPID')
-        localStorage.removeItem('listenProcessPID')
         if(pid) {
             try{
                 process.kill(pid, 'SIGKILL')
