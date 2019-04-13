@@ -2,6 +2,7 @@ import { app, BrowserWindow, dialog, shell } from 'electron'
 const Menu = require('electron').Menu
 const {ipcMain} = require('electron')
 
+import pkg from '../../package.json'
 import checkUpdate from '../shared/updateChecker'
 import {checkFirstTime} from '../shared/first'
 checkFirstTime()
@@ -15,6 +16,11 @@ import {downloadUrl } from '../shared/config'
  */
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+}
+
+//https://molunerfinn.com/electron-vue-5/#%E4%B8%8D%E5%90%8C%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%9E%84%E5%BB%BA%E9%85%8D%E7%BD%AE
+if (process.platform === 'win32') {
+  app.setAppUserModelId(pkg.build.appId)
 }
 
 let mainWindow
