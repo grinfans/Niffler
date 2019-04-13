@@ -24,6 +24,8 @@ if (process.platform === 'win32') {
 }
 
 let mainWindow
+let firstQuit = true
+let firstClose = true
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
@@ -46,7 +48,24 @@ function createWindow () {
 
   mainWindow.loadURL(winURL)
 
+  if (process.platform === 'win32') {
+    mainWindow.on('close', (e)=>{
+      mainWindow.webContents.send('before-quit');
+      if(firstClose){
+        e.preventDefault()
+        firstClose = false
+      }
+
+      setTimeout(()=>{
+        log.debug('close now')
+        mainWindow.close()}, 500)
+    })
+
+    mainWindow.setMenu(null)
+  }
+
   mainWindow.on('closed', () => {
+    log.debug('mainWidnows closed')
     mainWindow = null
   })
   log.debug('Mainwindows created')
@@ -73,16 +92,18 @@ async function launch(){
 
 app.on('ready', ()=>{
   createWindow()
-  createMenu()
+  if (process.platform !== 'darwin') {
+    createMenu()
+  }
 })
 
 app.on('window-all-closed', () => {
+  log.debug('window-all-closed')
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
 
-let firstQuit = true
 app.on('before-quit', (event)=>{
   log.debug('before-quit')
   
