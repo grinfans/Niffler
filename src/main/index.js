@@ -76,14 +76,23 @@ app.on('window-all-closed', () => {
   }
 })
 
-app.on('will-quit', (event)=>{
+let firstQuit = true
+app.on('before-quit', (event)=>{
+  log.debug('before-quit')
+  
   if(mainWindow){
-  mainWindow.webContents.send('will-quit');
-  setTimeout(()=>{
-    app.quit()
-  }, 500)
-  log.debug('App will quit.')
-}})
+    mainWindow.webContents.send('before-quit');
+    
+    if(firstQuit){
+      event.preventDefault()
+      firstQuit = false
+    }
+
+    setTimeout(()=>{
+      log.debug('quit now')
+      app.quit()}, 500)
+    }
+})
 
 app.on('activate', () => {
   if (mainWindow === null) {

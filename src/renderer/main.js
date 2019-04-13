@@ -53,6 +53,7 @@ new Vue({
   i18n
 }).$mount('#app')
 
-ipcRenderer.on('will-quit', ()=>{
+ipcRenderer.on('before-quit', ()=>{
+  log.debug('Render got msg is about to quit.')
   walletService.stopAll()
 })
