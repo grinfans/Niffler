@@ -1,5 +1,5 @@
 import fs from 'fs'
-import {exec} from 'child_process'
+import {exec, execFile} from 'child_process'
 
 import axios from 'axios'
 require('promise.prototype.finally').shim();
@@ -74,9 +74,10 @@ class WalletSerice {
     static start(password){
         WalletSerice.stop()
         enableForeignApi()
-        const cmd = `${grinPath} wallet -r ${grinNode} owner_api`
-        ownerAPI =  exec(cmd)
+        log.debug(`grinPath: ${grinPath}; grinNode: ${grinNode}`)
+        ownerAPI = execFile(grinPath, ['wallet', '-r', grinNode, 'owner_api'])
         ownerAPI.stdout.on('data', (data)=>{
+            log.debug('start owner api return: '+data)
             ownerAPI.stdin.write(password+'\n')
             localStorage.setItem('OwnerAPIPID', ownerAPI.pid)
         })
@@ -103,8 +104,7 @@ class WalletSerice {
     
     static startListen(password){
         WalletSerice.stopListen()
-        const cmd = `${grinPath} wallet -e listen`
-        listenProcess =  exec(cmd)
+        listenProcess =  execFile(grinPath, ['wallet', '-e', 'listen'])
         listenProcess.stdout.on('data', (data)=>{
             listenProcess.stdin.write(password+'\n')
             localStorage.setItem('listenProcessPID', listenProcess.pid)

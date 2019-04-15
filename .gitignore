@@ -13,3 +13,4 @@ thumbs.db
 yarn-error.log
 docs/dist/
 .vscode/*
+.yarnrc

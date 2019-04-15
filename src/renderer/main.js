@@ -30,9 +30,9 @@ const i18n = new VueI18n({
   messages
 })
 
-//remote.globalShortcut.register('CommandOrControl+Shift+K', () => {
-//  remote.BrowserWindow.getFocusedWindow().webContents.openDevTools()
-//})
+remote.globalShortcut.register('CommandOrControl+Shift+K', () => {
+  remote.BrowserWindow.getFocusedWindow().webContents.openDevTools()
+})
 
 window.addEventListener('beforeunload', () => {
   remote.globalShortcut.unregisterAll()
@@ -53,6 +53,7 @@ new Vue({
   i18n
 }).$mount('#app')
 
-ipcRenderer.on('will-quit', ()=>{
+ipcRenderer.on('before-quit', ()=>{
+  log.debug('Render got msg is about to quit.')
   walletService.stopAll()
 })

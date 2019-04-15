@@ -19,7 +19,7 @@ function getPlatform(){
       }
 }
 
-const platform = getPlatform()
+export const platform = getPlatform()
 
 const IS_PROD = process.env.NODE_ENV === 'production';
 const root = process.cwd();
