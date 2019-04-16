@@ -14,7 +14,9 @@ Windows版本也会很快释出.
 https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-0.1.1.dmg
 
 >linux版本：
+
 https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-linux-0.1.1_amd64.deb
+
 https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-linux-0.1.1.AppImage
 
 
