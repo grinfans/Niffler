@@ -79,36 +79,53 @@ export default {
         
         try{
           content = fs.readFileSync(fn.path).toString();
-          JSON.parse(content)
+          let data = JSON.parse(content)
+          tx_id = data.id
+          this.$log.debug('tx to finalize is ' + tx_id)
         }catch(e){
           this.$log.error('read tx file error:' + e)
-          this.errors.push(this.$t('msg.finalize.FileType'))
+          this.errors.push(this.$t('msg.finalize.WrongFileType'))
           return
         }
 
         this.isSending = true
-        let send = async function(){
+        //let send = async function(){
+        //  try{
+        //    let res = await this.$walletService.finalizeTransaction(content)
+        //    tx_id = res.data.id
+        //    let res2 = await this.$walletService.postTransaction(res.data, true)
+        //    this.isSent = true
+        //    this.$dbService.addPostedUnconfirmedTx(tx_id)
+        //    this.$log.debug(`finalize tx ${tx_id} ok; return:${res.data}`)
+        //    this.$log.debug(`post tx ok; return:${res2.data}`)
+        //  }catch(error){
+        //    this.$log.error('finalize or post error:' + error)   
+        //    if (error.response) {   
+        //      let resp = error.response      
+        //      this.$log.error(`resp.data:${resp.data}; status:${resp.status};headers:${resp.headers}`)
+        //    }
+        //    this.errors.push(this.$t('msg.finalize.TxFailed'))
+        //  }finally{
+        //    this.isSending = false
+        //    messageBus.$emit('update')
+        //  }
+        //}
+        //send.call(this)
+        let finalize = async function(){
           try{
-            let res = await this.$walletService.finalizeTransaction(content)
-            tx_id = res.data.id
-            let res2 = await this.$walletService.postTransaction(res.data, true)
+            let res = await this.$walletService.finalize(fn.path)
             this.isSent = true
-            this.$dbService.addPostedUnconfirmedTx(tx_id)
-            this.$log.debug(`finalize tx ${tx_id} ok; return:${res.data}`)
-            this.$log.debug(`post tx ok; return:${res2.data}`)
+            if(tx_id)this.$dbService.addPostedUnconfirmedTx(tx_id)
+            this.$log.debug(`finalize tx ${tx_id} ok; return:${res}`)
           }catch(error){
-            this.$log.error('finalize or post error:' + error)   
-            if (error.response) {   
-              let resp = error.response      
-              this.$log.error(`resp.data:${resp.data}; status:${resp.status};headers:${resp.headers}`)
-            }
+            this.$log.error('finalize or post error:' + error)        
             this.errors.push(this.$t('msg.finalize.TxFailed'))
           }finally{
             this.isSending = false
             messageBus.$emit('update')
           }
         }
-        send.call(this)
+        finalize.call(this)
       }else{
         this.errors.push(this.$t('msg.finalize.WrongFileType'))
       }

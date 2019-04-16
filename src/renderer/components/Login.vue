@@ -62,12 +62,19 @@ export default {
   },
   methods: {
     tryLogin(){
+      
+      let setPassword = this.$walletService.setPassword
+      let password = this.password
+
       this.resetErrors()
       this.$walletService.start(this.password)
       setTimeout(()=>{
         this.$walletService.getNodeHeight().then(
           (res) =>{
+            console.log('password'+password)
+            setPassword(password)
             messageBus.$emit('logined')
+           
           }).catch((error) => {
             return this.error = true
         })}, 250)

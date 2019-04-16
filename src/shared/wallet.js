@@ -1,6 +1,6 @@
 import fs from 'fs'
 const path = require('path');
-import {exec} from 'child_process'
+import {exec, execFile} from 'child_process'
 
 import axios from 'axios'
 require('promise.prototype.finally').shim();
@@ -12,6 +12,7 @@ import { messageBus } from '../renderer/messagebus'
 let ownerAPI
 let listenProcess
 let client
+let password_
 const wallet_host = 'http://localhost:3420'
 const jsonRPCUrl = 'http://localhost:3420/v2/owner'
 
@@ -23,6 +24,18 @@ function enableForeignApi(){
         c = c.replace(re, 'owner_api_include_foreign = true')
         fs.writeFileSync(walletTOMLPath, c)
     }
+}
+
+function execPromise(command) {
+    return new Promise(function(resolve, reject) {
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+            resolve(stdout.trim());
+        });
+    });
 }
 
 class WalletService {
@@ -38,6 +51,10 @@ class WalletService {
         }
     }
     
+    static setPassword(password){
+        password_ = password
+    }
+
     static jsonRPC(method, params){
         const headers = {
             'Content-Type': 'application/json'
@@ -223,6 +240,19 @@ class WalletService {
             log.error('Process:init new wallet got stderr: ' + data)
         })
     }
+
+    static send(amount, method, dest, version){
+        const grin = platform==='win'? `${path.resolve(grinPath)}`:grinPath
+        const cmd = `${grin} -r ${grinNode} -p ${password_} send -m ${method} -d ${dest} -v ${version} ${amount}`
+        return execPromise(cmd)
+    }
+
+    static finalize(fn){
+        const grin = platform==='win'? `${path.resolve(grinPath)}`:grinPath
+        const cmd = `${grin} -r ${grinNode} -p ${password_} finalize -i ${fn}`
+        return execPromise(cmd)
+    }
+
 }
 WalletService.initClient()
 export default WalletService

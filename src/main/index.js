@@ -23,6 +23,8 @@ if (process.platform === 'win32') {
   app.setAppUserModelId(pkg.build.appId)
 }
 
+log.debug(`Platform:${process.platform}`)
+
 let mainWindow
 let firstQuit = true
 let firstClose = true
@@ -58,7 +60,7 @@ function createWindow () {
 
       setTimeout(()=>{
         log.debug('close now')
-        mainWindow.close()}, 500)
+        if(mainWindow)mainWindow.close()}, 500)
     })
 
     mainWindow.setMenu(null)
@@ -92,7 +94,7 @@ async function launch(){
 
 app.on('ready', ()=>{
   createWindow()
-  if (process.platform !== 'darwin') {
+  if (process.platform === 'darwin') {
     createMenu()
   }
 })

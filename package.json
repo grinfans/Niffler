@@ -41,11 +41,29 @@
       ]
     },
     "mac": {
-      "icon": "build/icons/icon.icns"
+      "icon": "build/icons/icon.icns",
+      "extraFiles": [
+        {
+          "from": "resources/bin/mac",
+          "to": "Resources/bin/mac",
+          "filter": [
+            "**/*"
+          ]
+        }
+      ]
     },
     "win": {
       "icon": "build/icons/icon.ico",
-      "target": "nsis"
+      "target": "nsis",
+      "extraFiles": [
+        {
+          "from": "resources/bin/win",
+          "to": "Resources/bin/win",
+          "filter": [
+            "**/*"
+          ]
+        }
+      ]
     },
     "nsis": {
       "oneClick": false,
@@ -53,16 +71,7 @@
     },
     "linux": {
       "icon": "build/icons"
-    },
-    "extraFiles": [
-      {
-        "from": "resources/",
-        "to": "Resources/",
-        "filter": [
-          "**/*"
-        ]
-      }
-    ]
+    }
   },
   "dependencies": {
     "animate.css": "^3.7.0",

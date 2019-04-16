@@ -79,7 +79,7 @@ export default {
         if(fn_output){
           this.$walletService.receiveTransaction(content)
               .then( (res) => {
-                fs.writeFileSync(fn_output, res.data)
+                fs.writeFileSync(fn_output, JSON.stringify(res.data))
                 messageBus.$emit('update')
                 this.closeModal()
                 this.$log.debug(`Generated tx file ok; return ${res.data}`)

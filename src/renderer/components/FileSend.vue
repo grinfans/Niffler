@@ -87,20 +87,32 @@ export default {
           "max_outputs": 500,
           "num_change_outputs": 1,
           "selection_strategy_is_use_all": true,
-          //"target_slate_version": 0
+          "target_slate_version": 1
         }
-        this.$walletService.issueSendTransaction(tx_data).then(
-          (res) => {
-            if (fn_output){
-              fs.writeFileSync(fn_output, JSON.stringify(res.data))
-              this.$log.debug('new send tx file generated')
-              messageBus.$emit('update')
-              this.closeModal()
-            }
-          }).catch((error) => {
-            this.$log.error('issueSendTransaction error:' + error)
-            this.errors.push(this.$t('msg.fileSend.CreateFailed'))
-          })
+        //this.$walletService.issueSendTransaction(tx_data).then(
+        //  (res) => {
+        //    if (fn_output){
+        //      fs.writeFileSync(fn_output, JSON.stringify(res.data))
+        //      this.$log.debug('new send tx file generated')
+        //      messageBus.$emit('update')
+        //      this.closeModal()
+        //    }
+        //  }).catch((error) => {
+        //    this.$log.error('issueSendTransaction error:' + error)
+        //    this.errors.push(this.$t('msg.fileSend.CreateFailed'))
+        //  })
+        //}
+        if (fn_output){
+          this.$walletService.send(this.amount, 'file', fn_output, 1).then(
+            (res) => {
+                this.$log.debug('send return: '+res)
+                messageBus.$emit('update')
+                this.closeModal()
+            }).catch((error) => {
+              this.$log.error('send error:' + error)
+              this.errors.push(this.$t('msg.fileSend.CreateFailed'))
+            })
+          }
         }
       },
 
