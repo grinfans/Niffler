@@ -17,6 +17,7 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
+log.debug("Platform:"+process.platform)
 let mainWindow
 let firstQuit = true
 let firstClose = true
@@ -43,7 +44,7 @@ function createWindow () {
 
   mainWindow.loadURL(winURL)
   
-  if (process.platform != 'darwin') {
+  if (process.platform == 'win32') {
     mainWindow.on('close', (e)=>{
       if(firstClose){
         mainWindow.webContents.send('before-quit');
