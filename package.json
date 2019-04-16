@@ -41,7 +41,15 @@
       ]
     },
     "mac": {
-      "icon": "build/icons/icon.icns"
+      "icon": "build/icons/icon.icns",
+      "extraFiles": [
+        {
+          "from": "resources/bin/mac",
+          "to": "resources/bin/mac",
+          "filter": [
+            "**/*"
+          ]
+        }]
     },
     "win": {
       "icon": "build/icons/icon.ico"
@@ -66,7 +74,6 @@
         "StartupWMClass": "Niffler"
       }
     }
-    
   },
   "dependencies": {
     "animate.css": "^3.7.0",
