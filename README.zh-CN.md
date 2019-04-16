@@ -9,7 +9,7 @@ Niffler 是一个开箱即用、用户友好的 [Grin](https://github.com/mimble
 目前, Mac版本和Linux版本已经发布, 从[这里](https://github.com/grinfans/niffler/releases)下载. 
 Windows版本也会很快释出.
 
-中国大陆用户下载地址: 
+中国大陆用户下载地址: （客服qq 1573479696）
 >mac版:
 https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-0.1.1.dmg
 
