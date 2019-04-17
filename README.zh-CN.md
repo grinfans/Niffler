@@ -13,9 +13,11 @@ Windows 版本:
 [https://github.com/grinfans/niffler/releases/tag/v0.2.0](https://github.com/grinfans/niffler/releases/tag/v0.2.0)
 
 
-中国大陆用户下载地址: 
+#### 中国大陆用户快速下载
+
 >mac版:
 https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-0.1.1.dmg
+
 
 >linux版本：
 
@@ -23,9 +25,14 @@ https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-linux-0.1.1_amd64.deb
 
 https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-linux-0.1.1.AppImage
 
+
 > windows版本：
 https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-win-0.2.0.exe
 
+
+## 联系
+
+联系我: xiaojay@gmail.com
 
 用户讨论室 https://gitter.im/niffler-wallet/community
 
@@ -88,8 +95,3 @@ pull request 和 bug报告 当然非常欢迎.
 
 翻译到其他语言也是很需要的. 只要翻译下这个[语言文件夹](https://github.com/grinfans/niffler/tree/master/src/lang)里的文字即可.
 
-## 联系
-
-联系我: xiaojay@gmail.com
-
-Gitter room: https://gitter.im/niffler-wallet/community
