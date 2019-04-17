@@ -210,10 +210,11 @@ class WalletService {
     static new(password){
         const cmd = platform==='win'? `${path.resolve(grinPath)} -r ${grinNode} --pass ${password} init`:
                                       `${grinPath} -r ${grinNode} init`
-        log.debug(`platform: ${platform}; int wallet cmd: ${cmd}`)
+        //log.debug(`platform: ${platform}; int wallet cmd: ${cmd}`)
         let createProcess = exec(cmd)
         createProcess.stdout.on('data', (data) => {
             var output = data.toString()
+            //log.debug('init process return: '+output)
             if (output.includes("Please enter a password for your new wallet")){
                 createProcess.stdin.write(password + "\n");
                 createProcess.stdin.write(password + "\n");
@@ -232,7 +233,8 @@ class WalletService {
                 var wordSeedWithLog = wordSeed;
                 var wordSeedWithoutLog = wordSeedWithLog.substring(wordSeedWithLog.indexOf("==")+1);
                 wordSeedWithoutLog = wordSeedWithoutLog.trim();
-                wordSeedWithoutLog = wordSeedWithoutLog.replace("= ","");
+                wordSeedWithoutLog = wordSeedWithoutLog.replace("= ","").trim();
+                //log.debug(`wordSeed: ${wordSeed}; wordSeedWithoutLog: ${wordSeedWithoutLog}`)
                 return messageBus.$emit('walletCreated', wordSeedWithoutLog)
             }
         })
