@@ -3,14 +3,14 @@
     <div class="hero-body">
       <div class="container">
         <div class="columns is-mobile is-centered">
-          <div class="column is-6" >
+          <div class="column is-7" >
             <img src="../assets/logo.png" style="width:64px" class="is-pulled-left">
             <h2 class="title" style="margin-top: 24px; margin-left:70px" >{{ $t("msg.title") }}</h2>
           </div>
         </div>
 
         <div class="columns is-mobile is-centered">
-          <div class="column"  v-bind:class="{'is-8': firstTime, 'is-6': !firstTime }">
+          <div class="column"  v-bind:class="{'is-8': firstTime, 'is-7': !firstTime }">
             <div class="message is-warning is-small" v-show="firstTime" >
               <div class="message-header">
                 <p>{{ $t("msg.welcome") }}</p>
