@@ -27,17 +27,22 @@
 
       </div>
       <div v-else>
-        <div class="message is-warning">
-          <div class="message-header"><p>{{ $t("msg.httpReceive.attention") }}</p></div>
-          <div class="message-body">
-            <p>{{ $t("msg.httpReceive.reachableMsg") }}</p>
-            <!--<p>{{ $t("msg.httpReceive.frp") }}</p>-->
-          </div>
-        </div>
         <div class="notification is-warning" v-if="errors.length">
           <p v-for="error in errors">{{ error }}</p>
         </div>
-        
+        <div class="center" v-show="errors.length>0">
+          <a class="button is-link is-outlined" v-if="errors.length" @click="closeModal">OK</a>
+        </div>
+
+        <div v-show="errors.length==0">
+          <div class="message is-warning">
+            <div class="message-header"><p>{{ $t("msg.httpReceive.attention") }}</p></div>
+            <div class="message-body">
+              <p>{{ $t("msg.httpReceive.reachableMsg") }}</p>
+              <!--<p>{{ $t("msg.httpReceive.frp") }}</p>-->
+            </div>
+          </div>
+          
           <div class="field">
             <label class="label">{{ $t("msg.httpReceive.password") }}</label>
             <div class="control">
@@ -57,6 +62,7 @@
               <button class="button is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
             </div>
           </div>
+        </div>
       </div>
     </section>
   </div>
@@ -69,6 +75,12 @@ import { setTimeout } from 'timers';
 const fs = require('fs');
 const publicIp = require('public-ip');
 const extIP = require('external-ip');
+
+function isValidIP(str) {
+  const octet = '(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|0)';
+  const regex = new RegExp(`^${octet}\\.${octet}\\.${octet}\\.${octet}$`);
+  return regex.test(str);
+}
 
 export default {
   name: "http-receive",
@@ -88,15 +100,6 @@ export default {
       ip: this.$t('msg.httpReceive.ip')
     }
   },
-  watch: {
-    errors:function(newVal, oldVal){
-      if(newVal.length > 0){
-        setTimeout(()=>this.errors = [], 
-        4*1000)
-      }
-    },
-
-  },
   mounted() {
     this.checkRunning()
     this.getIP()
@@ -110,9 +113,6 @@ export default {
         setTimeout(()=>{
           this.checkRunning()
           this.$log.debug('start listen running?'+this.running)
-          if(!this.running){
-            this.errors.push(this.$t('msg.httpReceive.failed'))
-          }
           }, 500)
         }
     },
@@ -135,19 +135,34 @@ export default {
 
     checkRunning(){
       const url = 'http://localhost:3415'
+      
       this.$http.get(url).catch((error)=>{
         if(error.response){
-          this.running = true
-          if(this.starting){
-            this.started = true
-            this.starting = false
-            if(this.ip === ''){
-              this.getIP()
-            }
+          if(!isValidIP(this.ip)){
+            this.$log.debug(`${this.ip} is not valid ip.`)
+            this.getIP()
           }
+          const url2 = `http://${this.ip}:3415`
+          this.$log.debug(`try to test ${url2}.`)
+          this.$http.get(url2).catch((error)=>{
+            if(error.response){
+              this.running = true
+              if(this.starting){
+                this.started = true
+                this.starting = false
+              }
+            }else{
+              if(this.starting){
+                this.starting = false
+                this.errors.push(this.$t('msg.httpReceive.failed2'))
+              }
+              this.running = false
+            }
+          })
         }else{
           if(this.starting){
             this.starting = false
+            this.errors.push(this.$t('msg.httpReceive.failed'))
           }
           this.running = false
         }
@@ -186,15 +201,20 @@ export default {
       });
       getIP((err, ip) => {
         if (err) {
-           this.$log.error('error when getmyip2:' + err)
+           this.$log.error('error when getmyip2: ' + err)
            return
         }
         this.ip = ip
-        this.$log.debug('this host ip when getmyip2:' + this.ip)
+        this.$log.debug('this host ip when getmyip2: ' + this.ip)
       });
     }
   }
 }
 </script>
 <style>
+.center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

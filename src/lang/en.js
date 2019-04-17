@@ -121,6 +121,7 @@ const messages = {
       password: 'Wallet Password (used to start HTTP listen)',
       start: 'Start',
       failed: 'Start Failed, Maybe wrong password',
+      failed2: 'HTTP listen failed, your public ip could not reachable by internet user. Try trascation file way.',
       ip: 'your public ip'
     },
 

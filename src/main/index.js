@@ -60,7 +60,7 @@ function createWindow () {
 
       setTimeout(()=>{
         log.debug('close now')
-        if(mainWindow)mainWindow.close()}, 500)
+        if(mainWindow)mainWindow.close()}, 800)
     })
 
     mainWindow.setMenu(null)
@@ -119,7 +119,7 @@ app.on('before-quit', (event)=>{
 
     setTimeout(()=>{
       log.debug('quit now')
-      app.quit()}, 500)
+      app.quit()}, 800)
     }
 })
 
