@@ -2,14 +2,18 @@
 
 简体中文 | [English](./README.md)
 
-Niffler 是一个开箱即用、用户友好的 [Grin](https://github.com/mimblewimble/grin) 图形界面钱包.
+Niffler 是一个开箱即用、用户友好的 [Grin](https://github.com/mimblewimble/grin) 开源图形界面钱包.
 
 遵循Grin的命名传统，钱包的名字 **Niffler** 也是来自["哈利波特"](https://harrypotter.fandom.com/wiki/Niffler).
 
-目前, Mac版本和Linux版本已经发布, 从[这里](https://github.com/grinfans/niffler/releases)下载. 
-Windows版本也会很快释出.
+Mac/linux 版本:
+[https://github.com/grinfans/niffler/releases/tag/v0.1.1](https://github.com/grinfans/niffler/releases/tag/v0.1.1)
 
-中国大陆用户下载地址: （客服qq 1573479696）
+Windows 版本:
+[https://github.com/grinfans/niffler/releases/tag/v0.2.0](https://github.com/grinfans/niffler/releases/tag/v0.2.0)
+
+
+中国大陆用户下载地址: 
 >mac版:
 https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-0.1.1.dmg
 
@@ -19,6 +23,13 @@ https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-linux-0.1.1_amd64.deb
 
 https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-linux-0.1.1.AppImage
 
+> windows版本：
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-win-0.2.0.exe
+
+
+用户讨论室 https://gitter.im/niffler-wallet/community
+
+客服qq： 1573479696
 
 <img src="/src/renderer/assets/logo.png" width="256"> Logo 由[@Duoasa](https://weibo.com/u/3197271025)创建.
 
