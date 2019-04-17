@@ -70,7 +70,24 @@
       "allowToChangeInstallationDirectory": true
     },
     "linux": {
-      "icon": "build/icons"
+      "icon": "build/icons",
+      "target":["deb", "appImage"],
+      "extraFiles": [
+        {
+          "from": "resources/bin/linux",
+          "to": "resources/bin/linux",
+          "filter": [
+            "**/*"
+          ]
+        }
+      ],
+      "desktop": {
+        "Name": "Niffler",
+        "Encoding": "UTF-8",
+        "Type": "Application",
+        "Comment": "Niffler, a grin gui wallet",
+        "StartupWMClass": "Niffler"
+      }
     }
   },
   "dependencies": {
