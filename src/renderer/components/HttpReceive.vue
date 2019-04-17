@@ -101,11 +101,12 @@ export default {
       ip: this.$t('msg.httpReceive.ip')
     }
   },
-  mounted() {
-    this.checkRunning()
+  created(){
     if(!isValidIP(this.ip))this.getIP()
   },
-
+  mounted() {
+    this.checkRunning()
+  },
   methods: {
     start(){
       if(this.password!=''&&!this.starting&&!this.running){
@@ -113,7 +114,6 @@ export default {
         if(!this.localReachable)this.$walletService.startListen(this.password)
         setTimeout(()=>{
           this.checkRunning()
-          this.$log.debug('start listen running?'+this.running)
           }, 500)
         }
     },
@@ -141,9 +141,15 @@ export default {
       this.$http.get(url).catch((error)=>{
         if(error.response){
           this.localReachable = true
+          this.$log.debug('Http listen is locally reachable.')
           if(!isValidIP(this.ip)){
             this.$log.debug(`${this.ip} is not valid ip.`)
             this.getIP()
+            if(this.starting){
+              this.errors.push(this.$t('msg.httpReceive.failed3'))
+              this.starting = false
+            }
+            return
           }
           const url2 = `http://${this.ip}:3415`
           this.$log.debug(`try to test ${url2}.`)
@@ -175,10 +181,10 @@ export default {
     getIP(){
       this.getMyIP2()
       setTimeout(()=>{
-        if(this.ip===''){
+         if(!isValidIP(this.ip)){
           this.getMyIP()
         }
-      }, 1000)
+      }, 500)
     },
 
     getMyIP(){
