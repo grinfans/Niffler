@@ -79,8 +79,8 @@ export default {
         if(fn_output){
           this.$walletService.receiveTransaction(content)
               .then( (res) => {
-                //v2 version
                 if(typeof(res.data)==='string'){
+                  //v2 version
                   fs.writeFileSync(fn_output, res.data)
                 }else{
                   fs.writeFileSync(fn_output, JSON.stringify(res.data))
