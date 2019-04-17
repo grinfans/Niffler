@@ -71,7 +71,6 @@ export default {
       setTimeout(()=>{
         this.$walletService.getNodeHeight().then(
           (res) =>{
-            console.log('password'+password)
             setPassword(password)
             messageBus.$emit('logined')
            
