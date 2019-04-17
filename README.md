@@ -9,7 +9,13 @@ Mac/linux version:[https://github.com/grinfans/niffler/releases/tag/v0.1.1](http
 
 Windows version:[https://github.com/grinfans/niffler/releases/tag/v0.2.0](https://github.com/grinfans/niffler/releases/tag/v0.2.0)
 
+
+## Contact
+
+Contact me: xiaojay@gmail.com
+
 Gitter room: https://gitter.im/niffler-wallet/community
+
 
 <img src="/src/renderer/assets/logo.png" width="256"> Logo made by [@Duoasa](https://weibo.com/u/3197271025)
 
@@ -65,9 +71,3 @@ We now have a wonderful logo <img src="/src/renderer/assets/logo.png" width="64"
 Logo made by [@Duoasa](https://weibo.com/u/3197271025), and also thanks [@机械师区块链](https://weibo.com/u/6318956004)
 
 Translate to other languages is wanted, too. checkout [lang folder](https://github.com/grinfans/niffler/tree/master/src/lang).
-
-## Contact
-
-Contact me: xiaojay@gmail.com
-
-Gitter room: https://gitter.im/niffler-wallet/community
