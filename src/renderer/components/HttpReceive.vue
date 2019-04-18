@@ -111,11 +111,18 @@ export default {
     start(){
       if(this.password!=''&&!this.starting&&!this.running){
         this.starting = true
-        if(!this.localReachable)this.$walletService.startListen(this.password)
-        setTimeout(()=>{
+        this.$log.debug('Is local reachable before start? '+ this.localReachable)
+        if(!this.localReachable){
+          this.$walletService.startListen(this.password)
+          setTimeout(()=>{
+            this.checkRunning()
+            }, 500)
+          }
+        else{
+          this.$log.debug('checkRunning right now.')
           this.checkRunning()
-          }, 500)
         }
+      }
     },
     stop(){
       this.$walletService.stopListen()
@@ -137,8 +144,8 @@ export default {
 
     checkRunning(){
       const url = 'http://localhost:3415'
-      
-      this.$http.get(url).catch((error)=>{
+      this.$log.debug('Try to test if http listen locally reachable?')
+      this.$http.get(url, {timeout: 4000}).catch((error)=>{
         if(error.response){
           this.localReachable = true
           this.$log.debug('Http listen is locally reachable.')
@@ -152,7 +159,7 @@ export default {
             return
           }
           const url2 = `http://${this.ip}:3415`
-          this.$log.debug(`try to test ${url2}.`)
+          this.$log.debug(`Try to test ${url2} ?`)
           this.$http.get(url2, {timeout: 4000}).catch((error)=>{
             if(error.response){
               this.running = true
