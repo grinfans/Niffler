@@ -2,7 +2,7 @@
 
 <div class="modal" :class="{'is-active': showModal}">
   <div class="modal-background" @click="closeModal"></div>
-  <div class="modal-card" style="width:480px">
+  <div class="modal-card" style="width:500px">
     <header class="modal-card-head">
       <p class="modal-card-title is-size-4 has-text-link">{{ $t("msg.hedwig.title") }}</p>
       <button class="delete" aria-label="close" @click="closeModal"></button>

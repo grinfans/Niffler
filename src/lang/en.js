@@ -127,6 +127,21 @@ const messages = {
       ip: 'your public ip'
     },
 
+    hedwig: {
+      title: 'Receive via Hedwig(v1)',
+      launchSucess: 'Started successful',
+      reachable: 'Hedwig address is available',
+      address: 'Address to receive',
+      tip:'Please keep wallet online.',
+      close: 'Stop Hedwig',
+      introTitle: 'Introduction',
+      intro1: 'Hedwig(v1) is a relay service for users without a public ip. It provides a temporary address to receive grin.',
+      intro2: 'When someone send grin to the address, Hedwig(v1) will forward the send request to your wallet. So you will get your grin.',
+      start: 'Start',
+      failed: 'Error when try to connect Hedwig server, try it latter maybe',
+      failed2: 'Error when test Hedwig address, try it later maybe or restart wallet.',
+      failed3: 'Failed to start local grin receive service, try it later maybe or restart wallet.'
+    }
 
   }
 }

@@ -32,7 +32,7 @@
           </div>
 
           &nbsp; &nbsp; 
-          <div class="dropdown column column is-1" style="margin-left:-12px;margin-top:auto;" 
+          <div class="dropdown column column is-1" style="margin-left:-5px;margin-top:auto;" 
             v-bind:class="{'is-active':isDroppingDown2}" >
             <div class="dropdown-trigger" >
               <button class="button is-link is-outlined" aria-haspopup="true" aria-controls="dropdown-menu"
@@ -52,13 +52,13 @@
             </div>
           </div>
 
-          <div class="column column is-1" style="margin-top: auto; margin-left:12px;">
+          <div class="column column is-1" style="margin-top: auto; margin-left:25px;">
             <button class="button is-link is-outlined" @click="openHedwigV1 = true">
               {{ $t("msg.app.hedwig") }}
             </button>
           </div>
 
-          <div class="column is-offset-1 is-2" style="margin-left:85px;">
+          <div class="column is-offset-1 is-2" style="margin-left:80px;">
             <div class="level">
               <p class="is-size-7 tag is-warning animated" v-bind:class="{headShake: isAnimate}" style="animation-iteration-count:3">
                 {{ $t("msg.app.height") }}:{{height}}</p>
