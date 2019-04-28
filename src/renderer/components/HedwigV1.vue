@@ -109,6 +109,7 @@ export default {
         if(this.address == ''){
           let args = ['--server', hedwigServer, '--app', 'GRIN', '--port', '3415', 
             '--subdomain', String(Math.random()).slice(2)]
+          this.$log.debug('hedwig client at ' + hedwigClient )
           hedwig = fork(hedwigClient, args)
           hedwig.on('message', (msg)=>{
             if(msg.title=='tunnelCreated'){

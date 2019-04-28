@@ -49,6 +49,10 @@
           "filter": [
             "**/*"
           ]
+        },
+        {
+          "from": "src/shared/hedwig.js",
+          "to": "Resources/bin/mac/hedwig.js"
         }
       ]
     },
