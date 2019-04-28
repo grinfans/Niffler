@@ -46,7 +46,9 @@ const messages = {
       updateTitle: '发现新版本',
       updateMsg: '发现Niffer钱包的新版本, 请立刻更新! (下载并覆盖原有程序即可).',
       yes: '好的',
-      no: '暂时不更新'
+      no: '暂时不更新',
+
+      hedwig: '用Hedwig收币'
     },
 
     info:{
@@ -123,6 +125,22 @@ const messages = {
       failed3: '无法获取你的IP地址，请过段时间再试下',
       ip: '你的公网IP'
     },
+
+    hedwig: {
+      title: '用Hedwig(v1)收币',
+      launchSucess: '启动成功',
+      reachable: 'Hedwig临时地址正常可用',
+      address: '提币地址',
+      tip:'收币时，请保持钱包在线.',
+      close: '关闭Hedwig',
+      introTitle: '介绍',
+      intro1: 'Hedwig(v1) 是一个 为没有公网IP的用户 定制的代理服务，它会提供一个临时的收币地址.',
+      intro2: '当有人向这个临时地址发送grin时，它会把这个发币请求转发到你的Niffler钱包，完成交易.',
+      start: '启动',
+      failed: '连接到hedwig服务器时 发生错误，等下再试吧.',
+      failed2: '连接到hedwig临时地址时 发生错误， 重启下钱包 or 等下再试吧.',
+      failed3: '启动本地grin接收服务失败， 重启下钱包 or 等下再试吧.'
+    }
 
   }
 }

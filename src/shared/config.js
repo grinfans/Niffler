@@ -3,6 +3,8 @@ import path from 'path';
 import { app, remote } from 'electron';
 import os from 'os'
 
+let appRootDir = require('app-root-dir').get().replace('app.asar', '').replace(/(\s+)/g, '\\$1');
+
 function getPlatform(){
     switch (os.platform()) {
         case 'aix':
@@ -65,3 +67,6 @@ export function updateConfig(options){
 }
 
 export const logLevel = getConfig()['debug']?'debug':'info'
+
+export const hedwigServer = 'https://v1.hedwig.im'
+export const hedwigClient = path.resolve(path.join(appRootDir, 'src/shared/hedwig.js'))

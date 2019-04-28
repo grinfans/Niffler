@@ -48,7 +48,8 @@ const messages = {
       updateTitle: 'Found new version',
       updateMsg: 'Found new version of Niffler wallet. Please update Right NOW.',
       yes: 'yes',
-      no: 'no'
+      no: 'no',
+      hedwig: 'Receive via Hedwig'
     },
 
     info: {

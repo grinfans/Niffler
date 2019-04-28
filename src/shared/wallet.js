@@ -156,7 +156,7 @@ class WalletService {
         }
     }
     
-    static startListen(password){
+    static startListen(password=password_){
         WalletService.stopListen()        
         const cmd = platform==='win'? `${path.resolve(grinPath)} -e --pass ${password} listen`:
                                       `${grinPath} -e listen`

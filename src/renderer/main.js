@@ -53,7 +53,10 @@ new Vue({
   i18n
 }).$mount('#app')
 
+import { messageBus } from '@/messagebus'
+
 ipcRenderer.on('before-quit', ()=>{
   log.debug('Render got msg is about to quit.')
+  messageBus.$emit('quit')
   walletService.stopAll()
 })

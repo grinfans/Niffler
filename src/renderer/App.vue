@@ -6,7 +6,7 @@
             <summary-info></summary-info>
           </div>
           
-          <div class="dropdown column is-offset-1 is-1" style="margin-top: auto;" 
+          <div class="dropdown column is-1" style="margin-left:25px;margin-top: auto;" 
             v-bind:class="{'is-active':isDroppingDown}" >
             <div class="dropdown-trigger" >
               <button class="button is-link is-outlined" aria-haspopup="true" aria-controls="dropdown-menu"
@@ -14,7 +14,8 @@
                 {{ $t("msg.send") }}
               </button>
             </div>
-            <div  class="dropdown-menu" id="dropdown-menu" role="menu" style="left:12px;top:80%">
+
+            <div class="dropdown-menu" id="dropdown-menu" role="menu" style="left:12px;top:80%">
               <div class="dropdown-content">
                 <a href="#" class="dropdown-item" @click="openFileSend = true">
                   {{ $t("msg.app.create") }}
@@ -31,7 +32,7 @@
           </div>
 
           &nbsp; &nbsp; 
-          <div class="dropdown column column is-1" style="margin-top: auto;" 
+          <div class="dropdown column column is-1" style="margin-left:-12px;margin-top:auto;" 
             v-bind:class="{'is-active':isDroppingDown2}" >
             <div class="dropdown-trigger" >
               <button class="button is-link is-outlined" aria-haspopup="true" aria-controls="dropdown-menu"
@@ -50,8 +51,14 @@
               </div>
             </div>
           </div>
-          
-          <div class="column is-offset-2 is-2">
+
+          <div class="column column is-1" style="margin-top: auto; margin-left:12px;">
+            <button class="button is-link is-outlined" @click="openHedwigV1 = true">
+              {{ $t("msg.app.hedwig") }}
+            </button>
+          </div>
+
+          <div class="column is-offset-1 is-2" style="margin-left:85px;">
             <div class="level">
               <p class="is-size-7 tag is-warning animated" v-bind:class="{headShake: isAnimate}" style="animation-iteration-count:3">
                 {{ $t("msg.app.height") }}:{{height}}</p>
@@ -71,6 +78,7 @@
       <http-send :showModal="openHttpSend"></http-send>
       <file-send :showModal="openFileSend"></file-send>
       <finalize :showModal="openFinalize"></finalize>
+      <hedwig-v1 :showModal="openHedwigV1"></hedwig-v1>
     </div>
     <landing v-bind:walletExist="walletExist" v-else></landing>
   </div>
@@ -88,6 +96,8 @@
   import HttpReceive from '@/components/HttpReceive'
   import FileSend from '@/components/FileSend'
   import Finalize from '@/components/Finalize'
+  import HedwigV1 from '@/components/HedwigV1'
+
   import Landing from '@/components/Landing'
   import checkUpdate from '../shared/updateChecker'
   import {downloadUrl} from '../shared/config'
@@ -106,6 +116,7 @@
       HttpReceive,
       FileSend,
       Finalize,
+      HedwigV1,
       Landing
     },
     data(){
@@ -115,6 +126,7 @@
         openHttpSend: false,
         openFileSend: false,
         openFinalize: false,
+        openHedwigV1: false,
         isDroppingDown: false,
         isDroppingDown2: false,
         ownerApiRunning: false,
@@ -147,6 +159,9 @@
         }
         if(window =='windowHttpReceive'){
           this.openHttpReceive = false
+        }
+        if(window =='windowHedwigV1'){
+          this.openHedwigV1 = false
         }
       })
       messageBus.$on('logined', ()=>{
