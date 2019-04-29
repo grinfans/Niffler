@@ -118,7 +118,7 @@ class WalletService {
 
         const cmd = platform==='win'? `${path.resolve(grinPath)} -r ${grinNode} --pass ${password} owner_api`:
                                       `${grinPath} -r ${grinNode} owner_api`
-        log.debug(`platform: ${platform}; start owner api cmd: ${cmd}`)
+        //log.debug(`platform: ${platform}; start owner api cmd: ${cmd}`)
 
         ownerAPI =  exec(cmd)
 
@@ -160,7 +160,7 @@ class WalletService {
         WalletService.stopListen()        
         const cmd = platform==='win'? `${path.resolve(grinPath)} -e --pass ${password} listen`:
                                       `${grinPath} -e listen`
-        log.debug(`platform: ${platform}; start listen cmd: ${cmd}`)
+        //log.debug(`platform: ${platform}; start listen cmd: ${cmd}`)
 
         listenProcess =  exec(cmd)
         
