@@ -139,7 +139,9 @@ const messages = {
       start: '启动',
       failed: '连接到hedwig服务器时 发生错误，等下再试吧.',
       failed2: '连接到hedwig临时地址时 发生错误， 重启下钱包 or 等下再试吧.',
-      failed3: '启动本地grin接收服务失败， 重启下钱包 or 等下再试吧.'
+      failed3: '启动本地grin接收服务失败， 重启下钱包 or 等下再试吧.',
+      copy: '复制地址',
+      copied: '地址已经复制到剪贴板'
     }
 
   }

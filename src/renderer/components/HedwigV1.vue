@@ -15,7 +15,14 @@
           <div class="message-body">
             <p>{{ $t("msg.hedwig.address") }} :</p>
             <p class="has-text-weight-semibold is-size-5" style="margin-top:15px;margin-bottom:15px"> 
-              {{this.address}} </p>
+              {{this.address}}</p>
+            <p class="is-size-7 tag is-warning animated is-pulled-right bounce" v-if="copied" style="animation-iteration-count:3">
+              {{ $t("msg.hedwig.copied") }}
+            </p>
+            <button v-else class="button is-small is-link is-outlined is-pulled-right" @click="copy" >
+              {{ $t("msg.hedwig.copy") }}
+            </button>
+            <br/>
             <p>{{ $t("msg.hedwig.tip") }}</p>
           </div>
         </div>
@@ -68,6 +75,7 @@ import {fork} from 'child_process'
 import { messageBus } from '@/messagebus'
 import {hedwigServer, hedwigClient, hedwigApp} from '../../shared/config'
 import { setTimeout } from 'timers';
+const clipboard = require('electron').clipboard
 
 let hedwig 
 
@@ -89,7 +97,8 @@ export default {
       internetReachable:false,
       localReachable:false,
       address: '',
-      socket: null
+      socket: null,
+      copied: false
     }
   },
   created() {
@@ -137,7 +146,7 @@ export default {
             }
             if(msg_.title=='received'){
               this.$log.debug('receive data from hedwig')
-              setTimeout(()=>{messageBus.$emit('update')}, 4000)
+              setTimeout(()=>{messageBus.$emit('update')}, 5000)
             }
             if(msg_.title=='failed'){
               this.internetReachable = false
@@ -163,6 +172,13 @@ export default {
       this.closeModal()
     },
 
+    copy(){
+      clipboard.writeText(this.address)
+      this.copied = true
+
+      setTimeout(()=>{this.copied = false}, 4000)
+    },
+
     closeModal() {
       this.clearup()
       messageBus.$emit('close', 'windowHedwigV1');
@@ -172,6 +188,7 @@ export default {
       this.errors = []
       this.starting = false
       this.started = false
+      this.copied = false
       //this.localReachable = false
     },
 
