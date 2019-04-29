@@ -129,9 +129,9 @@ createTunnel(argv).then(
     }
     process.send(msg)
   }
-).catch((err)=>{
-  console.log('Failed to create tunnel: ' + err )
-  process.send({'title': 'failed'})
+).catch((error)=>{
+  console.log('Failed to create tunnel: ' + error )
+  process.send({'title': 'failed', 'error':error})
 })
 process.on('message', (msg)=>{
   if(msg.title=='close'){

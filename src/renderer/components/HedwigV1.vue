@@ -110,26 +110,36 @@ export default {
           let args = ['--server', hedwigServer, '--app', 'GRIN', '--port', '3415', 
             '--subdomain', String(Math.random()).slice(2)]
           this.$log.debug('hedwig client at ' + hedwigClient )
-          hedwig = fork(hedwigClient, args)
-          hedwig.on('message', (msg)=>{
-            if(msg.title=='tunnelCreated'){
-              this.address = msg.address
+          try{
+            hedwig = fork(hedwigClient, args)
+          }catch(e){
+            this.$log.error('Error during fork: ' + e )
+          }
+          
+          hedwig.on('error', (err) => {
+            this.$log.error(`error when try to start hedwig: ${err}`)
+          })
+
+          hedwig.on('message', (msg_)=>{
+            if(msg_.title=='tunnelCreated'){
+              this.address = msg_.address
               this.$log.debug(`connect hedwig on url ${this.address}`)
               this.checkReachable()
             }
-            if(msg.title=='disconnect'){
+            if(msg_.title=='disconnect'){
               this.$log.debug('receive disconnect msg')
               this.internetReachable = false
             }
-            if(msg.title=='reconnect'){
+            if(msg_.title=='reconnect'){
               this.$log.debug('receive reconnect msg')
               this.checkReachable()
             }
-            if(msg.title=='failed'){
+            if(msg_.title=='failed'){
               this.internetReachable = false
               this.starting = false
               this.errors.push(this.$t('msg.hedwig.failed'))
-              this.$log.error(`error when try to connect hedwig: ${err}`)
+              let e = JSON.stringify(msg_.error)
+              this.$log.error(`error when try to connect hedwig: ${e}`)
             }
           })
         }
