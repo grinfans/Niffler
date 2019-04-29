@@ -47,6 +47,7 @@ function createTunnel(options) {
 
         s.on('end', () => {
           client.destroy();
+          
         });
 
         ss(socket).emit(clientId, s);
@@ -55,6 +56,7 @@ function createTunnel(options) {
       client.setTimeout(IDLE_SOCKET_TIMEOUT_MILLISECONDS);
       client.on('timeout', () => {
         client.end();
+        process.send({'title':'received'})
       });
 
       client.on('error', () => {

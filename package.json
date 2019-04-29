@@ -25,6 +25,16 @@
     "files": [
       "dist/electron/**/*"
     ],
+    "extraFiles": [
+      {
+        "from": "hedwig",
+        "to": "resources/bin/hedwig",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+
     "dmg": {
       "contents": [
         {
@@ -49,10 +59,6 @@
           "filter": [
             "**/*"
           ]
-        },
-        {
-          "from": "src/shared/hedwig.js",
-          "to": "Resources/bin/mac/hedwig.js"
         }
       ]
     },
@@ -66,10 +72,6 @@
           "filter": [
             "**/*"
           ]
-        },
-        {
-          "from": "src/shared/hedwig.js",
-          "to": "resources/bin/win/hedwig.js"
         }
       ]
     },
@@ -90,12 +92,7 @@
           "filter": [
             "**/*"
           ]
-        },
-        {
-          "from": "src/shared/hedwig.js",
-          "to": "resources/bin/bin/hedwig.js"
         }
-
       ],
       "desktop": {
         "Name": "Niffler",

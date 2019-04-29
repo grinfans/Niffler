@@ -4,7 +4,7 @@ import { app, remote } from 'electron';
 import os from 'os'
 
 let appRootDir = require('app-root-dir').get().replace('app.asar', '').replace(/(\s+)/g, '\\$1');
-
+export const rootDir = require('app-root-dir').get()
 function getPlatform(){
     switch (os.platform()) {
         case 'aix':
@@ -71,5 +71,5 @@ export const logLevel = getConfig()['debug']?'debug':'info'
 export const hedwigServer = 'https://v1.hedwig.im'
 export const hedwigClient =  
   IS_PROD || APP.isPackaged
-    ? path.resolve(path.join(binariesPath, 'hedwig.js'))
-    : path.resolve(path.join(appRootDir, 'src/shared/hedwig.js'))
+    ? path.resolve(path.join(process.resourcesPath, 'bin', 'hedwig', 'client.js'))
+    : path.resolve(path.join(root, 'hedwig', 'client.js'))

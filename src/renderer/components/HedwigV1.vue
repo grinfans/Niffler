@@ -67,6 +67,7 @@ import {fork} from 'child_process'
 
 import { messageBus } from '@/messagebus'
 import {hedwigServer, hedwigClient} from '../../shared/config'
+import { setTimeout } from 'timers';
 
 let hedwig 
 
@@ -106,7 +107,7 @@ export default {
           this.$walletService.startListen()
         }
         
-        if(this.address == ''){
+        if(!this.internetReachable){
           let args = ['--server', hedwigServer, '--app', 'GRIN', '--port', '3415', 
             '--subdomain', String(Math.random()).slice(2)]
           this.$log.debug('hedwig client at ' + hedwigClient )
@@ -133,6 +134,10 @@ export default {
             if(msg_.title=='reconnect'){
               this.$log.debug('receive reconnect msg')
               this.checkReachable()
+            }
+            if(msg_.title=='received'){
+              this.$log.debug('receive data from hedwig')
+              setTimeout(()=>{messageBus.$emit('update')}, 2000)
             }
             if(msg_.title=='failed'){
               this.internetReachable = false
@@ -189,7 +194,8 @@ export default {
           
           const url2 = this.address
           this.$log.debug(`Try to test internet reachalbe: ${url2} ?`)
-          this.$http.get(url2, {timeout: 5000}).catch((error)=>{
+          this.$http.get(url2, {timeout: 10000}).catch((error)=>{
+            this.$log.debug(`connect ${url2} return: ${error}`)
             if(error.response){
               this.internetReachable = true
               let resp = error.response      
