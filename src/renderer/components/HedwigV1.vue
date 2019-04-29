@@ -66,7 +66,7 @@
 import {fork} from 'child_process'
 
 import { messageBus } from '@/messagebus'
-import {hedwigServer, hedwigClient} from '../../shared/config'
+import {hedwigServer, hedwigClient, hedwigApp} from '../../shared/config'
 import { setTimeout } from 'timers';
 
 let hedwig 
@@ -108,7 +108,7 @@ export default {
         }
         
         if(!this.internetReachable){
-          let args = ['--server', hedwigServer, '--app', 'GRIN', '--port', '3415', 
+          let args = ['--server', hedwigServer, '--app', hedwigApp, '--port', '3415', 
             '--subdomain', String(Math.random()).slice(2)]
           this.$log.debug('hedwig client at ' + hedwigClient )
           try{
@@ -137,7 +137,7 @@ export default {
             }
             if(msg_.title=='received'){
               this.$log.debug('receive data from hedwig')
-              setTimeout(()=>{messageBus.$emit('update')}, 2000)
+              setTimeout(()=>{messageBus.$emit('update')}, 4000)
             }
             if(msg_.title=='failed'){
               this.internetReachable = false

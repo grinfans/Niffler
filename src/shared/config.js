@@ -73,3 +73,5 @@ export const hedwigClient =
   IS_PROD || APP.isPackaged
     ? path.resolve(path.join(process.resourcesPath, 'bin', 'hedwig', 'client.js'))
     : path.resolve(path.join(root, 'hedwig', 'client.js'))
+
+export const hedwigApp = 'Niffler'
