@@ -69,4 +69,7 @@ export function updateConfig(options){
 export const logLevel = getConfig()['debug']?'debug':'info'
 
 export const hedwigServer = 'https://v1.hedwig.im'
-export const hedwigClient = path.resolve(path.join(binariesPath, 'hedwig.js'))
+export const hedwigClient =  
+  IS_PROD || APP.isPackaged
+    ? path.resolve(path.join(binariesPath, 'hedwig.js'))
+    : path.resolve(path.join(appRootDir, 'src/shared/hedwig.js'))
