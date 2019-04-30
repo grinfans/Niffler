@@ -138,5 +138,6 @@ createTunnel(argv).then(
 process.on('message', (msg)=>{
   if(msg.title=='close'){
     socket.close()
+    //process.exit()
   }
 })

@@ -28,6 +28,7 @@ log.debug(`Platform:${process.platform}`)
 let mainWindow
 let firstQuit = true
 let firstClose = true
+
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
@@ -50,7 +51,7 @@ function createWindow () {
 
   mainWindow.loadURL(winURL)
 
-  if (process.platform === 'win32') {
+  if (process.platform != 'darwin') {
     mainWindow.on('close', (e)=>{
       mainWindow.webContents.send('before-quit');
       if(firstClose){

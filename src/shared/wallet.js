@@ -116,11 +116,14 @@ class WalletService {
         WalletService.stop()
         enableForeignApi()
 
-        const cmd = platform==='win'? `${path.resolve(grinPath)} -r ${grinNode} --pass ${password} owner_api`:
-                                      `${grinPath} -r ${grinNode} owner_api`
-        //log.debug(`platform: ${platform}; start owner api cmd: ${cmd}`)
-
-        ownerAPI =  exec(cmd)
+        if(platform === 'linux'){
+            ownerAPI = execFile(grinPath, ['-r', grinNode, 'owner_api']) 
+        }else{
+            const cmd = platform==='win'? `${path.resolve(grinPath)} -r ${grinNode} --pass ${password} owner_api`:
+                                        `${grinPath} -r ${grinNode} owner_api`
+            //log.debug(`platform: ${platform}; start owner api cmd: ${cmd}`)
+            ownerAPI =  exec(cmd)
+        }
 
         if(platform==='win'){
             localStorage.setItem('OwnerAPIPID', ownerAPI.pid)
@@ -157,12 +160,15 @@ class WalletService {
     }
     
     static startListen(password=password_){
-        WalletService.stopListen()        
-        const cmd = platform==='win'? `${path.resolve(grinPath)} -e --pass ${password} listen`:
-                                      `${grinPath} -e listen`
-        //log.debug(`platform: ${platform}; start listen cmd: ${cmd}`)
-
-        listenProcess =  exec(cmd)
+        WalletService.stopListen()
+        if(platform==='linux'){
+            listenProcess =  execFile(grinPath, ['-e', 'listen']) 
+        }else{
+            const cmd = platform=='win'? `${path.resolve(grinPath)} -e --pass ${password} listen`:
+                                        `${grinPath} -e listen`
+            //log.debug(`platform: ${platform}; start listen cmd: ${cmd}`)
+            listenProcess =  exec(cmd)
+        }
         
         if(platform==='win'){
             localStorage.setItem('listenProcessPID', listenProcess.pid)

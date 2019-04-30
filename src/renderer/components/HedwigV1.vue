@@ -77,7 +77,7 @@ import {hedwigServer, hedwigClient, hedwigApp} from '../../shared/config'
 import { setTimeout } from 'timers';
 const clipboard = require('electron').clipboard
 
-let hedwig 
+let hedwig = null
 
 export default {
   name: "hedwig-v1",
@@ -103,7 +103,7 @@ export default {
   },
   created() {
       messageBus.$on('quit', ()=>{
-        hedwig.send({'title':'close'})
+       if(hedwig) hedwig.send({'title':'close'})
       })
   },
   methods: {
