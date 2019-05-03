@@ -34,7 +34,6 @@
         ]
       }
     ],
-
     "dmg": {
       "contents": [
         {
@@ -124,7 +123,8 @@
     "vue-electron": "^1.0.6",
     "vue-i18n": "^8.10.0",
     "vue-moment": "^4.0.0",
-    "vue-truncate-filter": "^1.1.7"
+    "vue-truncate-filter": "^1.1.7",
+    "tar": ">=4.4.2"
   },
   "devDependencies": {
     "ajv": "^6.5.0",
