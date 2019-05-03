@@ -49,14 +49,18 @@
           "filter": [
             "**/*"
           ]
-        }]
+        }
+      ]
     },
     "win": {
       "icon": "build/icons/icon.ico"
     },
     "linux": {
       "icon": "build/icons",
-      "target":["deb", "appImage"],
+      "target": [
+        "deb",
+        "appImage"
+      ],
       "extraFiles": [
         {
           "from": "resources/bin/linux",
@@ -88,7 +92,8 @@
     "vue-electron": "^1.0.6",
     "vue-i18n": "^8.10.0",
     "vue-moment": "^4.0.0",
-    "vue-truncate-filter": "^1.1.7"
+    "vue-truncate-filter": "^1.1.7",
+    "tar": ">=4.4.2"
   },
   "devDependencies": {
     "ajv": "^6.5.0",
@@ -107,7 +112,7 @@
     "del": "^3.0.0",
     "devtron": "^1.4.0",
     "electron": "^2.0.4",
-    "electron-builder": "^20.19.2",
+    "electron-builder": "^20.40.2",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.4",
     "file-loader": "^1.1.11",
@@ -115,7 +120,7 @@
     "mini-css-extract-plugin": "0.4.0",
     "multispinner": "^0.2.1",
     "node-loader": "^0.6.0",
-    "node-sass": "^4.9.2",
+    "node-sass": "^4.12.0",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
