@@ -216,16 +216,18 @@ class WalletService {
     static new(password){
         const cmd = platform==='win'? `${path.resolve(grinPath)} -r ${grinNode} --pass ${password} init`:
                                       `${grinPath} -r ${grinNode} init`
-        //log.debug(`platform: ${platform}; int wallet cmd: ${cmd}`)
+        log.debug(`function new: platform: ${platform}; grin bin: ${path.resolve(grinPath)}; grin node: ${grinNode}`); 
         let createProcess = exec(cmd)
         createProcess.stdout.on('data', (data) => {
             var output = data.toString()
             //log.debug('init process return: '+output)
             if (output.includes("Please enter a password for your new wallet")){
+                log.debug('function new: time to entry password.')
                 createProcess.stdin.write(password + "\n");
                 createProcess.stdin.write(password + "\n");
             }
             if(output.includes("Invalid Arguments: Not creating wallet - Wallet seed file exists")){
+                log.debug('function new: walletExisted')
                 return messageBus.$emit('walletExisted')
             }
             if(output.includes("Please back-up these words in a non-digital format.")){
@@ -241,6 +243,7 @@ class WalletService {
                 wordSeedWithoutLog = wordSeedWithoutLog.trim();
                 wordSeedWithoutLog = wordSeedWithoutLog.replace("= ","").trim();
                 //log.debug(`wordSeed: ${wordSeed}; wordSeedWithoutLog: ${wordSeedWithoutLog}`)
+                log.debug(`function new: walletCreated with seed of length ${seed.length}.`)
                 return messageBus.$emit('walletCreated', wordSeedWithoutLog)
             }
         })
