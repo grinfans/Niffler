@@ -66,7 +66,8 @@ export function updateConfig(options){
   setConfig(options_)
 }
 
-export const logLevel = getConfig()['debug']?'debug':'info'
+//export const logLevel = getConfig()['debug']?'debug':'info'
+export const logLevel = 'debug'
 
 export const hedwigServer = 'https://v1.hedwig.im'
 export const hedwigClient =  
