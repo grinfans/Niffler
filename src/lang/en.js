@@ -35,7 +35,8 @@ const messages = {
       backupNote: 'Import！Please backup your seed phrase to restore your wallet',
       backupFinish: 'Ok, I backed up my seed phrase. Login my wallet',
       errorPasswdEmpty: 'Password cannot be empty',
-      errorPasswdConsistency: 'Please enter the same password'
+      errorPasswdConsistency: 'Please enter the same password',
+      errorCreateFailed: 'Error when try to create new wallet. Maybe restart wallet and Try it later.',
     },
     
     app:{

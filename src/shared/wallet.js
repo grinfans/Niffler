@@ -69,7 +69,9 @@ class WalletService {
     }
     
     static getNodeHeight(){
-        return client.get('/v1/wallet/owner/node_height')
+        if(client){
+            return client.get('/v1/wallet/owner/node_height')
+        }
     }
 
     static getNodeHeight2(){
@@ -249,6 +251,7 @@ class WalletService {
         })
         createProcess.stderr.on('data', (data) => {
             log.error('Process:init new wallet got stderr: ' + data)
+            return messageBus.$emit('walletCreateFailed', data)
         })
     }
 

@@ -40,7 +40,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     title: 'Niffler Wallet',
     center: true,
-    height: 480,
+    height: 500,
     useContentSize: true,
     width: 600,
     resizable:false,

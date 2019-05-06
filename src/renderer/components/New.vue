@@ -53,7 +53,7 @@
                 </div>
             
                 <div class="field">
-                  <button class="button is-link" @click.prevent="create">
+                  <button class="button is-link" @click.prevent="create" v-bind:class="{'is-loading':walletCreating}">
                     {{ $t('msg.new_.newWallet') }}
                   </button>
                 </div>
@@ -76,6 +76,7 @@ export default {
       password: "", 
       password2: "", 
       walletCreated: false,
+      walletCreating: false,
       error: false,
       errorInfo: '',
       seeds: []
@@ -85,12 +86,21 @@ export default {
     messageBus.$on('walletCreated', (seed)=>{
       this.$log.debug('new.vue got walletCreated event.')
       this.$walletService.initClient()
+      this.walletCreating= false
       this.walletCreated = true
       this.seeds = seed.split(' ')
+    })
+    messageBus.$on('walletCreateFailed', (err)=>{
+      this.error = true
+      this.errorInfo = this.$t('msg.new_.errorCreateFailed')
+      this.clearup()
     })
   },
   methods: {
     create(){
+      if(this.walletCreating){
+        return
+      }
       this.resetErrors()
       if(this.password.length == 0 ){
         this.error = true
@@ -102,14 +112,24 @@ export default {
         this.errorInfo = this.$t('msg.new_.errorPasswdConsistency')
         return
       }
+      this.walletCreating = true
       this.$walletService.new(this.password)
     },
     finish(){
+      this.clearup()
       messageBus.$emit('walletCreateFinished')
     },
     resetErrors(){
       this.error = false;
+    },
+    clearup(){
+      this.password = ""
+      this.password2 = ""
+      this.walletCreating = false
+      this.error = false,
+      this.errorInfo = ''
     }
+    
   }
 }
 </script>
