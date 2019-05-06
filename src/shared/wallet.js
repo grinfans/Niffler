@@ -121,7 +121,7 @@ class WalletService {
         if(platform === 'linux'){
             ownerAPI = execFile(grinPath, ['-r', grinNode, 'owner_api']) 
         }else{
-            const cmd = platform==='win'? `${path.resolve(grinPath)} -r ${grinNode} --pass ${password} owner_api`:
+            const cmd = platform==='win'? `${grinPath} -r ${grinNode} --pass ${password} owner_api`:
                                         `${grinPath} -r ${grinNode} owner_api`
             //log.debug(`platform: ${platform}; start owner api cmd: ${cmd}`)
             ownerAPI =  exec(cmd)
@@ -166,7 +166,7 @@ class WalletService {
         if(platform==='linux'){
             listenProcess =  execFile(grinPath, ['-e', 'listen']) 
         }else{
-            const cmd = platform=='win'? `${path.resolve(grinPath)} -e --pass ${password} listen`:
+            const cmd = platform==='win'? `${grinPath} -e --pass ${password} listen`:
                                         `${grinPath} -e listen`
             //log.debug(`platform: ${platform}; start listen cmd: ${cmd}`)
             listenProcess =  exec(cmd)
@@ -216,9 +216,9 @@ class WalletService {
     }
 
     static new(password){
-        const cmd = platform==='win'? `${path.resolve(grinPath)} -r ${grinNode} --pass ${password} init`:
+        const cmd = platform==='win'? `${grinPath} -r ${grinNode} --pass ${password} init`:
                                       `${grinPath} -r ${grinNode} init`
-        log.debug(`function new: platform: ${platform}; grin bin: ${path.resolve(grinPath)}; grin node: ${grinNode}`); 
+        log.debug(`function new: platform: ${platform}; grin bin: ${grinPath}; grin node: ${grinNode}`); 
         let createProcess = exec(cmd)
         createProcess.stdout.on('data', (data) => {
             var output = data.toString()
@@ -256,14 +256,12 @@ class WalletService {
     }
 
     static send(amount, method, dest, version){
-        const grin = platform==='win'? `${path.resolve(grinPath)}`:grinPath
-        const cmd = `${grin} -r ${grinNode} -p ${password_} send -m ${method} -d ${dest} -v ${version} ${amount}`
+        const cmd = `${grinPath} -r ${grinNode} -p ${password_} send -m ${method} -d ${dest} -v ${version} ${amount}`
         return execPromise(cmd)
     }
 
     static finalize(fn){
-        const grin = platform==='win'? `${path.resolve(grinPath)}`:grinPath
-        const cmd = `${grin} -r ${grinNode} -p ${password_} finalize -i ${fn}`
+        const cmd = `${grinPath} -r ${grinNode} -p ${password_} finalize -i ${fn}`
         return execPromise(cmd)
     }
 

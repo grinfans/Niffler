@@ -76,7 +76,7 @@
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": false
+      "allowToChangeInstallationDirectory": true
     },
     "linux": {
       "icon": "build/icons",
