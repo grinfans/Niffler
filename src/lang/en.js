@@ -91,6 +91,8 @@ const messages = {
       WrongTxData: 'Failed to build transaction',
       success: 'Transcation success',
       TxFailed: 'Send transcation failed',
+      salteVersion: 'Slate file version',
+      salteVersionHelp: 'If you failed to send grin, try change the Slate file version then try again'
     },
 
     fileReceive: {

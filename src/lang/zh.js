@@ -90,6 +90,8 @@ const messages = {
       WrongTxData: '交易数据生成失败',
       success: '交易成功',
       TxFailed: '交易失败',
+      salteVersion: '交易文件版本',
+      salteVersionHelp: '如果发送交易失败，可以试下改变交易文件版本'
     },
 
     fileReceive: {

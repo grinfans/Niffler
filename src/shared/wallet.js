@@ -257,6 +257,7 @@ class WalletService {
 
     static send(amount, method, dest, version){
         const cmd = `${grinPath} -r ${grinNode} -p ${password_} send -m ${method} -d ${dest} -v ${version} ${amount}`
+        log.debug(cmd)
         return execPromise(cmd)
     }
 

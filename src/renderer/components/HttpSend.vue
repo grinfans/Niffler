@@ -25,6 +25,23 @@
             <input class="input" type="text" v-model="amount" placeholder="1 ツ">
           </div>
         </div>
+
+        <div class="field">
+        <label class="label">{{ $t("msg.httpSend.salteVersion") }}</label>
+
+          <div class="control">
+            <div class="select">
+              <select v-model="slateVersion">
+                <option>1</option>
+                <option>0</option>
+                <option>2</option>
+              </select>
+            </div>
+          </div>
+          <p class="help"> {{ $t("msg.httpSend.salteVersionHelp") }}</p>
+
+        </div>
+
         <br/>
         <div class="field is-grouped">
           <div class="control">
@@ -60,6 +77,7 @@ export default {
       errors: [],
       amount: null,
       address: '',
+      slateVersion: 1,
       sending: false,
       sent: false
     }
@@ -117,7 +135,7 @@ export default {
           "max_outputs": 500,
           "num_change_outputs": 1,
           "selection_strategy_is_use_all": true,
-          "target_slate_version": 1
+          "target_slate_version": parseInt(this.slateVersion)
         }
         
         let send = async function(){
@@ -155,6 +173,7 @@ export default {
       this.address = ''
       this.sending = false
       this.sent = false
+      this.slateVersion = 1
     },
     
   }
