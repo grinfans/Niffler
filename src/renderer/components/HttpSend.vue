@@ -32,8 +32,8 @@
           <div class="control">
             <div class="select">
               <select v-model="slateVersion">
-                <option>1</option>
                 <option>0</option>
+                <option>1</option>
                 <option>2</option>
               </select>
             </div>
@@ -77,7 +77,7 @@ export default {
       errors: [],
       amount: null,
       address: '',
-      slateVersion: 1,
+      slateVersion: 0,
       sending: false,
       sent: false
     }
@@ -173,7 +173,7 @@ export default {
       this.address = ''
       this.sending = false
       this.sent = false
-      this.slateVersion = 1
+      this.slateVersion = 0
     },
     
   }
