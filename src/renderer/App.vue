@@ -10,7 +10,7 @@
             v-bind:class="{'is-active':isDroppingDown}" >
             <div class="dropdown-trigger" >
               <button class="button is-link is-outlined" aria-haspopup="true" aria-controls="dropdown-menu"
-                @click="isDroppingDown=!isDroppingDown;isDroppingDown2=false">
+                @click="isDroppingDown=!isDroppingDown;isDroppingDown2=false;isDroppingDown3=false">
                 {{ $t("msg.send") }}
               </button>
             </div>
@@ -36,7 +36,7 @@
             v-bind:class="{'is-active':isDroppingDown2}" >
             <div class="dropdown-trigger" >
               <button class="button is-link is-outlined" aria-haspopup="true" aria-controls="dropdown-menu"
-                @click="isDroppingDown2=!isDroppingDown2;isDroppingDown=false">
+                @click="isDroppingDown2=!isDroppingDown2;isDroppingDown=false;isDroppingDown3=false">
                 {{ $t("msg.receive") }}
               </button>
             </div>
@@ -63,7 +63,29 @@
               <p class="is-size-7 tag is-warning animated" v-bind:class="{headShake: isAnimate}" style="animation-iteration-count:3">
                 {{ $t("msg.app.height") }}:{{height}}</p>
               &nbsp;
-              <a class="button is-small is-link is-outlined" @click.prevent="logout">{{ $t("msg.logout") }}</a>
+              <!--<a class="button is-small is-link is-outlined" @click.prevent="logout">{{ $t("msg.logout") }}</a>-->
+              <div class="dropdown is-right" v-bind:class="{'is-active':isDroppingDown3}">
+                <div class="dropdown-trigger">
+                  <button class="button is-small is-link is-outlined" aria-haspopup="true" aria-controls="dropdown-menu"
+                  @click="isDroppingDown3=!isDroppingDown3;isDroppingDown=false;isDroppingDown2=false" style="width:45px">
+                    <span>更多</span>
+                    <span class="icon is-small">
+                      <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                  <div class="dropdown-content">
+                    <a href="#" class="dropdown-item">
+                      检查UXTOS
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="#" class="dropdown-item" @click.prevent="logout">
+                      {{ $t("msg.logout") }}
+                    </a>
+                  </div>
+                </div>
+              </div>
 
             </div>
           </div>
@@ -129,6 +151,7 @@
         openHedwigV1: false,
         isDroppingDown: false,
         isDroppingDown2: false,
+        isDroppingDown3: false,
         ownerApiRunning: false,
         height:null,
         isAnimate:false,
@@ -188,7 +211,7 @@
           setTimeout(
             ()=>{
               this.isDroppingDown = false}, 
-            4*1000)
+            5*1000)
         }
       },
       isDroppingDown2:function(newVal, oldVal){
@@ -196,7 +219,15 @@
           setTimeout(
             ()=>{
               this.isDroppingDown2 = false}, 
-            4*1000)
+            5*1000)
+        }
+      },
+      isDroppingDown3:function(newVal, oldVal){
+        if(newVal){
+          setTimeout(
+            ()=>{
+              this.isDroppingDown3 = false}, 
+            5*1000)
         }
       },
       ownerApiRunning:function(newVal, old){
