@@ -4,7 +4,7 @@
   <div class="modal-background" @click="closeModal"></div>
   <div class="modal-card" style="width:480px">
     <header class="modal-card-head">
-      <p class="modal-card-title is-size-4 has-text-link">{{ $t("msg.finalize.finalize") }}</p>
+      <p class="modal-card-title is-size-4 has-text-link has-text-weight-semibold">{{ $t("msg.finalize.finalize") }}</p>
       <button class="delete" aria-label="close" @click="closeModal"></button>
     </header>
     <section class="modal-card-body" style="height:320px;background-color: whitesmoke;">
