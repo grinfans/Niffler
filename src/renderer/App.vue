@@ -76,11 +76,12 @@
                 </div>
                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
                   <div class="dropdown-content">
-                    <a href="#" class="dropdown-item">
+                    <a href="#" class="dropdown-item" style="line-height: 1.2;font-size: 0.8rem;">
                       检查UXTOS
                     </a>
                     <hr class="dropdown-divider">
-                    <a href="#" class="dropdown-item" @click.prevent="logout">
+                    <a href="#" class="dropdown-item" style="line-height: 1.2;font-size: 0.8rem;" 
+                       @click.prevent="logout">
                       {{ $t("msg.logout") }}
                     </a>
                   </div>
@@ -226,7 +227,7 @@
         if(newVal){
           setTimeout(
             ()=>{
-              this.isDroppingDown3 = false}, 
+              this.isDroppingDown3 = true}, 
             5*1000)
         }
       },
