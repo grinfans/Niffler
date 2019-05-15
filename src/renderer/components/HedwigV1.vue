@@ -110,56 +110,64 @@ export default {
     start(){
       if(!this.starting&&!this.internetReachable){
         this.starting = true
+        
         this.$log.debug('Is local reachable before start? '+ this.localReachable)
-        
-        if(!this.localReachable){
-          this.$walletService.startListen()
-        }
-        
-        if(!this.internetReachable){
-          let args = ['--server', hedwigServer, '--app', hedwigApp, '--port', '3415', 
-            '--subdomain', String(Math.random()).slice(2)]
-          this.$log.debug('hedwig client at ' + hedwigClient )
-          try{
-            hedwig = fork(hedwigClient, args)
-          }catch(e){
-            this.$log.error('Error during fork: ' + e )
+        this.checklocalReachable().catch((error)=>{
+          if(!error.response){
+            this.$walletService.startListen()
           }
-          
-          hedwig.on('error', (err) => {
-            this.$log.error(`error when try to start hedwig: ${err}`)
-          })
-
-          hedwig.on('message', (msg_)=>{
-            if(msg_.title=='tunnelCreated'){
-              this.address = msg_.address
-              this.$log.debug(`connect hedwig on url ${this.address}`)
-              this.checkReachable()
+          this.localReachable = true
+          this.$log.debug('Http listen is locally reachable.')
+          if(!this.internetReachable){
+            let args = ['--server', hedwigServer, '--app', hedwigApp, '--port', '3415', 
+              '--subdomain', String(Math.random()).slice(2)]
+            this.$log.debug('hedwig client at ' + hedwigClient )
+            try{
+              hedwig = fork(hedwigClient, args)
+            }catch(e){
+              this.$log.error('Error during fork: ' + e )
             }
-            if(msg_.title=='disconnect'){
-              this.$log.debug('receive disconnect msg')
-              this.internetReachable = false
-            }
-            if(msg_.title=='reconnect'){
-              this.$log.debug('receive reconnect msg')
-              this.checkReachable()
-            }
-            if(msg_.title=='received'){
-              this.$log.debug('receive data from hedwig')
-              setTimeout(()=>{messageBus.$emit('update')}, 5000)
-            }
-            if(msg_.title=='failed'){
-              this.internetReachable = false
-              this.starting = false
-              this.errors.push(this.$t('msg.hedwig.failed'))
-              let e = JSON.stringify(msg_.error)
-              this.$log.error(`error when try to connect hedwig: ${e}`)
-            }
-          })
-        }
+            
+            hedwig.on('error', (err) => {
+              this.$log.error(`error when try to start hedwig: ${err}`)
+            })
+            hedwig.on('message', (msg_)=>{
+              if(msg_.title=='tunnelCreated'){
+                this.address = msg_.address
+                this.$log.debug(`connect hedwig on url ${this.address}`)
+                this.checkReachable()
+              }
+              if(msg_.title=='disconnect'){
+                this.$log.debug('receive disconnect msg')
+                this.internetReachable = false
+              }
+              if(msg_.title=='reconnect'){
+                this.$log.debug('receive reconnect msg')
+                this.checkReachable()
+              }
+              if(msg_.title=='received'){
+                this.$log.debug('receive data from hedwig')
+                setTimeout(()=>{messageBus.$emit('update')}, 5000)
+              }
+              if(msg_.title=='failed'){
+                this.internetReachable = false
+                this.starting = false
+                this.errors.push(this.$t('msg.hedwig.failed'))
+                let e = JSON.stringify(msg_.error)
+                this.$log.error(`error when try to connect hedwig: ${e}`)
+              }
+            })
+          }
+        })
       }
     },
-    
+
+    checklocalReachable(){
+      const url = 'http://127.0.0.1:3415'
+      this.$log.debug('Try to test if http listen locally reachable?')
+      return this.$http.get(url, {timeout: 5000})
+    },
+
     stop(){
       this.$walletService.stopListen()
       hedwig.send({'title':'close'})
