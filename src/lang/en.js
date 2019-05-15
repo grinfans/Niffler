@@ -124,6 +124,7 @@ const messages = {
       frp: 'If you don not have public ip, try ngrok or frp',
       password: 'Wallet Password (used to start HTTP listen)',
       start: 'Start',
+      error: 'No password.',
       failed: 'Start Failed, Maybe wrong password',
       failed2: 'HTTP listen failed, your public ip could not reachable by internet user. Try trascation file way.',
       failed3: 'Failed to get your public ip; try it later',

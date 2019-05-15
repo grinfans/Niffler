@@ -123,6 +123,7 @@ const messages = {
       frp: '如果没有, 可以试试 ngrok 或者 frp的内网穿透方案',
       password: '钱包密码 (用于启动http监听)',
       start: '启动',
+      error: '没有输入密码.',
       failed: '启动失败，可能是密码错误',
       failed2: '监听失败，你的对外ip无法被访问到; 请使用交易文件的方法来收发Grin.',
       failed3: '无法获取你的IP地址，请过段时间再试下',

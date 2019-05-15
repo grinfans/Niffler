@@ -109,6 +109,9 @@ export default {
   },
   methods: {
     start(){
+      if(this.password===''){
+        this.errors.push(this.$t('msg.httpReceive.error'))
+      }
       if(this.password!=''&&!this.starting&&!this.running){
         this.starting = true
         this.$log.debug('Is local reachable before start? '+ this.localReachable)
