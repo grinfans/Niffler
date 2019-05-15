@@ -1,6 +1,6 @@
 import fs from 'fs'
 const path = require('path');
-import {exec, execFile} from 'child_process'
+import {exec, execFile, spawn} from 'child_process'
 
 import axios from 'axios'
 require('promise.prototype.finally').shim();
@@ -264,6 +264,24 @@ class WalletService {
     static finalize(fn){
         const cmd = `${grinPath} -r ${grinNode} -p ${password_} finalize -i ${fn}`
         return execPromise(cmd)
+    }
+
+    static check(cb){
+        log.debug(grinPath)
+        log.debug(password_)
+        let ck = spawn(grinPath, ['-r', grinNode, '-p', password_, 'check']);
+        ck.stdout.on('data', function(data){
+            let output = data.toString()
+            cb(output)
+        })
+        ck.stderr.on('data', function(data){
+            let output = data.toString()
+            cb(output)
+        })
+        ck.on('close', function(code){
+            log.debug('grin wallet check exists with code: ' + code);
+            return messageBus.$emit('walletCheckFinished')
+        });
     }
 
 }

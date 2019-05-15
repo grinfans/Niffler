@@ -74,9 +74,10 @@
                     </span>
                   </button>
                 </div>
-                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                <div class="dropdown-menu" id="dropdown-menu" role="menu" style="min-width:0">
                   <div class="dropdown-content">
-                    <a href="#" class="dropdown-item" style="line-height: 1.2;font-size: 0.8rem;">
+                    <a href="#" class="dropdown-item" style="line-height: 1.2;font-size: 0.8rem;" 
+                      @click.prevent="checkUTS">
                       检查UXTOS
                     </a>
                     <hr class="dropdown-divider">
@@ -227,7 +228,7 @@
         if(newVal){
           setTimeout(
             ()=>{
-              this.isDroppingDown3 = true}, 
+              this.isDroppingDown3 = false}, 
             5*1000)
         }
       },
@@ -270,6 +271,9 @@
             messageBus.$emit('update')
           }
         }, interval)
+      },
+      checkUTS(){
+        this.$walletService.check(console.log)
       },
       async checkNewVersion(){
         let toUpdate = await checkUpdate()
