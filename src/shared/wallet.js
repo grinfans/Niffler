@@ -11,6 +11,7 @@ import { messageBus } from '../renderer/messagebus'
 
 let ownerAPI
 let listenProcess
+let checkProcess
 let client
 let password_
 const wallet_host = 'http://localhost:3420'
@@ -267,9 +268,10 @@ class WalletService {
     }
 
     static check(cb){
-        log.debug(grinPath)
-        log.debug(password_)
-        let ck = spawn(grinPath, ['-r', grinNode, '-p', password_, 'check']);
+        checkProcess = spawn(grinPath, ['-r', grinNode, '-p', password_, 'check']);
+        let ck = checkProcess
+        localStorage.setItem('checkProcessPID', checkProcess.pid)
+
         ck.stdout.on('data', function(data){
             let output = data.toString()
             cb(output)
@@ -280,8 +282,29 @@ class WalletService {
         })
         ck.on('close', function(code){
             log.debug('grin wallet check exists with code: ' + code);
-            return messageBus.$emit('walletCheckFinished')
+            if(code==0){return messageBus.$emit('walletCheckFinished')}
         });
+    }
+
+    static stopCheck(){
+        const pid = localStorage.getItem('checkProcessPID')
+        localStorage.removeItem('checkProcessPID')
+
+        if(platform==='win'&&pid){
+            return exec(`taskkill /pid ${pid} /f /t`)
+        }
+        
+        if(checkProcess){
+            checkProcess.kill('SIGKILL')
+            log.debug('kill wallet listen process')
+        }
+        if(pid) {
+            try{
+                process.kill(pid, 'SIGKILL')
+            }catch(e){
+                log.error(`error when kill listen process ${pid}: ${e}` )
+            }
+        }
     }
 
 }

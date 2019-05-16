@@ -68,7 +68,7 @@
                 <div class="dropdown-trigger">
                   <button class="button is-small is-link is-outlined" aria-haspopup="true" aria-controls="dropdown-menu"
                   @click="isDroppingDown3=!isDroppingDown3;isDroppingDown=false;isDroppingDown2=false" style="width:45px">
-                    <span>更多</span>
+                    <span>{{ $t("msg.more") }}</span>
                     <span class="icon is-small">
                       <i class="fas fa-angle-down" aria-hidden="true"></i>
                     </span>
@@ -77,8 +77,8 @@
                 <div class="dropdown-menu" id="dropdown-menu" role="menu" style="min-width:0">
                   <div class="dropdown-content">
                     <a href="#" class="dropdown-item" style="line-height: 1.2;font-size: 0.8rem;" 
-                      @click.prevent="checkUTS">
-                      检查UXTOS
+                      @click="openCheck = true">
+                      {{ $t("msg.check.title") }}
                     </a>
                     <hr class="dropdown-divider">
                     <a href="#" class="dropdown-item" style="line-height: 1.2;font-size: 0.8rem;" 
@@ -103,6 +103,7 @@
       <file-send :showModal="openFileSend"></file-send>
       <finalize :showModal="openFinalize"></finalize>
       <hedwig-v1 :showModal="openHedwigV1"></hedwig-v1>
+      <check :showModal="openCheck"></Check>
     </div>
     <landing v-bind:walletExist="walletExist" v-else></landing>
   </div>
@@ -121,6 +122,7 @@
   import FileSend from '@/components/FileSend'
   import Finalize from '@/components/Finalize'
   import HedwigV1 from '@/components/HedwigV1'
+  import Check from '@/components/Check'
 
   import Landing from '@/components/Landing'
   import checkUpdate from '../shared/updateChecker'
@@ -141,6 +143,7 @@
       FileSend,
       Finalize,
       HedwigV1,
+      Check,
       Landing
     },
     data(){
@@ -151,6 +154,8 @@
         openFileSend: false,
         openFinalize: false,
         openHedwigV1: false,
+        openCheck: false,
+
         isDroppingDown: false,
         isDroppingDown2: false,
         isDroppingDown3: false,
@@ -187,6 +192,9 @@
         }
         if(window =='windowHedwigV1'){
           this.openHedwigV1 = false
+        }
+        if(window =='windowCheck'){
+          this.openCheck = false
         }
       })
       messageBus.$on('logined', ()=>{
@@ -272,9 +280,7 @@
           }
         }, interval)
       },
-      checkUTS(){
-        this.$walletService.check(console.log)
-      },
+      
       async checkNewVersion(){
         let toUpdate = await checkUpdate()
         if(toUpdate){

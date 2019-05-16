@@ -54,7 +54,7 @@
             <div class="field is-grouped " >
               <div class="control">
                 <button class="button is-link" v-bind:class="{'is-loading':starting}" @click="start">
-                  {{ $t("msg.httpReceive.start") }}
+                  {{ $t("msg.hedwig.start") }}
                 </button>
               </div>
               <div class="control">

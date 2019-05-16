@@ -21,6 +21,7 @@ const messages = {
     save: '保存',
     welcome: '欢迎使用Niffler钱包',
     msg: '消息',
+    more: '更多',
 
     login: {
       walletExist: '发现已有Grin钱包存在；请用原有的密码登陆吧 :-)',
@@ -146,6 +147,23 @@ const messages = {
       failed3: '启动本地grin接收服务失败， 重启下钱包 or 等下再试吧.',
       copy: '复制地址',
       copied: '地址已经复制到剪贴板'
+    },
+
+    check: {
+      title: '同步余额',
+      checking: '正在同步，请耐心等待 ...',
+      stop: '停止同步',
+
+      
+      tip:'完成同步余额可能需要10-20分钟.',
+      introTitle: '介绍',
+
+      intro1: '当你的本地钱包余额 和 Grin区块链上的余额不一致时，可以使用 "同步余额" 功能.',
+      intro2: '同步时，在Grin区块链的所有未花费的输出(uxtos)中，找到你可以使用的未花费的输出，相加就得到你的余额.',
+      
+      start: '开始同步',
+      stopCheckMsg: '同步已经取消',
+      checkedMsg: '同步完成'
     }
 
   }
