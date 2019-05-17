@@ -22,20 +22,29 @@ const messages = {
     welcome: '欢迎使用Niffler钱包',
     msg: '消息',
     more: '更多',
+    back: '返回',
 
     login: {
       walletExist: '发现已有Grin钱包存在；请用原有的密码登陆吧 :-)',
     },
-    
+
     new_:{
+      
+    },
+
+    create:{
+      toNewMsg: '没有发现已经建好的钱包；新建一个吧 :-)',
       seedPhrase: '助记词',
-      toNewMsg: '没有找到已有钱包, 新建一个吧 :)',
       newWallet: '新建钱包',
       backupNote: '重要！请务必备份助记词，用于恢复钱包',
       backupFinish: '备份完成，登录钱包',
       errorPasswdEmpty: '密码不能为空',
       errorPasswdConsistency: '请输入相同的密码',
       errorCreateFailed: '新建钱包时发生错误，你可以试试重启下钱包，过一会儿再试试',
+    },
+
+    restore:{
+      title: '从助记词中恢复钱包'
     },
 
     app:{

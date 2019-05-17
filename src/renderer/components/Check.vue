@@ -25,7 +25,7 @@
         <div class="notification is-link" >
           <p>{{ $t("msg.check.checkedMsg") }}</p>
         </div>
-        <button class="button is-link is-outlined center" @click="closeModal" >ok</button>
+        <button class="button is-link is-outlined center" @click="closeModal">ok</button>
       </div>  
       <div v-else>
         <div class="message is-warning">
