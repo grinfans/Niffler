@@ -15,3 +15,4 @@ docs/dist/
 .vscode/*
 .yarnrc
 !hedwig/node_modules/
+index.node

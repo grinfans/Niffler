@@ -41,6 +41,7 @@ export const chainType = 'main'
 export const grinNode = "http://node.niffler.org:3413"
 export const seedPath = path.join(APP.getPath('home'), '.grin', chainType, 'wallet_data/wallet.seed')
 export const walletTOMLPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-wallet.toml')
+export const walletPath = path.join(APP.getPath('home'), '.grin', chainType)
 export const apiSecretPath = path.join(APP.getPath('home'), '.grin', chainType, '.api_secret')
 export const nifflerPath = path.join(APP.getPath('home'), '.niffler')
 export const logDir = path.join(nifflerPath, 'log')
@@ -79,3 +80,9 @@ export const hedwigClient =
     : path.resolve(path.join(root, 'hedwig', 'client.js'))
 
 export const hedwigApp = 'Niffler'
+
+export const grinRsWallet =  
+  IS_PROD || APP.isPackaged
+    ? path.resolve(path.join(process.resourcesPath, 'bin', 'grinRs', 'wallet.js'))
+    : path.resolve(path.join(root, 'grinRs', 'wallet.js'))
+console.log(grinRsWallet)

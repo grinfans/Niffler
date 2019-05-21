@@ -1,17 +1,25 @@
 import fs from 'fs'
 const path = require('path');
-import {exec, execFile, spawn} from 'child_process'
+import {exec, execFile, spawn, fork} from 'child_process'
 
 import axios from 'axios'
 require('promise.prototype.finally').shim();
 
 import log from './logger'
-import {platform, grinPath, seedPath, grinNode, chainType, apiSecretPath, walletTOMLPath} from './config'
+import {platform, grinPath, seedPath, grinNode, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet} from './config'
 import { messageBus } from '../renderer/messagebus'
 
 let ownerAPI
 let listenProcess
 let checkProcess
+let initRProcess
+let restoreProcess
+let processes = {
+    'listen': listenProcess,
+    'check': checkProcess,
+    'initR': initRProcess,
+    'restore': restoreProcess
+}
 let client
 let password_
 const wallet_host = 'http://localhost:3420'
@@ -19,11 +27,13 @@ const jsonRPCUrl = 'http://localhost:3420/v2/owner'
 
 function enableForeignApi(){
     const re = /owner_api_include_foreign(\s)*=(\s)*false/
-    let c = fs.readFileSync(walletTOMLPath).toString()
-    if(c.search(re) != -1){
-        log.debug('Enable ForeignApi to true')
-        c = c.replace(re, 'owner_api_include_foreign = true')
-        fs.writeFileSync(walletTOMLPath, c)
+    if(fs.existsSync(walletTOMLPath)){
+        let c = fs.readFileSync(walletTOMLPath).toString()
+        if(c.search(re) != -1){
+            log.debug('Enable ForeignApi to true')
+            c = c.replace(re, 'owner_api_include_foreign = true')
+            fs.writeFileSync(walletTOMLPath, c)
+        }
     }
 }
 
@@ -222,7 +232,7 @@ class WalletService {
         log.debug(`function new: platform: ${platform}; grin bin: ${grinPath}; grin node: ${grinNode}`); 
         let createProcess = exec(cmd)
         createProcess.stdout.on('data', (data) => {
-            var output = data.toString()
+            let output = data.toString()
             //log.debug('init process return: '+output)
             if (output.includes("Please enter a password for your new wallet")){
                 log.debug('function new: time to entry password.')
@@ -267,6 +277,34 @@ class WalletService {
         return execPromise(cmd)
     }
 
+    static recover(seeds, password){
+        let rcProcess
+        let args = ['--node_api_http_addr', grinNode,
+            '--wallet_dir', walletPath, '--seeds', seeds,
+            '--password', password]
+        try{
+            rcProcess = fork(grinRsWallet, args)
+        }catch(e){
+            return log.error('Error during fork to recover: ' + e )
+        }
+        //rcProcess.stdout.on('data', (data)=>{
+        //    log.debug(`Recover stdout: ${data}`);
+        //})
+        rcProcess.on('message', (data) => {
+            log.debug(`Recover result: ${data}`);
+            let ret = data['ret']
+            messageBus.$emit('walletRecoverReturn', ret)
+        });
+          
+        rcProcess.on('error', (err) => {
+            log.error(`Recover stderr: ${err}`);
+          });
+          
+        rcProcess.on('exit', (code, sginal) => {
+            log.debug(`Recover exit: ${code}`);
+        });
+    }
+
     static check(cb){
         checkProcess = spawn(grinPath, ['-r', grinNode, '-p', password_, 'check']);
         let ck = checkProcess
@@ -296,17 +334,67 @@ class WalletService {
         
         if(checkProcess){
             checkProcess.kill('SIGKILL')
-            log.debug('kill wallet listen process')
+            log.debug('kill wallet check process')
         }
         if(pid) {
             try{
                 process.kill(pid, 'SIGKILL')
             }catch(e){
-                log.error(`error when kill listen process ${pid}: ${e}` )
+                log.error(`error when kill check process ${pid}: ${e}` )
             }
         }
     }
 
+    //https://github.com/mimblewimble/grin-wallet/issues/110
+    //static initR(seeds, newPassword){
+    //    log.debug(grinPath)
+    //    initRProcess = spawn(grinPath, ['init', '-r']);
+    //    localStorage.setItem('initRProcessPID', initRProcess.pid)
+    //    initRProcess.stdout.on('data', (data) => {
+    //        let output = data.toString()
+    //        log.debug('Wallet initR process return: ' + output)
+    //        if (output.includes("Please enter your recovery phrase:")){
+    //            log.debug('function initR: time to entry seeds.')
+    //            initRProcess.stdin.write(seeds + "\n");
+    //        }
+    //        if (output.includes("Recovery word phrase is invalid")){
+    //            log.debug('function initR: invalid seeds.')
+    //            stopProcess('initR')
+    //            return messageBus.$emit('invalidSeeds')
+    //        }
+    //        if (output.startsWith("Password:")){
+    //            log.debug('function initR: time to entry password.')
+    //            initRProcess.stdin.write(newPassword + "\n");
+    //            initRProcess.stdin.write(newPassword + "\n");
+    //        }
+    //        if(output.includes("Command 'init' completed successfully")){
+    //            log.debug('function initR: wallet initRed.')
+    //            return messageBus.$emit('walletInitRed')
+    //        }
+    //    })
+    //}
+    
+    static stopProcess(processName){
+        pidName = `${processName}ProcessPID`
+        const pid = localStorage.getItem(pid)
+        localStorage.removeItem(pidName)
+
+        if(platform==='win'&&pid){
+            return exec(`taskkill /pid ${pid} /f /t`)
+        }
+        
+        if(processes[processName]){
+            processes[processName].kill('SIGKILL')
+            log.debug(`kill ${processName}`)
+        }
+        if(pid) {
+            try{
+                process.kill(pid, 'SIGKILL')
+            }catch(e){
+                log.error(`error when kill ${processName} ${pid}: ${e}` )
+            }
+        }
+    }
 }
 WalletService.initClient()
 export default WalletService
