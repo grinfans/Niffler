@@ -1,0 +1,31 @@
+[package]
+name = "grin_wallet"
+version = "0.1.0"
+authors = ["hustxiaoc <308512341@qq.com>"]
+license = "MIT"
+build = "build.rs"
+exclude = ["artifacts.json", "index.node"]
+
+[lib]
+name = "grin_wallet"
+crate-type = ["dylib"]
+
+[build-dependencies]
+neon-build = "0.2.0"
+
+[dependencies]
+neon = "0.2.0"
+log4rs="0.8.1"
+log = "0.4"
+uuid = "0.6.5"
+
+serde_json = "1"
+grin_api = { git = "https://github.com/mimblewimble/grin", tag = "v1.0.2"}
+grin_core = { git = "https://github.com/mimblewimble/grin", tag = "v1.0.2" }
+grin_wallet = { git = "https://github.com/mimblewimble/grin", tag = "v1.0.2" }
+grin_keychain = { git = "https://github.com/mimblewimble/grin", tag = "v1.0.2" }
+grin_util = { git = "https://github.com/mimblewimble/grin", tag = "v1.0.2" }
+grin_store = { git = "https://github.com/mimblewimble/grin", tag = "v1.0.2" }
+grin_config = { git = "https://github.com/mimblewimble/grin", tag = "v1.0.2" }
+grin_p2p = { git = "https://github.com/mimblewimble/grin", tag = "v1.0.2" }
+grin_servers = { git = "https://github.com/mimblewimble/grin", tag = "v1.0.2" }

@@ -16,3 +16,6 @@ docs/dist/
 .yarnrc
 !hedwig/node_modules/
 index.node
+target
+artifacts.json
+Cargo.lock
