@@ -83,8 +83,6 @@ export default {
     }
   },
   created() {
-      messageBus.$on('quit', ()=>{
-      }),
       messageBus.$on('walletCheckFinished', ()=>{
         this.$log.debug('Got walletCheckFinished message.')
         this.checking = false
@@ -99,7 +97,7 @@ export default {
     },
 
     stop(){
-      this.$walletService.stopCheck()
+      this.$walletService.stopProcess('check')
       this.openStopMsg = true
       this.checking = false
       setTimeout(()=>{

@@ -12,14 +12,9 @@ import { messageBus } from '../renderer/messagebus'
 let ownerAPI
 let listenProcess
 let checkProcess
-let initRProcess
+//let initRProcess
 let restoreProcess
-let processes = {
-    'listen': listenProcess,
-    'check': checkProcess,
-    'initR': initRProcess,
-    'restore': restoreProcess
-}
+let processes = {}
 let client
 let password_
 const wallet_host = 'http://localhost:3420'
@@ -126,7 +121,7 @@ class WalletService {
     }
 
     static start(password){
-        WalletService.stop()
+        WalletService.stopProcess('ownerAPI')
         enableForeignApi()
 
         if(platform === 'linux'){
@@ -137,7 +132,7 @@ class WalletService {
             //log.debug(`platform: ${platform}; start owner api cmd: ${cmd}`)
             ownerAPI =  exec(cmd)
         }
-
+        processes['ownerAPI'] = ownerAPI
         if(platform==='win'){
             localStorage.setItem('OwnerAPIPID', ownerAPI.pid)
         }
@@ -151,29 +146,8 @@ class WalletService {
         })
     }
 
-    static stop(){
-        const pid = localStorage.getItem('OwnerAPIPID')
-        localStorage.removeItem('OwnerAPIPID')
-        if(platform==='win'&&pid){
-            return exec(`taskkill /pid ${pid} /f /t`)
-        }
-
-        if(ownerAPI){
-            ownerAPI.kill('SIGKILL')
-            log.debug('kill owner_api')
-        }
-      
-        if(pid) {
-            try{
-                process.kill(pid, 'SIGKILL')
-            }catch(e){
-                log.error(`error when kill ownerApi ${pid}: ${e}` )
-            }
-        }
-    }
-    
     static startListen(password=password_){
-        WalletService.stopListen()
+        WalletService.stopProcess('listen')
         if(platform==='linux'){
             listenProcess =  execFile(grinPath, ['-e', 'listen']) 
         }else{
@@ -182,7 +156,7 @@ class WalletService {
             //log.debug(`platform: ${platform}; start listen cmd: ${cmd}`)
             listenProcess =  exec(cmd)
         }
-        
+        processes['listen'] = listenProcess
         if(platform==='win'){
             localStorage.setItem('listenProcessPID', listenProcess.pid)
         }
@@ -198,29 +172,15 @@ class WalletService {
         })
     }
 
-    static stopListen(){
-        const pid = localStorage.getItem('listenProcessPID')
-        localStorage.removeItem('listenProcessPID')
-
-        if(platform==='win'&&pid){
-            return exec(`taskkill /pid ${pid} /f /t`)
-        }
-        
-        if(listenProcess){
-            listenProcess.kill('SIGKILL')
-            log.debug('kill wallet listen process')
-        }
-        if(pid) {
-            try{
-                process.kill(pid, 'SIGKILL')
-            }catch(e){
-                log.error(`error when kill listen process ${pid}: ${e}` )
+    static stopAll(){
+        for(var ps in processes){
+            log.debug('stopall ps: '+ ps)
+            log.debug(`processes value: ${processes[ps]}`)
+            if(processes[ps]){
+                log.debug('stopall try to kill '+ ps)
+                WalletService.stopProcess(ps)
             }
         }
-    }
-    static stopAll(){
-        WalletService.stop()
-        WalletService.stopListen()
     }
     static isExist(){
         return fs.existsSync(seedPath)?true:false
@@ -308,6 +268,7 @@ class WalletService {
     static check(cb){
         checkProcess = spawn(grinPath, ['-r', grinNode, '-p', password_, 'check']);
         let ck = checkProcess
+        processes['check'] = checkProcess
         localStorage.setItem('checkProcessPID', checkProcess.pid)
 
         ck.stdout.on('data', function(data){
@@ -327,6 +288,7 @@ class WalletService {
     static restore(password, cb){
         restoreProcess = spawn(grinPath, ['-r', grinNode, '-p', password, 'restore']);
         let rs = restoreProcess
+        prcess['restore'] = restoreProcess
         localStorage.setItem('restoreProcessPID', restoreProcess.pid)
 
         rs.stdout.on('data', function(data){
@@ -341,27 +303,6 @@ class WalletService {
             log.debug('grin wallet restore exists with code: ' + code);
             if(code==0){return messageBus.$emit('walletRestored')}
         });
-    }
-
-    static stopCheck(){
-        const pid = localStorage.getItem('checkProcessPID')
-        localStorage.removeItem('checkProcessPID')
-
-        if(platform==='win'&&pid){
-            return exec(`taskkill /pid ${pid} /f /t`)
-        }
-        
-        if(checkProcess){
-            checkProcess.kill('SIGKILL')
-            log.debug('kill wallet check process')
-        }
-        if(pid) {
-            try{
-                process.kill(pid, 'SIGKILL')
-            }catch(e){
-                log.error(`error when kill check process ${pid}: ${e}` )
-            }
-        }
     }
 
     //https://github.com/mimblewimble/grin-wallet/issues/110
@@ -394,8 +335,10 @@ class WalletService {
     //}
     
     static stopProcess(processName){
-        pidName = `${processName}ProcessPID`
-        const pid = localStorage.getItem(pid)
+        log.debug(`try to kill ${processName}`)
+        let pidName = `${processName}ProcessPID`
+        const pid = localStorage.getItem(pidName)
+        log.debug('try to kill pid: ' + pid)
         localStorage.removeItem(pidName)
 
         if(platform==='win'&&pid){

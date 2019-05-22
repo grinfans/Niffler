@@ -169,7 +169,7 @@ export default {
     },
 
     stop(){
-      this.$walletService.stopListen()
+      this.$walletService.stop('listen')
       hedwig.send({'title':'close'})
 
       this.internetReachable = false

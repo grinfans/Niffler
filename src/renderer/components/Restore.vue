@@ -37,7 +37,7 @@
                 style="margin-bottom:12px">
                 设置新恢复钱包的密码
               </p>
-              <form class="box" style="width:400px">
+              <form class="box" style="width:380px">
               
                 <div class="field">
                   <label class="label">{{ $t('msg.password') }}</label>
@@ -78,10 +78,10 @@
             <div class="animated bounce has-text-weight-semibold has-text-warning" 
                 style="animation-iteration-count:2;margin-bottom:10px">
                 <p>钱包恢复成功, 开始从Grin区块链同步钱包余额；</p>
-                <p>预计需要15-30分钟，请耐心等待</p>
+                <p>预计需要15-30分钟，不要关闭钱包，请耐心等待 ......</p>
             </div>
               <div v-if="restoreOutputs.length > 0">
-                <div class="message is-link">
+                <div class="message is-link" style="width:400px">
                   <div class="message-body">
                     <div class="control">
                       <p class="is-size-7" v-for="output in restoreOutputs">{{ output }}</p>
@@ -177,6 +177,8 @@ export default {
     },
 
     updateOutput(data){
+      //let toDel = 'grin_wallet_libwallet::internal::restore'
+      //this.restoreOutputs.push(data.replace(toDel, '').replace('WARN', ''))
       this.restoreOutputs.push(data)
     },
 
