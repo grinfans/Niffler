@@ -6,7 +6,7 @@
           <div class="column is-10" >
             
             <h1 class="title">{{ $t('msg.restore.title') }}</h1>
-            <div v-if="page==='addSeed'">
+            <div v-if="page==='addSeeds'">
               <p class="animated bounce has-text-weight-semibold has-text-warning" 
                 style="animation-iteration-count:2;margin-bottom:12px">
                 请一个个地输入助记词({{seeds.length}}/{{total}})
@@ -59,7 +59,7 @@
                 <div class="field">
                   <button class="button is-link" @click.prevent="initR" >
                     恢复钱包</button>
-                  <button class="button is-text" @click="page='addSeed'">
+                  <button class="button is-text" @click="page='addSeeds'">
                     {{ $t("msg.back") }}</button>
                 </div>
               </form>
@@ -70,15 +70,32 @@
             <p>{{recoverErrorInfo}}</p>
             </div>
 
-            <button class="button is-link is-inverted is-outlined" @click="page='addSeed'">
+            <button class="button is-link is-inverted is-outlined" @click="page='addSeeds'">
               重新输入
             </button>
           </div>
           <div v-else-if="page==='recovered'"> 
-            <div class="notification is-link">
-            <p>钱包恢复成功</p>
+            <div class="animated bounce has-text-weight-semibold has-text-warning" 
+                style="animation-iteration-count:2;margin-bottom:10px">
+                <p>钱包恢复成功, 开始从Grin区块链同步钱包余额；</p>
+                <p>预计需要15-30分钟，请耐心等待</p>
             </div>
-
+              <div v-if="restoreOutputs.length > 0">
+                <div class="message is-link">
+                  <div class="message-body">
+                    <div class="control">
+                      <p class="is-size-7" v-for="output in restoreOutputs">{{ output }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div v-else-if="page==='restored'"> 
+            <p class="animated bounce has-text-weight-semibold has-text-warning is-size-5" 
+                style="animation-iteration-count:2;margin-bottom:40px">
+                导入钱包成功
+            </p>
+            <a class="button is-link is-inverted is-outlined" @click="toLogin">登陆钱包</a>
           </div>
           </div>
         </div>
@@ -97,21 +114,27 @@ export default {
     return {
       currentSeed: '',
       currentSeedInvalid: false,
-      enoughSeeds: false,
-      seeds: '',
-      password: '',
-      password2: '',
+      enoughSeeds: true,
+      seeds: 'nurse chuckle view goddess wrist uncover spy youth mechanic result mad obey once frog swim ecology athlete link lottery size lab uncover force glory'.split(' '),
+      password: '123',
+      password2: '123',
       total: 24,
-      page: 'addSeed',
+      page: 'addSeeds',
+      
       errorPassword: false,
       errorInfoPassword: '',
+      
       recoverErrorInfo: '',
+
+      restoreOutputs: [],
     }
   },
+  
   created(){
     messageBus.$on('walletRecoverReturn', (ret)=>{
       if(ret === 'ok'){
         this.page = 'recovered'
+        this.startRestore()
       }else if(ret === 'invalidSeeds'){
         this.page = 'recoverError'
         this.recoverErrorInfo = '助记词无效'
@@ -120,7 +143,9 @@ export default {
         this.recoverErrorInfo = ret
       }
     })
-      
+    messageBus.$on('walletRestored', (ret)=>{
+      this.page = 'restored'
+    })
   },
   watch: {
     seeds:function(newVal, oldVal){
@@ -132,7 +157,29 @@ export default {
     }
   },
   methods: {
-    
+    clearup(){
+      this.enoughSeeds = false
+      this.currentSeed = ''
+      this.currentSeedInvalid = false
+      this.seeds = []
+      this.password =''
+      this.password2 = ''
+      this.page = 'addSeeds'
+      this.errorPassword = false
+      this.errorInfoPassword = ''
+      this.recoverErrorInfo = ''
+
+      this.restoreOutputs =[]
+    },
+
+    startRestore(){
+      this.$walletService.restore(this.password, this.updateOutput)
+    },
+
+    updateOutput(data){
+      this.restoreOutputs.push(data)
+    },
+
     validSeed(seed) {
       let re = /^[A-Za-z]+$/
       return re.test(seed)
@@ -168,18 +215,14 @@ export default {
     delete_(){
       if(this.seeds.length>0)this.seeds.pop()
     },
-    clearup(){
-      this.enoughSeeds = false
-      this.currentSeed = ''
-      this.currentSeedInvalid = false
-      this.seeds = []
-      this.password =''
-      this.password2 = ''
-      this.page = 'addSeed'
-    },
+    
     back(){
       this.clearup()
       messageBus.$emit('backToNew')
+    },
+    toLogin(){
+      this.clearup()
+      messageBus.$emit('restoredThenLogin')
     }
   }
 }

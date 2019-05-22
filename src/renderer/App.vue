@@ -197,6 +197,10 @@
           this.openCheck = false
         }
       })
+      messageBus.$on('restoredThenLogin', ()=>{
+        this.$log.info('wallet restored and now to login')
+        this.walletExist = true
+      })
       messageBus.$on('logined', ()=>{
         this.$log.info('app.vue got user logined event')
         this.$walletService.initClient()

@@ -67,6 +67,7 @@ export default {
       let password = this.password
 
       this.resetErrors()
+      this.$walletService.initClient()
       this.$walletService.start(this.password)
       setTimeout(()=>{
         this.$walletService.getNodeHeight().then(

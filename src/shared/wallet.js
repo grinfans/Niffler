@@ -279,7 +279,7 @@ class WalletService {
 
     static recover(seeds, password){
         let rcProcess
-        let args = ['--node_api_http_addr', grinNode,
+        let args = ['--node_api_http_addr', grinNode, 'node_api_secret_path', apiSecretPath,
             '--wallet_dir', walletPath, '--seeds', seeds,
             '--password', password]
         try{
@@ -321,6 +321,25 @@ class WalletService {
         ck.on('close', function(code){
             log.debug('grin wallet check exists with code: ' + code);
             if(code==0){return messageBus.$emit('walletCheckFinished')}
+        });
+    }
+
+    static restore(password, cb){
+        restoreProcess = spawn(grinPath, ['-r', grinNode, '-p', password, 'restore']);
+        let rs = restoreProcess
+        localStorage.setItem('restoreProcessPID', restoreProcess.pid)
+
+        rs.stdout.on('data', function(data){
+            let output = data.toString()
+            cb(output)
+        })
+        rs.stderr.on('data', function(data){
+            let output = data.toString()
+            cb(output)
+        })
+        rs.on('close', function(code){
+            log.debug('grin wallet restore exists with code: ' + code);
+            if(code==0){return messageBus.$emit('walletRestored')}
         });
     }
 
