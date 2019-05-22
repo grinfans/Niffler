@@ -33,6 +33,13 @@
         "filter": [
           "**/*"
         ]
+      },
+      {
+        "from": "grinRs",
+        "to": "resources/bin/grinRs",
+        "filter": [
+          "**/*", "!native"
+        ]
       }
     ],
     "dmg": {

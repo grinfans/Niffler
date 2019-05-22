@@ -30,9 +30,9 @@ const i18n = new VueI18n({
   messages
 })
 
-//remote.globalShortcut.register('CommandOrControl+Shift+K', () => {
-//  remote.BrowserWindow.getFocusedWindow().webContents.openDevTools()
-//})
+remote.globalShortcut.register('CommandOrControl+Shift+K', () => {
+  remote.BrowserWindow.getFocusedWindow().webContents.openDevTools()
+})
 
 window.addEventListener('beforeunload', () => {
   remote.globalShortcut.unregisterAll()

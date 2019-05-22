@@ -134,7 +134,7 @@ export default {
     messageBus.$on('walletRecoverReturn', (ret)=>{
       if(ret === 'ok'){
         this.page = 'recovered'
-        this.startRestore()
+        this.$walletService.restore(this.password, this.updateOutput)
       }else if(ret === 'invalidSeeds'){
         this.page = 'recoverError'
         this.recoverErrorInfo = '助记词无效'
@@ -171,11 +171,7 @@ export default {
 
       this.restoreOutputs =[]
     },
-
-    startRestore(){
-      this.$walletService.restore(this.password, this.updateOutput)
-    },
-
+    
     updateOutput(data){
       //let toDel = 'grin_wallet_libwallet::internal::restore'
       //this.restoreOutputs.push(data.replace(toDel, '').replace('WARN', ''))
