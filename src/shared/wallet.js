@@ -288,7 +288,7 @@ class WalletService {
     static restore(password, cb){
         restoreProcess = spawn(grinPath, ['-r', grinNode, '-p', password, 'restore']);
         let rs = restoreProcess
-        process['restore'] = restoreProcess
+        processes['restore'] = restoreProcess
         localStorage.setItem('restoreProcessPID', restoreProcess.pid)
         
         log.debug('grin wallet restore process running with pid: ' + restoreProcess.pid);
