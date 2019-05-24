@@ -1,5 +1,6 @@
 
 let keyPostedUnconfirmed = 'posted_unconfirmed_txs'
+let keySpendable = 'spendable'
 
 class DBService{
     static getPostedUnconfirmedTxs(){
@@ -27,6 +28,17 @@ class DBService{
         txs.delete(tx_id)
         DBService.setPostedUnconfirmedTxs(txs)
     }
+
+    static getSpendable(){
+        let amount = localStorage.getItem(keySpendable)
+        if(amount){
+            return parseFloat(amount)
+        }
+    }
+    static setSpendable(amount){
+        return localStorage.setItem(keySpendable, amount)
+    }
+
 }
 
 export default DBService

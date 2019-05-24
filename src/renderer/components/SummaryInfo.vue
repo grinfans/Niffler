@@ -36,6 +36,7 @@
             this.total = res.data[1]['total']/1000000000
             this.unconfirmed = res.data[1]['amount_awaiting_confirmation']/1000000000
             this.locked = res.data[1]['amount_locked']/1000000000
+            this.$dbService.setSpendable(this.spendable)
             }
           ).catch((error) => {
             this.$log.error('getSummaryinfo error:' + error)

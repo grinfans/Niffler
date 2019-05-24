@@ -111,6 +111,13 @@ export default {
       let re = /^\d+\.?\d*$/;
       return re.test(amount);
     },
+    enough(amount){
+      let spendable = this.$dbService.getSpendable()
+      if(spendable){
+        return spendable > parseFloat(amount) + 0.01 //0.008
+      }
+      return true
+    },
     checkForm(){
       this.errors = []
       if (!this.address || !this.validAddress(this.address)) {
@@ -118,6 +125,9 @@ export default {
       }
       if (!this.amount || !this.validAmount(this.amount)) {
         this.errors.push(this.$t('msg.httpSend.WrongAmount'));
+      }
+      if (!this.enough(this.amount)) {
+        this.errors.push(this.$t('msg.httpSend.NotEnough'));
       }
       if (!this.errors.length) {
         return true;

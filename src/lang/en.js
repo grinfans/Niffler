@@ -23,6 +23,7 @@ const messages = {
     welcome: 'Welcome to use Niffler wallet',
     
     msg: 'Message',
+    more: 'More',
 
     login: {
       walletExist: 'Found grin wallet data exists; login with original password :-)',
@@ -87,6 +88,7 @@ const messages = {
       sendAmount: 'Amount to send',
       address:'Address',
       WrongAmount: 'Wrong amount',
+      NotEnough: 'Not enough amount. Keep 0.01 as fee',
       WrongAddress: 'Wrong address',
       WrongTxData: 'Failed to build transaction',
       success: 'Transcation success',
