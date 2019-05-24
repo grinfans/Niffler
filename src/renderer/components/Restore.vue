@@ -9,19 +9,19 @@
             <div v-if="page==='addSeeds'">
               <p class="animated bounce has-text-weight-semibold has-text-warning" 
                 style="animation-iteration-count:2;margin-bottom:12px">
-                请一个个地输入助记词({{seeds.length}}/{{total}})
+                {{ $t('msg.restore.addSeedsInfo') }}({{seeds.length}}/{{total}})
               </p>
               <div class="field has-addons">
                 <div class="control">
-                  <input class="input" type="text" placeholder="助记词" v-model="currentSeed"  v-on:keyup.enter="add">
+                  <input class="input" type="text" placeholder="{{ $t('msg.restore.seedPhrase') }}" v-model="currentSeed"  v-on:keyup.enter="add">
                 </div>
 
                 <div class="control">
-                  <a class="button is-warning" @click="add">添加</a>
+                  <a class="button is-warning" @click="add">{{ $t('msg.restore.add') }}</a>
                 </div>
               </div>
-              <p class="help is-warning" v-show="currentSeedInvalid">助记词无效</p>
-              <button class="button is-link is-inverted is-outlined is-small" @click="delete_">删除</button>
+              <p class="help is-warning" v-show="currentSeedInvalid">{{ $t('msg.restore.invalid') }}</p>
+              <button class="button is-link is-inverted is-outlined is-small" @click="delete_">{{ $t('msg.restore.delete') }}</button>
               <button class="button is-link is-inverted is-outlined is-small" @click="back">{{ $t("msg.back") }}</button>
 
               <br/>
@@ -29,13 +29,14 @@
               <div class="tags are-medium">
                 <span class="tag" v-for="seed in seeds">{{seed}}</span>
               </div>
-              <a class="button is-link is-inverted is-outlined" v-show="enoughSeeds" @click="page='addPassword'">助记词输入完成</a>
+              <a class="button is-link is-inverted is-outlined" v-show="enoughSeeds" @click="page='addPassword'">
+                {{ $t('msg.restore.added') }}</a>
             </div>
 
             <div v-else-if="page==='addPassword'">
               <p class="has-text-weight-semibold has-text-warning" 
                 style="margin-bottom:12px">
-                设置新恢复钱包的密码
+                {{ $t('msg.restore.newPassword') }}
               </p>
               <form class="box" style="width:380px">
               
@@ -58,7 +59,7 @@
             
                 <div class="field">
                   <button class="button is-link" @click.prevent="initR" >
-                    恢复钱包</button>
+                    {{ $t('msg.restore.recover') }}</button>
                   <button class="button is-text" @click="page='addSeeds'">
                     {{ $t("msg.back") }}</button>
                 </div>
@@ -71,14 +72,14 @@
             </div>
 
             <button class="button is-link is-inverted is-outlined" @click="page='addSeeds'">
-              重新输入
+              {{ $t('msg.restore.reAdd') }}
             </button>
           </div>
           <div v-else-if="page==='recovered'"> 
             <div class="animated bounce has-text-weight-semibold has-text-warning" 
                 style="animation-iteration-count:2;margin-bottom:10px">
-                <p>钱包恢复成功, 开始从Grin区块链同步钱包余额；</p>
-                <p>预计需要15-30分钟，不要关闭钱包，请耐心等待 ......</p>
+                <p>{{ $t('msg.restore.recovered') }} </p>
+                <p>{{ $t('msg.restore.restoring') }}</p>
             </div>
               <div v-if="restoreOutputs.length > 0">
                 <div class="message is-link" style="width:400px">
@@ -93,9 +94,9 @@
           <div v-else-if="page==='restored'"> 
             <p class="animated bounce has-text-weight-semibold has-text-warning is-size-5" 
                 style="animation-iteration-count:2;margin-bottom:40px">
-                导入钱包成功
+                {{ $t('msg.restore.restored') }}
             </p>
-            <a class="button is-link is-inverted is-outlined" @click="toLogin">登陆钱包</a>
+            <a class="button is-link is-inverted is-outlined" @click="toLogin">{{ $t('msg.restore.login') }}</a>
           </div>
           </div>
         </div>
@@ -137,7 +138,7 @@ export default {
         this.$walletService.restore(this.password, this.updateOutput)
       }else if(ret === 'invalidSeeds'){
         this.page = 'recoverError'
-        this.recoverErrorInfo = '助记词无效'
+        this.recoverErrorInfo = this.$t('msg.restore.invalid')
       }else{
         this.page = 'recoverError'
         this.recoverErrorInfo = ret

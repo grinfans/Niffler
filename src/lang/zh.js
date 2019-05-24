@@ -29,7 +29,9 @@ const messages = {
     },
 
     new_:{
-      
+      create: '新建钱包',
+      restore: '通过助记词导入钱包',
+      import: '通过钱包备份文件导入'
     },
 
     create:{
@@ -44,7 +46,20 @@ const messages = {
     },
 
     restore:{
-      title: '从助记词中恢复钱包'
+      seedPhrase: '助记词',
+      title: '从助记词中恢复钱包',
+      addSeedsInfo: '请一个个地输入助记词',
+      add: '添加',
+      invaid: '助记词无效',
+      delete: '删除',
+      added: '助记词输入完成',
+      newPassword: '设置新的密码',
+      recover: '恢复钱包',
+      reAdd: '重新输入',
+      recovered: '钱包恢复成功, 开始从Grin区块链同步钱包余额；',
+      restoring: '预计需要15-30分钟，不要关闭钱包，请耐心等待 ......',
+      restored: '钱包恢复成功并且余额同步完成',
+      login: '登陆钱包',
     },
 
     app:{

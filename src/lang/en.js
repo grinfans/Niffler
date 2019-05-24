@@ -29,7 +29,7 @@ const messages = {
       walletExist: 'Found grin wallet data exists; login with original password :-)',
     },
     
-    new_:{
+    create:{
       seedPhrase: 'Seed Phrase',
       toNewMsg: 'No wallet exists Found. Create a New One.',
       newWallet: 'Create new wallet',
@@ -39,7 +39,30 @@ const messages = {
       errorPasswdConsistency: 'Please enter the same password',
       errorCreateFailed: 'Error when try to create new wallet. Maybe restart wallet and Try it later.',
     },
+
+    new_:{
+      create: 'Create new wallet',
+      restore: 'Restore wallet via seed phrase',
+      import: 'Import wallet backup file'
+    },
     
+    restore:{
+      seedPhrase: 'Seed Phrase',
+      title: 'Restore wallet via seed phrase',
+      addSeedsInfo: 'Add seed phrase one by one please',
+      add: 'Add',
+      invaid: 'Invalid Seed Phrase',
+      delete: 'Delete',
+      added: 'Finish enter seed phrase',
+      newPassword: 'Set a new password',
+      recover: 'Recover',
+      reAdd: 'Re-enter seed phrase ',
+      recovered: 'Wallet recovered, it is time to check balance from Grin blockchain',
+      restoring: 'It will take 10-30 minites to finish check. Be patient ......',
+      restored: 'Wallet recovered and balance checked.',
+      login: 'Login Wallet',
+    },
+
     app:{
       create: 'Create transaction file',
       finalize: 'Finalize',

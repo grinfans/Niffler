@@ -86,7 +86,7 @@ export default {
   },
   created(){
     messageBus.$on('walletCreated', (seed)=>{
-      this.$log.debug('new.vue got walletCreated event.')
+      this.$log.debug('create.vue got walletCreated event.')
       this.$walletService.initClient()
       this.walletCreating= false
       this.walletCreated = true
