@@ -1,5 +1,5 @@
 var path = require('path')
-var argv = require("optimist").argv
+var argv = require('optimist').argv
 var fse = require('fs-extra')
 
 var grin = require('./index.node')
