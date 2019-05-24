@@ -14,7 +14,6 @@ yarn-error.log
 docs/dist/
 .vscode/*
 .yarnrc
-!hedwig/node_modules/
 index.node
 target
 artifacts.json
