@@ -133,13 +133,14 @@ class WalletService {
             ownerAPI =  exec(cmd)
         }
         processes['ownerAPI'] = ownerAPI
+        log.debug('ownerAPIProcessPID: ' + ownerAPI.pid)
         if(platform==='win'){
-            localStorage.setItem('OwnerAPIPID', ownerAPI.pid)
+            localStorage.setItem('ownerAPIProcessPID', ownerAPI.pid)
         }
 
         ownerAPI.stdout.on('data', (data)=>{
             if(platform!='win'){ownerAPI.stdin.write(password+'\n')}
-            localStorage.setItem('OwnerAPIPID', ownerAPI.pid)
+            localStorage.setItem('ownerAPIProcessPID', ownerAPI.pid)
         })
         ownerAPI.stderr.on('data', (data) => {
             log.error('start owner_api got stderr: ' + data)
@@ -345,10 +346,9 @@ class WalletService {
     //}
     
     static stopProcess(processName){
-        log.debug(`try to kill ${processName}`)
         let pidName = `${processName}ProcessPID`
         const pid = localStorage.getItem(pidName)
-        log.debug('try to kill pid: ' + pid)
+        log.debug(`try to kill ${processName} with pid (get from ${pidName}) : ${pid}`)
         localStorage.removeItem(pidName)
 
         if(platform==='win'&&pid){

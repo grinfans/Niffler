@@ -128,7 +128,7 @@ export default {
       }
     },
     stop(){
-      this.$walletService.stop('listen')
+      this.$walletService.stopProcess('listen')
       this.running = false
       this.closeModal()
     },
