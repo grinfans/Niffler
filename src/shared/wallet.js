@@ -266,7 +266,11 @@ class WalletService {
     }
 
     static check(cb){
-        checkProcess = spawn(grinPath, ['-r', grinNode, '-p', password_, 'check']);
+        let grin = grinPath
+        if(platform==='win'){
+            grin = grinPath.slice(1,-1)
+        }
+        checkProcess = spawn(grin, ['-r', grinNode, '-p', password_, 'check']);
         let ck = checkProcess
         processes['check'] = checkProcess
         localStorage.setItem('checkProcessPID', checkProcess.pid)
@@ -286,7 +290,11 @@ class WalletService {
     }
 
     static restore(password, cb){
-        restoreProcess = spawn(grinPath, ['-r', grinNode, '-p', password, 'restore']);
+        let grin = grinPath
+        if(platform==='win'){
+            grin = grinPath.slice(1,-1)
+        }
+        restoreProcess = spawn(grin, ['-r', grinNode, '-p', password, 'restore']);
         let rs = restoreProcess
         processes['restore'] = restoreProcess
         localStorage.setItem('restoreProcessPID', restoreProcess.pid)
