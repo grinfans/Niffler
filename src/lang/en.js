@@ -153,10 +153,10 @@ const messages = {
 
     check: {
       title: 'Check Balance',
-      checking: 'Checking，be patient ...',
+      checking: 'Checking, be patient ...',
       stop: 'Stop Check',
 
-      tip:'It will take 10-20 minites to finish check',
+      tip:'It will take 10-30 minites to finish check',
       introTitle: 'Introduction',
 
       intro1: 'Because of all of the possibilities listed in the cancel command, as well as the possibility of forks, it is quite possible for your wallet to end up in an inconsistent state',
