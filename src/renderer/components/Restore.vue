@@ -9,11 +9,11 @@
             <div v-if="page==='addSeeds'">
               <p class="animated bounce has-text-weight-semibold has-text-warning" 
                 style="animation-iteration-count:2;margin-bottom:12px">
-                {{ $t('msg.restore.addSeedsInfo') }}({{seeds.length}}/{{total}})
+                {{ $t('msg.restore.addSeedsInfo') }} ({{seeds.length}}/{{total}})
               </p>
               <div class="field has-addons">
                 <div class="control">
-                  <input class="input" type="text" placeholder="{{ $t('msg.restore.seedPhrase') }}" v-model="currentSeed"  v-on:keyup.enter="add">
+                  <input class="input" type="text" placeholder={{ $t('msg.restore.seedPhrase') }} v-model="currentSeed"  v-on:keyup.enter="add">
                 </div>
 
                 <div class="control">
