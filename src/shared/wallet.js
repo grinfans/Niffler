@@ -240,7 +240,7 @@ class WalletService {
 
     static recover(seeds, password){
         if(platform==='win'){
-            return recoverOnWindows(seeds, password)
+            return  WalletService.recoverOnWindows(seeds, password)
         }
         let rcProcess
         let args = ['--node_api_http_addr', grinNode, 'node_api_secret_path', path.resolve(apiSecretPath),
