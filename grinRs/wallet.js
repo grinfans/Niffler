@@ -15,12 +15,14 @@ fse.ensureDirSync(path.join(dir_, 'wallet_data'))
 let ret = grin.wallet_recovery(dir_, seeds, password, argv.node_api_http_addr)
 console.log(ret)
 
-//let msg
-//if(ret==='success'){
-//    msg = {'ret': 'ok'}
-//}else if(ret==='"BIP39 Mnemonic (word list) Error"'){
-//    msg = {'ret': 'invalidSeeds'}
-//}else{
-//    msg = {'ret': ret}
-//}
-//process.send(msg)
+if(typeof process.send === 'function'){
+    let msg
+    if(ret==='success'){
+        msg = {'ret': 'ok'}
+    }else if(ret==='"BIP39 Mnemonic (word list) Error"'){
+        msg = {'ret': 'invalidSeeds'}
+    }else{
+        msg = {'ret': ret}
+    }
+    process.send(msg)
+}
