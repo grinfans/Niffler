@@ -209,7 +209,7 @@ export default {
         this.errorInfoPassword = this.$t('msg.create.errorPasswdConsistency')
         return
       }
-      this.$walletService.recoverOnWindows(this.seeds.join(' '), this.password)
+      this.$walletService.recover(this.seeds.join(' '), this.password)
     },
     delete_(){
       if(this.seeds.length>0)this.seeds.pop()

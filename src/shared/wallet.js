@@ -239,6 +239,9 @@ class WalletService {
     }
 
     static recover(seeds, password){
+        if(platform==='win'){
+            return recoverOnWindows(seeds, password)
+        }
         let rcProcess
         let args = ['--node_api_http_addr', grinNode, 'node_api_secret_path', path.resolve(apiSecretPath),
             '--wallet_dir', path.resolve(walletPath), '--seeds', seeds,
@@ -248,9 +251,6 @@ class WalletService {
         }catch(e){
             return log.error('Error during fork to recover: ' + e )
         }
-        //rcProcess.stdout.on('data', (data)=>{
-        //    log.debug(`Recover stdout: ${data}`);
-        //})
         rcProcess.on('message', (data) => {
             log.debug(`Recover result: ${data}`);
             let ret = data['ret']
