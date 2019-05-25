@@ -6,7 +6,7 @@ import axios from 'axios'
 require('promise.prototype.finally').shim();
 
 import log from './logger'
-import {platform, grinPath, seedPath, grinNode, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet, nodeExecutable} from './config'
+import {platform, grinPath, seedPath, grinNode, grinNode2, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet, nodeExecutable} from './config'
 import { messageBus } from '../renderer/messagebus'
 
 let ownerAPI
@@ -267,7 +267,7 @@ class WalletService {
     }
 
     static recoverOnWindows(seeds, password){
-        let args = [grinRsWallet, '--node_api_http_addr', grinNode,
+        let args = [grinRsWallet, '--node_api_http_addr', grinNode2,
             '--node_api_secret_path', path.resolve(apiSecretPath),
             '--wallet_dir', path.resolve(walletPath), 
             '--seeds', seeds, '--password', password]
@@ -297,7 +297,8 @@ class WalletService {
         if(platform==='win'){
             grin = grinPath.slice(1,-1)
         }
-        
+        checkProcess = spawn(grin, ['-r', grinNode2, '-p', password_, 'check']);
+
         let ck = checkProcess
         processes['check'] = checkProcess
         localStorage.setItem('checkProcessPID', checkProcess.pid)
@@ -321,7 +322,7 @@ class WalletService {
         if(platform==='win'){
             grin = grinPath.slice(1,-1)
         }
-        restoreProcess = spawn(grin, ['-r', grinNode, '-p', password, 'restore']);
+        restoreProcess = spawn(grin, ['-r', grinNode2, '-p', password, 'restore']);
         let rs = restoreProcess
         processes['restore'] = restoreProcess
         localStorage.setItem('restoreProcessPID', restoreProcess.pid)
