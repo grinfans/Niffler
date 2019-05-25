@@ -6,7 +6,7 @@ import axios from 'axios'
 require('promise.prototype.finally').shim();
 
 import log from './logger'
-import {platform, grinPath, seedPath, grinNode, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet} from './config'
+import {platform, grinPath, seedPath, grinNode, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet, nodeExecutable} from './config'
 import { messageBus } from '../renderer/messagebus'
 
 let ownerAPI
@@ -240,8 +240,8 @@ class WalletService {
 
     static recover(seeds, password){
         let rcProcess
-        let args = ['--node_api_http_addr', grinNode, 'node_api_secret_path', apiSecretPath,
-            '--wallet_dir', walletPath, '--seeds', seeds,
+        let args = ['--node_api_http_addr', grinNode, 'node_api_secret_path', path.resolve(apiSecretPath),
+            '--wallet_dir', path.resolve(walletPath), '--seeds', seeds,
             '--password', password]
         try{
             rcProcess = fork(grinRsWallet, args)
@@ -266,12 +266,38 @@ class WalletService {
         });
     }
 
+    static recoverOnWindows(seeds, password){
+        let args = [grinRsWallet, '--node_api_http_addr', grinNode,
+            '--node_api_secret_path', path.resolve(apiSecretPath),
+            '--wallet_dir', path.resolve(walletPath), 
+            '--seeds', seeds, '--password', password]
+        let rcProcess = spawn(nodeExecutable, args)
+        rcProcess.stdout.on('data', function(data){
+            let output = data.toString().trim()
+            log.debug('rcProcess stdout:', output)
+            let msg
+            if(output ==='success'){
+                msg = 'ok'
+            }else if(output ==='"BIP39 Mnemonic (word list) Error"'){
+                msg = 'invalidSeeds'
+            }else{
+                msg = data
+            }
+            log.debug('msg', msg)
+            messageBus.$emit('walletRecoverReturn', msg)
+        })
+        rcProcess.stderr.on('data', function(data){
+            let output = data.toString()
+            log.debug('rcProcess stderr:', output)
+        })
+    }
+
     static check(cb){
         let grin = grinPath
         if(platform==='win'){
             grin = grinPath.slice(1,-1)
         }
-        checkProcess = spawn(grin, ['-r', grinNode, '-p', password_, 'check']);
+        
         let ck = checkProcess
         processes['check'] = checkProcess
         localStorage.setItem('checkProcessPID', checkProcess.pid)

@@ -85,4 +85,8 @@ export const grinRsWallet =
   IS_PROD || APP.isPackaged
     ? path.resolve(path.join(process.resourcesPath, 'bin', 'grinRs', 'wallet.js'))
     : path.resolve(path.join(root, 'grinRs', 'wallet.js'))
-console.log(grinRsWallet)
+
+export const nodeExecutable =  
+    IS_PROD || APP.isPackaged
+      ? path.resolve(path.join(process.resourcesPath, 'bin', 'grinRs', 'node.exe'))
+      : path.resolve(path.join(root, 'grinRs', 'node.exe'))

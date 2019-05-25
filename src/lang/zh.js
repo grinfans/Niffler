@@ -50,7 +50,7 @@ const messages = {
       title: '从助记词中恢复钱包',
       addSeedsInfo: '请一个个地输入助记词',
       add: '添加',
-      invaid: '助记词无效',
+      invalid: '助记词无效',
       delete: '删除',
       added: '助记词输入完成',
       newPassword: '设置新的密码',

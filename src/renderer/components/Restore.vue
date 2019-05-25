@@ -13,7 +13,7 @@
               </p>
               <div class="field has-addons">
                 <div class="control">
-                  <input class="input" type="text" placeholder={{ $t('msg.restore.seedPhrase') }} v-model="currentSeed"  v-on:keyup.enter="add">
+                  <input class="input" type="text" v-model="currentSeed"  v-on:keyup.enter="add">
                 </div>
 
                 <div class="control">
@@ -38,7 +38,7 @@
                 style="margin-bottom:12px">
                 {{ $t('msg.restore.newPassword') }}
               </p>
-              <form class="box" style="width:380px">
+              <div class="box" style="width:380px">
               
                 <div class="field">
                   <label class="label">{{ $t('msg.password') }}</label>
@@ -58,12 +58,12 @@
                 </div>
             
                 <div class="field">
-                  <button class="button is-link" @click.prevent="initR" >
+                  <button class="button is-link" @click="initR" >
                     {{ $t('msg.restore.recover') }}</button>
                   <button class="button is-text" @click="page='addSeeds'">
                     {{ $t("msg.back") }}</button>
                 </div>
-              </form>
+              </div>
             </div>
           
           <div v-else-if="page==='recoverError'"> 
@@ -209,7 +209,7 @@ export default {
         this.errorInfoPassword = this.$t('msg.create.errorPasswdConsistency')
         return
       }
-      this.$walletService.recover(this.seeds.join(' '), this.password)
+      this.$walletService.recoverOnWindows(this.seeds.join(' '), this.password)
     },
     delete_(){
       if(this.seeds.length>0)this.seeds.pop()
