@@ -176,7 +176,6 @@ class WalletService {
     static stopAll(){
         for(var ps in processes){
             log.debug('stopall ps: '+ ps)
-            log.debug(`processes value: ${processes[ps]}`)
             if(processes[ps]){
                 log.debug('stopall try to kill '+ ps)
                 WalletService.stopProcess(ps)
@@ -252,8 +251,8 @@ class WalletService {
             return log.error('Error during fork to recover: ' + e )
         }
         rcProcess.on('message', (data) => {
-            log.debug(`Recover result: ${data}`);
             let ret = data['ret']
+            log.debug('Recover message: ' + ret)
             messageBus.$emit('walletRecoverReturn', ret)
         });
           
