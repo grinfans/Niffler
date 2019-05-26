@@ -8,7 +8,7 @@ Niffler 是一个开箱即用、用户友好的 [Grin](https://github.com/mimble
 
 #### 最新版本 V0.3.2
 
-Niffler 钱包 v0.3.0 新加了 hedwig v1 代理服务; 现在，没有公共ip的用户也可以很简单容易地接收grin了 :)
+Niffler钱包 新加了 **hedwig** v1 代理服务; 现在，没有公共ip的用户也可以很简单容易地接收grin了 :)
 
 也就是说，**你现在可以非常容易从各大交易所或矿池 提取grin到你的本地钱包** 。
 
