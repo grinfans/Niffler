@@ -19,14 +19,11 @@ Windows/Mac/linux 版本:
 #### 中国大陆用户快速下载
 
 >Windows
-https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-win-0.3.0.exe
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-win-0.3.2.exe
 
 >Mac
-https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-mac-0.3.0.dmg
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-mac-0.3.2.dmg
 
->Linux
-https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-linux-0.3.0.AppImage
-https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-linux-0.3.0_amd64.deb
 
 ## 联系
 
