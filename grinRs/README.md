@@ -1,0 +1,1 @@
+Grinrs is forked from https://github.com/bitmeshexchange/GrinPurse/tree/master/native
