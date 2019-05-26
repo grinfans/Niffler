@@ -9,7 +9,7 @@ The name 'Niffler' comes from ["harry potter"](https://harrypotter.fandom.com/wi
 
 Windows/Mac/linux version:[https://github.com/grinfans/niffler/releases/tag/v0.3.2](https://github.com/grinfans/niffler/releases/tag/v0.3.2)
 
-Niffler wallet V0.3.0 add **hedwig v1 relay service**, so User without public ip could receive grin really easy :)
+Niffler wallet has a **hedwig v1 relay service**, which enable User without public ip receive grin really easy :)
 
 In other words，**You could withdraw grin from any exchanges and miner pool effortlessly**.
 
