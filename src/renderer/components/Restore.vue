@@ -115,10 +115,10 @@ export default {
     return {
       currentSeed: '',
       currentSeedInvalid: false,
-      enoughSeeds: true,
-      seeds: 'nurse chuckle view goddess wrist uncover spy youth mechanic result mad obey once frog swim ecology athlete link lottery size lab uncover force glory'.split(' '),
-      password: '123',
-      password2: '123',
+      enoughSeeds: false,
+      seeds:[],
+      password: '',
+      password2: '',
       total: 24,
       page: 'addSeeds',
       
