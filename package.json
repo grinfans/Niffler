@@ -32,7 +32,7 @@
         "from": "hedwig",
         "to": "resources/bin/hedwig",
         "filter": [
-          "**/*"
+          "**/*", "!test.js"
         ]
       }
     ],
