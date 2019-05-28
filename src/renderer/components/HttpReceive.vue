@@ -39,7 +39,6 @@
             <div class="message-header"><p>{{ $t("msg.httpReceive.attention") }}</p></div>
             <div class="message-body">
               <p>{{ $t("msg.httpReceive.reachableMsg") }}</p>
-              <!--<p>{{ $t("msg.httpReceive.frp") }}</p>-->
             </div>
           </div>
           <!--
@@ -170,12 +169,14 @@ export default {
               this.started = true
               this.starting = false
             }
+            this.$log.debug('wallet HTTP listen works.')
           }else{
             if(this.starting){
               this.starting = false
               this.errors.push(this.$t('msg.httpReceive.failed2'))
             }
             this.running = false
+            this.$log.debug('Failed to connect ', url)
           }
         })
       }).catch(

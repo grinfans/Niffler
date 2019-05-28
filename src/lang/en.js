@@ -146,7 +146,6 @@ const messages = {
       close: 'Stop listen',
       attention: 'Attention',
       reachableMsg: 'To start HTTP listen, you should have public ip, which is reachable by internet user.',
-      frp: 'If you don not have public ip, try ngrok or frp',
       password: 'Wallet Password (used to start HTTP listen)',
       start: 'Start',
       error: 'No password.',

@@ -146,7 +146,6 @@ const messages = {
       close: '关闭HTTP监听',
       attention: '注意',
       reachableMsg: '设置HTTP接收Grin: 需要你有对外的公网ip, 并且你的ip能被访问',
-      frp: '如果没有, 可以试试 ngrok 或者 frp的内网穿透方案',
       password: '钱包密码 (用于启动http监听)',
       start: '启动',
       error: '没有输入密码.',
