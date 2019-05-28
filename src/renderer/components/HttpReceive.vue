@@ -42,24 +42,25 @@
               <!--<p>{{ $t("msg.httpReceive.frp") }}</p>-->
             </div>
           </div>
-          
+          <!--
           <div class="field">
             <label class="label">{{ $t("msg.httpReceive.password") }}</label>
             <div class="control">
               <input class="input" type="password" placeholder="********" required
                 :class="{'is-warning': errors.length>0}" v-model="password">
             </div>
-          </div>
-          <br/>
-
-          <div class="field is-grouped">
-            <div class="control">
-              <button class="button is-link" v-bind:class="{'is-loading':starting}" @click="start">
-                {{ $t("msg.httpReceive.start") }}
-              </button>
-            </div>
-            <div class="control">
-              <button class="button is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
+          </div>-->
+          
+          <div class="center">
+            <div class="field is-grouped ">
+              <div class="control">
+                <button class="button is-link" v-bind:class="{'is-loading':starting}" @click="start">
+                  {{ $t("msg.httpReceive.start") }}
+                </button>
+              </div>
+              <div class="control">
+                <button class="button is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
+              </div>
             </div>
           </div>
         </div>
@@ -75,6 +76,7 @@ import { setTimeout } from 'timers';
 const fs = require('fs');
 const publicIp = require('public-ip');
 const extIP = require('external-ip');
+const externalip = require('externalip')
 
 function isValidIP(str) {
   const octet = '(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|0)';
@@ -93,38 +95,27 @@ export default {
   data() {
     return {
       errors: [],
-      password:'',
       starting:false,
       started:false,
       running:false,
-      localReachable:false,
       ip: this.$t('msg.httpReceive.ip')
     }
-  },
-  created(){
-    if(!isValidIP(this.ip))this.getIP()
   },
   mounted() {
     this.checkRunning()
   },
   methods: {
     start(){
-      if(this.password===''){
-        this.errors.push(this.$t('msg.httpReceive.error'))
-      }
-      if(this.password!=''&&!this.starting&&!this.running){
+      if((!this.starting)&&(!this.running)){
         this.starting = true
-        this.$log.debug('Is local reachable before start? '+ this.localReachable)
-        if(!this.localReachable){
-          this.$walletService.startListen(this.password)
-          setTimeout(()=>{
-            this.checkRunning()
-            }, 500)
+        this.checklocalReachable().catch((error)=>{
+          if(!error.response){
+            this.$walletService.startListen()
           }
-        else{
+          this.$log.debug('Http listen is locally reachable.')
           this.$log.debug('checkRunning right now.')
           this.checkRunning()
-        }
+        })
       }
     },
     stop(){
@@ -139,93 +130,62 @@ export default {
     
     clearup(){
       this.errors = []
-      this.password = ''
       this.starting = false
       this.started = false
-      //this.localReachable = false
     },
 
-    checkRunning(){
-      const url = 'http://localhost:3415'
+    getIP(log){
+      return new Promise(function(resolve, reject) {
+        publicIp.v4().then((ip)=>{
+          return resolve(ip)
+        }).catch((err)=>{
+          log.error('Failed to get ip use publicIp: ' + err)
+          externalip(function (err, ip) {
+          if(ip){
+            return resolve(ip)
+          }else{
+            log.error('Failed to get ip use externalip: ' + err)
+            return reject(err)
+          }  
+        })})
+      })   
+    },
+
+    checklocalReachable(){
+      const url = 'http://127.0.0.1:3415'
       this.$log.debug('Try to test if http listen locally reachable?')
-      this.$http.get(url, {timeout: 4000}).catch((error)=>{
-        if(error.response){
-          this.localReachable = true
-          this.$log.debug('Http listen is locally reachable.')
-          if(!isValidIP(this.ip)){
-            this.$log.debug(`${this.ip} is not valid ip.`)
-            this.getIP()
+      return this.$http.get(url, {timeout: 5000})
+    },
+    
+    checkRunning(){
+      this.getIP(this.$log).then((ip)=>{
+        this.ip = ip
+        this.$log.debug('Get ip: ' + ip)
+        const url = `http://${ip}:3415`
+        this.$log.debug(`Try to test ${url} ?`)
+        this.$http.get(url, {timeout: 4000}).catch((error)=>{
+          if(error.response){
+            this.running = true
             if(this.starting){
-              this.errors.push(this.$t('msg.httpReceive.failed3'))
+              this.started = true
               this.starting = false
             }
-            return
-          }
-          const url2 = `http://${this.ip}:3415`
-          this.$log.debug(`Try to test ${url2} ?`)
-          this.$http.get(url2, {timeout: 4000}).catch((error)=>{
-            if(error.response){
-              this.running = true
-              if(this.starting){
-                this.started = true
-                this.starting = false
-              }
-            }else{
-              if(this.starting){
-                this.starting = false
-                this.errors.push(this.$t('msg.httpReceive.failed2'))
-              }
-              this.running = false
+          }else{
+            if(this.starting){
+              this.starting = false
+              this.errors.push(this.$t('msg.httpReceive.failed2'))
             }
-          })
-        }else{
-          if(this.starting){
-            this.starting = false
-            this.errors.push(this.$t('msg.httpReceive.failed'))
+            this.running = false
           }
+        })
+      }).catch(
+        (err)=>{
+          this.$log.error('Error when try to get ip: ' + err)
+          this.errors.push(this.$t('msg.httpReceive.failed3'))
+          this.starting = false
           this.running = false
         }
-      })
-    },
-
-    getIP(){
-      this.getMyIP2()
-      setTimeout(()=>{
-         if(!isValidIP(this.ip)){
-          this.getMyIP()
-        }
-      }, 500)
-    },
-
-    getMyIP(){
-      (async () => {
-        try{
-          this.ip = await publicIp.v4();
-          this.$log.debug('this host ip:' + this.ip)
-        }catch(e){
-          this.$log.error('error when getIP:' + e)
-          this.ip = await publicIp.v4({'https':true});
-          this.$log.debug('this host ip (getip use https):' + this.ip)
-        }
-      })();
-    },
-
-    getMyIP2(){
-      let getIP = extIP({
-          replace: true,
-          services: ['https://ipinfo.io/ip', 'http://ifconfig.io/ip'],
-          timeout: 600,
-          getIP: 'parallel',
-          userAgent: 'Chrome 15.0.874 / Mac OS X 10.8.1'
-      });
-      getIP((err, ip) => {
-        if (err) {
-           this.$log.error('error when getmyip2: ' + err)
-           return
-        }
-        this.ip = ip
-        this.$log.debug('this host ip when getmyip2: ' + this.ip)
-      });
+      )
     }
   }
 }

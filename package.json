@@ -32,7 +32,8 @@
         "from": "hedwig",
         "to": "resources/bin/hedwig",
         "filter": [
-          "**/*", "!test.js"
+          "**/*",
+          "!test.js"
         ]
       }
     ],
@@ -65,7 +66,10 @@
           "from": "grinRs",
           "to": "resources/bin/grinRs",
           "filter": [
-            "**/*", "!native", "!test.js", "!node.exe"
+            "**/*",
+            "!native",
+            "!test.js",
+            "!node.exe"
           ]
         }
       ]
@@ -85,7 +89,9 @@
           "from": "grinRs",
           "to": "resources/bin/grinRs",
           "filter": [
-            "**/*", "!native", "!test.js"
+            "**/*",
+            "!native",
+            "!test.js"
           ]
         }
       ]
@@ -126,6 +132,7 @@
     "electron-build-env": "^0.2.0",
     "electron-log": "^3.0.1",
     "external-ip": "^2.1.1",
+    "externalip": "^1.0.2",
     "fs-extra": "^7.0.1",
     "is-valid-domain": "0.0.5",
     "neon-cli": "^0.2.0",
