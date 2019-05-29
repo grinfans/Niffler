@@ -104,7 +104,7 @@ const messages = {
       createTxFile: 'Create new transcation file',
       WrongAmount: 'Wrong amount',
       saveMsg: 'Save transcation file created',
-      CreateFail: 'Failed to create new transcation file'
+      CreateFailed: 'Failed to create new transcation file'
     },
 
     httpSend:{

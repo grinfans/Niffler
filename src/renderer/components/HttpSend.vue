@@ -151,8 +151,8 @@ export default {
         let send = async function(){
           try{
             let res = await this.$walletService.issueSendTransaction(tx_data)
-            this.$log.debug(`issue tx ${tx_id} ok; return:${res.data}`)
             tx_id = res.data.id
+            this.$log.debug(`issue tx ${tx_id} ok; return:${res.data}`)
             let res2 = await this.$walletService.postTransaction(res.data, true)
             this.sent = true
             this.$dbService.addPostedUnconfirmedTx(tx_id)
