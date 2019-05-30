@@ -12,7 +12,7 @@ const messages = {
 
     confirmed: 'Подтверждено',
     unconfirmed: 'Не подтверждено',
-    locked: 'Заблокированно',
+    locked: 'Заблокировано',
     
     send: 'Отправить',
     receive: 'Получить',
