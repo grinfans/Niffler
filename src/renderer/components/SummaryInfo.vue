@@ -1,7 +1,7 @@
 <template>
   <div class="notification is-link" style="width:260px;">
     <p class="subtitle is-5">{{ $t("msg.info.spendable") }}:</p>
-    <p class="title is-2">{{spendable}} ツ</p>
+    <p class="title" v-bind:class="{'is-2':!smallTitle, 'is-4':smallTitle}">{{spendable}} ツ</p>
     <p>{{ $t("msg.info.total") }}: {{total}} ツ</p> 
     <p>{{ $t("msg.unconfirmed") }}: {{unconfirmed}} ツ</p>
     <p>{{ $t("msg.locked") }}: {{locked}} ツ</p>
@@ -18,7 +18,8 @@
         spendable: 0,
         total: 0,
         unconfirmed: 0,
-        locked: 0
+        locked: 0,
+        smallTitle: false
       }
     },
 
@@ -37,6 +38,8 @@
             this.unconfirmed = res.data[1]['amount_awaiting_confirmation']/1000000000
             this.locked = res.data[1]['amount_locked']/1000000000
             this.$dbService.setSpendable(this.spendable)
+
+            if(this.spendable.toString().length > 6)this.smallTitle=true
             }
           ).catch((error) => {
             this.$log.error('getSummaryinfo error:' + error)

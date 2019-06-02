@@ -77,8 +77,8 @@ export default {
   data() {
     return {
       errors: [],
-      amount: 0.11,
-      address: 'https://poloniex.com/public?currency=GRIN&command=createDeposit&id=33b1cccb-9656-4653-af21-f7e0132bec09',
+      amount: null,
+      address: '',
       slateVersion: 0,
       sending: false,
       sent: false
