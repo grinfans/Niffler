@@ -18,7 +18,23 @@
           <input class="input" type="text" v-model="amount" placeholder="1 ツ">
         </div>
       </div>
-      <br/>
+      
+      <div class="field">
+        <label class="label">{{ $t("msg.httpSend.salteVersion") }}</label>
+
+        <div class="control">
+          <div class="select">
+            <select v-model="slateVersion">
+              <option>0</option>
+              <option>1</option>
+              <option>2</option>
+            </select>
+          </div>
+        </div>
+        <p class="help"> {{ $t("msg.httpSend.salteVersionHelp") }}</p>
+      </div>
+      
+       <br/>
       <div class="field is-grouped">
         <div class="control">
           <button class="button is-link" @click="send">{{ $t("msg.fileSend.createTxFile") }}</button>
@@ -48,6 +64,7 @@ export default {
     return {
       errors: [],
       amount: null,
+      slateVersion: 0
     }
   },
   watch: {
@@ -103,7 +120,7 @@ export default {
         //  })
         //}
         if (fn_output){
-          this.$walletService.send(this.amount, 'file', fn_output, 1).then(
+          this.$walletService.send(this.amount, 'file', fn_output, parseInt(this.slateVersion)).then(
             (res) => {
                 this.$log.debug('send return: '+res)
                 messageBus.$emit('update')
@@ -124,6 +141,7 @@ export default {
     clearup(){
       this.errors = []
       this.amount = null
+      this.slateVersion = 0
       this.address = ''
     },
     

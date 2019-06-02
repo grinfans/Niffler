@@ -46,6 +46,8 @@ export const walletPath = path.join(APP.getPath('home'), '.grin', chainType)
 export const apiSecretPath = path.join(APP.getPath('home'), '.grin', chainType, '.api_secret')
 export const nifflerPath = path.join(APP.getPath('home'), '.niffler')
 export const logDir = path.join(nifflerPath, 'log')
+export const tempTxDir = path.join(nifflerPath, 'temp_tx')
+
 export const configPath = path.join(nifflerPath, 'config.json')
 
 export const releaseUrl = 'https://api.github.com/repos/grinfans/niffler/releases/latest'

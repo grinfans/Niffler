@@ -1,4 +1,5 @@
 import fs from 'fs'
+const fse = require('fs-extra')
 const path = require('path');
 import {exec, execFile, spawn, fork} from 'child_process'
 
@@ -6,7 +7,7 @@ import axios from 'axios'
 require('promise.prototype.finally').shim();
 
 import log from './logger'
-import {platform, grinPath, seedPath, grinNode, grinNode2, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet, nodeExecutable} from './config'
+import {platform, grinPath, seedPath, grinNode, grinNode2, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet, nodeExecutable, tempTxDir} from './config'
 import { messageBus } from '../renderer/messagebus'
 
 let ownerAPI
@@ -228,13 +229,37 @@ class WalletService {
 
     static send(amount, method, dest, version){
         const cmd = `${grinPath} -r ${grinNode} -p ${password_} send -m ${method} -d ${dest} -v ${version} ${amount}`
-        log.debug(cmd)
+        //log.debug(cmd)
         return execPromise(cmd)
+    }
+
+    static createSlate(amount, version){
+        fse.ensureDirSync(tempTxDir)
+
+        return new Promise(function(resolve, reject) {
+            let fn = path.join(tempTxDir, String(Math.random()).slice(2) + '.temp.tx')
+            WalletService.send(amount, 'file', fn, version).then((data)=>{
+                fs.readFile(fn, function(err, buffer) {
+                    if (err) return reject(err)
+                    //fse.remove(fn)
+                    return resolve(JSON.parse(buffer.toString()))
+                });
+            }).catch((err)=>{
+                return reject(err)
+            })
+        })
     }
 
     static finalize(fn){
         const cmd = `${grinPath} -r ${grinNode} -p ${password_} finalize -i ${fn}`
+        log.debug(cmd)
         return execPromise(cmd)
+    }
+
+    static finalizeSlate(slate){
+        let fn = path.join(tempTxDir, String(Math.random()).slice(2) + '.temp.tx.resp')
+        fs.writeFileSync(fn, JSON.stringify(slate))
+        return WalletService.finalize(fn)
     }
 
     static recover(seeds, password){

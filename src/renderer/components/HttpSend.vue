@@ -45,7 +45,7 @@
         <br/>
         <div class="field is-grouped">
           <div class="control">
-            <button class="button is-link" v-bind:class="{'is-loading':sending}" @click="send">{{ $t("msg.send") }}</button>
+            <button class="button is-link" v-bind:class="{'is-loading':sending}" @click="send2">{{ $t("msg.send") }}</button>
           </div>
           <div class="control">
             <button class="button is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
@@ -62,7 +62,9 @@
 </template>
 <script>
 import { messageBus } from '@/messagebus'
+const urllib = require('urllib');
 const fs = require('fs');
+import { constants } from 'fs';
 
 export default {
   name: "http-send",
@@ -75,8 +77,8 @@ export default {
   data() {
     return {
       errors: [],
-      amount: null,
-      address: '',
+      amount: 0.11,
+      address: 'https://poloniex.com/public?currency=GRIN&command=createDeposit&id=33b1cccb-9656-4653-af21-f7e0132bec09',
       slateVersion: 0,
       sending: false,
       sent: false
@@ -107,7 +109,7 @@ export default {
       return re.test(address);
     },
     validAmount(amount) {
-      if(parseFloat(amount) <= 0)return fasle
+      if(parseFloat(amount) <= 0)return false
       let re = /^\d+\.?\d*$/;
       return re.test(amount);
     },
@@ -172,6 +174,58 @@ export default {
         send.call(this)
       }
     },
+    send2(){
+      if(this.checkForm()&&!this.sending){
+        let tx_id
+        this.sending = true
+        let send2Async = async function(){
+          try{
+            const slate = await this.$walletService.createSlate(this.amount, 1)
+            tx_id = slate.id
+            //console.log(tx_id)
+            if(!tx_id){
+              this.errors.push(this.$t('msg.httpSend.TxCreateFailed'))
+            }else{
+              let url = `${this.address}/v1/wallet/foreign/receive_tx`
+              console.log(url)
+              const res = await urllib.request(url, {
+                method: 'post',
+                //contentType: "application/json",
+                contentType: '',
+                dataType: 'json',
+                timeout: '10s',
+                content: JSON.stringify(slate),
+                //data:JSON.stringify(slate),
+                //headers: {
+                //   'User-Agent': 'grin-client',
+                //'transfer-encoding': ''
+                //},
+              });
+              if (res && res.data && res.data.id === tx_id) {
+                //console.log(JSON.stringify(res.data))
+                console.log(`post transaction ok, start to finalize transaction ${tx_id}`);
+                let result = await this.$walletService.finalizeSlate(res.data)
+                this.sent = true
+                this.$dbService.addPostedUnconfirmedTx(tx_id)
+                this.$log.debug(`httpsend post tx ok; return:${JSON.stringify(result)}`)
+              }
+            }
+          }catch(error){
+            this.$log.error('http send error:' + error)  
+            this.$log.error(error.stack)
+            if (error.response) {   
+              let resp = error.response      
+              this.$log.error(`resp.data:${resp.data}; status:${resp.status};headers:${resp.headers}`)
+            }
+            this.errors.push(this.$t('msg.httpSend.TxFailed'))
+          }finally{
+            this.sending = false
+            messageBus.$emit('update')
+          }
+        }
+        send2Async.call(this)
+      }
+    },
     closeModal() {
       this.clearup()
       messageBus.$emit('close', 'windowHttpSend');
@@ -180,7 +234,7 @@ export default {
     clearup(){
       this.errors = []
       this.amount = null
-      this.address = ''
+      this.address = '',
       this.sending = false
       this.sent = false
       this.slateVersion = 0

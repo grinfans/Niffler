@@ -1,5 +1,5 @@
 var fs = require('fs');
-import { nifflerPath, logDir, getConfig, setConfig, updateConfig} from './config';
+import { nifflerPath, logDir, getConfig, setConfig, updateConfig, tempTxDir} from './config';
 
 export function checkFirstTime(){
     console.log(nifflerPath)
@@ -7,6 +7,7 @@ export function checkFirstTime(){
     if(isFirstTime){
         fs.mkdirSync(nifflerPath)
         fs.mkdirSync(logDir)
+        fs.mkdirSync(tempTxDir)
         setConfig({'firstTime':true})
     }
     else{
