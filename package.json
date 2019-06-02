@@ -81,7 +81,7 @@
   },
   "dependencies": {
     "animate.css": "^3.7.0",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "bulma": "^0.7.4",
     "electron-log": "^3.0.1",
     "external-ip": "^2.1.1",
