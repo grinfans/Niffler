@@ -127,7 +127,7 @@
   "dependencies": {
     "animate.css": "^3.7.0",
     "app-root-dir": "^1.0.2",
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "bulma": "^0.7.4",
     "electron-build-env": "^0.2.0",
     "electron-log": "^3.0.1",
@@ -150,7 +150,8 @@
     "vue-electron": "^1.0.6",
     "vue-i18n": "^8.10.0",
     "vue-moment": "^4.0.0",
-    "vue-truncate-filter": "^1.1.7"
+    "vue-truncate-filter": "^1.1.7",
+    "fstream": "^1.0.12"
   },
   "devDependencies": {
     "ajv": "^6.5.0",

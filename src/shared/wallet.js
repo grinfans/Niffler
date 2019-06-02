@@ -252,7 +252,7 @@ class WalletService {
 
     static finalize(fn){
         const cmd = `${grinPath} -r ${grinNode} -p ${password_} finalize -i ${fn}`
-        log.debug(cmd)
+        //log.debug(cmd)
         return execPromise(cmd)
     }
 
