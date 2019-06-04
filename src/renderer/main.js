@@ -11,6 +11,11 @@ import walletService from '../shared/wallet'
 import log from '../shared/logger'
 import dbService from '@/db'
 
+import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon'
+
+Vue.component('icon', Icon)
+
 Vue.walletService = Vue.prototype.$walletService = walletService
 Vue.dbService = Vue.prototype.$dbService = dbService
 Vue.log = Vue.prototype.$log = log

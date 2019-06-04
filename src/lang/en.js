@@ -97,6 +97,7 @@ const messages = {
       spent: 'Spent',
       noCmtFound: 'No Unspent Output Commit Found',
       noCmt:'No Unspent Output Commit',
+      copied: 'Copied'
     },
 
     fileSend:{

@@ -134,6 +134,7 @@
     "external-ip": "^2.1.1",
     "externalip": "^1.0.2",
     "fs-extra": "^7.0.1",
+    "fstream": "^1.0.12",
     "is-valid-domain": "0.0.5",
     "neon-cli": "^0.2.0",
     "optimist": "^0.6.1",
@@ -147,11 +148,11 @@
     "urllib": "^2.34.0",
     "uuid": "^3.2.1",
     "vue": "^2.5.16",
+    "vue-awesome": "^3.5.3",
     "vue-electron": "^1.0.6",
     "vue-i18n": "^8.10.0",
     "vue-moment": "^4.0.0",
-    "vue-truncate-filter": "^1.1.7",
-    "fstream": "^1.0.12"
+    "vue-truncate-filter": "^1.1.7"
   },
   "devDependencies": {
     "ajv": "^6.5.0",

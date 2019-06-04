@@ -97,6 +97,7 @@ const messages = {
       spent: '已用掉',
       noCmtFound: '没有找到相关未花费交易输出',
       noCmt:'没有未花费的交易输出',
+      copied: '已复制'
     },
 
     fileSend:{

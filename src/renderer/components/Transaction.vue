@@ -22,7 +22,7 @@
           </form>
         </div>
       </div>
-      <div v-for="tx in current_txs" style="margin-top: 20px">
+      <div v-for="tx in current_txs"  :key="tx.id" style="margin-top: 20px">
         <div class="level">
           <div class="level-left">
             <div>
