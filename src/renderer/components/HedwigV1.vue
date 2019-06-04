@@ -91,7 +91,6 @@ export default {
     internetReachable:function(newVal, oldVal){
       if(newVal){
         messageBus.$emit('hedwigRunning')
-        this.autoCheck(10*1000)
       }else{
         messageBus.$emit('hedwigFailed')
       }
@@ -107,7 +106,9 @@ export default {
       localReachable:false,
       address: '',
       socket: null,
-      copied: false
+      copied: false,
+
+      autoChecking: false
     }
   },
   created() {
@@ -168,6 +169,10 @@ export default {
             })
           }
         })
+      }
+      if(!this.autoChecking){
+        this.autoCheck(10*1000)
+        this.autoChecking = true
       }
     },
 

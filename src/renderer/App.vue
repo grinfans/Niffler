@@ -55,8 +55,11 @@
           <div class="column column is-1" style="margin-top: auto; margin-left:25px;">
            
             <button class="button is-link is-outlined" @click="openHedwigV1 = true">
-               <span class="icon-running animated infinite pulse delay-2s" v-show="hedwigRunning"></span>{{ $t("msg.app.hedwig") }}
+               <span class="icon-running icon-status animated infinite pulse delay-2s" v-if="hedwigRunning"></span>
+               <span class="icon-failed icon-status animated infinite pulse delay-2s" v-if="hedwigFailed"></span>
+               {{ $t("msg.app.hedwig") }}
             </button>
+
           </div>
 
           <div class="column is-offset-1 is-2" style="margin-left:80px;">
@@ -164,7 +167,8 @@
         height:null,
         isAnimate:false,
         walletExist:false,
-        hedwigRunning:false
+        hedwigRunning:false,
+        hedwigFailed:false
     }},
     mounted() {
       this.checkNewVersion()
@@ -219,8 +223,14 @@
         this.$log.warn('Found walletExisted during init new one')
         this.walletExist = true
       })
-      messageBus.$on('hedwigRunning', ()=>{this.hedwigRunning=true})
-      messageBus.$on('hedwigFailed', ()=>{this.hedwigRunning=false})
+      messageBus.$on('hedwigRunning', ()=>{
+        this.hedwigRunning = true
+        this.hedwigFailed = false
+      })
+      messageBus.$on('hedwigFailed', ()=>{
+        this.hedwigRunning= false
+        this.hedwigFailed = true
+      })
     },
     
     watch: {
@@ -325,12 +335,18 @@
 .icon-running{
   background: #00aa72;
   border-color: #e5f8f1;
+}
+.icon-failed{
+  background: #D8000C;
+  border-color: #FFBABA;
+}
+.icon-status{
   display: inline-block;
   -webkit-border-radius: 25px;
   -moz-border-radius: 25px;
   border-radius: 25px;
-  height: 18px;
-  width: 18px;
+  height: 15px;
+  width: 15px;
   border-width: 4px;
   border-style: solid;
   margin-right: 4px;
