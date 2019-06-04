@@ -87,7 +87,16 @@ export default {
       default: false
     }
   },
-  
+  watch: {
+    internetReachable:function(newVal, oldVal){
+      if(newVal){
+        messageBus.$emit('hedwigRunning')
+        this.autoCheck(10*1000)
+      }else{
+        messageBus.$emit('hedwigFailed')
+      }
+    }
+  },
   data() {
     return {
       errors: [],
@@ -198,6 +207,14 @@ export default {
       this.started = false
       this.copied = false
       //this.localReachable = false
+    },
+
+    autoCheck(interval){
+      setInterval(()=>{
+        if(this.internetReachable){
+          this.checkReachable()
+        }
+      }, interval)
     },
 
     checkReachable(){
