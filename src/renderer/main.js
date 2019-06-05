@@ -22,16 +22,19 @@ Vue.log = Vue.prototype.$log = log
 
 import en from '../lang/en'
 import zh from '../lang/zh'
+import ru from '../lang/ru'
 
 Vue.use(VueI18n)
 const messages = {
   en,
-  zh
+  ru,
+  zh,
 }
 
+import {locale} from '../shared/config'
 const i18n = new VueI18n({
-  locale: remote.app.getLocale().toLowerCase().startsWith('zh')?'zh':'en',
-  //locale: 'en',
+  locale: locale,
+  //locale: 'ru',
   messages
 })
 

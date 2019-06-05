@@ -73,9 +73,6 @@
                   <button class="button is-small is-link is-outlined" aria-haspopup="true" aria-controls="dropdown-menu"
                   @click="isDroppingDown3=!isDroppingDown3;isDroppingDown=false;isDroppingDown2=false" style="width:45px">
                     <span>{{ $t("msg.more") }}</span>
-                    <span class="icon is-small">
-                      <i class="fas fa-angle-down" aria-hidden="true"></i>
-                    </span>
                   </button>
                 </div>
                 <div class="dropdown-menu" id="dropdown-menu" role="menu" style="min-width:0">
@@ -84,6 +81,12 @@
                       @click="openCheck = true">
                       {{ $t("msg.check.title") }}
                     </a>
+                    
+                    <a href="#" class="dropdown-item" style="line-height: 1.2;font-size: 0.8rem;" 
+                      @click="openLang=true">
+                      {{ $t("msg.lang.title") }}
+                    </a>
+
                     <hr class="dropdown-divider">
                     <a href="#" class="dropdown-item" style="line-height: 1.2;font-size: 0.8rem;" 
                        @click.prevent="logout">
@@ -107,7 +110,8 @@
       <file-send :showModal="openFileSend"></file-send>
       <finalize :showModal="openFinalize"></finalize>
       <hedwig-v1 :showModal="openHedwigV1"></hedwig-v1>
-      <check :showModal="openCheck"></Check>
+      <check :showModal="openCheck"></check>
+      <lang :showModal="openLang"></lang>
     </div>
     <landing v-bind:walletExist="walletExist" v-else></landing>
   </div>
@@ -127,6 +131,7 @@
   import Finalize from '@/components/Finalize'
   import HedwigV1 from '@/components/HedwigV1'
   import Check from '@/components/Check'
+  import Lang from '@/components/Lang'
 
   import Landing from '@/components/Landing'
   import checkUpdate from '../shared/updateChecker'
@@ -148,7 +153,8 @@
       Finalize,
       HedwigV1,
       Check,
-      Landing
+      Landing,
+      Lang,
     },
     data(){
       return {
@@ -159,6 +165,7 @@
         openFinalize: false,
         openHedwigV1: false,
         openCheck: false,
+        openLang:false,
 
         isDroppingDown: false,
         isDroppingDown2: false,
@@ -201,6 +208,9 @@
         }
         if(window =='windowCheck'){
           this.openCheck = false
+        }
+        if(window =='windowLang'){
+          this.openLang = false
         }
       })
       messageBus.$on('restoredThenLogin', ()=>{
@@ -272,6 +282,9 @@
       }
     },
     methods: {
+      lang(){
+        this.$i18n.locale = 'en'
+      },
       checkOwnerApi(){
         let ret = this.$walletService.getNodeHeight()
         if(!ret){return false}

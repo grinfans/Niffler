@@ -188,6 +188,12 @@ const messages = {
       
       start: 'Start',
       stopCheckMsg: 'Check was cancelled'
+    },
+
+    lang: {
+      title: 'Select Language',
+      lang: 'Language',
+      select: 'Select'
     }
 
   }

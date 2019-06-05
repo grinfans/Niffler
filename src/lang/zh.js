@@ -190,6 +190,12 @@ const messages = {
       start: '开始同步',
       stopCheckMsg: '同步已经取消',
       checkedMsg: '同步完成'
+    },
+
+    lang: {
+      title: '选择语言',
+      lang: '语言',
+      select: '选择'
     }
 
   }
