@@ -228,7 +228,8 @@ class WalletService {
     }
 
     static send(amount, method, dest, version){
-        const cmd = `${grinPath} -r ${grinNode} -p ${password_} send -m ${method} -d ${dest} -v ${version} ${amount}`
+        let dest_ = '"' + path.resolve(dest) + '"'
+        const cmd = `${grinPath} -r ${grinNode} -p ${password_} send -m ${method} -d ${dest_} -v ${version} ${amount}`
         //log.debug(cmd)
         return execPromise(cmd)
     }
@@ -251,7 +252,8 @@ class WalletService {
     }
 
     static finalize(fn){
-        const cmd = `${grinPath} -r ${grinNode} -p ${password_} finalize -i ${fn}`
+        let fn_ = '"' + path.resolve(fn) + '"'
+        const cmd = `${grinPath} -r ${grinNode} -p ${password_} finalize -i ${fn_}`
         //log.debug(cmd)
         return execPromise(cmd)
     }
