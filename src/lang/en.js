@@ -154,6 +154,7 @@ const messages = {
       failed: 'Start Failed, Maybe wrong password',
       failed2: 'HTTP listen failed, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
       failed3: 'Failed to get your public ip; try it later',
+      failed4: 'Localhost http listen is running(http://127.0.0.1:3415). Howerver, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
       ip: 'your public ip'
     },
 

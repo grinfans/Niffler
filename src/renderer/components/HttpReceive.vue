@@ -96,6 +96,7 @@ export default {
       errors: [],
       starting:false,
       started:false,
+      localReachable: false,
       running:false,
       ip: this.$t('msg.httpReceive.ip')
     }
@@ -113,7 +114,7 @@ export default {
           }
           this.$log.debug('Http listen is locally reachable.')
           this.$log.debug('checkRunning right now.')
-          this.checkRunning()
+          setTimeout(()=>this.checkRunning(), 2*1000)
         })
       }
     },
@@ -157,6 +158,11 @@ export default {
     },
     
     checkRunning(){
+      this.checklocalReachable().catch((err)=>{
+        if(err.response){
+          this.localReachable = true
+        }
+      })
       this.getIP(this.$log).then((ip)=>{
         this.ip = ip
         this.$log.debug('Get ip: ' + ip)
@@ -173,7 +179,11 @@ export default {
           }else{
             if(this.starting){
               this.starting = false
-              this.errors.push(this.$t('msg.httpReceive.failed2'))
+              if(this.localReachable){
+                this.errors.push(this.$t('msg.httpReceive.failed4'))
+              }else{
+                this.errors.push(this.$t('msg.httpReceive.failed2'))
+              }
             }
             this.running = false
             this.$log.debug('Failed to connect ', url)

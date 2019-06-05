@@ -154,6 +154,7 @@ const messages = {
       failed: '启动失败，可能是密码错误',
       failed2: '监听失败，你的对外ip无法被访问到; 请使用交易文件的方法 或者 Hedwig 来收发Grin.',
       failed3: '无法获取你的IP地址，请过段时间再试下',
+      failed4: '本地HTTP监听(http://127.0.0.1:3415)已经启动。但是你的对外ip无法被访问到; 请使用交易文件的方法 或者 Hedwig 来收发Grin.',
       ip: '你的公网IP'
     },
 
