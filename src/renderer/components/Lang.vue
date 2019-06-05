@@ -61,6 +61,8 @@ export default {
     select(){
       this.$i18n.locale = this.localeSelected
       setLocale(this.localeSelected)
+      messageBus.$emit('selectLocale', this.localeSelected)
+      this.closeModal()
     },
     closeModal() {
       messageBus.$emit('close', 'windowLang');

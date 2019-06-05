@@ -189,9 +189,9 @@ const messages = {
     },
     
     lang: {
-      title: 'Select Language',
-      lang: 'Language',
-      select: 'Select'
+      title: 'Выберите язык',
+      lang: 'язык',
+      select: 'Выбрать'
     }
 
   }
