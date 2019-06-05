@@ -21,7 +21,7 @@ const messages = {
     save: 'Save',
 
     welcome: 'Welcome to use Niffler wallet',
-    
+    back: 'Back',
     msg: 'Message',
     more: 'More',
 

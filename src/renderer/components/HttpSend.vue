@@ -64,6 +64,7 @@
 import { messageBus } from '@/messagebus'
 const urllib = require('urllib');
 const fs = require('fs');
+const urljoin = require('url-join');
 import { constants } from 'fs';
 
 export default {
@@ -182,12 +183,11 @@ export default {
           try{
             const slate = await this.$walletService.createSlate(this.amount, 1)
             tx_id = slate.id
-            //console.log(tx_id)
             if(!tx_id){
               this.errors.push(this.$t('msg.httpSend.TxCreateFailed'))
             }else{
-              let url = `${this.address}/v1/wallet/foreign/receive_tx`
-              console.log(url)
+              let url = urljoin(this.address, '/v1/wallet/foreign/receive_tx')
+              this.$log.debug('http send to: ' + url)
               const res = await urllib.request(url, {
                 method: 'post',
                 //contentType: "application/json",
@@ -202,8 +202,7 @@ export default {
                 //},
               });
               if (res && res.data && res.data.id === tx_id) {
-                //console.log(JSON.stringify(res.data))
-                console.log(`post transaction ok, start to finalize transaction ${tx_id}`);
+                this.$log.debug(`post transaction ok, start to finalize transaction ${tx_id}`);
                 let result = await this.$walletService.finalizeSlate(res.data)
                 this.sent = true
                 this.$dbService.addPostedUnconfirmedTx(tx_id)
