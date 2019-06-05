@@ -114,7 +114,7 @@ export default {
           }
           this.$log.debug('Http listen is locally reachable.')
           this.$log.debug('checkRunning right now.')
-          setTimeout(()=>this.checkRunning(), 2*1000)
+          setTimeout(()=>this.checkRunning(), 1.5*1000)
         })
       }
     },
