@@ -2,12 +2,12 @@
 
 <div class="modal" :class="{'is-active': showModal}">
   <div class="modal-background" @click="closeModal"></div>
-  <div class="modal-card" style="width:480px">
+  <div class="modal-card" style="width:300px">
     <header class="modal-card-head">
       <p class="modal-card-title is-size-4 has-text-link has-text-weight-semibold">{{ $t("msg.lang.title") }}</p>
       <button class="delete" aria-label="close" @click="closeModal"></button>
     </header>
-    <section class="modal-card-body" style="height:300px;background-color: whitesmoke;">
+    <section class="modal-card-body" style="height:200px;background-color: whitesmoke;">
       
       
       <div class="field">
@@ -21,7 +21,6 @@
             </select>
           </div>
         </div>
-        <p class="help"> {{ $t("msg.httpSend.salteVersionHelp") }}</p>
       </div>
       
        <br/>

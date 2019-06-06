@@ -129,7 +129,7 @@ export default {
       if (!this.amount || !this.validAmount(this.amount)) {
         this.errors.push(this.$t('msg.httpSend.WrongAmount'));
       }
-      if (!this.enough(this.amount)) {
+      if (this.validAmount(this.amount) && !this.enough(this.amount)) {
         this.errors.push(this.$t('msg.httpSend.NotEnough'));
       }
       if (!this.errors.length) {

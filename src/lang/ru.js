@@ -23,7 +23,7 @@ const messages = {
     welcome: 'Добро пожаловать в Niffler кошелек',
     
     msg: 'Сообщение',
-    more: 'Дополнительно',
+    more: 'Больше',
 
     back: 'отступать',
     login: {
@@ -92,7 +92,7 @@ const messages = {
     },
 
     commit:{
-      unspentCmt: 'Unspent Output Commit',
+      unspentCmt: 'Неизрасходованный вывод транзакции',
       heightCreated: 'Высота блока при создании',
       unspent: 'Неизрасходованный',
       spent: 'Израсходованный',
