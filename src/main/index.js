@@ -25,6 +25,13 @@ if (process.platform === 'win32') {
 
 log.debug(`Platform:${process.platform}`)
 
+import {exec, execFile, spawn, fork} from 'child_process'
+if(process.platform!=='win32'){
+  exec('pkill grin-wallet')
+}else{
+  exec('taskkill -f /im grin-wallet.exe')
+}
+
 let mainWindow
 let firstQuit = true
 let firstClose = true
