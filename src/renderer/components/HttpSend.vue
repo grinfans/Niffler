@@ -211,6 +211,9 @@ export default {
                 this.sent = true
                 this.$dbService.addPostedUnconfirmedTx(tx_id)
                 this.$log.debug(`httpsend post tx ok; return:${JSON.stringify(result)}`)
+              }else{
+                this.$log.debug('post transaction return bad response: ' + JSON.stringify(res))
+                this.errors.push(this.$t('msg.httpSend.TxResponseFailed'))
               }
             }
           }catch(error){

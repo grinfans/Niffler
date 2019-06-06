@@ -117,6 +117,7 @@ const messages = {
       WrongTxData: 'Не удалось создать транзакцию',
       success: 'Успешная транзакция',
       TxFailed: 'Ошибка отправки транзакции',
+      TxResponseFailed: 'Failed to get right respose from receiver',
       salteVersion: 'Версия Slate файла',
       salteVersionHelp: 'Если вам не удалось отправить Grin, попробуйте изменить версию Slate файла'
     },
