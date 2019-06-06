@@ -62,6 +62,11 @@ class WalletService {
         password_ = password
     }
 
+    static passwordUndefined(){
+        if(!password_)return true
+        return false
+    }
+
     static jsonRPC(method, params){
         const headers = {
             'Content-Type': 'application/json'

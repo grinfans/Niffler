@@ -176,6 +176,10 @@ export default {
       }
     },
     send2(){
+      if(this.$walletService.passwordUndefined()){
+        this.$log.debug('Use send1.')
+        return this.send()
+      }
       if(this.checkForm()&&!this.sending){
         let tx_id
         this.sending = true
