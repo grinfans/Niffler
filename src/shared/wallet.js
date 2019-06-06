@@ -45,6 +45,9 @@ function execPromise(command) {
     });
 }
 
+function addQuotations(s){
+    return '"' + s +'"'
+}
 class WalletService {
     static initClient() {
         if(fs.existsSync(apiSecretPath)){
@@ -133,7 +136,7 @@ class WalletService {
         if(platform === 'linux'){
             ownerAPI = execFile(grinPath, ['-r', grinNode, 'owner_api']) 
         }else{
-            const cmd = platform==='win'? `${grinPath} -r ${grinNode} --pass ${password} owner_api`:
+            const cmd = platform==='win'? `${grinPath} -r ${grinNode} --pass ${addQuotations(password)} owner_api`:
                                         `${grinPath} -r ${grinNode} owner_api`
             //log.debug(`platform: ${platform}; start owner api cmd: ${cmd}`)
             ownerAPI =  exec(cmd)
@@ -158,7 +161,7 @@ class WalletService {
         if(platform==='linux'){
             listenProcess =  execFile(grinPath, ['-e', 'listen']) 
         }else{
-            const cmd = platform==='win'? `${grinPath} -e --pass ${password} listen`:
+            const cmd = platform==='win'? `${grinPath} -e --pass ${addQuotations(password)} listen`:
                                         `${grinPath} -e listen`
             //log.debug(`platform: ${platform}; start listen cmd: ${cmd}`)
             listenProcess =  exec(cmd)
@@ -193,7 +196,7 @@ class WalletService {
     }
 
     static new(password){
-        const cmd = platform==='win'? `${grinPath} -r ${grinNode} --pass ${password} init`:
+        const cmd = platform==='win'? `${grinPath} -r ${grinNode} --pass ${addQuotations(password)} init`:
                                       `${grinPath} -r ${grinNode} init`
         log.debug(`function new: platform: ${platform}; grin bin: ${grinPath}; grin node: ${grinNode}`); 
         let createProcess = exec(cmd)
@@ -234,7 +237,7 @@ class WalletService {
 
     static send(amount, method, dest, version){
         let dest_ = '"' + path.resolve(dest) + '"'
-        const cmd = `${grinPath} -r ${grinNode} -p ${password_} send -m ${method} -d ${dest_} -v ${version} ${amount}`
+        const cmd = `${grinPath} -r ${grinNode} -p ${addQuotations(password_)} send -m ${method} -d ${dest_} -v ${version} ${amount}`
         //log.debug(cmd)
         return execPromise(cmd)
     }
@@ -258,7 +261,7 @@ class WalletService {
 
     static finalize(fn){
         let fn_ = '"' + path.resolve(fn) + '"'
-        const cmd = `${grinPath} -r ${grinNode} -p ${password_} finalize -i ${fn_}`
+        const cmd = `${grinPath} -r ${grinNode} -p ${addQuotations(password_)} finalize -i ${fn_}`
         //log.debug(cmd)
         return execPromise(cmd)
     }
