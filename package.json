@@ -93,7 +93,8 @@
     "vue-i18n": "^8.10.0",
     "vue-moment": "^4.0.0",
     "vue-truncate-filter": "^1.1.7",
-    "tar": ">=4.4.2"
+    "tar": ">=4.4.2",
+    "js-yaml": ">=3.13.1"
   },
   "devDependencies": {
     "ajv": "^6.5.0",
