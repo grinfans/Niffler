@@ -42,7 +42,7 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;
 
               </p>
-              <small>{{ $t("msg.commit.heightCreated") }}: {{ct.height}} </small>
+              <small>{{ $t("msg.commit.heightCreated") }}: <a @click="open(`https://grin-fans.org/block/${ct.height}`)">{{ct.height}}</a></small>
             </div>
           </div>
           <div class="level-right">
