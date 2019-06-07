@@ -42,7 +42,10 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;
 
               </p>
-              <small>{{ $t("msg.commit.heightCreated") }}: <a @click="open(`https://grin-fans.org/block/${ct.height}`)">{{ct.height}}</a></small>
+              <small>{{ $t("msg.commit.heightCreated") }}: 
+                <span  v-if="ct.status=='Unconfirmed'">{{ct.height}}</span>
+                <a v-else @click="open(`https://grin-fans.org/block/${ct.height}`)">{{ct.height}}</a>
+              </small>
             </div>
           </div>
           <div class="level-right">
