@@ -94,7 +94,8 @@
     "vue-moment": "^4.0.0",
     "vue-truncate-filter": "^1.1.7",
     "tar": ">=4.4.2",
-    "js-yaml": ">=3.13.1"
+    "js-yaml": ">=3.13.1",
+    "querystringify": "^2.0.0"
   },
   "devDependencies": {
     "ajv": "^6.5.0",
