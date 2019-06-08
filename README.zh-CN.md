@@ -18,10 +18,10 @@ Niffler钱包 新加了 **hedwig** v1 代理服务; 现在，没有公共ip的�
 #### 中国大陆用户快速下载
 
 >Windows
-https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-win-0.3.2.exe
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-win-0.3.3.exe
 
 >Mac
-https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-mac-0.3.2.dmg
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-mac-0.3.3.dmg
 
 
 ## 联系
