@@ -89,3 +89,5 @@ pull request 和 bug报告 当然非常欢迎.
 
 翻译到其他语言也是很需要的. 只要翻译下这个[语言文件夹](https://github.com/grinfans/niffler/tree/master/src/lang)里的文字即可.
 
+感谢  [@yozx](https://github.com/yozx) 翻译俄语版本.
+
