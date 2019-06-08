@@ -75,3 +75,5 @@ We now have a wonderful logo <img src="/src/renderer/assets/logo.png" width="64"
 Logo made by [@Duoasa](https://weibo.com/u/3197271025), and also thanks [@机械师区块链](https://weibo.com/u/6318956004)
 
 Translate to other languages is wanted, too. checkout [lang folder](https://github.com/grinfans/niffler/tree/master/src/lang).
+
+Thanks to  [@yozx](https://github.com/yozx) for Russian version.
