@@ -77,7 +77,7 @@ export default {
            
           }).catch((error) => {
             return this.error = true
-        })}, 250)
+        })}, 500)
       this.resetErrors()
       },
     resetErrors(){
