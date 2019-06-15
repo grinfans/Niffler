@@ -186,11 +186,12 @@
       if(this.$walletService.isExist()){
         this.walletExist = true
       }
-      this.checkOwnerApi()
       this.getHeight()
       this.$log.debug(`Render main window mounted:height ${this.height}; owner_api running?${this.ownerApiRunning};wallet exists? ${this.walletExist}`)
     },
     created () {
+      this.checkOwnerApi()
+
       if(locale==='ru'){
         this.isRu = true
       }
@@ -254,6 +255,7 @@
         this.hedwigRunning= false
         this.hedwigFailed = true
       })
+      
     },
     
     watch: {
