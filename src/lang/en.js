@@ -189,7 +189,8 @@ const messages = {
       intro2: "For this reason, Grin provides a manual check command that scans the chain's UTXO set for any outputs belonging to your wallet, and ensures they're in a consistent state with your local wallet database.",
       
       start: 'Start',
-      stopCheckMsg: 'Check was cancelled'
+      stopCheckMsg: 'Check was cancelled',
+      checkedMsg: 'Check balance finished'
     },
 
     lang: {
