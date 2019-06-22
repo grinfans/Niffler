@@ -33,7 +33,7 @@
 
       <div class="center" v-show="toDrag" id="filebox2" v-bind:class="{'drag-over':isDragOver}"
          @dragover.prevent="isDragOver=true" @dragleave.prevent="isDragOver=false" @drop.prevent="drop">
-        <p class="is-size-5 has-text-link">{{ $t("msg.finalize.dropMsg") }}</p>
+        <p class="is-size-5 has-text-link has-text-weight-semibold">{{ $t("msg.finalize.dropMsg") }}</p>
       </div>
 
     </section>
