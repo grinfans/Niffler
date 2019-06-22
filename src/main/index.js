@@ -100,6 +100,19 @@ async function launch(){
   }
 } 
 
+
+var shouldQuit = app.makeSingleInstance(function (commandLine, workingDirectory) {
+  // Someone tried to run a second instance, we should focus our window.
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.focus();
+  }
+});
+
+if (shouldQuit) {
+  app.quit();
+}
+
 app.on('ready', ()=>{
   createWindow()
   if (process.platform === 'darwin') {
