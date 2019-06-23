@@ -285,7 +285,7 @@
       },
       ownerApiRunning:function(newVal, old){
         if(newVal){
-          ipcRenderer.send('resize', 800, 800)
+          ipcRenderer.send('resize', 800, 880)
           this.autoRefresh(60*2.5*1000)
         }else{
           ipcRenderer.send('resize', 600, 480)
