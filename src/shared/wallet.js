@@ -105,16 +105,27 @@ class WalletService {
     static getTransactions(){
         return client.get('/v1/wallet/owner/retrieve_txs?refresh')
     }
+
+    static getTransactions2(toRefresh, tx_id, tx_salte_id){
+        return WalletService.jsonRPC('retrieve_txs', [toRefresh, tx_id, tx_salte_id])
+    }
+
     static getCommits(show_spent=true){
         const url = show_spent?
             '/v1/wallet/owner/retrieve_outputs?refresh&show_spent':
             '/v1/wallet/owner/retrieve_outputs?refresh'
         return client.get(url)
     }
+
     static cancelTransactions(tx_id){
         const url = `/v1/wallet/owner/cancel_tx?tx_id=${tx_id}`
         return client.post(url)
     }
+
+    static cancelTransactions2(tx_id, tx_salte_id){
+        return WalletService.jsonRPC('cancel_tx', [tx_id, tx_salte_id])
+    }
+
     static receiveTransaction(tx_data){
         return client.post('/v1/wallet/foreign/receive_tx', tx_data)
     }

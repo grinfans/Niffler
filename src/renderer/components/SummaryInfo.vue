@@ -28,7 +28,7 @@
     },
 
     mounted () {
-      this.getSummaryinfo()
+      this.getSummaryinfo2()
     },
     created () {
       messageBus.$on('update', ()=>this.getSummaryinfo2())
@@ -56,7 +56,7 @@
       getSummaryinfo2: function() {
         this.$walletService.getSummaryInfo2(10)
           .then( (res) => {
-            data = res.data.result.OK
+            let data = res.data.result.Ok
             this.spendable = data[1]['amount_currently_spendable']/1000000000
             this.total = data[1]['total']/1000000000
             this.unconfirmed = data[1]['amount_awaiting_confirmation']/1000000000
