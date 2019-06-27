@@ -81,6 +81,8 @@ const messages = {
     info: {
       spendable: 'Расходуемые',
       total: 'Всего',
+      unfinalization: 'Hезаконченный',
+      immature: 'Hезрелый'
     },
 
     txs:{

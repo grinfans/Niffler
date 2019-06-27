@@ -80,6 +80,8 @@ const messages = {
     info:{
       spendable: '可用余额',
       total: '总计',
+      unfinalization: '等待对方完成',
+      immature: '未成熟'
     },
 
     txs:{

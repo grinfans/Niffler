@@ -310,20 +310,25 @@
             this.ownerApiRunning = false
           })
       },
-      getHeight(){
-        let ret = this.$walletService.getNodeHeight()
-        if(!ret)return "0"
-        ret.then(
-          (res) =>{
-            this.height = res.data[0]
-          }).catch((error)=>{})
-      },
+      
       //getHeight(){
-      //  this.$walletService.getNodeHeight2().then(
+      //  let ret = this.$walletService.getNodeHeight()
+      //  if(!ret)return "0"
+      //  ret.then(
       //    (res) =>{
-      //      this.height = parseInt(res.data.result.Ok.height)
+      //      this.height = res.data[0]
       //    }).catch((error)=>{})
       //},
+      
+      getHeight(){
+        this.$walletService.getNodeHeight2().then(
+          (res) =>{
+            this.height = parseInt(res.data.result.Ok.height)
+          }).catch((error)=>{
+            this.$log.error(error)
+          })
+      },
+
       logout(){
         this.$log.debug('logout')
         ipcRenderer.send('quit')

@@ -80,6 +80,8 @@ const messages = {
     info: {
       spendable: 'Spendable',
       total: 'Total',
+      unfinalization: 'Unfinalization',
+      immature: 'Immature'
     },
 
     txs:{

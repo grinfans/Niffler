@@ -97,6 +97,11 @@ class WalletService {
         const url = `/v1/wallet/owner/retrieve_summary_info?refresh&minimum_confirmations=${minimum_confirmations}`
         return client.get(url)
     }
+
+    static getSummaryInfo2(minimum_confirmations){
+        return WalletService.jsonRPC('retrieve_summary_info', [true, minimum_confirmations])
+    }
+
     static getTransactions(){
         return client.get('/v1/wallet/owner/retrieve_txs?refresh')
     }
