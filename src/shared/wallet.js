@@ -117,6 +117,10 @@ class WalletService {
         return client.get(url)
     }
 
+    static getCommits2(include_spent, toRefresh, tx_id){
+        return WalletService.jsonRPC('retrieve_outputs', [include_spent, toRefresh, tx_id])
+    }
+
     static cancelTransactions(tx_id){
         const url = `/v1/wallet/owner/cancel_tx?tx_id=${tx_id}`
         return client.post(url)

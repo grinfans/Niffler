@@ -149,9 +149,10 @@
       },
       
       getCommits() {
-        this.$walletService.getCommits(false)
-          .then( (res) => {
-            this.total_commits = this.processCommits(res.data[1].reverse())
+        this.$walletService.getCommits2(false, true, null)
+          .then((res) => {
+
+            this.total_commits = this.processCommits(res.data.result.Ok[1].reverse())
            
             this.current_commits = this.total_commits.slice(0, this.count_per_page)
             if (this.total_commits.length%this.count_per_page ==0){
