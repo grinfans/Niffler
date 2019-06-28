@@ -1,6 +1,6 @@
 import fs from 'fs'
 const fse = require('fs-extra')
-const path = require('path');
+const path = require('path')
 import {exec, execFile, spawn, fork} from 'child_process'
 
 import axios from 'axios'
@@ -133,15 +133,23 @@ class WalletService {
     static receiveTransaction(tx_data){
         return client.post('/v1/wallet/foreign/receive_tx', tx_data)
     }
+
     static issueSendTransaction(tx_data){
         return client.post('/v1/wallet/owner/issue_send_tx', tx_data)
     }
+
     static issueSendTransaction2(tx_data){
-        return WalletService.jsonRPC('initiate_tx', tx_data)
+        return WalletService.jsonRPC('init_send_tx',  {'args': tx_data})
     }
+
+    static lock_outputs(slate, participant_id){
+        return WalletService.jsonRPC('tx_lock_outputs',  [slate, participant_id])
+    }
+
     static finalizeTransaction(tx_data){
         return client.post('/v1/wallet/owner/finalize_tx', tx_data)
     }
+
     static postTransaction(tx_data, isFluff){
         const url = isFluff?
             '/v1/wallet/owner/post_tx?fluff':
