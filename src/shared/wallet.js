@@ -20,6 +20,7 @@ let client
 let password_
 const wallet_host = 'http://localhost:3420'
 const jsonRPCUrl = 'http://localhost:3420/v2/owner'
+const jsonRPCForeignUrl = 'http://localhost:3420/v2/foreign'
 
 function enableForeignApi(){
     const re = /owner_api_include_foreign(\s)*=(\s)*false/
@@ -70,7 +71,7 @@ class WalletService {
         return false
     }
 
-    static jsonRPC(method, params){
+    static jsonRPC(method, params, isForeign){
         const headers = {
             'Content-Type': 'application/json'
         }
@@ -80,7 +81,8 @@ class WalletService {
             method: method,
             params: params,
         }
-        return client.post(jsonRPCUrl, body, headers)
+        const url = isForeign?jsonRPCForeignUrl:jsonRPCUrl
+        return client.post(url, body, headers)
     }
     
     static getNodeHeight(){
@@ -90,7 +92,7 @@ class WalletService {
     }
 
     static getNodeHeight2(){
-        return WalletService.jsonRPC('node_height', [])
+        return WalletService.jsonRPC('node_height', [], false)
     }
     
     static getSummaryInfo(minimum_confirmations){
@@ -99,7 +101,7 @@ class WalletService {
     }
 
     static getSummaryInfo2(minimum_confirmations){
-        return WalletService.jsonRPC('retrieve_summary_info', [true, minimum_confirmations])
+        return WalletService.jsonRPC('retrieve_summary_info', [true, minimum_confirmations], false)
     }
 
     static getTransactions(){
@@ -107,7 +109,7 @@ class WalletService {
     }
 
     static getTransactions2(toRefresh, tx_id, tx_salte_id){
-        return WalletService.jsonRPC('retrieve_txs', [toRefresh, tx_id, tx_salte_id])
+        return WalletService.jsonRPC('retrieve_txs', [toRefresh, tx_id, tx_salte_id], false)
     }
 
     static getCommits(show_spent=true){
@@ -118,7 +120,7 @@ class WalletService {
     }
 
     static getCommits2(include_spent, toRefresh, tx_id){
-        return WalletService.jsonRPC('retrieve_outputs', [include_spent, toRefresh, tx_id])
+        return WalletService.jsonRPC('retrieve_outputs', [include_spent, toRefresh, tx_id], false)
     }
 
     static cancelTransactions(tx_id){
@@ -132,6 +134,10 @@ class WalletService {
 
     static receiveTransaction(tx_data){
         return client.post('/v1/wallet/foreign/receive_tx', tx_data)
+    }
+
+    static receiveTransaction2(slate, account, message){
+        return WalletService.jsonRPC('receive_tx', [slate, account, message], true)
     }
 
     static issueSendTransaction(tx_data){

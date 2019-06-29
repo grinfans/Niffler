@@ -93,7 +93,6 @@ export default {
           (res) => {
             if (fn_output){
               let slate = res.data.result.Ok
-              console.log(slate)
               fs.writeFileSync(fn_output, JSON.stringify(slate))
               this.$walletService.lock_outputs(slate, 0).then(
                 (res) =>{

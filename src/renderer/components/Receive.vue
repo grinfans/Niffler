@@ -77,14 +77,11 @@ export default {
           defaultPath: filePath
         })
         if(fn_output){
-          this.$walletService.receiveTransaction(content)
+          this.$walletService.receiveTransaction2(JSON.parse(content), null, null)
               .then( (res) => {
-                if(typeof(res.data)==='string'){
-                  //v2 version
-                  fs.writeFileSync(fn_output, res.data)
-                }else{
-                  fs.writeFileSync(fn_output, JSON.stringify(res.data))
-                }
+                console.log(res)
+                let slate = res.data.result.Ok
+                fs.writeFileSync(fn_output, JSON.stringify(slate))
                 messageBus.$emit('update')
                 this.closeModal()
                 this.$log.debug(`Generated tx file ok; return ${res.data}`)
