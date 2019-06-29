@@ -156,6 +156,10 @@ class WalletService {
         return client.post('/v1/wallet/owner/finalize_tx', tx_data)
     }
 
+    static finalizeTransaction2(slate){
+        return WalletService.jsonRPC('finalize_tx',  [slate])
+    }
+
     static postTransaction(tx_data, isFluff){
         const url = isFluff?
             '/v1/wallet/owner/post_tx?fluff':
@@ -163,6 +167,10 @@ class WalletService {
         return client.post(url, tx_data)
     }
 
+    static postTransaction2(tx, isFluff){
+        return WalletService.jsonRPC('post_tx',  [tx, isFluff])
+    }
+ 
     static start(password){
         WalletService.stopProcess('ownerAPI')
         enableForeignApi()

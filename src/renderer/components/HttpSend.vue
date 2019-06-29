@@ -26,26 +26,10 @@
           </div>
         </div>
 
-        <div class="field">
-        <label class="label">{{ $t("msg.httpSend.salteVersion") }}</label>
-
-          <div class="control">
-            <div class="select">
-              <select v-model="slateVersion">
-                <option>0</option>
-                <option>1</option>
-                <option>2</option>
-              </select>
-            </div>
-          </div>
-          <p class="help"> {{ $t("msg.httpSend.salteVersionHelp") }}</p>
-
-        </div>
-
         <br/>
         <div class="field is-grouped">
           <div class="control">
-            <button class="button is-link" v-bind:class="{'is-loading':sending}" @click="send2">{{ $t("msg.send") }}</button>
+            <button class="button is-link" v-bind:class="{'is-loading':sending}" @click="send3">{{ $t("msg.send") }}</button>
           </div>
           <div class="control">
             <button class="button is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
@@ -231,6 +215,83 @@ export default {
         }
         send2Async.call(this)
       }
+    },
+
+    send3(){
+      if(this.checkForm()&&!this.sending){
+        let tx_id
+        this.sending = true
+
+        let tx_data = {
+          "amount": this.amount * 1000000000, 
+          "minimum_confirmations": 10,
+          "max_outputs": 500,
+          "num_change_outputs": 1,
+          "selection_strategy_is_use_all": true,
+          "method": "http",
+          "dest": this.address,
+        }
+
+        let send3Async = async function(){
+          try{
+            let res = await this.$walletService.issueSendTransaction2(tx_data)
+            let slate = res.data.result.Ok
+            tx_id = slate.id
+            if(!tx_id){
+              this.errors.push(this.$t('msg.httpSend.TxCreateFailed'))
+            }else{
+              this.$log.debug('Generate slate file: ' + tx_id)
+
+              let url = urljoin(this.address, '/v2/foreign')
+              const payload = {
+                jsonrpc: "2.0",
+                id: +new Date(),
+                method: 'receive_tx',
+                params: [slate, null, null],
+              }
+              const res = await urllib.request(url, {
+                method: 'post',
+                contentType: "application/json",
+                dataType: 'json',
+                timeout: '10s',
+                //data: payload,
+                content: JSON.stringify(payload)
+              });
+              let slate2 = res.data.result.Ok
+              if(slate2){
+                this.$log.debug('Got slate2 file from receiver')
+
+                let res = await this.$walletService.lock_outputs(slate, 0)
+                this.$log.debug('output locked.')
+
+                res = await this.$walletService.finalizeTransaction2(slate2)
+                let tx = res.data.result.Ok.tx
+                this.$log.debug('finalized.')
+
+                res = await this.$walletService.postTransaction2(tx, true)
+                this.$log.debug('posted.')
+
+                this.sent = true
+                this.$dbService.addPostedUnconfirmedTx(tx_id)
+              }
+            }
+              
+          }catch(error){
+            this.$log.error('http send error:' + error)  
+            this.$log.error(error.stack)
+            if (error.response) {   
+              let resp = error.response      
+              this.$log.error(`resp.data:${resp.data}; status:${resp.status};headers:${resp.headers}`)
+            }
+            this.errors.push(this.$t('msg.httpSend.TxFailed'))
+          }finally{
+            this.sending = false
+            messageBus.$emit('update')
+          }
+        }
+        send3Async.call(this)
+      }
+
     },
     closeModal() {
       this.clearup()
