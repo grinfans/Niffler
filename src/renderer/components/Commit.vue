@@ -151,7 +151,6 @@
       getCommits() {
         this.$walletService.getCommits(false, true, null)
           .then((res) => {
-
             this.total_commits = this.processCommits(res.data.result.Ok[1].reverse())
            
             this.current_commits = this.total_commits.slice(0, this.count_per_page)

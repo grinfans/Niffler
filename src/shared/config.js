@@ -38,8 +38,8 @@ if(platform=='win'){
   grinPath = '"' + path.resolve(grinPath) + '"' 
 }
 export const chainType = 'main'
-export const grinNode = "http://node.niffler.org:3413"
-export const grinNode2 = "http://node2.niffler.org:3413"
+export const grinNode = "http://grin2-node.niffler.org:3413"
+export const grinNode2 = "http://grin2-node2.niffler.org:3413"
 export const grinDIR = path.join(APP.getPath('home'), '.grin')
 export const seedPath = path.join(APP.getPath('home'), '.grin', chainType, 'wallet_data/wallet.seed')
 export const walletTOMLPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-wallet.toml')

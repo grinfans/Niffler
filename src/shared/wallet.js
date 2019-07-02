@@ -97,7 +97,7 @@ class WalletService {
         return WalletService.jsonRPC('retrieve_txs', [toRefresh, tx_id, tx_salte_id], false)
     }
 
-    static getCommitss(include_spent, toRefresh, tx_id){
+    static getCommits(include_spent, toRefresh, tx_id){
         return WalletService.jsonRPC('retrieve_outputs', [include_spent, toRefresh, tx_id], false)
     }
 
@@ -327,8 +327,7 @@ class WalletService {
         if(platform==='win'){
             grin = grinPath.slice(1,-1)
         }
-        checkProcess = spawn(grin, ['-r', grinNode2, '-p', password_, '-d', 'check']);
-
+        checkProcess = spawn(grin, ['-r', grinNode2, '-p', password_, 'check', '-d']);
         let ck = checkProcess
         processes['check'] = checkProcess
         localStorage.setItem('checkProcessPID', checkProcess.pid)
