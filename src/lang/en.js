@@ -28,6 +28,15 @@ const messages = {
     login: {
       walletExist: 'Found grin wallet data exists; login with original password :-)',
     },
+
+    remove:{
+      title: 'Remove Current Wallet',
+      warning: 'Warning !',
+      info: 'Before you remove current wallet, Make sure there is no grin in this wallet or You write down the Seed Phrase !',
+      help: 'Enter "remove" into the input box below to confirm',
+      remove: 'Remove',
+      success: 'Current wallet was removed. Click "OK" to restart Niffler.'
+    },
     
     create:{
       seedPhrase: 'Seed Phrase',

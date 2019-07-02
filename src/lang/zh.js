@@ -28,6 +28,15 @@ const messages = {
       walletExist: '发现已有Grin钱包存在；请用原有的密码登陆吧 :-)',
     },
 
+    remove:{
+      title: '移除当前钱包',
+      warning: '警告 !',
+      info: '移除钱包前，请确认 当前钱包里已经没有grin 或者 你已经完整记录了当前钱包的助记词 !',
+      help: '在下面输入框填入 “移除” 用于确认',
+      remove: '移除钱包',
+      success: '当前钱包已经移除，请重启Niffler'
+    },
+
     new_:{
       create: '新建钱包',
       restore: '通过助记词导入钱包',

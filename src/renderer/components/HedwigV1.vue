@@ -243,8 +243,10 @@ export default {
           this.$log.debug(`Try to test internet reachalbe: ${url2} ?`)
           this.$http.get(url2, {timeout: 10000}).catch((error)=>{
             this.$log.debug(`connect ${url2} return: ${error}`)
-            let resp = error.response      
-            this.$log.error(`resp.data:${resp.data}; status:${resp.status};headers:${resp.headers}`)
+            let resp = error.response
+            if(resp.data){
+              this.$log.error(`resp.data:${resp.data}; status:${resp.status};headers:${resp.headers}`)
+            }
             if(resp.status==404){
               this.internetReachable = true
               this.$log.debug('hedwig succesful with url: '+ this.address)

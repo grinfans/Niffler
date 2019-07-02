@@ -36,8 +36,14 @@
                   </button>
                 </div>
             </form>
+
+            <a class="button is-small is-text is-pulled-right" @click="openRemove=true">{{ $t("msg.remove.title") }}</a>
+
           </div>
         </div>
+      
+      <remove :showModal="openRemove"></remove>
+
       </div>
     </div>
   </section>
@@ -46,15 +52,25 @@
 <script>
 import { messageBus } from '@/messagebus'
 import {isFirstTime} from '../../shared/first'
+import Remove from '@/components/Remove'
 
 export default {
   name: "login",
+
+  components: {
+    Remove
+  },
+
   data() {
     return {
       firstTime:false,
       password: '', 
-      error: false 
+      error: false,
+      openRemove: false
     }
+  },
+  created(){
+    messageBus.$on('closeWindowRemove',()=>{this.openRemove = false})
   },
   mounted(){
     this.$log.info('isfirst(login.vue)? '+isFirstTime())
