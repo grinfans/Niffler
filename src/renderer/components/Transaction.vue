@@ -122,7 +122,7 @@
     },
     methods: {
       getTxs() {
-        this.$walletService.getTransactions2(true, null, null)
+        this.$walletService.getTransactions(true, null, null)
           .then((res) => {
             let data = res.data.result.Ok[1].reverse()
             this.total_txs = this.processTxs(data)
@@ -219,7 +219,7 @@
       },
 
       cancel(tx_slate_id){
-        this.$walletService.cancelTransactions2(null, tx_slate_id)
+        this.$walletService.cancelTransactions(null, tx_slate_id)
           .then((res) => {
             if(res.data.result.Ok === null){
               messageBus.$emit('update')

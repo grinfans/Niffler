@@ -310,18 +310,8 @@
             this.ownerApiRunning = false
           })
       },
-      
-      //getHeight(){
-      //  let ret = this.$walletService.getNodeHeight()
-      //  if(!ret)return "0"
-      //  ret.then(
-      //    (res) =>{
-      //      this.height = res.data[0]
-      //    }).catch((error)=>{})
-      //},
-      
       getHeight(){
-        this.$walletService.getNodeHeight2().then(
+        this.$walletService.getNodeHeight().then(
           (res) =>{
             this.height = parseInt(res.data.result.Ok.height)
           }).catch((error)=>{

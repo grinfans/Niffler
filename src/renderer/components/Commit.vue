@@ -149,7 +149,7 @@
       },
       
       getCommits() {
-        this.$walletService.getCommits2(false, true, null)
+        this.$walletService.getCommits(false, true, null)
           .then((res) => {
 
             this.total_commits = this.processCommits(res.data.result.Ok[1].reverse())

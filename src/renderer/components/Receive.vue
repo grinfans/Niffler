@@ -77,7 +77,7 @@ export default {
           defaultPath: filePath
         })
         if(fn_output){
-          this.$walletService.receiveTransaction2(JSON.parse(content), null, null)
+          this.$walletService.receiveTransaction(JSON.parse(content), null, null)
               .then( (res) => {
                 console.log(res)
                 let slate = res.data.result.Ok

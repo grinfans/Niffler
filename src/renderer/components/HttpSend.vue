@@ -29,7 +29,7 @@
         <br/>
         <div class="field is-grouped">
           <div class="control">
-            <button class="button is-link" v-bind:class="{'is-loading':sending}" @click="send3">{{ $t("msg.send") }}</button>
+            <button class="button is-link" v-bind:class="{'is-loading':sending}" @click="send">{{ $t("msg.send") }}</button>
           </div>
           <div class="control">
             <button class="button is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
@@ -124,117 +124,20 @@ export default {
       if(this.checkForm()&&!this.sending){
         let tx_id
         this.sending = true
+
         let tx_data = {
           "amount": this.amount * 1000000000, 
           "minimum_confirmations": 10,
-          "method": "http",
-          "dest": this.address,
           "max_outputs": 500,
           "num_change_outputs": 1,
           "selection_strategy_is_use_all": true,
-          "target_slate_version": parseInt(this.slateVersion)
+          "method": "http",
+          "dest": this.address,
         }
-        
-        let send = async function(){
+
+        let sendAsync = async function(){
           try{
             let res = await this.$walletService.issueSendTransaction(tx_data)
-            tx_id = res.data.id
-            this.$log.debug(`issue tx ${tx_id} ok; return:${res.data}`)
-            let res2 = await this.$walletService.postTransaction(res.data, true)
-            this.sent = true
-            this.$dbService.addPostedUnconfirmedTx(tx_id)
-            this.$log.debug(`httpsend post tx ok; return:${res2.data}`)
-          }catch(error){
-            this.$log.error('http send error:' + error)   
-            if (error.response) {   
-              let resp = error.response      
-              this.$log.error(`resp.data:${resp.data}; status:${resp.status};headers:${resp.headers}`)
-            }
-            this.errors.push(this.$t('msg.httpSend.TxFailed'))
-          }finally{
-            this.sending = false
-            messageBus.$emit('update')
-          }
-        }
-        send.call(this)
-      }
-    },
-    send2(){
-      if(this.$walletService.passwordUndefined()){
-        this.$log.debug('Use send1.')
-        return this.send()
-      }
-      if(this.checkForm()&&!this.sending){
-        let tx_id
-        this.sending = true
-        let send2Async = async function(){
-          try{
-            const slate = await this.$walletService.createSlate(this.amount, 1)
-            tx_id = slate.id
-            if(!tx_id){
-              this.errors.push(this.$t('msg.httpSend.TxCreateFailed'))
-            }else{
-              let url = urljoin(this.address, '/v1/wallet/foreign/receive_tx')
-              this.$log.debug('http send to: ' + url)
-              const res = await urllib.request(url, {
-                method: 'post',
-                //contentType: "application/json",
-                contentType: '',
-                dataType: 'json',
-                timeout: '10s',
-                content: JSON.stringify(slate),
-                //data:JSON.stringify(slate),
-                //headers: {
-                //   'User-Agent': 'grin-client',
-                //'transfer-encoding': ''
-                //},
-              });
-              if (res && res.data && res.data.id === tx_id) {
-                this.$log.debug(`post transaction ok, start to finalize transaction ${tx_id}`);
-                let result = await this.$walletService.finalizeSlate(res.data)
-                this.sent = true
-                this.$dbService.addPostedUnconfirmedTx(tx_id)
-                this.$log.debug(`httpsend post tx ok; return:${JSON.stringify(result)}`)
-              }else{
-                this.$log.debug('post transaction return bad response: ' + JSON.stringify(res))
-                this.errors.push(this.$t('msg.httpSend.TxResponseFailed'))
-              }
-            }
-          }catch(error){
-            this.$log.error('http send error:' + error)  
-            this.$log.error(error.stack)
-            if (error.response) {   
-              let resp = error.response      
-              this.$log.error(`resp.data:${resp.data}; status:${resp.status};headers:${resp.headers}`)
-            }
-            this.errors.push(this.$t('msg.httpSend.TxFailed'))
-          }finally{
-            this.sending = false
-            messageBus.$emit('update')
-          }
-        }
-        send2Async.call(this)
-      }
-    },
-
-    send3(){
-      if(this.checkForm()&&!this.sending){
-        let tx_id
-        this.sending = true
-
-        let tx_data = {
-          "amount": this.amount * 1000000000, 
-          "minimum_confirmations": 10,
-          "max_outputs": 500,
-          "num_change_outputs": 1,
-          "selection_strategy_is_use_all": true,
-          "method": "http",
-          "dest": this.address,
-        }
-
-        let send3Async = async function(){
-          try{
-            let res = await this.$walletService.issueSendTransaction2(tx_data)
             let slate = res.data.result.Ok
             tx_id = slate.id
             if(!tx_id){
@@ -264,11 +167,11 @@ export default {
                 let res = await this.$walletService.lock_outputs(slate, 0)
                 this.$log.debug('output locked.')
 
-                res = await this.$walletService.finalizeTransaction2(slate2)
+                res = await this.$walletService.finalizeTransaction(slate2)
                 let tx = res.data.result.Ok.tx
                 this.$log.debug('finalized.')
 
-                res = await this.$walletService.postTransaction2(tx, true)
+                res = await this.$walletService.postTransaction(tx, true)
                 this.$log.debug('posted.')
 
                 this.sent = true
@@ -289,7 +192,7 @@ export default {
             messageBus.$emit('update')
           }
         }
-        send3Async.call(this)
+        sendAsync.call(this)
       }
 
     },

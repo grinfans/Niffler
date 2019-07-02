@@ -10,7 +10,7 @@
     <section class="modal-card-body" style="height:320px;background-color: whitesmoke;">
       
       <div class="notification is-warning" v-if="errors.length">
-        <p v-for="error in errors">{{ error }}</p>
+        <p v-for="error in errors" :key="error.id">{{ error }}</p>
       </div>
       <div class="center">
         <a class="button is-link is-outlined" v-if="errors.length" @click="clearup">{{ $t("msg.clearup") }}</a>
@@ -91,11 +91,11 @@ export default {
         this.isSending = true
         let send = async function(){
           try{
-            let res = await this.$walletService.finalizeTransaction2(JSON.parse(content))
+            let res = await this.$walletService.finalizeTransaction(JSON.parse(content))
             console.log(res)
             tx_id = res.data.result.Ok.id
             let tx = res.data.result.Ok.tx
-            let res2 = await this.$walletService.postTransaction2(tx, true)
+            let res2 = await this.$walletService.postTransaction(tx, true)
             this.isSent = true
             this.$dbService.addPostedUnconfirmedTx(tx_id)
             this.$log.debug(`finalize tx ${tx_id} ok; return:${res.data}`)

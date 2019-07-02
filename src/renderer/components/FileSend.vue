@@ -89,7 +89,7 @@ export default {
           "num_change_outputs": 1,
           "selection_strategy_is_use_all": true,
         }
-        this.$walletService.issueSendTransaction2(tx_data).then(
+        this.$walletService.issueSendTransaction(tx_data).then(
           (res) => {
             if (fn_output){
               let slate = res.data.result.Ok

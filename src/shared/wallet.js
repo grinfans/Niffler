@@ -86,65 +86,30 @@ class WalletService {
     }
     
     static getNodeHeight(){
-        if(client){
-            return client.get('/v1/wallet/owner/node_height')
-        }
-    }
-
-    static getNodeHeight2(){
         return WalletService.jsonRPC('node_height', [], false)
     }
     
     static getSummaryInfo(minimum_confirmations){
-        const url = `/v1/wallet/owner/retrieve_summary_info?refresh&minimum_confirmations=${minimum_confirmations}`
-        return client.get(url)
-    }
-
-    static getSummaryInfo2(minimum_confirmations){
         return WalletService.jsonRPC('retrieve_summary_info', [true, minimum_confirmations], false)
     }
 
-    static getTransactions(){
-        return client.get('/v1/wallet/owner/retrieve_txs?refresh')
-    }
-
-    static getTransactions2(toRefresh, tx_id, tx_salte_id){
+    static getTransactions(toRefresh, tx_id, tx_salte_id){
         return WalletService.jsonRPC('retrieve_txs', [toRefresh, tx_id, tx_salte_id], false)
     }
 
-    static getCommits(show_spent=true){
-        const url = show_spent?
-            '/v1/wallet/owner/retrieve_outputs?refresh&show_spent':
-            '/v1/wallet/owner/retrieve_outputs?refresh'
-        return client.get(url)
-    }
-
-    static getCommits2(include_spent, toRefresh, tx_id){
+    static getCommitss(include_spent, toRefresh, tx_id){
         return WalletService.jsonRPC('retrieve_outputs', [include_spent, toRefresh, tx_id], false)
     }
 
-    static cancelTransactions(tx_id){
-        const url = `/v1/wallet/owner/cancel_tx?tx_id=${tx_id}`
-        return client.post(url)
-    }
-
-    static cancelTransactions2(tx_id, tx_salte_id){
+    static cancelTransactions(tx_id, tx_salte_id){
         return WalletService.jsonRPC('cancel_tx', [tx_id, tx_salte_id])
     }
 
-    static receiveTransaction(tx_data){
-        return client.post('/v1/wallet/foreign/receive_tx', tx_data)
-    }
-
-    static receiveTransaction2(slate, account, message){
+    static receiveTransaction(slate, account, message){
         return WalletService.jsonRPC('receive_tx', [slate, account, message], true)
     }
 
     static issueSendTransaction(tx_data){
-        return client.post('/v1/wallet/owner/issue_send_tx', tx_data)
-    }
-
-    static issueSendTransaction2(tx_data){
         return WalletService.jsonRPC('init_send_tx',  {'args': tx_data})
     }
 
@@ -152,22 +117,11 @@ class WalletService {
         return WalletService.jsonRPC('tx_lock_outputs',  [slate, participant_id])
     }
 
-    static finalizeTransaction(tx_data){
-        return client.post('/v1/wallet/owner/finalize_tx', tx_data)
-    }
-
-    static finalizeTransaction2(slate){
+    static finalizeTransaction(slate){
         return WalletService.jsonRPC('finalize_tx',  [slate])
     }
 
-    static postTransaction(tx_data, isFluff){
-        const url = isFluff?
-            '/v1/wallet/owner/post_tx?fluff':
-            '/v1/wallet/owner/post_tx'
-        return client.post(url, tx_data)
-    }
-
-    static postTransaction2(tx, isFluff){
+    static postTransaction(tx, isFluff){
         return WalletService.jsonRPC('post_tx',  [tx, isFluff])
     }
  
@@ -373,7 +327,7 @@ class WalletService {
         if(platform==='win'){
             grin = grinPath.slice(1,-1)
         }
-        checkProcess = spawn(grin, ['-r', grinNode2, '-p', password_, 'check']);
+        checkProcess = spawn(grin, ['-r', grinNode2, '-p', password_, '-d', 'check']);
 
         let ck = checkProcess
         processes['check'] = checkProcess
