@@ -86,7 +86,9 @@ class WalletService {
     }
     
     static getNodeHeight(){
-        return WalletService.jsonRPC('node_height', [], false)
+        if(client){
+            return WalletService.jsonRPC('node_height', [], false)
+        }
     }
     
     static getSummaryInfo(minimum_confirmations){
