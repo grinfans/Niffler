@@ -116,7 +116,8 @@ const messages = {
       createTxFile: '生成交易文件',
       WrongAmount: '发送数量错误',
       saveMsg: '保存新生成的交易文件',
-      CreateFailed: '生成交易文件错误'
+      CreateFailed: '生成交易文件错误',
+      NotEnough: '没有足够的余额，请至少留下0.01作为手续费',
     },
 
     httpSend:{

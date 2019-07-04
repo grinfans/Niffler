@@ -101,7 +101,7 @@ export default {
     enough(amount){
       let spendable = this.$dbService.getSpendable()
       if(spendable){
-        return spendable > parseFloat(amount) + 0.01 //0.008
+        return spendable >= parseFloat(amount) + 0.01 //0.008
       }
       return true
     },
@@ -113,7 +113,7 @@ export default {
       if (!this.amount || !this.validAmount(this.amount)) {
         this.errors.push(this.$t('msg.httpSend.WrongAmount'));
       }
-      if (this.validAmount(this.amount) && !this.enough(this.amount)) {
+      if (this.amount && this.validAmount(this.amount) && !this.enough(this.amount)) {
         this.errors.push(this.$t('msg.httpSend.NotEnough'));
       }
       if (!this.errors.length) {

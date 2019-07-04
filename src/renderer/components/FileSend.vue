@@ -70,9 +70,19 @@ export default {
       if (!this.amount || !this.validAmount(this.amount)) {
         this.errors.push(this.$t('msg.fileSend.WrongAmount'));
       }
+      if (this.amount && this.validAmount(this.amount) && !this.enough(this.amount)) {
+        this.errors.push(this.$t('msg.fileSend.NotEnough'));
+      }
       if (!this.errors.length) {
         return true;
       }
+    },
+    enough(amount){
+      let spendable = this.$dbService.getSpendable()
+      if(spendable){
+        return spendable >= parseFloat(amount) + 0.01 //0.008
+      }
+      return true
     },
     send(){
       if(this.checkForm()){
