@@ -1,8 +1,6 @@
 import axios from 'axios'
-import {releaseUrl} from './config'
+import {releaseUrl, version} from './config'
 import log from './logger'
-import pkg from '../../package.json'
-const version = pkg.version
 
 const checkUpdate = async () => {
   try{

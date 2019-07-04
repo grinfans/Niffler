@@ -5,7 +5,9 @@
         <div class="columns is-mobile is-centered">
           <div class="column is-6" >
             <img src="../assets/logo.png" style="width:64px" class="is-pulled-left">
-            <h2 class="title" style="margin-top:24px; margin-left:70px;font-size:1.6rem" >{{ $t("msg.title") }}</h2>
+            <h2 class="title" style="margin-top:24px; margin-left:70px;font-size:1.6rem" >{{ $t("msg.title") }}
+              <span class="is-pulled-right" style="font-size:0.75rem">v{{version}}</span>
+            </h2>
           </div>
         </div>
 
@@ -53,6 +55,7 @@
 import { messageBus } from '@/messagebus'
 import {isFirstTime} from '../../shared/first'
 import Remove from '@/components/Remove'
+import {version} from '../../shared/config'
 
 export default {
   name: "login",
@@ -66,7 +69,8 @@ export default {
       firstTime:false,
       password: '', 
       error: false,
-      openRemove: false
+      openRemove: false,
+      version: version,
     }
   },
   created(){
