@@ -1,3 +1,3 @@
-The windows version of grin-wallet.ext binaries is grin-wallet v1.1.0-win-beta.1 (https://github.com/mimblewimble/grin-wallet/releases/tag/v1.1.0-win-beta.1),
+The Windows version of grin-wallet binaries is grin-wallet v2.0.0(https://github.com/mimblewimble/grin-wallet/releases/tag/v2.0.0),
 
-downloaded from https://github.com/mimblewimble/grin-wallet/releases/download/v1.1.0-win-beta.1/grin-wallet-v1.1.0-win-beta.1-515278587-win-x64.zip
+Downloaded from (https://github.com/mimblewimble/grin-wallet/releases/download/v2.0.0/grin-wallet-v2.0.0-win-x64.zip)
