@@ -103,7 +103,7 @@ export default {
       if(spendable){
         return spendable >= parseFloat(amount) + 0.01 //0.008
       }
-      return true
+      return false
     },
     checkForm(){
       this.errors = []
