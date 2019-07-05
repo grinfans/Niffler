@@ -197,7 +197,7 @@ export default {
                 //contentType: "application/json",
                 contentType: '',
                 dataType: 'json',
-                timeout: '10s',
+                timeout: '25s',
                 content: JSON.stringify(slate),
                 //data:JSON.stringify(slate),
                 //headers: {
