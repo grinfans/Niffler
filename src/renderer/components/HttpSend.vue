@@ -156,8 +156,7 @@ export default {
                 method: 'post',
                 contentType: "application/json",
                 dataType: 'json',
-                timeout: '10s',
-                //data: payload,
+                timeout: '25s',
                 content: JSON.stringify(payload)
               });
               let slate2 = res.data.result.Ok
