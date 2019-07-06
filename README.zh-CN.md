@@ -6,10 +6,13 @@ Niffler 是一个开箱即用、用户友好的 [Grin](https://github.com/mimble
 
 遵循Grin的命名传统，钱包的名字 **Niffler** 也是来自["哈利波特"](https://harrypotter.fandom.com/wiki/Niffler).
 
-#### 最新版本 V0.3.3
+#### 最新版本 V0.4.0
+
+Niffler 钱包 v0.40 是一个支持Grin在7月中旬第一次的硬分叉的Beta版本，
+使用官方的命令行钱包[grin-wallet v2.0.0](https://github.com/mimblewimble/grin/releases/tag/v2.0.0) 作为后端.
 
 Windows/Mac/linux 版本:
-[https://github.com/grinfans/niffler/releases/tag/v0.3.3](https://github.com/grinfans/niffler/releases/tag/v0.3.3)
+[https://github.com/grinfans/niffler/releases/tag/v0.4.0](https://github.com/grinfans/niffler/releases/tag/v0.4.0)
 
 Niffler钱包 新加了 **hedwig** v1 代理服务; 现在，没有公共ip的用户也可以很简单容易地接收grin了 :)
 
@@ -17,11 +20,12 @@ Niffler钱包 新加了 **hedwig** v1 代理服务; 现在，没有公共ip的�
 
 #### 中国大陆用户快速下载
 
+中国大陆用户快速下载地址:
 >Windows
-https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-win-0.3.3.exe
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-win-0.4.0.exe
 
 >Mac
-https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-mac-0.3.3.dmg
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-mac-0.4.0.dmg
 
 
 ## 联系
