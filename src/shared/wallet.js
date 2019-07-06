@@ -128,7 +128,7 @@ class WalletService {
     }
  
     static start(password){
-        WalletService.stopProcess('ownerAPI')
+        //WalletService.stopProcess('ownerAPI')
         enableForeignApi()
 
         if(platform === 'linux'){
