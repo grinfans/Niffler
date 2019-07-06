@@ -32,17 +32,24 @@ const binariesPath =
     ? path.join(process.resourcesPath, 'bin', platform)
     : path.join(root, 'resources', 'bin', platform);
 
-const grinBinaries = platform==='win'?'grin-wallet.exe':'grin-wallet'
+const grinWalletBinaries = platform==='win'?'grin-wallet.exe':'grin-wallet'
+const grinBinaries = platform==='win'?'grin.exe':'grin'
+
+export let grinWalletPath = path.join(binariesPath, grinWalletBinaries)
 export let grinPath = path.join(binariesPath, grinBinaries)
+
 if(platform=='win'){
+  grinWalletPath = '"' + path.resolve(grinWalletPath) + '"' 
   grinPath = '"' + path.resolve(grinPath) + '"' 
 }
+
 export const chainType = 'main'
 export const grinNode = "http://grin2-node.niffler.org:3413"
 export const grinNode2 = "http://grin2-node2.niffler.org:3413"
 export const grinDIR = path.join(APP.getPath('home'), '.grin')
 export const seedPath = path.join(APP.getPath('home'), '.grin', chainType, 'wallet_data/wallet.seed')
 export const walletTOMLPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-wallet.toml')
+export const nodeTOMLPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-server.toml')
 export const walletPath = path.join(APP.getPath('home'), '.grin', chainType)
 export const apiSecretPath = path.join(APP.getPath('home'), '.grin', chainType, '.api_secret')
 export const nifflerPath = path.join(APP.getPath('home'), '.niffler')
@@ -112,3 +119,6 @@ export const langs = {'zh':'简体中文', 'en':'English', 'ru': 'русский
 
 import pkg from '../../package.json'
 export const version = pkg.version
+
+//gnode options: no, running, background.
+export const gnodeOption = getConfig()['gnode']

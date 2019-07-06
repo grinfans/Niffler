@@ -7,7 +7,7 @@ import axios from 'axios'
 require('promise.prototype.finally').shim();
 
 import log from './logger'
-import {platform, grinPath, seedPath, grinNode, grinNode2, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet, nodeExecutable, tempTxDir} from './config'
+import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet, nodeExecutable, tempTxDir} from './config'
 import { messageBus } from '../renderer/messagebus'
 
 let ownerAPI
@@ -18,7 +18,7 @@ let restoreProcess
 let processes = {}
 let client
 let password_
-const wallet_host = 'http://localhost:3420'
+const walletHost = 'http://localhost:3420'
 const jsonRPCUrl = 'http://localhost:3420/v2/owner'
 const jsonRPCForeignUrl = 'http://localhost:3420/v2/foreign'
 
@@ -53,7 +53,7 @@ class WalletService {
     static initClient() {
         if(fs.existsSync(apiSecretPath)){
             client = axios.create({
-                baseURL: wallet_host,
+                baseURL: walletHost,
                 auth: {
                     username: 'grin',
                     password: fs.readFileSync(apiSecretPath).toString()
@@ -132,10 +132,10 @@ class WalletService {
         enableForeignApi()
 
         if(platform === 'linux'){
-            ownerAPI = execFile(grinPath, ['-r', grinNode, 'owner_api']) 
+            ownerAPI = execFile(grinWalletPath, ['-r', grinNode, 'owner_api']) 
         }else{
-            const cmd = platform==='win'? `${grinPath} -r ${grinNode} --pass ${addQuotations(password)} owner_api`:
-                                        `${grinPath} -r ${grinNode} owner_api`
+            const cmd = platform==='win'? `${grinWalletPath} -r ${grinNode} --pass ${addQuotations(password)} owner_api`:
+                                        `${grinWalletPath} -r ${grinNode} owner_api`
             //log.debug(`platform: ${platform}; start owner api cmd: ${cmd}`)
             ownerAPI =  exec(cmd)
         }
@@ -157,10 +157,10 @@ class WalletService {
     static startListen(password=password_){
         WalletService.stopProcess('listen')
         if(platform==='linux'){
-            listenProcess =  execFile(grinPath, ['-e', 'listen']) 
+            listenProcess =  execFile(grinWalletPath, ['-e', 'listen']) 
         }else{
-            const cmd = platform==='win'? `${grinPath} -e --pass ${addQuotations(password)} listen`:
-                                        `${grinPath} -e listen`
+            const cmd = platform==='win'? `${grinWalletPath} -e --pass ${addQuotations(password)} listen`:
+                                        `${grinWalletPath} -e listen`
             //log.debug(`platform: ${platform}; start listen cmd: ${cmd}`)
             listenProcess =  exec(cmd)
         }
@@ -194,9 +194,9 @@ class WalletService {
     }
 
     static new(password){
-        const cmd = platform==='win'? `${grinPath} -r ${grinNode} --pass ${addQuotations(password)} init`:
-                                      `${grinPath} -r ${grinNode} init`
-        log.debug(`function new: platform: ${platform}; grin bin: ${grinPath}; grin node: ${grinNode}`); 
+        const cmd = platform==='win'? `${grinWalletPath} -r ${grinNode} --pass ${addQuotations(password)} init`:
+                                      `${grinWalletPath} -r ${grinNode} init`
+        log.debug(`function new: platform: ${platform}; grin bin: ${grinWalletPath}; grin node: ${grinNode}`); 
         let createProcess = exec(cmd)
         createProcess.stdout.on('data', (data) => {
             let output = data.toString()
@@ -235,7 +235,7 @@ class WalletService {
 
     static send(amount, method, dest, version){
         let dest_ = '"' + path.resolve(dest) + '"'
-        const cmd = `${grinPath} -r ${grinNode} -p ${addQuotations(password_)} send -m ${method} -d ${dest_} -v ${version} ${amount}`
+        const cmd = `${grinWalletPath} -r ${grinNode} -p ${addQuotations(password_)} send -m ${method} -d ${dest_} -v ${version} ${amount}`
         //log.debug(cmd)
         return execPromise(cmd)
     }
@@ -259,7 +259,7 @@ class WalletService {
 
     static finalize(fn){
         let fn_ = '"' + path.resolve(fn) + '"'
-        const cmd = `${grinPath} -r ${grinNode} -p ${addQuotations(password_)} finalize -i ${fn_}`
+        const cmd = `${grinWalletPath} -r ${grinNode} -p ${addQuotations(password_)} finalize -i ${fn_}`
         //log.debug(cmd)
         return execPromise(cmd)
     }
@@ -325,9 +325,9 @@ class WalletService {
     }
 
     static check(cb){
-        let grin = grinPath
+        let grin = grinWalletPath
         if(platform==='win'){
-            grin = grinPath.slice(1,-1)
+            grin = grinWalletPath.slice(1,-1)
         }
         checkProcess = spawn(grin, ['-r', grinNode2, '-p', password_, 'check', '-d']);
         let ck = checkProcess
@@ -349,9 +349,9 @@ class WalletService {
     }
 
     static restore(password, cb){
-        let grin = grinPath
+        let grin = grinWalletPath
         if(platform==='win'){
-            grin = grinPath.slice(1,-1)
+            grin = grinWalletPath.slice(1,-1)
         }
         restoreProcess = spawn(grin, ['-r', grinNode2, '-p', password, 'restore']);
         let rs = restoreProcess
@@ -376,8 +376,8 @@ class WalletService {
 
     //https://github.com/mimblewimble/grin-wallet/issues/110
     //static initR(seeds, newPassword){
-    //    log.debug(grinPath)
-    //    initRProcess = spawn(grinPath, ['init', '-r']);
+    //    log.debug(grinWalletPath)
+    //    initRProcess = spawn(grinWalletPath, ['init', '-r']);
     //    localStorage.setItem('initRProcessPID', initRProcess.pid)
     //    initRProcess.stdout.on('data', (data) => {
     //        let output = data.toString()

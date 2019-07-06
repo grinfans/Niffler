@@ -234,6 +234,7 @@
       messageBus.$on('logined', ()=>{
         this.$log.info('app.vue got user logined event')
         this.$walletService.initClient()
+        this.$gnodeService.startGnode()
         this.ownerApiRunning = true
         this.getHeight()
       })

@@ -8,6 +8,8 @@ import 'animate.css/animate.css'
 import { remote, ipcRenderer} from 'electron'
 
 import walletService from '../shared/wallet'
+import gnodeService from '../shared/gnode'
+
 import log from '../shared/logger'
 import dbService from '@/db'
 
@@ -16,6 +18,7 @@ import Icon from 'vue-awesome/components/Icon'
 
 Vue.component('icon', Icon)
 
+Vue.gnodeService = Vue.prototype.$gnodeService = gnodeService
 Vue.walletService = Vue.prototype.$walletService = walletService
 Vue.dbService = Vue.prototype.$dbService = dbService
 Vue.log = Vue.prototype.$log = log
