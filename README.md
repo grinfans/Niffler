@@ -5,9 +5,12 @@ English | [简体中文](./README.zh-CN.md)
 Niffler is a out-of-the box user-friendly gui [Grin](https://github.com/mimblewimble/grin) wallet.
 The name 'Niffler' comes from ["harry potter"](https://harrypotter.fandom.com/wiki/Niffler).
 
-### Latest Version: 0.3.3
+### Latest Version: 0.4.0
 
-Windows/Mac/linux version:[https://github.com/grinfans/niffler/releases/tag/v0.3.3](https://github.com/grinfans/niffler/releases/tag/v0.3.3)
+Niffler v0.4.0 is an beta version, which support [Grin's first hard fork in Mid-July](https://www.grin-forum.org/t/grin-first-hard-fork-mid-july/5148).
+It's use the official [grin-wallet v2.0.0](https://github.com/mimblewimble/grin/releases/tag/v2.0.0)  as backend. 
+
+Windows/Mac/linux version:[https://github.com/grinfans/niffler/releases/tag/v0.4.0](https://github.com/grinfans/niffler/releases/tag/v0.4.0)
 
 Niffler wallet has a **hedwig v1 relay service**, which enable User without public ip receive grin really easy :)
 
