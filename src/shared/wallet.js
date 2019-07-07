@@ -9,7 +9,7 @@ require('promise.prototype.finally').shim();
 import log from './logger'
 import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet, nodeExecutable, tempTxDir, gnodeOption} from './config'
 import { messageBus } from '../renderer/messagebus'
-import gnodeService from './gnode'
+import GnodeService from './gnode'
 
 let ownerAPI
 let listenProcess
@@ -189,8 +189,8 @@ class WalletService {
                 WalletService.stopProcess(ps)
             }
         }
-        if(gnodeOption === 'running'){
-            gnodeService.stopGnode()
+        if(gnodeOption != 'background'){
+            GnodeService.stopGnode()
         }
     }
     static isExist(){

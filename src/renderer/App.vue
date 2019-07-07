@@ -137,7 +137,7 @@
 
   import Landing from '@/components/Landing'
   import checkUpdate from '../shared/updateChecker'
-  import {downloadUrl, locale} from '../shared/config'
+  import {downloadUrl, locale, gnodeOption} from '../shared/config'
 
   const {ipcRenderer} = require('electron')
 
@@ -234,9 +234,11 @@
       messageBus.$on('logined', ()=>{
         this.$log.info('app.vue got user logined event')
         this.$walletService.initClient()
-        this.$gnodeService.startGnode()
         this.ownerApiRunning = true
         this.getHeight()
+
+        if(gnodeOption!='no')this.startGnode()
+
       })
       messageBus.$on('update', ()=>this.getHeight())
       messageBus.$on('walletCreateFinished', ()=>{
@@ -323,6 +325,15 @@
       logout(){
         this.$log.debug('logout')
         ipcRenderer.send('quit')
+      },
+
+      startGnode(){
+        this.$gnodeService.getStatus().then(
+          (res)=>this.$log.debug('Grin node already running')
+        ).catch((err)=>{
+          this.$log.debug('Start Grin node now.')
+          this.$gnodeService.startGnode()
+        })
       },
 
       autoRefresh(interval){

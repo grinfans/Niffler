@@ -23,7 +23,7 @@ function disableTUI(){
     }
 }
 
-class gnodeService {
+class GnodeService {
     static initClient() {
         if(fs.existsSync(apiSecretPath)){
             client = axios.create({
@@ -81,5 +81,5 @@ class gnodeService {
         }
     }
 }
-gnodeService.initClient()
-export default gnodeService
+GnodeService.initClient()
+export default GnodeService
