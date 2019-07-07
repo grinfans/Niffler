@@ -121,4 +121,10 @@ import pkg from '../../package.json'
 export const version = pkg.version
 
 //gnode options: no, running, background.
-export const gnodeOption = getConfig()['gnode']
+function getGnodeOption(){
+  let o = getConfig()['gnode']
+  if(o)return o
+  setConfig({'gnode': 'running'})
+  return 'running'
+}
+export const gnodeOption = getGnodeOption()

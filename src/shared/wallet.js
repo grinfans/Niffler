@@ -7,8 +7,9 @@ import axios from 'axios'
 require('promise.prototype.finally').shim();
 
 import log from './logger'
-import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet, nodeExecutable, tempTxDir} from './config'
+import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet, nodeExecutable, tempTxDir, gnodeOption} from './config'
 import { messageBus } from '../renderer/messagebus'
+import gnodeService from './gnode'
 
 let ownerAPI
 let listenProcess
@@ -187,6 +188,9 @@ class WalletService {
                 log.debug('stopall try to kill '+ ps)
                 WalletService.stopProcess(ps)
             }
+        }
+        if(gnodeOption === 'running'){
+            gnodeService.stopGnode()
         }
     }
     static isExist(){

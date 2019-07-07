@@ -9,6 +9,7 @@ export function checkFirstTime(){
         fs.mkdirSync(logDir)
         fs.mkdirSync(tempTxDir)
         setConfig({'firstTime':true})
+        setConfig({'gnode': 'running'})
     }
     else{
         updateConfig({'firstTime':false})

@@ -57,6 +57,29 @@ class gnodeService {
             log.error('start grin node got stderr: ' + data)
         })
     }
+
+    static stopGnode(){
+        let pidName = 'gnodeProcessPID'
+        const pid = localStorage.getItem(pidName)
+        log.debug(`try to kill gnode process with pid (get from ${pidName}) : ${pid}`)
+        localStorage.removeItem(pidName)
+
+        if(platform==='win'&&pid){
+            return exec(`taskkill /pid ${pid} /f /t`)
+        }
+        
+        if(gnodeProcess){
+            gnodeProcess.kill('SIGKILL')
+            log.debug("killing gnodeProcess by gnodeProcess.kill('SIGKILL'). ")
+        }
+        if(pid) {
+            try{
+                process.kill(pid, 'SIGKILL')
+            }catch(e){
+                log.error(`error when kill ${processName} ${pid}: ${e}` )
+            }
+        }
+    }
 }
 gnodeService.initClient()
 export default gnodeService
