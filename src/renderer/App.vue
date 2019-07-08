@@ -83,6 +83,11 @@
                       @click="openCheck = true">
                       {{ $t("msg.check.title") }}
                     </a>
+
+                    <a href="#" class="dropdown-item" style="line-height: 1.2;font-size: 0.8rem;" 
+                      @click="openGnode = true">
+                      本地节点
+                    </a>
                     
                     <a href="#" class="dropdown-item" style="line-height: 1.2;font-size: 0.8rem;" 
                       @click="openLang=true">
@@ -114,6 +119,7 @@
       <hedwig-v1 :showModal="openHedwigV1"></hedwig-v1>
       <check :showModal="openCheck"></check>
       <lang :showModal="openLang"></lang>
+      <gnode :showModal="openGnode"></gnode>
     </div>
     <landing v-bind:walletExist="walletExist" v-else></landing>
   </div>
@@ -134,7 +140,7 @@
   import HedwigV1 from '@/components/HedwigV1'
   import Check from '@/components/Check'
   import Lang from '@/components/Lang'
-
+  import Gnode from '@/components/Gnode'
   import Landing from '@/components/Landing'
   import checkUpdate from '../shared/updateChecker'
   import {downloadUrl, locale, gnodeOption} from '../shared/config'
@@ -157,6 +163,7 @@
       Check,
       Landing,
       Lang,
+      Gnode
     },
     data(){
       return {
@@ -168,6 +175,7 @@
         openHedwigV1: false,
         openCheck: false,
         openLang:false,
+        openGnode:false,
 
         isDroppingDown: false,
         isDroppingDown2: false,
@@ -225,6 +233,9 @@
         }
         if(window =='windowLang'){
           this.openLang = false
+        }
+        if(window =='windowGnode'){
+          this.openGnode = false
         }
       })
       messageBus.$on('restoredThenLogin', ()=>{

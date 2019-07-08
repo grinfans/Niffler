@@ -5,11 +5,15 @@ import axios from 'axios'
 require('promise.prototype.finally').shim();
 
 import log from './logger'
-import {gnodeOption, grinPath, apiSecretPath, nodeTOMLPath, platform} from './config'
+import {gnodeOption, grinPath, apiSecretPath, nodeTOMLPath, platform, grinNode} from './config'
+import { messageBus } from '../renderer/messagebus'
 
 let client
+let clietForRemote
 let gnodeProcess
 const gnodeHost = 'http://localhost:3413'
+
+const gnodeRemoteHost = grinNode
 
 function disableTUI(){
     const re = /run_tui(\s)*=(\s)*true/
@@ -56,6 +60,7 @@ class GnodeService {
         gnodeProcess.stderr.on('data', (data) => {
             log.error('start grin node got stderr: ' + data)
         })
+        messageBus.$emit('gnodeStarting')
     }
 
     static stopGnode(){
@@ -83,3 +88,23 @@ class GnodeService {
 }
 GnodeService.initClient()
 export default GnodeService
+
+export class RemoteGnodeService{
+    static initClient(nodeURL, apiSecret) {
+        if(apiSecret){
+            clietForRemote = axios.create({
+                    baseURL: nodeURL,
+                    auth: {
+                        username: 'grin',
+                        password: apiSecret
+                    },
+                })
+        }else{
+            clietForRemote = axios.create({baseURL: nodeURL})
+        }
+    }
+    static getStatus(){
+        return client.get('/v1/status')
+    }
+}
+RemoteGnodeService.initClient(grinNode, null)

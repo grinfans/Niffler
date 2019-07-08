@@ -210,6 +210,15 @@ const messages = {
       title: '选择语言',
       lang: '语言',
       select: '选择'
+    },
+
+    gnode:{
+      title: '本地Grin节点',
+      tab_status: '运行状态',
+      tab_peers: '已连接的节点',
+      tab_log: '运行日志',
+      tab_config: '设置'
+      
     }
 
   }
