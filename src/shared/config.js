@@ -52,6 +52,8 @@ export const walletTOMLPath = path.join(APP.getPath('home'), '.grin', chainType,
 export const nodeTOMLPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-server.toml')
 export const walletPath = path.join(APP.getPath('home'), '.grin', chainType)
 export const apiSecretPath = path.join(APP.getPath('home'), '.grin', chainType, '.api_secret')
+export const grinNodeLog = path.join(APP.getPath('home'), '.grin', chainType, 'grin-server.log')
+
 export const nifflerPath = path.join(APP.getPath('home'), '.niffler')
 export const logDir = path.join(nifflerPath, 'log')
 export const tempTxDir = path.join(nifflerPath, 'temp_tx')
@@ -120,11 +122,10 @@ export const langs = {'zh':'简体中文', 'en':'English', 'ru': 'русский
 import pkg from '../../package.json'
 export const version = pkg.version
 
-//gnode options: no, running, background.
 function getGnodeOption(){
-  let o = getConfig()['gnode']
+  let o = getConfig()['localGnode']
   if(o)return o
-  setConfig({'gnode': 'running'})
-  return 'running'
+  setConfig({'localGnode': true})
+  return true
 }
 export const gnodeOption = getGnodeOption()

@@ -1,5 +1,6 @@
 
 let keyPostedUnconfirmed = 'posted_unconfirmed_txs'
+let keyLocalGnodeStatus = 'local_gnode_status'
 let keySpendable = 'spendable'
 
 class DBService{
@@ -39,6 +40,13 @@ class DBService{
         return localStorage.setItem(keySpendable, amount)
     }
 
+    static setLocalGnodeStatus(status){
+        return localStorage.setItem(keyLocalGnodeStatus, status)
+    }
+
+    static getLocalGnodeStatus(status){
+        return localStorage.getItem(keyLocalGnodeStatus)
+    }
 }
 
 export default DBService

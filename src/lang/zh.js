@@ -214,10 +214,13 @@ const messages = {
 
     gnode:{
       title: '本地Grin节点',
-      tab_status: '运行状态',
-      tab_peers: '已连接的节点',
-      tab_log: '运行日志',
-      tab_config: '设置'
+      tabStatus: '运行状态',
+      tabPeers: '周边节点',
+      tabLog: '运行日志',
+      tabConfig: '设置',
+      statusRunning: '运行中,可用',
+      statusSyncing: '正在同步区块 ... 不可用',
+      statusToStart: '没有启动'
       
     }
 

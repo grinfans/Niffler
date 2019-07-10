@@ -248,7 +248,7 @@
         this.ownerApiRunning = true
         this.getHeight()
 
-        if(gnodeOption!='no')this.startGnode()
+        if(gnodeOption)this.startGnode()
 
       })
       messageBus.$on('update', ()=>this.getHeight())

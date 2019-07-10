@@ -104,7 +104,7 @@ export class RemoteGnodeService{
         }
     }
     static getStatus(){
-        return client.get('/v1/status')
+        return clietForRemote.get('/v1/status')
     }
 }
-RemoteGnodeService.initClient(grinNode, null)
+RemoteGnodeService.initClient(gnodeRemoteHost, null)

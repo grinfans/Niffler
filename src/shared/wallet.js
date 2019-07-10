@@ -10,6 +10,7 @@ import log from './logger'
 import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet, nodeExecutable, tempTxDir, gnodeOption} from './config'
 import { messageBus } from '../renderer/messagebus'
 import GnodeService from './gnode'
+import dbService from '../renderer/db'
 
 let ownerAPI
 let listenProcess
@@ -189,7 +190,9 @@ class WalletService {
                 WalletService.stopProcess(ps)
             }
         }
-        if(gnodeOption != 'background'){
+        
+        if(!gnodeOption || dbService.getLocalGnodeStatus()=='running'){
+            log.debug('Try to stop local gnode.')
             GnodeService.stopGnode()
         }
     }

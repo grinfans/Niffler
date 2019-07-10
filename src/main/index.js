@@ -141,7 +141,7 @@ app.on('before-quit', (event)=>{
     setTimeout(()=>{
       log.debug('quit now')
       app.quit()}, 800)
-    }
+  }
 })
 
 app.on('activate', () => {
