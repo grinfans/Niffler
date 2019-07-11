@@ -27,6 +27,18 @@ function disableTUI(){
     }
 }
 
+function enableArchiveMode(){
+    const re = /archive_mode(\s)*=(\s)*false/
+    if(fs.existsSync(nodeTOMLPath)){
+        let c = fs.readFileSync(nodeTOMLPath).toString()
+        if(c.search(re) != -1){
+            log.debug('enable archive_mode.')
+            c = c.replace(re, 'archive_mode = true')
+            fs.writeFileSync(nodeTOMLPath, c)
+        }
+    }
+}
+
 class GnodeService {
     static initClient() {
         if(fs.existsSync(apiSecretPath)){
@@ -48,6 +60,7 @@ class GnodeService {
 
     static startGnode(){
         disableTUI()
+        enableArchiveMode()
         if(platform === 'linux'){
             gnodeProcess = execFile(grinPath) 
         }else{

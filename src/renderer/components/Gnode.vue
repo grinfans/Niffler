@@ -23,25 +23,28 @@
                 </div>
                 <div class="tab-is-link">
                     <div v-if="tab ==='status'">
-                      <p> 状态&nbsp;: 
+                      <p>状态&nbsp;: 
                         <span class="has-text-centered has-text-weight-semibold">{{getStatusDisplay()}}</span>
                       </p>
                       <div v-if="status!='toStart'">
-                        <p> 本地节点高度/(全网高度)&nbsp;: 
+                        <p>本地节点高度/(全网高度)&nbsp;: 
                           <span class="has-text-centered has-text-weight-semibold">{{localHeight}}/({{remoteHeight}})</span>
                         </p>
                         <br/>
-                        <p> 节点版本&nbsp;: 
+                        <p>节点版本&nbsp;: 
                           <span class="has-text-centered has-text-weight-semibold">{{userAgent}}</span>
                         </p>
-                        <p> 协议版本&nbsp;: 
+                        <p>协议版本&nbsp;: 
                           <span class="has-text-centered has-text-weight-semibold">{{protocolVersion}}</span>
                         </p>
                         <br/>
-                        <p> 已连接到周边Grin节点数量&nbsp;: 
+                        <p>已连接到周边Grin节点数量&nbsp;: 
                           <span class="has-text-centered has-text-weight-semibold">{{peers.length}}</span>
                         </p>
-                        <br/> 
+                        <br/>
+                        <p v-if="chainDataSize != 0">全节点区块数据大小&nbsp;: 
+                          <span class="has-text-centered has-text-weight-semibold">{{chainDataSize}}</span>
+                        </p>
                       </div>
                     </div>
                     <div v-if="tab ==='peers'">
@@ -84,11 +87,12 @@
 </template>
 <script>
 import { messageBus } from '@/messagebus'
-import {gnodeOption, grinNodeLog} from '../../shared/config'
+import {gnodeOption, grinNodeLog, chainDataPath} from '../../shared/config'
 
 import Message from '@/components/Message'
 import { remote } from 'electron';
 const Tail = require('tail').Tail;
+const getSize = require('get-folder-size');
 
 export default {
   name: "gnode",
@@ -110,7 +114,8 @@ export default {
       userAgent: '',
       protocolVersion: '',
       peers: [],
-      nodeLog: []
+      nodeLog: [],
+      chainDataSize: 0 
     }
   },
   watch: {
@@ -125,6 +130,7 @@ export default {
   },
   mounted() {
     this.checkStarted()
+    this.getChainDataSize()
   },
   methods: {
     checkStarted(){
@@ -169,6 +175,13 @@ export default {
           this.$log.debug('Failed to get peers: ' + error)
           }
       )
+    },
+
+    getChainDataSize(){
+      getSize(chainDataPath, (err, size) => {
+        if (err) { this.$log.error('Error when get size of chain data dir: ' + err)}
+        this.chainDataSize = (size / 1024 / 1024).toFixed(2) + ' MB'
+      })
     },
 
     startTailLog(log){

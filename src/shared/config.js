@@ -53,6 +53,7 @@ export const nodeTOMLPath = path.join(APP.getPath('home'), '.grin', chainType, '
 export const walletPath = path.join(APP.getPath('home'), '.grin', chainType)
 export const apiSecretPath = path.join(APP.getPath('home'), '.grin', chainType, '.api_secret')
 export const grinNodeLog = path.join(APP.getPath('home'), '.grin', chainType, 'grin-server.log')
+export const chainDataPath = path.join(APP.getPath('home'), '.grin', chainType, 'chain_data')
 
 export const nifflerPath = path.join(APP.getPath('home'), '.niffler')
 export const logDir = path.join(nifflerPath, 'log')
