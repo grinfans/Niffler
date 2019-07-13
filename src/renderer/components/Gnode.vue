@@ -8,7 +8,7 @@
       <button class="delete" aria-label="close" @click="closeModal"></button>
 
     </header>
-    <section class="modal-card-body" style="height:450px;background-color: whitesmoke;">
+    <section class="modal-card-body" style="height:500px;background-color: whitesmoke;">
       
        <div class="container">
         <div class="columns">
@@ -74,8 +74,9 @@
                         <p class="is-size-7" v-for="log in nodeLog" :key="log.id">{{ log }}</p>
                     </div>
                     <div v-if="tab ==='config'">
-                       
+                      <GnodeConfig v-on:close="closeModal"></GnodeConfig>
                     </div>
+                    
                 </div>
               </div>
             </div>
@@ -89,7 +90,8 @@
 import { messageBus } from '@/messagebus'
 import {gnodeOption, grinNodeLog, chainDataPath} from '../../shared/config'
 
-import Message from '@/components/Message'
+import GnodeConfig from '@/components/GnodeConfig'
+
 import { remote } from 'electron';
 const Tail = require('tail').Tail;
 const getSize = require('get-folder-size');
@@ -103,11 +105,11 @@ export default {
     }
   },
   components: {
-      Message
+      GnodeConfig
   },
   data() {
     return {
-      tab: 'status', //status, peers, log, config
+      tab: 'config', //status, peers, log, config
       status: 'toStart',//'toStart','syncing','running'
       localHeight: -1,
       remoteHeight: -1,
@@ -186,9 +188,9 @@ export default {
 
     startTailLog(log){
       let tail = new Tail(grinNodeLog)
-      console.log(grinNodeLog)
+      //console.log(grinNodeLog)
       tail.on("line", function(data) {
-        console.log(data)
+        //console.log(data)
         log.push(data)
       });
 

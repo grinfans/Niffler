@@ -191,7 +191,8 @@ class WalletService {
             }
         }
         
-        if(!gnodeOption || dbService.getLocalGnodeStatus()=='running'){
+        if(gnodeOption.type == 'remoteAllTime' || 
+           (!gnodeOption.background && dbService.getLocalGnodeStatus()=='running')){
             log.debug('Try to stop local gnode.')
             GnodeService.stopGnode()
         }

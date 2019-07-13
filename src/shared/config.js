@@ -46,6 +46,7 @@ if(platform=='win'){
 export const chainType = 'main'
 export const grinNode = "http://grin2-node.niffler.org:3413"
 export const grinNode2 = "http://grin2-node2.niffler.org:3413"
+export const grinLocalNode= "http://127.0.0.1:3413"
 export const grinDIR = path.join(APP.getPath('home'), '.grin')
 export const seedPath = path.join(APP.getPath('home'), '.grin', chainType, 'wallet_data/wallet.seed')
 export const walletTOMLPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-wallet.toml')
@@ -123,10 +124,13 @@ export const langs = {'zh':'简体中文', 'en':'English', 'ru': 'русский
 import pkg from '../../package.json'
 export const version = pkg.version
 
-function getGnodeOption(){
-  let o = getConfig()['localGnode']
-  if(o)return o
-  setConfig({'localGnode': true})
-  return true
+//other gnode options:
+        //type:'remoteAllTime', addr: 'http://xxxx:3413'
+        //type:'localAllTime', addr: 'http://127.0.0.1:3413'
+export const defaultGnodeOptions= {
+  'type':'smart',
+  'remoteAddr': grinNode,
+  'localAddr': grinLocalNode,
+  'background': true
 }
-export const gnodeOption = getGnodeOption()
+export const gnodeOption = getConfig()['gnode']
