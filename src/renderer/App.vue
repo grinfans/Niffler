@@ -247,9 +247,6 @@
         this.$walletService.initClient()
         this.ownerApiRunning = true
         this.getHeight()
-
-        if(gnodeOption.type != 'remoteAllTime')this.startGnode()
-
       })
       messageBus.$on('update', ()=>this.getHeight())
       messageBus.$on('walletCreateFinished', ()=>{
@@ -337,16 +334,7 @@
         this.$log.debug('logout')
         ipcRenderer.send('quit')
       },
-
-      startGnode(){
-        this.$gnodeService.getStatus().then(
-          (res)=>this.$log.debug('Grin node already running')
-        ).catch((err)=>{
-          this.$log.debug('Start Grin node now.')
-          this.$gnodeService.startGnode()
-        })
-      },
-
+      
       autoRefresh(interval){
         setInterval(()=>{
           if(this.ownerApiRunning){

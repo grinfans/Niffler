@@ -45,6 +45,9 @@
                         <p v-if="chainDataSize != 0">全节点区块数据大小&nbsp;: 
                           <span class="has-text-centered has-text-weight-semibold">{{chainDataSize}}</span>
                         </p>
+
+                        <br/>
+                        <a class="button is-link" @click="restart">重启本地grin节点</a>
                       </div>
                     </div>
                     <div v-if="tab ==='peers'">
@@ -109,7 +112,7 @@ export default {
   },
   data() {
     return {
-      tab: 'config', //status, peers, log, config
+      tab: 'status', //status, peers, log, config
       status: 'toStart',//'toStart','syncing','running'
       localHeight: -1,
       remoteHeight: -1,
@@ -127,7 +130,7 @@ export default {
   },
   created(){
     messageBus.$on('gnodeStarting',()=>{
-      setTimeout(()=>this.checkStarted(), 7500)
+      setTimeout(()=>this.checkStarted(), 2500)
     })
   },
   mounted() {
@@ -214,7 +217,10 @@ export default {
          this.getPeers()
         }, interval)
     },
-
+    restart(){
+      this.$gnodeService.restartGnode()
+      this.status = 'toStart'
+    },
     closeModal() {
       messageBus.$emit('close', 'windowGnode');
     },

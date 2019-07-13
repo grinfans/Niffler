@@ -129,15 +129,15 @@ class WalletService {
         return WalletService.jsonRPC('post_tx',  [tx, isFluff])
     }
  
-    static start(password){
+    static startOwnerApi(password, grinNodeToConnect){
         //WalletService.stopProcess('ownerAPI')
         enableForeignApi()
-
+        
         if(platform === 'linux'){
-            ownerAPI = execFile(grinWalletPath, ['-r', grinNode, 'owner_api']) 
+            ownerAPI = execFile(grinWalletPath, ['-r', grinNodeToConnect, 'owner_api']) 
         }else{
-            const cmd = platform==='win'? `${grinWalletPath} -r ${grinNode} --pass ${addQuotations(password)} owner_api`:
-                                        `${grinWalletPath} -r ${grinNode} owner_api`
+            const cmd = platform==='win'? `${grinWalletPath} -r ${grinNodeToConnect} --pass ${addQuotations(password)} owner_api`:
+                                        `${grinWalletPath} -r ${grinNodeToConnect} owner_api`
             //log.debug(`platform: ${platform}; start owner api cmd: ${cmd}`)
             ownerAPI =  exec(cmd)
         }
@@ -156,6 +156,13 @@ class WalletService {
         })
     }
 
+    static restartOwnerApi(password, grinNodeToConnect){
+        WalletService.stopProcess(ownerAPI)
+        setTimeout(()=>{
+            WalletService.startOwnerApi(password, grinNodeToConnect)
+        }, 500)
+    }
+    
     static startListen(password=password_){
         WalletService.stopProcess('listen')
         if(platform==='linux'){
@@ -202,9 +209,11 @@ class WalletService {
     }
 
     static new(password){
-        const cmd = platform==='win'? `${grinWalletPath} -r ${grinNode} --pass ${addQuotations(password)} init`:
-                                      `${grinWalletPath} -r ${grinNode} init`
-        log.debug(`function new: platform: ${platform}; grin bin: ${grinWalletPath}; grin node: ${grinNode}`); 
+        //const cmd = platform==='win'? `${grinWalletPath} -r ${grinNode} --pass ${addQuotations(password)} init`:
+        //                              `${grinWalletPath} -r ${grinNode} init`
+        const cmd = platform==='win'? `${grinWalletPath} --pass ${addQuotations(password)} init`:
+                                      `${grinWalletPath} init`
+        log.debug(`function new: platform: ${platform}; grin bin: ${grinWalletPath}`); 
         let createProcess = exec(cmd)
         createProcess.stdout.on('data', (data) => {
             let output = data.toString()
@@ -241,13 +250,6 @@ class WalletService {
         })
     }
 
-    static send(amount, method, dest, version){
-        let dest_ = '"' + path.resolve(dest) + '"'
-        const cmd = `${grinWalletPath} -r ${grinNode} -p ${addQuotations(password_)} send -m ${method} -d ${dest_} -v ${version} ${amount}`
-        //log.debug(cmd)
-        return execPromise(cmd)
-    }
-
     static createSlate(amount, version){
         fse.ensureDirSync(tempTxDir)
 
@@ -263,13 +265,6 @@ class WalletService {
                 return reject(err)
             })
         })
-    }
-
-    static finalize(fn){
-        let fn_ = '"' + path.resolve(fn) + '"'
-        const cmd = `${grinWalletPath} -r ${grinNode} -p ${addQuotations(password_)} finalize -i ${fn_}`
-        //log.debug(cmd)
-        return execPromise(cmd)
     }
 
     static finalizeSlate(slate){

@@ -5,10 +5,12 @@ const {ipcMain} = require('electron')
 import pkg from '../../package.json'
 import checkUpdate from '../shared/updateChecker'
 import {checkFirstTime} from '../shared/first'
+import gnodeService from '../shared/gnode'
+
 checkFirstTime()
 
 import log from '../shared/logger'
-import {downloadUrl } from '../shared/config'
+import {downloadUrl, gnodeOption} from '../shared/config'
 
 /**
  * Set `__static` path to static files in production
@@ -30,6 +32,10 @@ if(process.platform!=='win32'){
   exec('pkill grin-wallet')
 }else{
   exec('taskkill -f /im grin-wallet.exe')
+}
+
+if(gnodeOption.type!='remoteAllTime'){
+  gnodeService.restartGnode()
 }
 
 let mainWindow

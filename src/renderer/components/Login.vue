@@ -55,7 +55,7 @@
 import { messageBus } from '@/messagebus'
 import {isFirstTime} from '../../shared/first'
 import Remove from '@/components/Remove'
-import {version} from '../../shared/config'
+import {version, grinNode, gnodeOption} from '../../shared/config'
 
 export default {
   name: "login",
@@ -88,13 +88,13 @@ export default {
 
       this.resetErrors()
       this.$walletService.initClient()
-      this.$walletService.start(this.password)
+      this.$walletService.startOwnerApi(this.password, grinNode)
       setTimeout(()=>{
         this.$walletService.getNodeHeight().then(
           (res) =>{
             setPassword(password)
             messageBus.$emit('logined')
-           
+            if(gnodeOption.type!='remoteAllTime')messageBus.$emit('gnodeStarting')
           }).catch((error) => {
             return this.error = true
         })}, 500)

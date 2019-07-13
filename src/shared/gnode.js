@@ -98,6 +98,19 @@ class GnodeService {
             }
         }
     }
+
+    static stopGnode2(){
+        if(process.platform!=='win32'){
+            exec('pkill grin$')
+        }else{
+            exec('taskkill -f /im grin.exe')
+        }
+    }
+
+    static restartGnode(){
+        GnodeService.stopGnode2()
+        setTimeout(()=>GnodeService.startGnode(), 2500)
+    }
 }
 GnodeService.initClient()
 export default GnodeService
