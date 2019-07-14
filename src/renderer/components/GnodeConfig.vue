@@ -29,18 +29,21 @@
     </div>               
     <label class="label" style="color:#22509a; margin-top:17.5px">节点连接方式:</label>
     <div class="control" style="font-size:0.8rem">
-        <label class="radio">
-            <input type="radio" value="smart" v-model="type">&nbsp;(推荐)当本地节点同步完成时连接本地，否则使用远程
+      <label class="radio">
+            <input type="radio" value="remoteFirst" v-model="connectMethod">&nbsp;(推荐)优先使用远程. 当远程节点不可用, 使用本地节点
         </label>
         <br/>
         <label class="radio">
-            <input type="radio" value="remoteAllTime" v-model="type">&nbsp;轻节点, 始终连接远程节点
+            <input type="radio" value="localFirst" v-model="connectMethod">&nbsp;当本地节点同步完成时优先连接本地, 否则使用远程
         </label>
         <br/>
         <label class="radio">
-            <input type="radio" value="localAllTime" v-model="type">&nbsp;始终连接本地节点
+            <input type="radio" value="remoteAllTime" v-model="connectMethod">&nbsp;始终连接远程节点
         </label>
         <br/>
+        <label class="radio">
+            <input type="radio" value="localAllTime" v-model="connectMethod">&nbsp;始终连接本地节点
+        </label>
     </div>
     <label class="label" style="color:#22509a; margin-top:17.5px">其他:</label>
     <label class="checkbox" style="font-size:0.88rem">
@@ -71,9 +74,10 @@ export default {
 
   data() {
     return{
+      useLocalGnode: gnodeOption.useLocalGnode,
       localAddr: gnodeOption.localAddr,
       remoteAddr: gnodeOption.remoteAddr,
-      type: gnodeOption.type,
+      connectMethod: gnodeOption.connectMethod,
       background: gnodeOption.background,
       openMsg:false,
       msg:'设置已经保存, 重启钱包后生效.'
@@ -82,10 +86,11 @@ export default {
   methods: {
     save(){
       let options = {
-        'type': this.type,
+        'connectMethod': this.connectMethod,
         'remoteAddr': this.remoteAddr,
         'localAddr': this.localAddr,
-        'background': this.background
+        'background': this.background,
+        'useLocalGnode': true
       }
       setConfig({'gnode': options})
       this.openMsg = true
@@ -93,7 +98,7 @@ export default {
     restore(){
       this.localAddr = defaultGnodeOptions.localAddr
       this.remoteAddr = defaultGnodeOptions.remoteAddr
-      this.type = defaultGnodeOptions.type
+      this.connetMethod = defaultGnodeOptions.connetMethod
       this.background = defaultGnodeOptions.background
       setConfig({'gnode': defaultGnodeOptions})
     },

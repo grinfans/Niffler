@@ -36,7 +36,7 @@ const messages = {
   zh,
 }
 
-import {locale} from '../shared/config'
+import {locale, gnodeOption} from '../shared/config'
 const i18n = new VueI18n({
   locale: locale,
   //locale: 'ru',
@@ -73,3 +73,12 @@ ipcRenderer.on('before-quit', ()=>{
   messageBus.$emit('quit')
   walletService.stopAll()
 })
+
+if(gnodeOption.useLocalGnode){
+  setTimeout(()=>gnodeService.startGnode(), 1500)
+  setTimeout(()=>{
+    gnodeService.getStatus().then().catch((err)=>{
+      log.debug('start gnode after 2s wait.')
+      gnodeService.startGnode()})
+  }, 2000)
+}

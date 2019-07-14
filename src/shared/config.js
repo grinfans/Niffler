@@ -124,13 +124,12 @@ export const langs = {'zh':'简体中文', 'en':'English', 'ru': 'русский
 import pkg from '../../package.json'
 export const version = pkg.version
 
-//other gnode options:
-        //type:'remoteAllTime', addr: 'http://xxxx:3413'
-        //type:'localAllTime', addr: 'http://127.0.0.1:3413'
 export const defaultGnodeOptions= {
-  'type':'smart',
+  'useLocalGnode': true,
+  //connnectMethod: localFirst, remoteFirst, localAllTime, remoteAllTime
+  'connectMethod':'remoteFirst',
   'remoteAddr': grinNode,
   'localAddr': grinLocalNode,
   'background': true
 }
-export const gnodeOption = getConfig()['gnode']
+export const gnodeOption = getConfig()['gnode']?getConfig()['gnode']: defaultGnodeOptions

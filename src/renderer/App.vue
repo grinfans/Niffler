@@ -64,10 +64,10 @@
 
           </div>
 
-          <div class="column is-offset-1 is-2" style="margin-left:80px;">
+          <div class="column is-offset-1 is-2" style="margin-left:40px;">
             <div class="level">
               <p class="is-size-7 tag is-warning animated" v-bind:class="{headShake: isAnimate}" style="animation-iteration-count:3">
-                {{ $t("msg.app.height") }}:{{height}}</p>
+                {{ $t("msg.app.height") }} ({{getGnodeLocationDisplay()}}):{{height}}</p>
               &nbsp;
               <!--<a class="button is-small is-link is-outlined" @click.prevent="logout">{{ $t("msg.logout") }}</a>-->
               <div class="dropdown is-right" v-bind:class="{'is-active':isDroppingDown3}">
@@ -187,6 +187,7 @@
         hedwigRunning:false,
         hedwigFailed:false,
 
+        isGnodeLocal: false,
         isRu: false
     }},
     mounted() {
@@ -195,6 +196,7 @@
         this.walletExist = true
       }
       this.getHeight()
+      if(this.$dbService.getGnodeLocation() == 'local')this.isGnodeLocal = true
       this.$log.debug(`Render main window mounted:height ${this.height}; owner_api running?${this.ownerApiRunning};wallet exists? ${this.walletExist}`)
     },
     created () {
@@ -342,7 +344,14 @@
           }
         }, interval)
       },
-      
+      getGnodeLocationDisplay(){
+        if(this.isGnodeLocal){
+          return this.$t('msg.local')
+        }
+        return this.$t('msg.remote')
+        
+      },
+
       async checkNewVersion(){
         let toUpdate = await checkUpdate()
         if(toUpdate){

@@ -23,6 +23,9 @@ const messages = {
     msg: '消息',
     more: '更多',
     back: '返回',
+    
+    remote: '远程',
+    local: '本地',
 
     login: {
       walletExist: '发现已有Grin钱包存在；请用原有的密码登陆吧 :-)',

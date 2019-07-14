@@ -25,6 +25,9 @@ const messages = {
     msg: 'Message',
     more: 'More',
 
+    remote: 'remote',
+    local: 'local',
+    
     login: {
       walletExist: 'Found grin wallet data exists; login with original password :-)',
     },

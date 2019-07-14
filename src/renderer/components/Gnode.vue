@@ -96,6 +96,7 @@ import {gnodeOption, grinNodeLog, chainDataPath} from '../../shared/config'
 import GnodeConfig from '@/components/GnodeConfig'
 
 import { remote } from 'electron';
+import { setTimeout } from 'timers';
 const Tail = require('tail').Tail;
 const getSize = require('get-folder-size');
 
@@ -130,12 +131,18 @@ export default {
   },
   created(){
     messageBus.$on('gnodeStarting',()=>{
-      setTimeout(()=>this.checkStarted(), 2500)
+      this.$log.debug('Got event gnodeStarting')
+      setTimeout(()=>this.checkStarted(), 5000)
     })
   },
   mounted() {
     this.checkStarted()
     this.getChainDataSize()
+    setTimeout(()=>{
+      if(this.status == 'toStart'){
+        this.checkStarted()
+      }
+    }, 10*1000)
   },
   methods: {
     checkStarted(){

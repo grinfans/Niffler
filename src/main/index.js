@@ -5,8 +5,6 @@ const {ipcMain} = require('electron')
 import pkg from '../../package.json'
 import checkUpdate from '../shared/updateChecker'
 import {checkFirstTime} from '../shared/first'
-import gnodeService from '../shared/gnode'
-
 checkFirstTime()
 
 import log from '../shared/logger'
@@ -29,13 +27,10 @@ log.debug(`Platform:${process.platform}`)
 
 import {exec, execFile, spawn, fork} from 'child_process'
 if(process.platform!=='win32'){
-  exec('pkill grin-wallet')
+  exec('pkill grin')
 }else{
   exec('taskkill -f /im grin-wallet.exe')
-}
-
-if(gnodeOption.type!='remoteAllTime'){
-  gnodeService.restartGnode()
+  exec('taskkill -f /im grin.exe')
 }
 
 let mainWindow
