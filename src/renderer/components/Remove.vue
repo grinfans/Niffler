@@ -51,7 +51,7 @@
 </template>
 <script>
 import { messageBus } from '@/messagebus'
-import { grinDIR, nifflerPath} from '../../shared/config'
+import {walletDataPath, walletLogPath, walletTOMLPath, nifflerPath} from '../../shared/config'
 const fse = require('fs-extra')
 const {ipcRenderer} = require('electron')
 const path = require('path')
@@ -87,9 +87,12 @@ export default {
     remove(){
       let rcText = this.removeConfirmedText.trim().toLowerCase()
       if(['移除', 'remove'].indexOf(rcText) >= 0){
-        let suffix = String(Math.random()).slice(2)
-        let dest = path.join(nifflerPath, `.grin_${suffix}`)
-        fse.moveSync(grinDIR, dest)
+        //let suffix = String(Math.random()).slice(2)
+        //let dest = path.join(nifflerPath, `.grin_${suffix}`)
+        //fse.moveSync(grinDIR, dest)
+        fse.removeSync(walletDataPath)
+        fse.removeSync(walletTOMLPath)
+        fse.removeSync(walletLogPath)
         this.removed = true
       }else{
         this.noConfirmed = true

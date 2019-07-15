@@ -42,6 +42,9 @@
                           <span class="has-text-centered has-text-weight-semibold">{{peers.length}}</span>
                         </p>
                         <br/>
+                        <p>全节点区块数据存储的位置&nbsp;: </p>
+                        <p><span class="has-text-centered has-text-weight-semibold">{{chainDataPath}}</span></p>
+                        <br/>
                         <p v-if="chainDataSize != 0">全节点区块数据大小&nbsp;: 
                           <span class="has-text-centered has-text-weight-semibold">{{chainDataSize}}</span>
                         </p>
@@ -121,6 +124,7 @@ export default {
       protocolVersion: '',
       peers: [],
       nodeLog: [],
+      chainDataPath: chainDataPath,
       chainDataSize: 0 
     }
   },
