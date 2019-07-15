@@ -327,12 +327,12 @@ class WalletService {
         })
     }
 
-    static check(cb){
+    static check(cb, gnode){
         let grin = grinWalletPath
         if(platform==='win'){
             grin = grinWalletPath.slice(1,-1)
         }
-        checkProcess = spawn(grin, ['-r', grinNode2, '-p', password_, 'check', '-d']);
+        checkProcess = spawn(grin, ['-r', gnode, '-p', password_, 'check', '-d']);
         let ck = checkProcess
         processes['check'] = checkProcess
         localStorage.setItem('checkProcessPID', checkProcess.pid)

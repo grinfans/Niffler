@@ -61,6 +61,7 @@
 import { messageBus } from '@/messagebus'
 import Message from '@/components/Message'
 import { setTimeout } from 'timers';
+import {grinNode2, grinLocalNode} from '../../shared/config'
 
 export default {
   name: "check",
@@ -93,7 +94,14 @@ export default {
     start(){
       this.checking = true
       this.checked = false
-      this.$walletService.check(this.updateOutput)
+      let gnode = grinNode2
+      let localGnodeStatus = this.$dbService.getLocalGnodeStatus()
+      this.$log.debug('check grin local status before check balance: ' + localGnodeStatus)
+      if( localGnodeStatus == 'running'){
+        this.$log.debug('check use grin local node')
+        gnode = grinLocalNode
+      }
+      this.$walletService.check(this.updateOutput, gnode)
     },
 
     stop(){
