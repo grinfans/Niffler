@@ -98,7 +98,7 @@ export default {
     restore(){
       this.localAddr = defaultGnodeOptions.localAddr
       this.remoteAddr = defaultGnodeOptions.remoteAddr
-      this.connetMethod = defaultGnodeOptions.connetMethod
+      this.connectMethod = defaultGnodeOptions.connectMethod
       this.background = defaultGnodeOptions.background
       setConfig({'gnode': defaultGnodeOptions})
     },

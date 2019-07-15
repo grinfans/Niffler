@@ -131,7 +131,7 @@ export default {
           })
         }
       }
-      setTimeout(()=>selectGnode.call(this), 250)
+      setTimeout(()=>selectGnode.call(this), 100)
 
       setTimeout(()=>{
         this.$walletService.getNodeHeight().then(
@@ -140,7 +140,7 @@ export default {
             messageBus.$emit('logined')
           }).catch((error) => {
             return this.error = true
-        })}, 800)
+        })}, 600)
 
       this.resetErrors()
       },
