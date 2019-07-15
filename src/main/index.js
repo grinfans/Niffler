@@ -27,10 +27,17 @@ log.debug(`Platform:${process.platform}`)
 
 import {exec, execFile, spawn, fork} from 'child_process'
 if(process.platform!=='win32'){
-  exec('pkill grin')
+  exec('pkill grin-wallet')
 }else{
   exec('taskkill -f /im grin-wallet.exe')
-  exec('taskkill -f /im grin.exe')
+}
+
+if(gnodeOption.connectMethod != 'localAllTime'){
+  if(process.platform!=='win32'){
+    exec('pkill grin')
+  }else{
+    exec('taskkill -f /im grin.exe')
+  }
 }
 
 let mainWindow

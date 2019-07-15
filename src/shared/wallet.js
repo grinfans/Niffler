@@ -198,12 +198,13 @@ class WalletService {
             }
         }
         
-        //if(!gnodeOption.useLocalGnode || 
-        //   (!gnodeOption.background && dbService.getLocalGnodeStatus()=='running')){
-        //    log.debug('Try to stop local gnode.')
-        //    GnodeService.stopGnode()
-        //}
+        if(!gnodeOption.useLocalGnode || 
+           (!gnodeOption.background && dbService.getLocalGnodeStatus()=='running')){
+            log.debug('Try to stop local gnode.')
+            GnodeService.stopGnode()
+        }
     }
+    
     static isExist(){
         return fs.existsSync(seedPath)?true:false
     }

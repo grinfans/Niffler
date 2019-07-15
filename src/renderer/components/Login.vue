@@ -111,7 +111,7 @@ export default {
                   let peersCount = parseInt(res.data.connections)
                   this.$log.debug('local node height is ' + localHeight)
                   this.$log.debug('local node peers count is ' + peersCount)
-                  if(localHeight + 60 >= remoteHeight && peersCount >= 10){
+                  if(localHeight + 60 >= remoteHeight && peersCount >= 6){
                     this.$dbService.setGnodeLocation('local')
                     return this.$walletService.startOwnerApi(this.password, grinLocalNode)
                   }else{
@@ -131,7 +131,7 @@ export default {
           })
         }
       }
-      selectGnode.call(this)
+      setTimeout(()=>selectGnode.call(this), 250)
 
       setTimeout(()=>{
         this.$walletService.getNodeHeight().then(
@@ -140,7 +140,7 @@ export default {
             messageBus.$emit('logined')
           }).catch((error) => {
             return this.error = true
-        })}, 500)
+        })}, 800)
 
       this.resetErrors()
       },

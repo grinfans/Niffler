@@ -78,7 +78,7 @@ if(gnodeOption.useLocalGnode){
   setTimeout(()=>gnodeService.startGnode(), 1500)
   setTimeout(()=>{
     gnodeService.getStatus().then().catch((err)=>{
-      log.debug('start gnode after 2s wait.')
+      log.debug('start gnode after 2.5s wait.')
       gnodeService.startGnode()})
-  }, 2000)
+  }, 2500)
 }

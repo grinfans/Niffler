@@ -60,7 +60,7 @@ class GnodeService {
 
     static startGnode(){
         disableTUI()
-        enableArchiveMode()
+        //enableArchiveMode()
         if(platform === 'linux'){
             gnodeProcess = execFile(grinPath) 
         }else{

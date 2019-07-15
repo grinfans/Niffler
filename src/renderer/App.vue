@@ -196,7 +196,7 @@
         this.walletExist = true
       }
       this.getHeight()
-      if(this.$dbService.getGnodeLocation() == 'local')this.isGnodeLocal = true
+      this.updateIsLocalGnode()
       this.$log.debug(`Render main window mounted:height ${this.height}; owner_api running?${this.ownerApiRunning};wallet exists? ${this.walletExist}`)
     },
     created () {
@@ -250,7 +250,11 @@
         this.ownerApiRunning = true
         this.getHeight()
       })
-      messageBus.$on('update', ()=>this.getHeight())
+      messageBus.$on('update', ()=>{
+        this.getHeight()
+        this.updateIsLocalGnode()
+        }
+      )
       messageBus.$on('walletCreateFinished', ()=>{
         this.$log.info('app.vue got walletCreateFinished event')
         this.walletExist = true
@@ -330,6 +334,14 @@
           }).catch((error)=>{
             this.$log.error(error)
           })
+      },
+
+      updateIsLocalGnode(){
+        if(this.$dbService.getGnodeLocation() == 'local'){
+          this.isGnodeLocal = true
+        }else{
+            this.isGnodeLocal = false
+        }
       },
 
       logout(){
