@@ -231,6 +231,7 @@ export default {
     restart(){
       this.$gnodeService.restartGnode()
       this.status = 'toStart'
+      this.nodeLog = []
     },
     closeModal() {
       messageBus.$emit('close', 'windowGnode');
