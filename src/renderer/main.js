@@ -75,13 +75,6 @@ ipcRenderer.on('before-quit', ()=>{
 })
 
 if(gnodeOption.useLocalGnode){
-  setTimeout(()=>{
-    gnodeService.getStatus().then().catch((err)=>{
-      gnodeService.startGnode()})
-  }, 1000)
-  setTimeout(()=>{
-    gnodeService.getStatus().then().catch((err)=>{
-      log.debug('start gnode after 2.5s wait.')
-      gnodeService.startGnode()})
-  }, 2000)
+  gnodeService.getStatus().then().catch((err)=>{
+    gnodeService.startGnode()})
 }

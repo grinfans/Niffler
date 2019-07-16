@@ -8,7 +8,7 @@
       <button class="delete" aria-label="close" @click="closeModal"></button>
 
     </header>
-    <section class="modal-card-body" style="height:500px;background-color: whitesmoke;">
+    <section class="modal-card-body" style="height:540px;background-color: whitesmoke;">
       
        <div class="container">
         <div class="columns">

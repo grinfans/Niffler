@@ -337,6 +337,7 @@
       },
 
       updateIsLocalGnode(){
+        //console.log(this.$dbService.getGnodeLocation())
         if(this.$dbService.getGnodeLocation() == 'local'){
           this.isGnodeLocal = true
         }else{

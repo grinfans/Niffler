@@ -92,7 +92,12 @@ export default {
         let localHeight
         let remoteHeight
         this.$log.debug('Time to select gnode.')
-        this.$log.debug('Connect method is ' + gnodeOption.connectMethod)      
+        this.$log.debug('Use local gnode? ' + gnodeOption.useLocalGnode)  
+        this.$log.debug('Connect method is ' + gnodeOption.connectMethod)  
+        if(!gnodeOption.useLocalGnode){
+          this.$dbService.setGnodeLocation('remote')
+          return this.$walletService.startOwnerApi(this.password, grinNode)
+        }  
         if(gnodeOption.connectMethod ==='localAllTime'){
           this.$dbService.setGnodeLocation('local')
           return this.$walletService.startOwnerApi(this.password, grinLocalNode)

@@ -32,13 +32,13 @@ if(process.platform!=='win32'){
   exec('taskkill -f /im grin-wallet.exe')
 }
 
-//if(gnodeOption.connectMethod != 'localAllTime'){
-//  if(process.platform!=='win32'){
-//    exec('pkill grin')
-//  }else{
-//    exec('taskkill -f /im grin.exe')
-//  }
-//}
+if(!gnodeOption.useLocalGnode){
+  if(process.platform!=='win32'){
+    exec('pkill grin')
+  }else{
+    exec('taskkill -f /im grin.exe')
+  }
+}
 
 let mainWindow
 let firstQuit = true

@@ -54,7 +54,7 @@ class DBService{
         return localStorage.setItem(keyGnodeLocation, location)
     }
 
-    static getGnodeLocation(status){
+    static getGnodeLocation(){
         return localStorage.getItem(keyGnodeLocation)
     }
 
