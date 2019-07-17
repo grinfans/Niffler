@@ -40,12 +40,12 @@
             </form>
 
             <a class="button is-small is-text is-pulled-right" @click="openRemove=true">{{ $t("msg.remove.title") }}</a>
-
+            <a class="button is-small is-text is-pulled-right" @click="openGnodeConfig=true">设置Grin节点</a>
           </div>
         </div>
       
       <remove :showModal="openRemove"></remove>
-
+      <gnode-config-modal :showModal="openGnodeConfig"></gnode-config-modal>
       </div>
     </div>
   </section>
@@ -55,13 +55,16 @@
 import { messageBus } from '@/messagebus'
 import {isFirstTime} from '../../shared/first'
 import Remove from '@/components/Remove'
+import GnodeConfigModal from '@/components/GnodeConfigModal'
+
 import {version, grinNode, gnodeOption, grinNode2, grinLocalNode} from '../../shared/config'
 
 export default {
   name: "login",
 
   components: {
-    Remove
+    Remove,
+    GnodeConfigModal
   },
 
   data() {
@@ -70,11 +73,13 @@ export default {
       password: '', 
       error: false,
       openRemove: false,
+      openGnodeConfig:false,
       version: version
     }
   },
   created(){
     messageBus.$on('closeWindowRemove',()=>{this.openRemove = false})
+    messageBus.$on('closeWindowGnodeConfig',()=>{this.openGnodeConfig = false})
   },
   mounted(){
     this.$log.info('isfirst(login.vue)? '+isFirstTime())
@@ -136,7 +141,7 @@ export default {
           })
         }
       }
-      setTimeout(()=>selectGnode.call(this), 100)
+      setTimeout(()=>selectGnode.call(this), 50)
 
       setTimeout(()=>{
         this.$walletService.getNodeHeight().then(
@@ -145,7 +150,7 @@ export default {
             messageBus.$emit('logined')
           }).catch((error) => {
             return this.error = true
-        })}, 600)
+        })}, 800)
 
       this.resetErrors()
       },

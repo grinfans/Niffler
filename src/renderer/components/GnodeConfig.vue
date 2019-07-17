@@ -1,6 +1,6 @@
 <template>
 <div class="field">
-    <p class="tag is-warning" style="font-size:0.85rem">普通用户推荐使用默认值 !</p>
+    <p class="tag is-warning" style="font-size:0.85rem;margin-left:-10px">普通用户推荐使用默认值 !</p>
     <br/>
     <label class="checkbox" style="color:#22509a;font-size:0.95rem;margin-top:20px">
     <input type="checkbox" v-model="useLocalGnode">
