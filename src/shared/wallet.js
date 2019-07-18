@@ -157,10 +157,10 @@ class WalletService {
     static startListen(password=password_){
         WalletService.stopProcess('listen')
         if(platform==='linux'){
-            listenProcess =  execFile(grinPath, ['-e', 'listen']) 
+            listenProcess =  execFile(grinPath, ['-r', grinNode, '-e', 'listen']) 
         }else{
-            const cmd = platform==='win'? `${grinPath} -e --pass ${addQuotations(password)} listen`:
-                                        `${grinPath} -e listen`
+            const cmd = platform==='win'? `${grinPath} -r ${grinNode} -e --pass ${addQuotations(password)} listen`:
+                                        `${grinPath} -r ${grinNode} -e listen`
             //log.debug(`platform: ${platform}; start listen cmd: ${cmd}`)
             listenProcess =  exec(cmd)
         }
