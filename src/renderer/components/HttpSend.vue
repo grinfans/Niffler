@@ -29,7 +29,7 @@
         <br/>
         <div class="field is-grouped">
           <div class="control">
-            <button class="button is-link" v-bind:class="{'is-loading':sending}" @click="send">{{ $t("msg.send") }}</button>
+            <button class="button is-link" v-bind:class="{'is-loading':sending}" @click="send2">{{ $t("msg.send") }}</button>
           </div>
           <div class="control">
             <button class="button is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
@@ -159,6 +159,7 @@ export default {
                 timeout: '25s',
                 content: JSON.stringify(payload)
               });
+              this.$log.debug('post slate return res: ' + JSON.stringify(res))
               let slate2 = res.data.result.Ok
               if(slate2){
                 this.$log.debug('Got slate2 file from receiver')
@@ -193,7 +194,49 @@ export default {
         }
         sendAsync.call(this)
       }
+    },
+    send2(){
+      if(this.checkForm()&&!this.sending){
+        let tx_id
+        this.sending = true
 
+        let tx_data = {
+          "src_acct_name": null,
+          "amount": this.amount * 1000000000, 
+          "minimum_confirmations": 10,
+          "max_outputs": 500,
+          "num_change_outputs": 1,
+          "selection_strategy_is_use_all": true,
+          "target_slate_version": null,
+          "send_args": {
+            "method": "http",
+            "dest": this.address,
+            "finalize": true,
+            "post_tx": true,
+            "fluff": true
+          }
+        }
+
+        this.$walletService.issueSendTransaction(tx_data).then(
+          (res) => {
+            this.$log.debug('send2 issueSendTransaction return: '+ res)
+            let slate = res.data.result.Ok
+            tx_id = slate.id
+            this.sent = true
+            this.$dbService.addPostedUnconfirmedTx(tx_id)
+          }).catch((error) => {
+            this.$log.error('http send2 error:' + error)  
+            this.$log.error(error.stack)
+            if (error.response) {   
+              let resp = error.response      
+              this.$log.error(`resp.data:${resp.data}; status:${resp.status};headers:${resp.headers}`)
+            }
+            this.errors.push(this.$t('msg.httpSend.TxFailed'))
+          }).finally(()=>{
+            this.sending = false
+            messageBus.$emit('update')
+          })
+        }
     },
     closeModal() {
       this.clearup()
