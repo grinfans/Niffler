@@ -12,7 +12,7 @@ v0.4.1 是一个bug修复版本.
 修复了Grin第一次硬分叉后Windows版本无法通过Http/Https 方法/hedwig方法收款的bug.
 
 Windows/Mac/linux 版本:
-[https://github.com/grinfans/niffler/releases/tag/v0.4.0](https://github.com/grinfans/niffler/releases/tag/v0.4.1)
+[https://github.com/grinfans/niffler/releases/tag/v0.4.1](https://github.com/grinfans/niffler/releases/tag/v0.4.1)
 
 Niffler钱包 新加了 **hedwig** v1 代理服务; 现在，没有公共ip的用户也可以很简单容易地接收grin了 :)
 
