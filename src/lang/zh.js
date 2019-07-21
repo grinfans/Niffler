@@ -27,6 +27,12 @@ const messages = {
     remote: '远程',
     local: '本地',
 
+    node: '节点',
+    remoteNode: '远程节点',
+    localNode: '本地节点',
+
+    other: '其他',
+
     login: {
       walletExist: '发现已有Grin钱包存在；请用原有的密码登陆吧 :-)',
     },
@@ -223,10 +229,34 @@ const messages = {
       tabConfig: '设置',
       statusRunning: '运行中,可用',
       statusSyncing: '正在同步区块 ... 不可用',
-      statusToStart: '没有启动'
-      
-    }
+      statusToStart: '没有启动',
+      status:'状态',
+      localRemoteHeight: '本地节点高度/全网高度',
+      nodeVersion: '节点版本',
+      protocolVersion: '协议版本',
+      connectedCount: '已连接到周边Grin节点数量',
+      location: '区块数据存储的位置',
+      size: '全节点区块数据大小',
+      restart: '重启本地节点',
+      height: '最新高度'
+    },
 
+    gnodeConfig:{
+      warning: '普通用户推荐使用默认值 !',
+      useLocalorNot: '(推荐)启用本地节点',
+      connectMethod: '节点连接方式',
+      remoteFirst: '(推荐)优先使用远程. 当远程节点不可用, 使用本地节点',
+      localFirst:  '当本地节点同步完成时优先连接本地, 否则使用远程',
+      remoteAllTime: '始终连接远程节点',
+      localAllTime: '始终连接本地节点',
+      background: '(推荐)钱包退出后，本地节点后台运行',
+      restoreToDefault: '恢复默认值',
+      saved: '设置已经保存, 重启钱包后生效.'
+    },
+
+    gnodeConfigModal:{
+      config: '设置Grin本地节点'
+    }
   }
 }
 export default messages

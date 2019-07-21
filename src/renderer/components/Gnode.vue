@@ -23,38 +23,38 @@
                 </div>
                 <div class="tab-is-link">
                     <div v-if="tab ==='status'">
-                      <p>状态&nbsp;: 
+                      <p>{{ $t("msg.gnode.status") }}&nbsp;: 
                         <span class="has-text-centered has-text-weight-semibold">{{getStatusDisplay()}}</span>
                       </p>
                       <div v-if="status!='toStart'">
-                        <p>本地节点高度/(全网高度)&nbsp;: 
+                        <p>{{ $t("msg.gnode.localRemoteHeight") }}&nbsp;: 
                           <span class="has-text-centered has-text-weight-semibold">{{localHeight}}/({{remoteHeight}})</span>
                         </p>
                         <br/>
-                        <p>节点版本&nbsp;: 
+                        <p>{{ $t("msg.gnode.nodeVersion") }}&nbsp;: 
                           <span class="has-text-centered has-text-weight-semibold">{{userAgent}}</span>
                         </p>
-                        <p>协议版本&nbsp;: 
+                        <p>{{ $t("msg.gnode.protocolVersion") }}&nbsp;: 
                           <span class="has-text-centered has-text-weight-semibold">{{protocolVersion}}</span>
                         </p>
                         <br/>
-                        <p>已连接到周边Grin节点数量&nbsp;: 
+                        <p>{{ $t("msg.gnode.connectedCount") }}&nbsp;: 
                           <span class="has-text-centered has-text-weight-semibold">{{peers.length}}</span>
                         </p>
                         <br/>
-                        <p>全节点区块数据存储的位置&nbsp;: </p>
+                        <p>{{ $t("msg.gnode.location") }}&nbsp;: </p>
                         <p><span class="has-text-centered has-text-weight-semibold">{{chainDataPath}}</span></p>
                         <br/>
-                        <p v-if="chainDataSize != 0">全节点区块数据大小&nbsp;: 
+                        <p v-if="chainDataSize != 0">{{ $t("msg.gnode.size") }} &nbsp;: 
                           <span class="has-text-centered has-text-weight-semibold">{{chainDataSize}}</span>
                         </p>
 
                         <br/>
-                        <a class="button is-link" @click="restart">重启本地grin节点</a>
+                        <a class="button is-link" @click="restart">{{ $t("msg.gnode.restart") }} </a>
                       </div>
                     </div>
                     <div v-if="tab ==='peers'">
-                      <p class="tag is-warning">已连接到周边Grin节点数量:{{peers.length}}</p>
+                      <p class="tag is-warning">{{ $t("msg.gnode.connectedCount") }}:{{peers.length}}</p>
                       <br/>
                       <br/>
 
@@ -63,8 +63,8 @@
                           <th>No.</th>
 
                           <th>IP</th>
-                          <th>节点</th>
-                          <th>最新高度</th>
+                          <th>{{ $t("msg.node") }}</th>
+                          <th>{{ $t("msg.gnode.height") }}</th>
                         </thead>
                         <tbody>
                           <tr v-for="(peer, index) in peers" :key="peer.id">
@@ -226,6 +226,7 @@ export default {
         setInterval(()=>{
          this.checkStatus()
          this.getPeers()
+         this.getChainDataSize()
         }, interval)
     },
     restart(){

@@ -101,10 +101,12 @@ export default {
         this.$log.debug('Connect method is ' + gnodeOption.connectMethod)  
         if(!gnodeOption.useLocalGnode){
           this.$dbService.setGnodeLocation('remote')
+          this.$log.debug('use remote grin node.')
           return this.$walletService.startOwnerApi(this.password, grinNode)
         }  
         if(gnodeOption.connectMethod ==='localAllTime'){
           this.$dbService.setGnodeLocation('local')
+          this.$log.debug('use local grin node.')
           return this.$walletService.startOwnerApi(this.password, grinLocalNode)
         }else{
           this.$remoteGnodeService.getStatus().then(
@@ -113,6 +115,7 @@ export default {
               this.$log.debug('Remote node height is ' + remoteHeight)
               if(gnodeOption.connectMethod ==='remoteAllTime' || gnodeOption.connectMethod ==='remoteFirst'){
                 this.$dbService.setGnodeLocation('remote')
+                this.$log.debug('use remote grin node.')
                 return this.$walletService.startOwnerApi(this.password, grinNode)
               }
               this.$gnodeService.getStatus().then(
@@ -122,6 +125,7 @@ export default {
                   this.$log.debug('local node height is ' + localHeight)
                   this.$log.debug('local node peers count is ' + peersCount)
                   if(localHeight + 60 >= remoteHeight && peersCount >= 6){
+                    this.$log.debug('use local grin node.')
                     this.$dbService.setGnodeLocation('local')
                     return this.$walletService.startOwnerApi(this.password, grinLocalNode)
                   }else{
@@ -137,6 +141,7 @@ export default {
             }
           ).catch((err)=>{
             this.$dbService.setGnodeLocation('local')
+            this.$log.debug('use local grin node.')
             return this.$walletService.startOwnerApi(this.password, grinLocalNode)
           })
         }

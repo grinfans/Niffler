@@ -5,7 +5,7 @@
   <div class="modal-card" style="width:450px">
     
     <header class="modal-card-head">
-      <p class="modal-card-title is-size-4 has-text-link has-text-weight-semibold">设置Grin本地节点</p>
+      <p class="modal-card-title is-size-4 has-text-link has-text-weight-semibold">{{ $t("msg.gnodeConfigModal.config") }}</p>
       <button class="delete" aria-label="close" @click="closeModal"></button>
     </header>
     <section class="modal-card-body" style="height:380px;background-color: #f6f9fe;color: #22509a;">
