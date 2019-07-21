@@ -10,7 +10,7 @@
     <section class="modal-card-body" style="height:380px;background-color: whitesmoke;">
       
       <div class="notification is-warning" v-if="errors.length">
-        <p v-for="error in errors">{{ error }}</p>
+        <p v-for="error in errors" :key="error.id">{{ error }}</p>
       </div>
       <div v-if="!sent">
         <div class="field">

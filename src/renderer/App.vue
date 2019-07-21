@@ -249,6 +249,7 @@
         this.$walletService.initClient()
         this.ownerApiRunning = true
         this.getHeight()
+        messageBus.$emit('update')
       })
       messageBus.$on('update', ()=>{
         this.getHeight()

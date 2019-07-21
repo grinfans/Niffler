@@ -71,7 +71,8 @@
 </template>
 <script>
 import { messageBus } from '@/messagebus'
-import { setTimeout } from 'timers';
+import {grinNode, grinLocalNode} from '../../shared/config'
+
 const fs = require('fs');
 const publicIp = require('public-ip');
 const extIP = require('external-ip');
@@ -106,11 +107,13 @@ export default {
   },
   methods: {
     start(){
+      let gnode = grinNode
+      if(this.$dbService.getGnodeLocation() == 'local')gnode=grinLocalNode
       if((!this.starting)&&(!this.running)){
         this.starting = true
         this.checklocalReachable().catch((error)=>{
           if(!error.response){
-            this.$walletService.startListen()
+            this.$walletService.startListen(gnode)
           }
           this.$log.debug('Http listen is locally reachable.')
           this.$log.debug('checkRunning right now.')

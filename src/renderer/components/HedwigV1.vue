@@ -73,7 +73,7 @@
 import {fork} from 'child_process'
 
 import { messageBus } from '@/messagebus'
-import {hedwigServer, hedwigClient, hedwigApp} from '../../shared/config'
+import {hedwigServer, hedwigClient, hedwigApp, grinNode, grinLocalNode} from '../../shared/config'
 import { setTimeout } from 'timers';
 const clipboard = require('electron').clipboard
 
@@ -118,13 +118,15 @@ export default {
   },
   methods: {
     start(){
+      let gnode = grinNode
+      if(this.$dbService.getGnodeLocation() == 'local')gnode=grinLocalNode
       if(!this.starting&&!this.internetReachable){
         this.starting = true
         
         this.$log.debug('Is local reachable before start? '+ this.localReachable)
         this.checklocalReachable().catch((error)=>{
           if(!error.response){
-            this.$walletService.startListen()
+            this.$walletService.startListen(gnode)
           }
           this.localReachable = true
           this.$log.debug('Http listen is locally reachable.')

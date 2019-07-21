@@ -163,13 +163,13 @@ class WalletService {
         }, 500)
     }
     
-    static startListen(password=password_){
+    static startListen(gnode, password=password_){
         WalletService.stopProcess('listen')
         if(platform==='linux'){
-            listenProcess =  execFile(grinWalletPath, ['-e', 'listen']) 
+            listenProcess =  execFile(grinWalletPath, ['-r', gnode, '-e', 'listen']) 
         }else{
-            const cmd = platform==='win'? `${grinWalletPath} -e --pass ${addQuotations(password)} listen`:
-                                        `${grinWalletPath} -e listen`
+            const cmd = platform==='win'? `${grinWalletPath} -r ${gnode} -e --pass ${addQuotations(password)} listen`:
+                                        `${grinWalletPath} -r ${gnode} -e listen`
             //log.debug(`platform: ${platform}; start listen cmd: ${cmd}`)
             listenProcess =  exec(cmd)
         }

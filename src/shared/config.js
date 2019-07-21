@@ -44,9 +44,6 @@ if(platform=='win'){
 }
 
 export const chainType = 'main'
-export const grinNode = "http://grin2-node.niffler.org:3413"
-export const grinNode2 = "http://grin2-node2.niffler.org:3413"
-export const grinLocalNode= "http://127.0.0.1:3413"
 export const grinDIR = path.join(APP.getPath('home'), '.grin')
 export const seedPath = path.join(APP.getPath('home'), '.grin', chainType, 'wallet_data/wallet.seed')
 export const walletTOMLPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-wallet.toml')
@@ -130,8 +127,15 @@ export const defaultGnodeOptions= {
   'useLocalGnode': true,
   //connnectMethod: localFirst, remoteFirst, localAllTime, remoteAllTime
   'connectMethod':'remoteFirst',
-  'remoteAddr': grinNode,
-  'localAddr': grinLocalNode,
+  'remoteAddr': 'http://grin2-node.niffler.org:3413',
+  'localAddr': 'http://127.0.0.1:3413',
   'background': true
 }
 export const gnodeOption = getConfig()['gnode']?getConfig()['gnode']: defaultGnodeOptions
+//export const grinNode = "http://grin2-node.niffler.org:3413"
+//export const grinNode2 = "http://grin2-node2.niffler.org:3413"
+//export const grinLocalNode= "http://127.0.0.1:3413"
+
+export const grinNode = gnodeOption.remoteAddr
+export const grinNode2 = gnodeOption.remoteAddr
+export const grinLocalNode = gnodeOption.localAddr
