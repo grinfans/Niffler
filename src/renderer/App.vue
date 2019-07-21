@@ -86,7 +86,7 @@
 
                     <a href="#" class="dropdown-item" style="line-height: 1.2;font-size: 0.8rem;" 
                       @click="openGnode = true">
-                      本地节点
+                      {{ $t("msg.localNode") }}
                     </a>
                     
                     <a href="#" class="dropdown-item" style="line-height: 1.2;font-size: 0.8rem;" 

@@ -32,7 +32,7 @@
               </div>
           </div>
       </div>               
-      <label class="label" style="color:#22509a; margin-top:17.5px">{{ $t("msg.gnodeConfig.connectMethod") }}</label>
+      <label class="label" style="color:#22509a; margin-top:17.5px">{{ $t("msg.gnodeConfig.connectMethod") }}:</label>
       <div class="control" style="font-size:0.8rem">
         <label class="radio">
               <input type="radio" value="remoteFirst" v-model="connectMethod">&nbsp;{{ $t("msg.gnodeConfig.remoteFirst") }}
