@@ -140,9 +140,9 @@ export default {
     })
     setTimeout(()=>{
     if(gnodeOption.useLocalGnode){
-      gnodeService.getStatus().then().catch((err)=>{
+      this.$gnodeService.getStatus().then().catch((err)=>{
         this.$log.debug('Try to start gnode after 45s')
-        gnodeService.startGnode()
+        this.$gnodeService.startGnode()
       })
     }}, 45*1000)
   },
