@@ -40,7 +40,7 @@
             </form>
 
             <a class="button is-small is-text is-pulled-right" @click="openRemove=true">{{ $t("msg.remove.title") }}</a>
-            <a class="button is-small is-text is-pulled-right" @click="openGnodeConfig=true">设置Grin节点</a>
+            <a class="button is-small is-text is-pulled-right" @click="openGnodeConfig=true">{{ $t("msg.gnodeConfigModal.title") }}</a>
           </div>
         </div>
       

@@ -28,12 +28,15 @@ Vue.log = Vue.prototype.$log = log
 import en from '../lang/en'
 import zh from '../lang/zh'
 import ru from '../lang/ru'
+import ko from '../lang/ko'
+
 
 Vue.use(VueI18n)
 const messages = {
   en,
   ru,
   zh,
+  ko
 }
 
 import {locale, gnodeOption} from '../shared/config'

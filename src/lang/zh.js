@@ -255,7 +255,8 @@ const messages = {
     },
 
     gnodeConfigModal:{
-      config: '设置Grin本地节点'
+      config: '设置Grin本地节点',
+      title: '设置Grin节点'
     }
   }
 }

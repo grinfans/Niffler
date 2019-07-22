@@ -26,6 +26,16 @@ const messages = {
     more: 'Больше',
 
     back: 'отступать',
+    
+    remote: 'remote',
+    local: 'local',
+
+    node: 'Node',
+    remoteNode: 'Remote node',
+    localNode: 'Local node',
+
+    other: 'Others',
+
     login: {
       walletExist: 'Данные grin кошелька найдены; Войти с оригинальным паролем :-)',
     },
@@ -198,7 +208,54 @@ const messages = {
       title: 'Выберите язык',
       lang: 'язык',
       select: 'Выбрать'
-    }
+    },
+
+    gnode:{
+      title: 'Local grin node',
+      tabStatus: 'Status',
+      tabPeers: 'Peers',
+      tabLog: 'Log',
+      tabConfig: 'Settings',
+      statusRunning: 'Running, Available',
+      statusSyncing: 'Syncing ...',
+      statusToStart: 'not Runing',
+      status:'Status',
+      localRemoteHeight: 'Local Height/Networking Height',
+      nodeVersion: 'Node Version',
+      protocolVersion: 'Protocol Version',
+      connectedCount: 'Connected Peers',
+      location: 'Location where grin blockchain data store',
+      size: 'Size of grin blockchain data',
+      restart: 'Restart grin node',
+      height: 'height'
+    },
+
+    gnodeConfig:{
+      warning: 'For General users, default setting is prefered!',
+      useLocalorNot: '(Recommend)Use local grin node',
+      connectMethod: 'Connect Method',
+      remoteFirst: '(Recommend)Remote grin node is preferred, When remote node is not available, use local node.',
+      localFirst:  'Local grin node is preferred when it is synced. Otherwise, use remote node.',
+      remoteAllTime: 'Use remote all the time',
+      localAllTime: 'Use local all the time',
+      background: '(Recommend)Runing grin node background when Niffler is closed.',
+      restoreToDefault: 'Restore to default setting',
+      saved: 'Settings was saved, Restart Niffler to take effect.'
+    },
+
+    gnodeConfigModal:{
+      config: 'Grin Local Node Settings',
+      title: 'Grin node settings'
+    },
+
+    remove:{
+      title: 'Remove Current Wallet',
+      warning: 'Warning !',
+      info: 'Before you remove current wallet, Make sure there is no grin in this wallet or You write down the Seed Phrase !',
+      help: 'Enter "remove" into the input box below to confirm',
+      remove: 'Remove',
+      success: 'Current wallet was removed. Click "OK" to restart Niffler.'
+    },
 
   }
 }
