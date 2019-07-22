@@ -1,32 +1,30 @@
 const messages = {
   msg: {
-    title: 'Niffler 지갑',
-    password: '비밀번호',
-    passwordAgain: '암호를 다시 입력하십시오',
-    wrongPassword: '비밀번호 오류',
-    login_: '로그인',
-    logout: '로그 아웃',
-    search: '검색',
-    clearup: '제거',
-    jump: '점프',
+    title: 'Niffler Wallet',
+    password: 'Password',
+    passwordAgain: 'Enter password again',
+    wrongPassword: 'Wrong password',
+    login_: 'Login',
+    logout: 'Logout',
+    search: 'Search',
+    clearup: 'Clearup',
+    jump: 'Jump',
 
-    confirmed: '확인 완료',
-    unconfirmed: '미확인',
-    locked: '잠김',
+    confirmed: 'Confirmed',
+    unconfirmed: 'Unconfirmed',
+    locked: 'Locked',
     
-    send: '보내기',
-    receive: '수신',
+    send: 'Send',
+    receive: 'Receive',
 
-    cancel:'취소',
-    save: '저장',
+    cancel:'Cancel',
+    save: 'Save',
 
-    welcome: 'Niffler 지갑 사용을 환영합니다',
-    
-    msg: '메시지',
-
+    welcome: 'Welcome to use Niffler wallet',
+    back: 'Back',
+    msg: 'Message',
     more: 'More',
-    back: 'back',
-    
+
     remote: 'remote',
     local: 'local',
 
@@ -35,19 +33,29 @@ const messages = {
     localNode: 'Local node',
 
     other: 'Others',
+
     
     login: {
-      walletExist: 'grin 지갑이 존재합니다; 원래 비밀번호로 로그인 해 주십시오:-)',
+      walletExist: 'Found grin wallet data exists; login with original password :-)',
+    },
+
+    remove:{
+      title: 'Remove Current Wallet',
+      warning: 'Warning !',
+      info: 'Before you remove current wallet, Make sure there is no grin in this wallet or You write down the Seed Phrase !',
+      help: 'Enter "remove" into the input box below to confirm',
+      remove: 'Remove',
+      success: 'Current wallet was removed. Click "OK" to restart Niffler.'
     },
     
     create:{
-      seedPhrase: '니모닉',
-      toNewMsg: '지갑이 없습니다. 새 것을 만드십시오.',
-      newWallet: '새 지갑 만들기',
-      backupNote: '지갑을 복구하기 위해 니모닉를 저장해 주십시오',
-      backupFinish: '니모닉를 저장하였습니다. 지갑에 로그인 해 주십시오',
-      errorPasswdEmpty: '비밀번호는 비워 둘 수 없습니다',
-      errorPasswdConsistency: '같은 암호를 입력하십시오',
+      seedPhrase: 'Seed Phrase',
+      toNewMsg: 'No wallet exists Found. Create a New One.',
+      newWallet: 'Create new wallet',
+      backupNote: 'Import！Please backup your seed phrase to restore your wallet',
+      backupFinish: 'Ok, I backed up my seed phrase. Login my wallet',
+      errorPasswdEmpty: 'Password cannot be empty',
+      errorPasswdConsistency: 'Please enter the same password',
       errorCreateFailed: 'Error when try to create new wallet. Maybe restart wallet and Try it later.',
     },
 
@@ -73,96 +81,104 @@ const messages = {
       restored: 'Wallet recovered and balance checked.',
       login: 'Login Wallet',
     },
-    
+
     app:{
-      create: '트랜잭션 파일 생성',
-      finalize: '완료',
-      httpSend: 'http / https를 통해 전송',
-      createRespFile: '응답 트랜잭션 파일 작성',
-      httpReceive: '수신 할 http 리스너 열기',
-      height:'높이',
-      updateTitle: '새 버전을 찾았습니다',
-      updateMsg: '새로운 버전의 Niffler 지갑이 존재합니다. 지금 업데이트 해 주시기 바랍니다.',
-      yes: '예',
-      no: '아니오',
+      create: 'Create transaction file',
+      finalize: 'Finalize',
+      httpSend: 'Send via http/https',
+      createRespFile: 'Create response transaction file',
+      httpReceive: 'Open http listener to receive',
+      height:'Height',
+      updateTitle: 'Found new version',
+      updateMsg: 'Found new version of Niffler wallet. Please update Right NOW.',
+      yes: 'yes',
+      no: 'no',
       hedwig: 'Receive via Hedwig'
     },
 
     info: {
-      spendable: '지출 가능',
-      total: '합계',
+      spendable: 'Spendable',
+      total: 'Total',
       unfinalization: 'Unfinalization',
       immature: 'Immature'
     },
 
     txs:{
-      tx: '거래',
-      canceled:'취소됨',
-      noTxFound: '거래 없음',
-      noTx:'거래 없음',
-      cancelSuccess:'이 거래가 취소되었습니다',
+      tx: 'Transactions',
+      canceled:'Canceled',
+      noTxFound: 'No transactions Found',
+      noTx:'No transactions',
+      cancelSuccess:'This transaction canceled',
     },
 
     commit:{
-      unspentCmt: '사용되지 않은 출력 커밋',
-      heightCreated: '생성시 블록 높이',
-      unspent: '미사용',
-      spent: '지출',
-      noCmtFound: '사용되지 않은 출력 커밋 없음',
-      noCmt:'사용되지 않은 출력 커밋 없음',
+      unspentCmt: 'Unspent Output Commit',
+      heightCreated: 'Block height when Created',
+      unspent: 'Unspent',
+      spent: 'Spent',
+      noCmtFound: 'No Unspent Output Commit Found',
+      noCmt:'No Unspent Output Commit',
+      copied: 'Copied'
     },
 
     fileSend:{
-      sendAmount: '보낼 금액',
-      createTxFile: '새 변환 파일 만들기',
-      WrongAmount: '잘못된 금액',
-      saveMsg: '만든 성적서 파일 저장',
-      CreateFail: '새 변환 파일을 만들지 못했습니다'
+      sendAmount: 'Amount to send',
+      createTxFile: 'Create new transcation file',
+      WrongAmount: 'Wrong amount',
+      saveMsg: 'Save transcation file created',
+      CreateFailed: 'Failed to create new transcation file',
+      NotEnough: 'Not enough amount. Keep 0.01 as fee'
     },
 
     httpSend:{
-      sendAmount: '보낼 금액',
-      address:'주소',
-      WrongAmount: '잘못된 금액',
-      WrongAddress: '잘못된 주소',
-      WrongTxData: '트랜잭션을 만들지 못했습니다',
-      success: '탈주 성공',
-      TxFailed: '전송 실패 보내기',
+      sendAmount: 'Amount to send',
+      address:'Address',
+      WrongAmount: 'Wrong amount',
+      NotEnough: 'Not enough amount. Keep 0.01 as fee',
+      WrongAddress: 'Wrong address',
+      WrongTxData: 'Failed to build transaction',
+      success: 'Transcation success',
+      TxFailed: 'Send transcation failed',
+      TxResponseFailed: 'Failed to get right respose from receiver',
+      TxCreateFailed: 'Create transcation failed',
+      salteVersion: 'Slate file version',
+      salteVersionHelp: 'If you failed to send grin, try change the Slate file version then resend'
     },
 
     fileReceive: {
-      dropMsg: '받은 트랜잭션 파일을 버리십시오',
-      WrongFileType: '잘못된 트랜잭션 파일 형식',
-      saveMsg: '생성 된 응답 트랜잭션 파일 저장',
-      CreateFailed: '새 응답 기록 파일을 만들지 못했습니다',
-      NoSavePlace: '저장 위치를 선택하십시오',
+      dropMsg: 'Drop transaction file received',
+      WrongFileType: 'Wrong transaction file type',
+      saveMsg: 'Save response transaction file created',
+      CreateFailed: 'Failed to create new response transcation file',
+      NoSavePlace: 'Please choose the location to save',
     },
 
     finalize: {
-      finalize: '완료',
-      success: '거래 성공',
-      ok:'확인',
-      sending: '보내기',
-      dropMsg: '완료 할 응답 트랜잭션 파일 삭제',
-      WrongFileType: '잘못된 트랜잭션 파일 형식',
-      TxFailed: '변환 실패',
+      finalize: 'Finalize',
+      success: 'Transcation success',
+      ok:'OK',
+      sending: 'Sending',
+      dropMsg: 'Drop response transaction file to finalize',
+      WrongFileType: 'Wrong transaction file type',
+      TxFailed: 'transcation failed',
     },
 
     httpReceive: {
-      launchSucess: '시작 성공',
-      listening: "지갑의 HTTP 수신 대기",
-      address: '지갑 주소',
-      reachableMsg2: '인터넷 사용자가 귀하의 IP에 연결할 수 있는지 확인하십시오',
-      close: '지갑의 HTTP 수신 정지',
-      attention: '주의',
-      reachableMsg: 'HTTP 연결을 시작하기 위해 인터넷 사용자들에게 도달할 수 있는 공용 ip가 필요합니다',
-      password: '지갑 비밀번호 (HTTP 수신 대기)',
-      start: '시작',
-      failed: '시작 실패, 비밀번호를 확인 해 주십시오',
+      launchSucess: 'Started successful',
+      listening: "Wallet's HTTP listen is running",
+      address: 'Wallet Address',
+      reachableMsg2: 'Make sure your ip is reachable by internet user',
+      close: 'Stop listen',
+      attention: 'Attention',
+      reachableMsg: 'To start HTTP listen, you should have public ip, which is reachable by internet user.',
+      password: 'Wallet Password (used to start HTTP listen)',
+      start: 'Start',
+      error: 'No password.',
+      failed: 'Start Failed, Maybe wrong password',
       failed2: 'HTTP listen failed, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
       failed3: 'Failed to get your public ip; try it later',
       failed4: 'Localhost http listen is running(http://127.0.0.1:3415). Howerver, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
-      ip: '귀하의 공개 IP'
+      ip: 'your public ip'
     },
 
     hedwig: {
@@ -226,7 +242,7 @@ const messages = {
     },
 
     gnodeConfig:{
-      warning: 'For General users, recommend using default setting!',
+      warning: 'For General users, default setting is prefered!',
       useLocalorNot: '(Recommend)Use local grin node',
       connectMethod: 'Connect Method',
       remoteFirst: '(Recommend)Remote grin node is preferred, When remote node is not available, use local node.',
@@ -241,16 +257,7 @@ const messages = {
     gnodeConfigModal:{
       config: 'Grin Local Node Settings',
       title: 'Grin node settings'
-    },
-
-    remove:{
-      title: 'Remove Current Wallet',
-      warning: 'Warning !',
-      info: 'Before you remove current wallet, Make sure there is no grin in this wallet or You write down the Seed Phrase !',
-      help: 'Enter "remove" into the input box below to confirm',
-      remove: 'Remove',
-      success: 'Current wallet was removed. Click "OK" to restart Niffler.'
-    },
+    }
 
   }
 }

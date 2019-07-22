@@ -23,7 +23,18 @@ const messages = {
     welcome: 'Добро пожаловать в Niffler кошелек',
     
     msg: 'Сообщение',
-    more: 'Дополнительно',
+    more: 'Больше',
+
+    back: 'отступать',
+    
+    remote: 'remote',
+    local: 'local',
+
+    node: 'Node',
+    remoteNode: 'Remote node',
+    localNode: 'Local node',
+
+    other: 'Others',
 
     login: {
       walletExist: 'Данные grin кошелька найдены; Войти с оригинальным паролем :-)',
@@ -80,6 +91,8 @@ const messages = {
     info: {
       spendable: 'Расходуемые',
       total: 'Всего',
+      unfinalization: 'Hезаконченный',
+      immature: 'Hезрелый'
     },
 
     txs:{
@@ -91,7 +104,7 @@ const messages = {
     },
 
     commit:{
-      unspentCmt: 'Unspent Output Commit',
+      unspentCmt: 'Неизрасходованный вывод транзакции',
       heightCreated: 'Высота блока при создании',
       unspent: 'Неизрасходованный',
       spent: 'Израсходованный',
@@ -104,7 +117,8 @@ const messages = {
       createTxFile: 'Создать новый файл транзакции',
       WrongAmount: 'Неверная сумма',
       saveMsg: 'Сохранить созданный файл транзакции',
-      CreateFailed: 'Не удалось создать новый файл транзакции'
+      CreateFailed: 'Не удалось создать новый файл транзакции',
+      NotEnough: 'Недостаточно средств. Оставьте 0.01 для комиссии'
     },
 
     httpSend:{
@@ -116,6 +130,7 @@ const messages = {
       WrongTxData: 'Не удалось создать транзакцию',
       success: 'Успешная транзакция',
       TxFailed: 'Ошибка отправки транзакции',
+      TxResponseFailed: 'Failed to get right respose from receiver',
       salteVersion: 'Версия Slate файла',
       salteVersionHelp: 'Если вам не удалось отправить Grin, попробуйте изменить версию Slate файла'
     },
@@ -152,6 +167,7 @@ const messages = {
       failed: 'Не удалось запустить, возможно введен неверный пароль',
       failed2: 'Сбой при прослушивании HTTP, ваш публичный IP недоступен для других пользователей. Попробуйте использовать отправку файла транзакции или Hedwig.',
       failed3: 'Не удалось получить ваш публичный IP; попробуйте позже',
+      failed4: 'Localhost http listen is running(http://127.0.0.1:3415). Howerver, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
       ip: 'Ваш публичный IP'
     },
 
@@ -186,7 +202,60 @@ const messages = {
       
       start: 'Запуск',
       stopCheckMsg: 'Проверка была прервана'
-    }
+    },
+    
+    lang: {
+      title: 'Выберите язык',
+      lang: 'язык',
+      select: 'Выбрать'
+    },
+
+    gnode:{
+      title: 'Local grin node',
+      tabStatus: 'Status',
+      tabPeers: 'Peers',
+      tabLog: 'Log',
+      tabConfig: 'Settings',
+      statusRunning: 'Running, Available',
+      statusSyncing: 'Syncing ...',
+      statusToStart: 'not Runing',
+      status:'Status',
+      localRemoteHeight: 'Local Height/Networking Height',
+      nodeVersion: 'Node Version',
+      protocolVersion: 'Protocol Version',
+      connectedCount: 'Connected Peers',
+      location: 'Location where grin blockchain data store',
+      size: 'Size of grin blockchain data',
+      restart: 'Restart grin node',
+      height: 'height'
+    },
+
+    gnodeConfig:{
+      warning: 'For General users, default setting is prefered!',
+      useLocalorNot: '(Recommend)Use local grin node',
+      connectMethod: 'Connect Method',
+      remoteFirst: '(Recommend)Remote grin node is preferred, When remote node is not available, use local node.',
+      localFirst:  'Local grin node is preferred when it is synced. Otherwise, use remote node.',
+      remoteAllTime: 'Use remote all the time',
+      localAllTime: 'Use local all the time',
+      background: '(Recommend)Runing grin node background when Niffler is closed.',
+      restoreToDefault: 'Restore to default setting',
+      saved: 'Settings was saved, Restart Niffler to take effect.'
+    },
+
+    gnodeConfigModal:{
+      config: 'Grin Local Node Settings',
+      title: 'Grin node settings'
+    },
+
+    remove:{
+      title: 'Remove Current Wallet',
+      warning: 'Warning !',
+      info: 'Before you remove current wallet, Make sure there is no grin in this wallet or You write down the Seed Phrase !',
+      help: 'Enter "remove" into the input box below to confirm',
+      remove: 'Remove',
+      success: 'Current wallet was removed. Click "OK" to restart Niffler.'
+    },
 
   }
 }
