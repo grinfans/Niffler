@@ -138,6 +138,13 @@ export default {
       this.$log.debug('Got event gnodeStarting')
       setTimeout(()=>this.checkStarted(), 5000)
     })
+    setTimeout(()=>{
+    if(gnodeOption.useLocalGnode){
+      gnodeService.getStatus().then().catch((err)=>{
+        this.$log.debug('Try to start gnode after 45s')
+        gnodeService.startGnode()
+      })
+    }}, 45*1000)
   },
   mounted() {
     this.checkStarted()
@@ -201,7 +208,7 @@ export default {
     },
 
     startTailLog(log){
-      let tail = new Tail(grinNodeLog)
+      let tail = new Tail(grinNodeLog, {'useWatchFile':true})
       //console.log(grinNodeLog)
       tail.on("line", function(data) {
         //console.log(data)
