@@ -212,6 +212,7 @@ export default {
       //console.log(grinNodeLog)
       tail.on("line", function(data) {
         //console.log(data)
+        if(log.length >= 30){log.shift()}
         log.push(data)
       });
 
