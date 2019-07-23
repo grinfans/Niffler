@@ -6,13 +6,12 @@ Niffler 是一个开箱即用、用户友好的 [Grin](https://github.com/mimble
 
 遵循Grin的命名传统，钱包的名字 **Niffler** 也是来自["哈利波特"](https://harrypotter.fandom.com/wiki/Niffler).
 
-#### 最新版本 V0.4.1
+#### 最新版本 V0.4.2
 
-v0.4.1 是一个bug修复版本.
-修复了Grin第一次硬分叉后Windows版本无法通过Http/Https 方法/hedwig方法收款的bug.
+v0.4.2 加了grin本地全节点
 
 Windows/Mac/linux 版本:
-[https://github.com/grinfans/niffler/releases/tag/v0.4.1](https://github.com/grinfans/niffler/releases/tag/v0.4.1)
+[https://github.com/grinfans/niffler/releases/tag/v0.4.2](https://github.com/grinfans/niffler/releases/tag/v0.4.2)
 
 Niffler钱包 新加了 **hedwig** v1 代理服务; 现在，没有公共ip的用户也可以很简单容易地接收grin了 :)
 
@@ -22,10 +21,10 @@ Niffler钱包 新加了 **hedwig** v1 代理服务; 现在，没有公共ip的�
 
 中国大陆用户快速下载地址:
 >Windows
-https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-win-0.4.1.exe
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-win-0.4.2.exe
 
 >Mac
-https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-mac-0.4.1.dmg
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-mac-0.4.2.dmg
 
 
 ## 联系
@@ -76,6 +75,10 @@ npm run dev
 # 打包
 npm run build
 
+##Build restore node (grinRs) (install latest rustc)
+
+npm run build-rs
+mv index.node from /target to /grinRs
 
 ```
 
