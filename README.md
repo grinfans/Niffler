@@ -64,9 +64,8 @@ npm run dev
 npm run build
 
 #Build restore node (grinRs) (install latest rustc)
-
-npm build-rs
-move index.node from /target to /grinRs
+npm run build-rs
+mv index.node from /target to /grinRs
 
 ```
 
