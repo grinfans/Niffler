@@ -231,7 +231,7 @@ const messages = {
     },
 
     gnodeConfig:{
-      warning: 'For General users, default setting is prefered!',
+      warning: 'For General users, default setting is preferred!',
       useLocalorNot: '(Recommend)Use local grin node',
       connectMethod: 'Connect Method',
       remoteFirst: '(Recommend)Remote grin node is preferred, When remote node is not available, use local node.',
