@@ -201,7 +201,7 @@ class WalletService {
         if(!gnodeOption.useLocalGnode || 
            (!gnodeOption.background && dbService.getLocalGnodeStatus()=='running')){
             log.debug('Try to stop local gnode.')
-            GnodeService.stopGnode()
+            GnodeService.stopGnode2()
         }
     }
     
