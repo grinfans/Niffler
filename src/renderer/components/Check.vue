@@ -88,6 +88,7 @@ export default {
         this.$log.debug('Got walletCheckFinished message.')
         this.checking = false
         this.checked = true
+        messageBus.$emit('update')
       })
   },
   methods: {
