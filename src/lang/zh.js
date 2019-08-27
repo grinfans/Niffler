@@ -3,7 +3,7 @@ const messages = {
     title: 'Niffler 钱包',
     password: '密码',
     passwordAgain: '再次输入密码',
-    wrongPassword: '密码错误',
+    wrongPassword: 'Grin owner Api进程启动失败，可能是密码错误',
     login_: '登录',
     logout: '登出',
     search: '搜索',

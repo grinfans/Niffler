@@ -149,13 +149,14 @@ export default {
       setTimeout(()=>selectGnode.call(this), 50)
 
       setTimeout(()=>{
+        this.$log.debug('check owner api process after try to login')
         this.$walletService.getNodeHeight().then(
           (res) =>{
             setPassword(password)
             messageBus.$emit('logined')
           }).catch((error) => {
             return this.error = true
-        })}, 800)
+        })}, 1250)
 
       this.resetErrors()
       },

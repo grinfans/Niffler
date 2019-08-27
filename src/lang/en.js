@@ -3,7 +3,7 @@ const messages = {
     title: 'Niffler Wallet',
     password: 'Password',
     passwordAgain: 'Enter password again',
-    wrongPassword: 'Wrong password',
+    wrongPassword: 'Failed to start Grin owner api. May be Wrong password',
     login_: 'Login',
     logout: 'Logout',
     search: 'Search',
