@@ -388,6 +388,12 @@
   }
 </script>
 
+<!--
+<style>
+  @import "~bulmaswatch/superhero/bulmaswatch.min.css";
+</style>
+-->
+
 <style>
 .icon-running{
   background: #00aa72;

@@ -139,3 +139,5 @@ export const gnodeOption = getConfig()['gnode']?getConfig()['gnode']: defaultGno
 export const grinNode = gnodeOption.remoteAddr
 export const grinNode2 = gnodeOption.remoteAddr
 export const grinLocalNode = gnodeOption.localAddr
+
+export const darkMode = getConfig()['darkMode']?getConfig()['darkMode']: False
