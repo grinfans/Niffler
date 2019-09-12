@@ -128,8 +128,8 @@ export default {
         //  }
         //}
         //finalize.call(this)
-      //}else{
-        //this.errors.push(this.$t('msg.finalize.WrongFileType'))
+      }else{
+        this.errors.push(this.$t('msg.finalize.WrongFileType'))
       }
     },
     clearup(){
