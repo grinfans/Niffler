@@ -7,7 +7,6 @@
             <img src="../assets/logo.png" style="width:64px" class="is-pulled-left">
             <h2 class="title" style="margin-top: 24px; margin-left:70px" >{{ $t("msg.title") }}
                 <span class="is-pulled-right" style="font-size:0.65rem">v{{version}}</span>
-
             </h2>
               <div class="column">
                 <a class="button is-link is-inverted is-outlined" @click="current='create'">

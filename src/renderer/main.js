@@ -79,5 +79,6 @@ ipcRenderer.on('before-quit', ()=>{
 
 if(gnodeOption.useLocalGnode){
   gnodeService.getStatus().then().catch((err)=>{
+    console.log('Try to start local grin node.')
     gnodeService.startGnode()})
 }

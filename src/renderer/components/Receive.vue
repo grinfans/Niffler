@@ -79,7 +79,6 @@ export default {
         if(fn_output){
           this.$walletService.receiveTransaction(JSON.parse(content), null, null)
               .then( (res) => {
-                console.log(res)
                 let slate = res.data.result.Ok
                 fs.writeFileSync(fn_output, JSON.stringify(slate))
                 messageBus.$emit('update')

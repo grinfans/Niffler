@@ -92,7 +92,6 @@ export default {
         let send = async function(){
           try{
             let res = await this.$walletService.finalizeTransaction(JSON.parse(content))
-            console.log(res)
             tx_id = res.data.result.Ok.id
             let tx = res.data.result.Ok.tx
             let res2 = await this.$walletService.postTransaction(tx, true)
