@@ -17,8 +17,7 @@ Niffler wallet has a **hedwig v1 relay service**, which enable User without publ
 
 In other words，**You could withdraw grin from any exchanges and miner pool effortlessly**.
 
-A great tutorial of how to withdraw grin from any exchanges using Niffler wallet.
-
+[A great video tutorial of how to withdraw grin from any exchanges using Niffler wallet.](https://www.youtube.com/watch?v=rufKWEv64o8)
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/rufKWEv64o8/0.jpg)](https://www.youtube.com/watch?v=rufKWEv64o8)
 
 ## Contact
