@@ -13,20 +13,20 @@ const messages = {
     confirmed: 'Подтверждено',
     unconfirmed: 'Не подтверждено',
     locked: 'Заблокировано',
-    
+
     send: 'Отправить',
     receive: 'Получить',
 
-    cancel:'Отменить',
+    cancel: 'Отменить',
     save: 'Сохранить',
 
     welcome: 'Добро пожаловать в Niffler кошелек',
-    
+
     msg: 'Сообщение',
     more: 'Больше',
 
     back: 'отступать',
-    
+
     remote: 'remote',
     local: 'local',
 
@@ -39,8 +39,8 @@ const messages = {
     login: {
       walletExist: 'Данные grin кошелька найдены; Войти с оригинальным паролем :-)',
     },
-    
-    create:{
+
+    create: {
       seedPhrase: 'Сид-фраза',
       toNewMsg: 'Кошелек не найден. Создать новый',
       newWallet: 'Создать новый кошелек',
@@ -51,13 +51,13 @@ const messages = {
       errorCreateFailed: 'Ошибка при создании нового кошелька. Попробуйте перезапустить кошелек и попробуйте снова.',
     },
 
-    new_:{
+    new_: {
       create: 'Создать новый кошелек',
       restore: 'Восстановить кошелек с помощью сид фразы',
       import: 'Импортить бекап файл кошелька'
     },
-    
-    restore:{
+
+    restore: {
       seedPhrase: 'Сид-фраза',
       title: 'Восстановление кошелька с помощью сид-фразы',
       addSeedsInfo: 'Пожалуйста, введите слова по одному',
@@ -74,13 +74,13 @@ const messages = {
       login: 'Вход в кошелек',
     },
 
-    app:{
+    app: {
       create: 'Создать файл транзакции',
       finalize: 'Заверишть',
       httpSend: 'Отправить через http/https',
       createRespFile: 'Создать ответный файл транзакции',
       httpReceive: 'Получить по http',
-      height:'Высота',
+      height: 'Высота',
       updateTitle: 'Найдена новая версия',
       updateMsg: 'Найдена новая версия Niffler кошелка. Обновить прямо сейчас?',
       yes: 'Да',
@@ -95,24 +95,24 @@ const messages = {
       immature: 'Hезрелый'
     },
 
-    txs:{
+    txs: {
       tx: 'Транзакции',
-      canceled:'Отмененные',
+      canceled: 'Отмененные',
       noTxFound: 'Транзакции не найдены',
-      noTx:'Нет транзакций',
-      cancelSuccess:'Эта транзакция отменена',
+      noTx: 'Нет транзакций',
+      cancelSuccess: 'Эта транзакция отменена',
     },
 
-    commit:{
+    commit: {
       unspentCmt: 'Неизрасходованный вывод транзакции',
       heightCreated: 'Высота блока при создании',
       unspent: 'Неизрасходованный',
       spent: 'Израсходованный',
       noCmtFound: 'No Unspent Output Commit Found',
-      noCmt:'No Unspent Output Commit',
+      noCmt: 'No Unspent Output Commit',
     },
 
-    fileSend:{
+    fileSend: {
       sendAmount: 'Сумма для отправки',
       createTxFile: 'Создать новый файл транзакции',
       WrongAmount: 'Неверная сумма',
@@ -121,9 +121,9 @@ const messages = {
       NotEnough: 'Недостаточно средств. Оставьте 0.01 для комиссии'
     },
 
-    httpSend:{
+    httpSend: {
       sendAmount: 'Сумма для отправки',
-      address:'Адрес',
+      address: 'Адрес',
       WrongAmount: 'Неверная сумма',
       NotEnough: 'Недостаточно средств. Оставьте 0.01 для комиссии',
       WrongAddress: 'Неверный адрес',
@@ -146,7 +146,7 @@ const messages = {
     finalize: {
       finalize: 'Завершить',
       success: 'Успешная транзакция',
-      ok:'OK',
+      ok: 'OK',
       sending: 'Отправка',
       dropMsg: 'Удалить файл транзакции ответа для завершения',
       WrongFileType: 'Неверный тип файла транзакции',
@@ -167,7 +167,7 @@ const messages = {
       failed: 'Не удалось запустить, возможно введен неверный пароль',
       failed2: 'Сбой при прослушивании HTTP, ваш публичный IP недоступен для других пользователей. Попробуйте использовать отправку файла транзакции или Hedwig.',
       failed3: 'Не удалось получить ваш публичный IP; попробуйте позже',
-      failed4: 'Localhost http listen is running(http://127.0.0.1:3415). Howerver, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
+      failed4: 'Localhost http listen is running(http://127.0.0.1:3415). However, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
       ip: 'Ваш публичный IP'
     },
 
@@ -176,7 +176,7 @@ const messages = {
       launchSucess: 'Успешный запуск',
       reachable: 'Hedwig адрес доступен',
       address: 'Адрес для получения',
-      tip:'Пожалуйста, держите кошелек онлайн.',
+      tip: 'Пожалуйста, держите кошелек онлайн.',
       close: 'Остановить Hedwig',
       introTitle: 'Введение',
       intro1: 'Hedwig(v1) представляет из себя ретранслятор для пользователей без публичного IP, предоставляя временный адрес для получения Grin.',
@@ -194,23 +194,23 @@ const messages = {
       checking: 'Проверяю, ожидайте ...',
       stop: 'Остановить проверку',
 
-      tip:'Проверка занимает 10-30 минут',
+      tip: 'Проверка занимает 10-30 минут',
       introTitle: 'Введение',
 
       intro1: 'Из-за всех возможностей, доступных для отмены, а также вероятных форков цепи, вполне возможно, что ваш кошелек окажется в несовместимом состоянии',
       intro2: "По этой причине Grin предоставляет команду проверки вручную, которая сканирует набор UTXO-цепочки для любых выходов, принадлежащих вашему кошельку, и обеспечивает их соответствие с вашей локальной базой данных кошелька.",
-      
+
       start: 'Запуск',
       stopCheckMsg: 'Проверка была прервана'
     },
-    
+
     lang: {
       title: 'Выберите язык',
       lang: 'язык',
       select: 'Выбрать'
     },
 
-    gnode:{
+    gnode: {
       title: 'Local grin node',
       tabStatus: 'Status',
       tabPeers: 'Peers',
@@ -219,7 +219,7 @@ const messages = {
       statusRunning: 'Running, Available',
       statusSyncing: 'Syncing ...',
       statusToStart: 'not Runing',
-      status:'Status',
+      status: 'Status',
       localRemoteHeight: 'Local Height/Networking Height',
       nodeVersion: 'Node Version',
       protocolVersion: 'Protocol Version',
@@ -230,25 +230,25 @@ const messages = {
       height: 'height'
     },
 
-    gnodeConfig:{
-      warning: 'For General users, default setting is prefered!',
+    gnodeConfig: {
+      warning: 'For General users, default setting is preferred!',
       useLocalorNot: '(Recommend)Use local grin node',
       connectMethod: 'Connect Method',
       remoteFirst: '(Recommend)Remote grin node is preferred, When remote node is not available, use local node.',
-      localFirst:  'Local grin node is preferred when it is synced. Otherwise, use remote node.',
+      localFirst: 'Local grin node is preferred when it is synced. Otherwise, use remote node.',
       remoteAllTime: 'Use remote all the time',
       localAllTime: 'Use local all the time',
-      background: '(Recommend)Runing grin node background when Niffler is closed.',
+      background: '(Recommend)Running grin node background when Niffler is closed.',
       restoreToDefault: 'Restore to default setting',
       saved: 'Settings was saved, Restart Niffler to take effect.'
     },
 
-    gnodeConfigModal:{
+    gnodeConfigModal: {
       config: 'Grin Local Node Settings',
       title: 'Grin node settings'
     },
 
-    remove:{
+    remove: {
       title: 'Remove Current Wallet',
       warning: 'Warning !',
       info: 'Before you remove current wallet, Make sure there is no grin in this wallet or You write down the Seed Phrase !',
