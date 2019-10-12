@@ -13,11 +13,11 @@ const messages = {
     confirmed: 'Confirmed',
     unconfirmed: 'Unconfirmed',
     locked: 'Locked',
-    
+
     send: 'Send',
     receive: 'Receive',
 
-    cancel:'Cancel',
+    cancel: 'Cancel',
     save: 'Save',
 
     welcome: 'Welcome to use Niffler wallet',
@@ -34,12 +34,12 @@ const messages = {
 
     other: 'Others',
 
-    
+
     login: {
       walletExist: 'Found grin wallet data exists; login with original password :-)',
     },
 
-    remove:{
+    remove: {
       title: 'Remove Current Wallet',
       warning: 'Warning !',
       info: 'Before you remove current wallet, Make sure there is no grin in this wallet or You write down the Seed Phrase !',
@@ -47,8 +47,8 @@ const messages = {
       remove: 'Remove',
       success: 'Current wallet was removed. Click "OK" to restart Niffler.'
     },
-    
-    create:{
+
+    create: {
       seedPhrase: 'Seed Phrase',
       toNewMsg: 'No wallet exists Found. Create a New One.',
       newWallet: 'Create new wallet',
@@ -59,13 +59,13 @@ const messages = {
       errorCreateFailed: 'Error when try to create new wallet. Maybe restart wallet and Try it later.',
     },
 
-    new_:{
+    new_: {
       create: 'Create new wallet',
       restore: 'Restore wallet via seed phrase',
       import: 'Import wallet backup file'
     },
-    
-    restore:{
+
+    restore: {
       seedPhrase: 'Seed Phrase',
       title: 'Restore wallet via seed phrase',
       addSeedsInfo: 'Add seed phrase one by one please',
@@ -82,13 +82,13 @@ const messages = {
       login: 'Login Wallet',
     },
 
-    app:{
+    app: {
       create: 'Create transaction file',
       finalize: 'Finalize',
       httpSend: 'Send via http/https',
       createRespFile: 'Create response transaction file',
       httpReceive: 'Open http listener to receive',
-      height:'Height',
+      height: 'Height',
       updateTitle: 'Found new version',
       updateMsg: 'Found new version of Niffler wallet. Please update Right NOW.',
       yes: 'yes',
@@ -103,25 +103,25 @@ const messages = {
       immature: 'Immature'
     },
 
-    txs:{
+    txs: {
       tx: 'Transactions',
-      canceled:'Canceled',
+      canceled: 'Canceled',
       noTxFound: 'No transactions Found',
-      noTx:'No transactions',
-      cancelSuccess:'This transaction canceled',
+      noTx: 'No transactions',
+      cancelSuccess: 'This transaction canceled',
     },
 
-    commit:{
+    commit: {
       unspentCmt: 'Unspent Output Commit',
       heightCreated: 'Block height when Created',
       unspent: 'Unspent',
       spent: 'Spent',
       noCmtFound: 'No Unspent Output Commit Found',
-      noCmt:'No Unspent Output Commit',
+      noCmt: 'No Unspent Output Commit',
       copied: 'Copied'
     },
 
-    fileSend:{
+    fileSend: {
       sendAmount: 'Amount to send',
       createTxFile: 'Create new transcation file',
       WrongAmount: 'Wrong amount',
@@ -130,9 +130,9 @@ const messages = {
       NotEnough: 'Not enough amount. Keep 0.01 as fee'
     },
 
-    httpSend:{
+    httpSend: {
       sendAmount: 'Amount to send',
-      address:'Address',
+      address: 'Address',
       WrongAmount: 'Wrong amount',
       NotEnough: 'Not enough amount. Keep 0.01 as fee',
       WrongAddress: 'Wrong address',
@@ -156,7 +156,7 @@ const messages = {
     finalize: {
       finalize: 'Finalize',
       success: 'Transcation success',
-      ok:'OK',
+      ok: 'OK',
       sending: 'Sending',
       dropMsg: 'Drop response transaction file to finalize',
       WrongFileType: 'Wrong transaction file type',
@@ -186,7 +186,7 @@ const messages = {
       launchSucess: 'Started successful',
       reachable: 'Hedwig address is available',
       address: 'Address to receive',
-      tip:'Please keep wallet online.',
+      tip: 'Please keep wallet online.',
       close: 'Stop Hedwig',
       introTitle: 'Introduction',
       intro1: 'Hedwig(v1) is a relay service for users without a public ip. It provides a temporary address to receive grin.',
@@ -204,12 +204,12 @@ const messages = {
       checking: 'Checking, be patient ...',
       stop: 'Stop Check',
 
-      tip:'It will take 10-30 minites to finish check',
+      tip: 'It will take 10-30 minutes to finish check',
       introTitle: 'Introduction',
 
       intro1: 'Because of all of the possibilities listed in the cancel command, as well as the possibility of forks, it is quite possible for your wallet to end up in an inconsistent state',
       intro2: "For this reason, Grin provides a manual check command that scans the chain's UTXO set for any outputs belonging to your wallet, and ensures they're in a consistent state with your local wallet database.",
-      
+
       start: 'Start',
       stopCheckMsg: 'Check was cancelled',
       checkedMsg: 'Check balance finished'
@@ -221,7 +221,7 @@ const messages = {
       select: 'Select'
     },
 
-    gnode:{
+    gnode: {
       title: 'Local grin node',
       tabStatus: 'Status',
       tabPeers: 'Peers',
@@ -230,7 +230,7 @@ const messages = {
       statusRunning: 'Running, Available',
       statusSyncing: 'Syncing ...',
       statusToStart: 'not Runing',
-      status:'Status',
+      status: 'Status',
       localRemoteHeight: 'Local Height/Networking Height',
       nodeVersion: 'Node Version',
       protocolVersion: 'Protocol Version',
@@ -241,20 +241,20 @@ const messages = {
       height: 'height'
     },
 
-    gnodeConfig:{
-      warning: 'For General users, default setting is prefered!',
+    gnodeConfig: {
+      warning: 'For General users, default setting is preferred!',
       useLocalorNot: '(Recommend)Use local grin node',
       connectMethod: 'Connect Method',
       remoteFirst: '(Recommend)Remote grin node is preferred, When remote node is not available, use local node.',
-      localFirst:  'Local grin node is preferred when it is synced. Otherwise, use remote node.',
+      localFirst: 'Local grin node is preferred when it is synced. Otherwise, use remote node.',
       remoteAllTime: 'Use remote all the time',
       localAllTime: 'Use local all the time',
-      background: '(Recommend)Runing grin node background when Niffler is closed.',
+      background: '(Recommend)Running grin node background when Niffler is closed.',
       restoreToDefault: 'Restore to default setting',
       saved: 'Settings was saved, Restart Niffler to take effect.'
     },
 
-    gnodeConfigModal:{
+    gnodeConfigModal: {
       config: 'Grin Local Node Settings',
       title: 'Grin node settings'
     }
