@@ -7,7 +7,7 @@ import axios from 'axios'
 require('promise.prototype.finally').shim();
 
 import log from './logger'
-import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet, nodeExecutable, tempTxDir, gnodeOption} from './config'
+import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet, nodeExecutable, tempTxDir, gnodeOption, grinRecover} from './config'
 import { messageBus } from '../renderer/messagebus'
 import GnodeService from './gnode'
 import dbService from '../renderer/db'
@@ -278,6 +278,9 @@ class WalletService {
         if(platform==='win'){
             return  WalletService.recoverOnWindows(seeds, password)
         }
+        if(platform==='linux'){
+            return  WalletService.recoverOnLinux(seeds, password)
+        }
         let rcProcess
         let args = ['--node_api_http_addr', grinNode, 'node_api_secret_path', path.resolve(apiSecretPath),
             '--wallet_dir', path.resolve(walletPath), '--seeds', seeds,
@@ -326,6 +329,24 @@ class WalletService {
             let output = data.toString()
             log.debug('rcProcess stderr:', output)
         })
+    }
+    
+    static recoverOnLinux(seeds, password){
+        var walletDir = path.resolve(walletPath)
+        fse.ensureDirSync(path.join(walletDir, 'wallet_data'))
+        execFile(grinRecover, [walletDir, seeds, password]) 
+        setTimeout(()=>{
+            var seedsPath = path.join(walletDir, 'wallet_data', 'wallet.seed')
+            var msg = ''
+            if(fse.pathExistsSync(seedsPath)){
+                msg = 'ok'
+            }else{
+                msg = 'recoverError'
+            }
+            log.debug('recover return msg:', msg)
+            messageBus.$emit('walletRecoverReturn', msg)
+            return
+        }, 600)
     }
 
     static check(cb, gnode){

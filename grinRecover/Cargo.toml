@@ -1,0 +1,11 @@
+[package]
+name = "recover"
+version = "0.1.0"
+authors = ["xiaojay <xiaojay@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+grin_wallet = { git = "https://github.com/mimblewimble/grin-wallet", tag = "v2.0.0" }
+grin_wallet_impls = { git = "https://github.com/mimblewimble/grin-wallet", tag = "v2.0.0" }
+grin_wallet_config = { git = "https://github.com/mimblewimble/grin-wallet", tag = "v2.0.0" }
+grin_wallet_util = { git = "https://github.com/mimblewimble/grin-wallet", tag = "v2.0.0" }
