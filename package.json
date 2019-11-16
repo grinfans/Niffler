@@ -108,6 +108,13 @@
       ],
       "extraFiles": [
         {
+          "from": "grinRecover/recover",
+          "to": "resources/bin/grinRecover/recover",
+          "filter": [
+            "**/*"
+          ]
+        },
+        {
           "from": "resources/bin/linux",
           "to": "resources/bin/linux",
           "filter": [
