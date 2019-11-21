@@ -61,6 +61,9 @@ https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-mac-0.4.2.dmg
 
 ## 构建
 
+*目前最新发布版本的Niffler 构建于分支 [gw2](https://github.com/grinfans/Niffler/tree/gw2)*
+
+
 ``` bash
 
 # git 克隆 
