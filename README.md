@@ -52,6 +52,8 @@ Gitter room: https://gitter.im/niffler-wallet/community
 
 ## Build Setup
 
+*The current release is built on branch [gw2](https://github.com/grinfans/Niffler/tree/gw2)*
+
 ``` bash
 # clone
 git clone https://github.com/grinfans/niffler.git && cd niffler
