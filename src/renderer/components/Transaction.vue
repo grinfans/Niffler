@@ -224,7 +224,7 @@
             if(res.data.result.Ok === null){
               messageBus.$emit('update')
               this.openMsg = true
-              this.$log.debug(`Cancel tx ${tx_id} ok return:${res.data}`)
+              this.$log.debug(`Cancel tx ${tx_slate_id} ok return:${res.data}`)
             }else{
               this.$log.error('cancelTransactions ' + tx_slate_id + ' error:' + JSON.stringify(res))
             }

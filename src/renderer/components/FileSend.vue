@@ -91,13 +91,17 @@ export default {
           message: this.$t('msg.fileSend.saveMsg'),
         })
         let tx_data = {
+          "src_acct_name": null,
           "amount": this.amount * 1000000000, 
           "minimum_confirmations": 10,
-          "method": "file",
-          "dest": fn_output,
           "max_outputs": 500,
           "num_change_outputs": 1,
           "selection_strategy_is_use_all": true,
+          "message": null,
+          "target_slate_version": null,
+          "payment_proof_recipient_address": null,
+          "ttl_blocks": null,
+          "send_args": null
         }
         this.$walletService.issueSendTransaction(tx_data).then(
           (res) => {

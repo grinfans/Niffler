@@ -132,14 +132,11 @@ export const defaultGnodeOptions= {
   'useLocalGnode': true,
   //connnectMethod: localFirst, remoteFirst, localAllTime, remoteAllTime
   'connectMethod':'remoteFirst',
-  'remoteAddr': 'http://grin2-node.niffler.org:3413',
+  'remoteAddr': 'http://116.62.214.128:3413',
   'localAddr': 'http://127.0.0.1:3413',
   'background': true
 }
 export const gnodeOption = getConfig()['gnode']?getConfig()['gnode']: defaultGnodeOptions
-//export const grinNode = "http://grin2-node.niffler.org:3413"
-//export const grinNode2 = "http://grin2-node2.niffler.org:3413"
-//export const grinLocalNode= "http://127.0.0.1:3413"
 
 export const grinNode = gnodeOption.remoteAddr
 export const grinNode2 = gnodeOption.remoteAddr
