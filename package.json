@@ -155,7 +155,7 @@
     "vue-awesome": "^3.5.3",
     "vue-electron": "^1.0.6",
     "vue-i18n": "^8.10.0",
-    "vue-moment": "^4.0.0",
+    "vue-moment": "^4.1.0",
     "vue-truncate-filter": "^1.1.7"
   },
   "devDependencies": {
