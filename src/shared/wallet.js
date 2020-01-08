@@ -353,7 +353,7 @@ class WalletService {
         if(platform==='win'){
             grin = grinWalletPath.slice(1,-1)
         }
-        checkProcess = spawn(grin, ['-r', gnode, '-p', password_, 'check', '-d']);
+        checkProcess = spawn(grin, ['-r', gnode, '-p', password_, 'scan', '-d']);
         let ck = checkProcess
         processes['check'] = checkProcess
         localStorage.setItem('checkProcessPID', checkProcess.pid)
