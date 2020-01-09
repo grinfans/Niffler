@@ -152,9 +152,11 @@ export default {
         this.$log.debug('check owner api process after try to login')
         this.$walletService.getNodeHeight().then(
           (res) =>{
+            this.$log.debug('check owner api process: started')
             setPassword(password)
             messageBus.$emit('logined')
           }).catch((error) => {
+            this.$log.debug('check owner api process got error:', error)
             return this.error = true
         })}, 1250)
 

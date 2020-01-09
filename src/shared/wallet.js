@@ -7,7 +7,9 @@ import axios from 'axios'
 require('promise.prototype.finally').shim();
 
 import log from './logger'
-import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, apiSecretPath, walletTOMLPath, walletPath, grinRsWallet, nodeExecutable, tempTxDir, gnodeOption, grinRecover} from './config'
+import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, 
+    apiSecretPath, ownerApiSecretPath, walletTOMLPath, walletPath, grinRsWallet, 
+    nodeExecutable, tempTxDir, gnodeOption, grinRecover} from './config'
 import { messageBus } from '../renderer/messagebus'
 import GnodeService from './gnode'
 import dbService from '../renderer/db'
@@ -36,6 +38,13 @@ function enableForeignApi(){
     }
 }
 
+function getApiSecret(){
+    const re = /api_secret_path\s*=\s*"(.\S+)"/
+    let c = fs.readFileSync(walletTOMLPath).toString()
+    const found = c.match(re)
+    if(found)return found[1]
+}
+
 function execPromise(command) {
     return new Promise(function(resolve, reject) {
         exec(command, (error, stdout, stderr) => {
@@ -53,14 +62,17 @@ function addQuotations(s){
 }
 class WalletService {
     static initClient() {
-        if(fs.existsSync(apiSecretPath)){
+        const apiSecret = getApiSecret()
+        if(fs.existsSync(apiSecret)){
             client = axios.create({
                 baseURL: walletHost,
                 auth: {
                     username: 'grin',
-                    password: fs.readFileSync(apiSecretPath).toString()
+                    password: fs.readFileSync(apiSecret).toString()
                 },
             })
+        }else{
+            client = axios.create({baseURL: walletHost})
         }
     }
     

@@ -52,6 +52,7 @@ export const walletPath = path.join(APP.getPath('home'), '.grin', chainType)
 export const walletDataPath = path.join(APP.getPath('home'), '.grin', chainType, 'wallet_data')
 export const walletLogPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-wallet.log')
 export const apiSecretPath = path.join(APP.getPath('home'), '.grin', chainType, '.api_secret')
+export const ownerApiSecretPath = path.join(APP.getPath('home'), '.grin', chainType, '.owner_api_secret')
 export const grinNodeLog = path.join(APP.getPath('home'), '.grin', chainType, 'grin-server.log')
 export const chainDataPath = path.join(APP.getPath('home'), '.grin', chainType, 'chain_data')
 
