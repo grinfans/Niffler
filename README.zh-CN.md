@@ -2,13 +2,38 @@
 
 简体中文 | [English](./README.md)
 
-Niffler 是一个开箱即用、用户友好的 [Grin](https://github.com/mimblewimble/grin) 图形界面钱包.
+Niffler 是一个开箱即用、用户友好的 [Grin](https://github.com/mimblewimble/grin) 开源图形界面钱包.
 
 遵循Grin的命名传统，钱包的名字 **Niffler** 也是来自["哈利波特"](https://harrypotter.fandom.com/wiki/Niffler).
 
-目前, Mac版本已经发布, 从[这里](https://github.com/grinfans/niffler/releases)下载. Windows/Linux 版本也会很快释出.
+#### 最新版本 V0.4.2
 
-Mac 版本中国大陆下载地址: [https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-0.1.1.dmg](https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-0.1.1.dmg)
+v0.4.2 加了grin本地全节点
+
+Windows/Mac/linux 版本:
+[https://github.com/grinfans/niffler/releases/tag/v0.4.2](https://github.com/grinfans/niffler/releases/tag/v0.4.2)
+
+Niffler钱包 新加了 **hedwig** v1 代理服务; 现在，没有公共ip的用户也可以很简单容易地接收grin了 :)
+
+也就是说，**你现在可以非常容易从各大交易所或矿池 提取grin到你的本地钱包** 。
+
+#### 中国大陆用户快速下载
+
+中国大陆用户快速下载地址:
+>Windows
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-win-0.4.2.exe
+
+>Mac
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-mac-0.4.2.dmg
+
+
+## 联系
+
+联系我: xiaojay@gmail.com
+
+用户讨论室 https://gitter.im/niffler-wallet/community
+
+客服qq： 1573479696
 
 <img src="/src/renderer/assets/logo.png" width="256"> Logo 由[@Duoasa](https://weibo.com/u/3197271025)创建.
 
@@ -16,7 +41,7 @@ Mac 版本中国大陆下载地址: [https://grin-fans.oss-cn-hangzhou.aliyuncs.
 
 * 用 [官方的Grin命令行钱包](https://github.com/mimblewimble/grin/releases) 作为后端, 用[elctron-vue](https://github.com/SimulatedGREG/electron-vue) 写了GUI界面
 
-* 支持多个平台
+* 会支持多个平台(mac/linux/windows)
 
 * 支持多个语言(目前支持[English](./README.md)和简体中文, 未来会更多)
 
@@ -36,6 +61,9 @@ Mac 版本中国大陆下载地址: [https://grin-fans.oss-cn-hangzhou.aliyuncs.
 
 ## 构建
 
+*目前最新发布版本的Niffler 构建于分支 [gw2](https://github.com/grinfans/Niffler/tree/gw2)*
+
+
 ``` bash
 
 # git 克隆 
@@ -50,6 +78,10 @@ npm run dev
 # 打包
 npm run build
 
+##Build restore node (grinRs) (install latest rustc)
+
+npm run build-rs
+mv index.node from /target to /grinRs
 
 ```
 
@@ -57,7 +89,7 @@ npm run build
 
 ## 帮助
 
-pull request 和 bug报告 当然
+pull request 和 bug报告 当然非常欢迎.
 
 ~~更具体地说, 希望有grin社区的设计师帮助设计一个logo :-)~~
 
@@ -67,8 +99,4 @@ pull request 和 bug报告 当然
 
 翻译到其他语言也是很需要的. 只要翻译下这个[语言文件夹](https://github.com/grinfans/niffler/tree/master/src/lang)里的文字即可.
 
-## 联系
-
-联系我: xiaojay@gmail.com
-
-Gitter room: https://gitter.im/niffler-wallet/community
+感谢  [@yozx](https://github.com/yozx) 翻译俄语版本.
