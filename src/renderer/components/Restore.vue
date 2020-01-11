@@ -9,7 +9,7 @@
             <div v-if="page==='addSeeds'">
               <p class="animated bounce has-text-weight-semibold has-text-warning" 
                 style="animation-iteration-count:2;margin-bottom:12px">
-                {{ $t('msg.restore.addSeedsInfo') }} ({{seeds.length}}/{{total}})
+                {{ $t('msg.restore.addSeedsInfo') }} ({{seeds.length}}/(12 or 24))
               </p>
               <div class="field has-addons">
                 <div class="control">
@@ -119,7 +119,6 @@ export default {
       seeds:[],
       password: '',
       password2: '',
-      total: 24,
       page: 'addSeeds',
       
       errorPassword: false,
@@ -150,7 +149,7 @@ export default {
   },
   watch: {
     seeds:function(newVal, oldVal){
-      if(newVal.length == this.total){
+      if(newVal.length == 24 || newVal.length == 12){
         this.enoughSeeds = true
       }else{
         this.enoughSeeds = false
@@ -184,7 +183,7 @@ export default {
       return re.test(seed)
     },
     add(){
-      if(this.enoughSeeds)return
+      if(this.seeds.length >=24 )return
       let seed = this.currentSeed.trim()
       if(seed === '' || !this.validSeed(seed) ){
         return this.currentSeedInvalid = true
