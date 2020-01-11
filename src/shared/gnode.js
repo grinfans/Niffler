@@ -5,7 +5,7 @@ import axios from 'axios'
 require('promise.prototype.finally').shim();
 
 import log from './logger'
-import {gnodeOption, grinPath, apiSecretPath, nodeTOMLPath, platform, grinNode} from './config'
+import {gnodeOption, grinPath, nodeApiSecretPath, nodeTOMLPath, platform, grinNode} from './config'
 import { messageBus } from '../renderer/messagebus'
 
 let client
@@ -41,12 +41,12 @@ function enableArchiveMode(){
 
 class GnodeService {
     static initClient() {
-        if(fs.existsSync(apiSecretPath)){
+        if(fs.existsSync(nodeApiSecretPath)){
             client = axios.create({
                 baseURL: gnodeHost,
                 auth: {
                     username: 'grin',
-                    password: fs.readFileSync(apiSecretPath).toString()
+                    password: fs.readFileSync(nodeApiSecretPath).toString()
                 },
             })
         }

@@ -44,15 +44,36 @@ if(platform=='win'){
 }
 
 export const chainType = 'main'
-export const grinDIR = path.join(APP.getPath('home'), '.grin')
-export const seedPath = path.join(APP.getPath('home'), '.grin', chainType, 'wallet_data/wallet.seed')
 export const walletTOMLPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-wallet.toml')
 export const nodeTOMLPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-server.toml')
+
+function getOwnerApiSecret(){
+  if(fs.existsSync(walletTOMLPath)){
+      const re = /api_secret_path\s*=\s*"(.\S+)"/
+      let c = fs.readFileSync(walletTOMLPath).toString()
+      const found = c.match(re)
+      if(found)return found[1]
+  }
+  return path.join(APP.getPath('home'), '.grin', chainType, '.owner_api_secret')
+}
+
+function getNodeApiSecret(){
+  if(fs.existsSync(nodeTOMLPath)){
+      const re = /api_secret_path\s*=\s*"(.\S+)"/
+      let c = fs.readFileSync(nodeTOMLPath).toString()
+      const found = c.match(re)
+      if(found)return found[1]
+  }
+  return path.join(APP.getPath('home'), '.grin', chainType, '.api_secret')
+}
+
+export const grinDIR = path.join(APP.getPath('home'), '.grin')
+export const seedPath = path.join(APP.getPath('home'), '.grin', chainType, 'wallet_data/wallet.seed')
 export const walletPath = path.join(APP.getPath('home'), '.grin', chainType)
 export const walletDataPath = path.join(APP.getPath('home'), '.grin', chainType, 'wallet_data')
 export const walletLogPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-wallet.log')
-export const apiSecretPath = path.join(APP.getPath('home'), '.grin', chainType, '.api_secret')
-export const ownerApiSecretPath = path.join(APP.getPath('home'), '.grin', chainType, '.owner_api_secret')
+export const nodeApiSecretPath = getNodeApiSecret()
+export const ownerApiSecretPath = getOwnerApiSecret()
 export const grinNodeLog = path.join(APP.getPath('home'), '.grin', chainType, 'grin-server.log')
 export const chainDataPath = path.join(APP.getPath('home'), '.grin', chainType, 'chain_data')
 

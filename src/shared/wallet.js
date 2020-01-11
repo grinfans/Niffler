@@ -8,7 +8,7 @@ require('promise.prototype.finally').shim();
 
 import log from './logger'
 import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, 
-    apiSecretPath, ownerApiSecretPath, walletTOMLPath, walletPath, grinRsWallet, 
+    nodeApiSecretPath, ownerApiSecretPath, walletTOMLPath, walletPath, grinRsWallet, 
     nodeExecutable, tempTxDir, gnodeOption, grinRecover} from './config'
 import { messageBus } from '../renderer/messagebus'
 import GnodeService from './gnode'
@@ -38,13 +38,6 @@ function enableForeignApi(){
     }
 }
 
-function getApiSecret(){
-    const re = /api_secret_path\s*=\s*"(.\S+)"/
-    let c = fs.readFileSync(walletTOMLPath).toString()
-    const found = c.match(re)
-    if(found)return found[1]
-}
-
 function execPromise(command) {
     return new Promise(function(resolve, reject) {
         exec(command, (error, stdout, stderr) => {
@@ -62,13 +55,12 @@ function addQuotations(s){
 }
 class WalletService {
     static initClient() {
-        const apiSecret = getApiSecret()
-        if(fs.existsSync(apiSecret)){
+        if(fs.existsSync(ownerApiSecretPath)){
             client = axios.create({
                 baseURL: walletHost,
                 auth: {
                     username: 'grin',
-                    password: fs.readFileSync(apiSecret).toString()
+                    password: fs.readFileSync(ownerApiSecretPath).toString()
                 },
             })
         }else{
@@ -293,7 +285,7 @@ class WalletService {
             return  WalletService.recoverOnLinux(seeds, password)
         }
         let rcProcess
-        let args = ['--node_api_http_addr', grinNode, 'node_api_secret_path', path.resolve(apiSecretPath),
+        let args = ['--node_api_http_addr', grinNode, 'node_api_secret_path', path.resolve(nodeApiSecretPath),
             '--wallet_dir', path.resolve(walletPath), '--seeds', seeds,
             '--password', password]
         try{
@@ -318,7 +310,7 @@ class WalletService {
 
     static recoverOnWindows(seeds, password){
         let args = [grinRsWallet, '--node_api_http_addr', grinNode2,
-            '--node_api_secret_path', path.resolve(apiSecretPath),
+            '--node_api_secret_path', path.resolve(nodeApiSecretPath),
             '--wallet_dir', path.resolve(walletPath), 
             '--seeds', seeds, '--password', password]
         let rcProcess = spawn(nodeExecutable, args)
@@ -389,7 +381,7 @@ class WalletService {
         if(platform==='win'){
             grin = grinWalletPath.slice(1,-1)
         }
-        restoreProcess = spawn(grin, ['-r', grinNode2, '-p', password, 'restore']);
+        restoreProcess = spawn(grin, ['-r', grinNode2, '-p', password, 'scan']);
         let rs = restoreProcess
         processes['restore'] = restoreProcess
         localStorage.setItem('restoreProcessPID', restoreProcess.pid)
