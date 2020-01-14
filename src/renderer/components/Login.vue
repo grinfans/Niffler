@@ -90,13 +90,15 @@ export default {
       
       this.$walletService.killGrinWallet()
 
-      let setPassword = this.$walletService.setPassword
       let password = this.password
 
       this.resetErrors()
       this.$walletService.initClient()
       
-      let selectGnode = async function(){
+      let selectGnodeAndLogin = async function(){
+        
+        setTimeout(()=>this.checkLogin(), 1500)
+
         let localHeight
         let remoteHeight
         this.$log.debug('Time to select gnode.')
@@ -149,25 +151,7 @@ export default {
           })
         }
       }
-      setTimeout(()=>selectGnode.call(this), 250)
-
-      setTimeout(()=>{
-        this.$log.debug('check owner api process after try to login')
-        this.$walletService.getAccounts().then(
-          (res) =>{
-            this.$log.debug('getAccounts return:' + JSON.stringify(res.data))
-            if(res.data.result.Ok){
-              this.$log.debug('owner api process started')
-              setPassword(password)
-              messageBus.$emit('logined')
-            }else{
-              return this.error = true
-            }
-          }).catch((error) => {
-            this.$log.error('check owner api process got error:', error)
-            return this.error = true
-        })}, 1500)
-
+      setTimeout(()=>selectGnodeAndLogin.call(this), 250)
       this.resetErrors()
       },
     
@@ -175,6 +159,23 @@ export default {
       this.error = false;
     },
 
+    checkLogin(){
+      this.$log.debug('check owner api process after try to login')
+      this.$walletService.getAccounts().then(
+        (res) =>{
+          this.$log.debug('getAccounts return:' + JSON.stringify(res.data))
+          if(res.data.result.Ok){
+            this.$log.debug('owner api process started')
+            this.$walletService.setPassword(this.password)
+            messageBus.$emit('logined')
+          }else{
+            return this.error = true
+          }
+        }).catch((error) => {
+          this.$log.error('check owner api process got error:', error)
+          return this.error = true
+      })
+    }
   }
 }
 </script>
