@@ -18,7 +18,6 @@ let ownerAPI
 let listenProcess
 let checkProcess
 //let initRProcess
-let restoreProcess
 let processes = {}
 let client
 let password_
@@ -287,12 +286,16 @@ class WalletService {
         return WalletService.finalize(fn)
     }
 
-    static check(cb, gnode){
+    static check(cb, gnode, password){
         let grin = grinWalletPath
         if(platform==='win'){
             grin = grinWalletPath.slice(1,-1)
         }
-        checkProcess = spawn(grin, ['-r', gnode, '-p', password_, 'scan', '-d']);
+        if(password){
+            checkProcess = spawn(grin, ['-r', gnode, '-p', password, 'scan', '-d'])
+        }else{
+            checkProcess = spawn(grin, ['-r', gnode, '-p', password_, 'scan', '-d'])
+        }
         let ck = checkProcess
         processes['check'] = checkProcess
         localStorage.setItem('checkProcessPID', checkProcess.pid)
@@ -310,33 +313,6 @@ class WalletService {
             if(code==0){return messageBus.$emit('walletCheckFinished')}
         });
     }
-
-    static restore(password, cb){
-        let grin = grinWalletPath
-        if(platform==='win'){
-            grin = grinWalletPath.slice(1,-1)
-        }
-        restoreProcess = spawn(grin, ['-r', grinNode2, '-p', password, 'scan']);
-        let rs = restoreProcess
-        processes['restore'] = restoreProcess
-        localStorage.setItem('restoreProcessPID', restoreProcess.pid)
-        
-        log.debug('grin wallet restore process running with pid: ' + restoreProcess.pid);
-
-        rs.stdout.on('data', function(data){
-            let output = data.toString()
-            cb(output)
-        })
-        rs.stderr.on('data', function(data){
-            let output = data.toString()
-            cb(output)
-        })
-        rs.on('close', function(code){
-            log.debug('grin wallet restore exists with code: ' + code);
-            if(code==0){return messageBus.$emit('walletRestored')}
-        });
-    }
-
     //https://github.com/mimblewimble/grin-wallet/issues/110
     //static initR(seeds, newPassword){
     //    log.debug(grinWalletPath)

@@ -102,7 +102,7 @@ export default {
         this.$log.debug('check use grin local node')
         gnode = grinLocalNode
       }
-      this.$walletService.check(this.updateOutput, gnode)
+      this.$walletService.check(this.updateOutput, gnode, null)
     },
 
     stop(){

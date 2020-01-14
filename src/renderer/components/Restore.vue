@@ -109,7 +109,8 @@
 import { messageBus } from '@/messagebus'
 const { exec } = require('child_process')
 import walletServiceV3 from '../../shared/walletv3'
-import {chainType} from '../../shared/config'
+import {chainType, grinNode2, grinLocalNode} from '../../shared/config'
+
 export default {
   name: "restore",
   data() {
@@ -117,7 +118,7 @@ export default {
       currentSeed: '',
       currentSeedInvalid: false,
       enoughSeeds: false,
-      seeds:['idea', 'cattle', 'ripple', 'focus', 'crazy', 'oblige', 'test', 'flat', 'february', 'phone', 'among'],
+      seeds:[],
       password: '',
       password2: '',
       page: 'addSeeds',
@@ -134,8 +135,16 @@ export default {
   created(){
     messageBus.$on('walletRecoverReturn', (ret)=>{
       if(ret === 'ok'){
+        let gnode = grinNode2
+
         this.page = 'recovered'
-        this.$walletService.restore(this.password, this.updateOutput)
+        let localGnodeStatus = this.$dbService.getLocalGnodeStatus()
+        this.$log.debug('check grin local status before restore balance: ' + localGnodeStatus)
+        if(localGnodeStatus == 'running'){
+          this.$log.debug('check use grin local node')
+          gnode = grinLocalNode
+        }
+        this.$walletService.check(this.updateOutput, gnode, this.password)
       }else if(ret === 'invalidSeeds'){
         this.page = 'recoverError'
         this.recoverErrorInfo = this.$t('msg.restore.invalid')
@@ -144,7 +153,7 @@ export default {
         this.recoverErrorInfo = this.$t('msg.restore.failed')
       }
     })
-    messageBus.$on('walletRestored', (ret)=>{
+    messageBus.$on('walletCheckFinished', (ret)=>{
       this.page = 'restored'
     })
   },
