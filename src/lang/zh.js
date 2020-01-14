@@ -69,6 +69,7 @@ const messages = {
       addSeedsInfo: '请一个个地输入助记词',
       add: '添加',
       invalid: '助记词无效',
+      failed: '从助记词中恢复钱包失败',
       delete: '删除',
       added: '助记词输入完成',
       newPassword: '设置新的密码',

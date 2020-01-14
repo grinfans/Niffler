@@ -319,13 +319,17 @@
         this.$i18n.locale = 'en'
       },
       checkOwnerApi(){
-        let ret = this.$walletService.getNodeHeight()
+        let ret = this.$walletService.getAccounts()
         if(!ret){return false}
         ret.then(
           (res) =>{
-            this.ownerApiRunning = true
+            this.$log.debug('getAccounts return:' + JSON.stringify(res.data))
+            if(res.data.result.OK){
+              this.ownerApiRunning = true
+            }
           }).catch((error)=>{
             this.ownerApiRunning = false
+            this.$log.error('getAccounts failed:' + error)
           })
       },
       getHeight(){
@@ -333,7 +337,7 @@
           (res) =>{
             this.height = parseInt(res.data.result.Ok.height)
           }).catch((error)=>{
-            this.$log.error(error)
+            this.$log.error('getHeight failed:' + error)
           })
       },
 

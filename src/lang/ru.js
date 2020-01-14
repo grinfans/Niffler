@@ -63,6 +63,7 @@ const messages = {
       addSeedsInfo: 'Пожалуйста, введите слова по одному',
       add: 'Добавить',
       invalid: 'Сид-фраза недействительна',
+      failed: 'Recover wallet from seeds Failed',
       delete: 'Удалить',
       added: 'Ввод сид-фразы завершен',
       newPassword: 'Установить новый пароль',

@@ -8,8 +8,8 @@ require('promise.prototype.finally').shim();
 
 import log from './logger'
 import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, 
-    nodeApiSecretPath, ownerApiSecretPath, walletTOMLPath, walletPath, grinRsWallet, 
-    nodeExecutable, tempTxDir, gnodeOption, grinRecover} from './config'
+    nodeApiSecretPath, ownerApiSecretPath, walletTOMLPath, walletPath, walletConfigPath,
+    tempTxDir, gnodeOption} from './config'
 import { messageBus } from '../renderer/messagebus'
 import GnodeService from './gnode'
 import dbService from '../renderer/db'
@@ -94,6 +94,12 @@ class WalletService {
     static getNodeHeight(){
         if(client){
             return WalletService.jsonRPC('node_height', [], false)
+        }
+    }
+
+    static getAccounts(){
+        if(client){
+            return WalletService.jsonRPC('accounts', [], false)
         }
     }
     
@@ -214,6 +220,10 @@ class WalletService {
         return fs.existsSync(seedPath)?true:false
     }
 
+    static isWalletConfigExist(){
+        return fs.existsSync(walletConfigPath)?true:false
+    }
+
     static new(password){
         const cmd = platform==='win'? `${grinWalletPath} --pass ${addQuotations(password)} init`:
                                       `${grinWalletPath} init`
@@ -275,81 +285,6 @@ class WalletService {
         let fn = path.join(tempTxDir, String(Math.random()).slice(2) + '.temp.tx.resp')
         fs.writeFileSync(fn, JSON.stringify(slate))
         return WalletService.finalize(fn)
-    }
-
-    static recover(seeds, password){
-        if(platform==='win'){
-            return  WalletService.recoverOnWindows(seeds, password)
-        }
-        if(platform==='linux'){
-            return  WalletService.recoverOnLinux(seeds, password)
-        }
-        let rcProcess
-        let args = ['--node_api_http_addr', grinNode, 'node_api_secret_path', path.resolve(nodeApiSecretPath),
-            '--wallet_dir', path.resolve(walletPath), '--seeds', seeds,
-            '--password', password]
-        try{
-            rcProcess = fork(grinRsWallet, args)
-        }catch(e){
-            return log.error('Error during fork to recover: ' + e )
-        }
-        rcProcess.on('message', (data) => {
-            let ret = data['ret']
-            log.debug('Recover message: ' + ret)
-            messageBus.$emit('walletRecoverReturn', ret)
-        });
-          
-        rcProcess.on('error', (err) => {
-            log.error(`Recover stderr: ${err}`);
-          });
-          
-        rcProcess.on('exit', (code, sginal) => {
-            log.debug(`Recover exit: ${code}`);
-        });
-    }
-
-    static recoverOnWindows(seeds, password){
-        let args = [grinRsWallet, '--node_api_http_addr', grinNode2,
-            '--node_api_secret_path', path.resolve(nodeApiSecretPath),
-            '--wallet_dir', path.resolve(walletPath), 
-            '--seeds', seeds, '--password', password]
-        let rcProcess = spawn(nodeExecutable, args)
-        rcProcess.stdout.on('data', function(data){
-            let output = data.toString().trim()
-            log.debug('rcProcess stdout:', output)
-            let msg
-            if(output ==='success'){
-                msg = 'ok'
-            }else if(output ==='"BIP39 Mnemonic (word list) Error"'){
-                msg = 'invalidSeeds'
-            }else{
-                msg = data
-            }
-            log.debug('msg', msg)
-            messageBus.$emit('walletRecoverReturn', msg)
-        })
-        rcProcess.stderr.on('data', function(data){
-            let output = data.toString()
-            log.debug('rcProcess stderr:', output)
-        })
-    }
-    
-    static recoverOnLinux(seeds, password){
-        var walletDir = path.resolve(walletPath)
-        fse.ensureDirSync(path.join(walletDir, 'wallet_data'))
-        execFile(grinRecover, [walletDir, seeds, password]) 
-        setTimeout(()=>{
-            var seedsPath = path.join(walletDir, 'wallet_data', 'wallet.seed')
-            var msg = ''
-            if(fse.pathExistsSync(seedsPath)){
-                msg = 'ok'
-            }else{
-                msg = 'recoverError'
-            }
-            log.debug('recover return msg:', msg)
-            messageBus.$emit('walletRecoverReturn', msg)
-            return
-        }, 600)
     }
 
     static check(cb, gnode){
@@ -451,6 +386,14 @@ class WalletService {
             }catch(e){
                 log.error(`error when kill ${processName} ${pid}: ${e}` )
             }
+        }
+    }
+
+    static killGrinWallet(){
+        if(platform!=='win'){
+            exec('pkill grin-wallet')
+        }else{
+            exec('taskkill -f /im grin-wallet.exe')
         }
     }
 }

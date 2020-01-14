@@ -71,6 +71,7 @@ export const grinDIR = path.join(APP.getPath('home'), '.grin')
 export const seedPath = path.join(APP.getPath('home'), '.grin', chainType, 'wallet_data/wallet.seed')
 export const walletPath = path.join(APP.getPath('home'), '.grin', chainType)
 export const walletDataPath = path.join(APP.getPath('home'), '.grin', chainType, 'wallet_data')
+export const walletConfigPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-wallet.toml')
 export const walletLogPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-wallet.log')
 export const nodeApiSecretPath = getNodeApiSecret()
 export const ownerApiSecretPath = getOwnerApiSecret()
@@ -116,22 +117,6 @@ export const hedwigClient =
     : path.resolve(path.join(root, 'hedwig', 'client.js'))
 
 export const hedwigApp = 'Niffler'
-
-export const grinRsWallet =  
-  IS_PROD || APP.isPackaged
-    ? path.resolve(path.join(process.resourcesPath, 'bin', 'grinRs', 'wallet.js'))
-    : path.resolve(path.join(root, 'grinRs', 'wallet.js'))
-
-export const grinRecover =  
-  IS_PROD || APP.isPackaged
-    ? path.resolve(path.join(process.resourcesPath, 'bin', 'grinRecover', 'recover'))
-    : path.resolve(path.join(root, 'grinRecover', 'recover'))
-
-export const nodeExecutable =  
-    IS_PROD || APP.isPackaged
-      ? path.resolve(path.join(process.resourcesPath, 'bin', 'grinRs', 'node.exe'))
-      : path.resolve(path.join(root, 'grinRs', 'node.exe'))
-
 
 function getLocale(){
   let locale = getConfig()['locale']

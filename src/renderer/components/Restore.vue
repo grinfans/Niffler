@@ -108,7 +108,8 @@
 <script>
 import { messageBus } from '@/messagebus'
 const { exec } = require('child_process')
-
+import walletServiceV3 from '../../shared/walletv3'
+import {chainType} from '../../shared/config'
 export default {
   name: "restore",
   data() {
@@ -116,7 +117,7 @@ export default {
       currentSeed: '',
       currentSeedInvalid: false,
       enoughSeeds: false,
-      seeds:[],
+      seeds:['idea', 'cattle', 'ripple', 'focus', 'crazy', 'oblige', 'test', 'flat', 'february', 'phone', 'among'],
       password: '',
       password2: '',
       page: 'addSeeds',
@@ -140,7 +141,7 @@ export default {
         this.recoverErrorInfo = this.$t('msg.restore.invalid')
       }else{
         this.page = 'recoverError'
-        this.recoverErrorInfo = ret
+        this.recoverErrorInfo = this.$t('msg.restore.failed')
       }
     })
     messageBus.$on('walletRestored', (ret)=>{
@@ -208,7 +209,52 @@ export default {
         this.errorInfoPassword = this.$t('msg.create.errorPasswdConsistency')
         return
       }
-      this.$walletService.recover(this.seeds.join(' '), this.password)
+      const seeds_ = this.seeds.join(' ')
+      let len = 32
+      if(this.seeds.length==12){
+        len = 16
+      }
+      let chain
+      if(chainType==='main')chain='Mainnet'
+      if(this.$walletService.isWalletConfigExist()){
+        walletServiceV3.createWallet(null, seeds_, len, this.password).then(
+          (res)=>{
+            this.$log.debug('createWallet return: '+ JSON.stringify(res))
+            if(res.result.hasOwnProperty('Ok')){
+              if(this.$walletService.isExist()){
+                messageBus.$emit('walletRecoverReturn', 'ok')
+              }else{
+                messageBus.$emit('walletRecoverReturn', 'invalidSeeds')
+              }
+            }
+          }).catch((err)=>{
+            this.$log.error('createWallet failed: '+ err)
+            messageBus.$emit('walletRecoverReturn', 'failed')
+          })
+      }else{
+        walletServiceV3.createConfig(chain, null, null, null).then(
+          (res) =>{
+            this.$log.debug('createConfig return: '+ JSON.stringify(res))
+            if(res.result.hasOwnProperty('Ok')){
+              walletServiceV3.createWallet(null, seeds_, len, this.password).then(
+                (res)=>{
+                  this.$log.debug('createWallet return: '+ JSON.stringify(res))
+                  if(res.result.hasOwnProperty('Ok')){
+                    if(this.$walletService.isExist()){messageBus.$emit('walletRecoverReturn', 'ok')}
+                    else{
+                      messageBus.$emit('walletRecoverReturn', 'invalidSeeds')
+                    }
+                  }
+                }).catch((err)=>{
+                  this.$log.error('createWallet failed: '+ err)
+                  messageBus.$emit('walletRecoverReturn', 'failed')
+                })
+            }
+          }).catch((err)=>{
+            this.$log.error('createConfig failed: '+ err)
+            messageBus.$emit('walletRecoverReturn', 'failed')
+          })
+      }
     },
     delete_(){
       if(this.seeds.length>0)this.seeds.pop()

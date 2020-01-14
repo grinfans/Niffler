@@ -7,8 +7,6 @@
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
-    "build-rs": "electron-build-env neon build --release -p ./grinRs",
-    "build-rs-win": "neon build --release -p ./grinRs",
     "build:dir": "node .electron-vue/build.js && electron-builder --dir",
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
@@ -61,16 +59,6 @@
           "filter": [
             "**/*"
           ]
-        },
-        {
-          "from": "grinRs",
-          "to": "resources/bin/grinRs",
-          "filter": [
-            "**/*",
-            "!native",
-            "!test.js",
-            "!node.exe"
-          ]
         }
       ]
     },
@@ -83,15 +71,6 @@
           "to": "resources/bin/win",
           "filter": [
             "**/*"
-          ]
-        },
-        {
-          "from": "grinRs",
-          "to": "resources/bin/grinRs",
-          "filter": [
-            "**/*",
-            "!native",
-            "!test.js"
           ]
         }
       ]

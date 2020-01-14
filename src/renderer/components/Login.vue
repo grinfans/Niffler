@@ -57,7 +57,7 @@ import {isFirstTime} from '../../shared/first'
 import Remove from '@/components/Remove'
 import GnodeConfigModal from '@/components/GnodeConfigModal'
 
-import {version, grinNode, gnodeOption, grinNode2, grinLocalNode} from '../../shared/config'
+import {version, grinNode, gnodeOption, grinNode2, grinLocalNode, platform} from '../../shared/config'
 
 export default {
   name: "login",
@@ -88,11 +88,14 @@ export default {
   methods: {
     tryLogin(){
       
+      this.$walletService.killGrinWallet()
+
       let setPassword = this.$walletService.setPassword
       let password = this.password
 
       this.resetErrors()
       this.$walletService.initClient()
+      
       let selectGnode = async function(){
         let localHeight
         let remoteHeight
@@ -146,19 +149,24 @@ export default {
           })
         }
       }
-      setTimeout(()=>selectGnode.call(this), 50)
+      setTimeout(()=>selectGnode.call(this), 250)
 
       setTimeout(()=>{
         this.$log.debug('check owner api process after try to login')
-        this.$walletService.getNodeHeight().then(
+        this.$walletService.getAccounts().then(
           (res) =>{
-            this.$log.debug('check owner api process: started')
-            setPassword(password)
-            messageBus.$emit('logined')
+            this.$log.debug('getAccounts return:' + JSON.stringify(res.data))
+            if(res.data.result.Ok){
+              this.$log.debug('owner api process started')
+              setPassword(password)
+              messageBus.$emit('logined')
+            }else{
+              return this.error = true
+            }
           }).catch((error) => {
-            this.$log.debug('check owner api process got error:', error)
+            this.$log.error('check owner api process got error:', error)
             return this.error = true
-        })}, 1250)
+        })}, 1500)
 
       this.resetErrors()
       },

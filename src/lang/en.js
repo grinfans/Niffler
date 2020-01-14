@@ -71,6 +71,7 @@ const messages = {
       addSeedsInfo: 'Add seed phrase one by one please',
       add: 'Add',
       invalid: 'Invalid Seed Phrase',
+      failed: 'Recover wallet from seeds failed',
       delete: 'Delete',
       added: 'Finish enter seed phrase',
       newPassword: 'Set a new password',

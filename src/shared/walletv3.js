@@ -2,7 +2,9 @@ const axios = require('axios')
 require('promise.prototype.finally').shim()
 const crypto = require('crypto')
 import fs from 'fs'
-import {ownerApiSecretPath} from './config'
+import {ownerApiSecretPath, grinWalletPath, platform} from './config'
+import log from './logger'
+import {exec} from 'child_process'
 
 let client
 let ecdh
@@ -34,6 +36,21 @@ function decrypt(key, data, nonce){
 }
 
 class WalletServiceV3 {
+    static startOwnerApi(){
+        let ownerAPI
+        if(platform === 'linux'){
+            ownerAPI = execFile(grinWalletPath, ['owner_api']) 
+        }else{
+            ownerAPI =  exec(`${grinWalletPath} owner_api`)
+        }
+        ownerAPI.stdout.on('data', (data)=>{
+            log.debug('start owner_api got: ' + data)
+        })
+        ownerAPI.stderr.on('data', (data) => {
+            log.error('start owner_api got stderr: ' + data)
+        })
+    }
+
     static initClient() {
         if(fs.existsSync(ownerApiSecretPath)){
             client = axios.create({
@@ -69,6 +86,7 @@ class WalletServiceV3 {
             method: method,
             params: params,
         }
+        console.log('post body: ' + JSON.stringify(body))
         const nonce = crypto.randomBytes(12)
         const key = Buffer.from(sharedSecret,'hex')
         const bodyEncrypted = encrypt(key, JSON.stringify(body), nonce)
@@ -82,7 +100,7 @@ class WalletServiceV3 {
                 const data = Buffer.from(res.data.result.Ok.body_enc, 'base64')
                 const decrypted = decrypt(key, data, nonce2)
                 console.log('decrypted:' + decrypted)
-                resolve(decrypted)
+                resolve(JSON.parse(decrypted))
             }).catch(err=>{
                 reject(err)        
             })
