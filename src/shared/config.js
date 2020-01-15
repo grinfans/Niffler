@@ -138,8 +138,8 @@ export const version = pkg.version
 export const defaultGnodeOptions= {
   'useLocalGnode': true,
   //connnectMethod: localFirst, remoteFirst, localAllTime, remoteAllTime
-  'connectMethod':'remoteFirst',
-  'remoteAddr': 'http://116.62.214.128:3413',
+  'connectMethod':'localFirst',
+  'remoteAddr': 'http://grin3-node.niffler.org:3413',
   'localAddr': 'http://127.0.0.1:3413',
   'background': true
 }
