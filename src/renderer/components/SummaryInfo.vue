@@ -31,10 +31,10 @@
       this.getSummaryinfo()
     },
     created () {
-      messageBus.$on('update', ()=>this.getSummaryinfo())
+      messageBus.$on('update', (showloading)=>this.getSummaryinfo(showloading))
     },
     methods: {
-      getSummaryinfo: function() {
+      getSummaryinfo: function(showloading) {
         this.$walletService.getSummaryInfo(10)
           .then( (res) => {
             let data = res.data.result.Ok
@@ -53,7 +53,9 @@
               let resp = error.response      
               this.$log.error(`resp.data:${resp.data}; status:${resp.status};headers:${resp.headers}`)
             }
-          })        
+          }).finally(()=> {
+            messageBus.$emit('loaded')
+          })       
       }
     }
   }

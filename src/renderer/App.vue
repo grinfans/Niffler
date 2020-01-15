@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <div class="pageloader is-link" v-bind:class="{'is-active': isloading }"><span class="title">{{ $t("msg.loading") }}</span></div>
+
     <div class="section" v-if="ownerApiRunning">
       <div class="columns">
           <div class="column is-4">
@@ -188,7 +190,8 @@
         hedwigFailed:false,
 
         isGnodeLocal: false,
-        isRu: false
+        isRu: false,
+        isloading: false
     }},
     mounted() {
       this.checkNewVersion()
@@ -249,9 +252,14 @@
         this.$walletService.initClient()
         this.ownerApiRunning = true
         this.getHeight()
-        messageBus.$emit('update')
+        messageBus.$emit('update', true)
       })
-      messageBus.$on('update', ()=>{
+      messageBus.$on('update', (showloading)=>{
+        console.log('updating showloading: ' + showloading)
+
+        if(showloading){
+          this.isloading=true
+        }
         this.getHeight()
         this.updateIsLocalGnode()
         }
@@ -272,6 +280,10 @@
       messageBus.$on('hedwigFailed', ()=>{
         this.hedwigRunning= false
         this.hedwigFailed = true
+      }),
+
+      messageBus.$on('loaded', ()=>{
+        this.isloading = false
       })
       
     },

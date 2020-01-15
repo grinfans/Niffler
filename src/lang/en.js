@@ -34,6 +34,7 @@ const messages = {
 
     other: 'Others',
 
+    loading: 'Updating status from Grin node ...',
     
     login: {
       walletExist: 'Found grin wallet data exists; login with original password :-)',

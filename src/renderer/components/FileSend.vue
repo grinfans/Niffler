@@ -111,7 +111,7 @@ export default {
               this.$walletService.lock_outputs(slate, 0).then(
                 (res) =>{
                   this.$log.debug('new send tx file generated')
-                  messageBus.$emit('update')
+                  messageBus.$emit('update', true)
                   this.closeModal()
                 }).catch((error) => {
                   this.$log.error('error when try to lock output:' + error)

@@ -199,7 +199,7 @@ export default {
             this.errors.push(this.$t('msg.httpSend.TxFailed'))
           }finally{
             this.sending = false
-            messageBus.$emit('update')
+            messageBus.$emit('update', true)
           }
         }
         sendAsync.call(this)
@@ -247,7 +247,7 @@ export default {
             this.errors.push(this.$t('msg.httpSend.TxFailed'))
           }).finally(()=>{
             this.sending = false
-            messageBus.$emit('update')
+            messageBus.$emit('update', true)
           })
         }
     },

@@ -81,7 +81,7 @@ export default {
               .then( (res) => {
                 let slate = res.data.result.Ok
                 fs.writeFileSync(fn_output, JSON.stringify(slate))
-                messageBus.$emit('update')
+                messageBus.$emit('update', true)
                 this.closeModal()
                 this.$log.debug(`Generated tx file ok; return ${res.data}`)
               }).catch((error) => {

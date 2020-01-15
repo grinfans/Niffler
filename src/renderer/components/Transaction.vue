@@ -118,10 +118,10 @@
       this.getTxs()
     },
     created () {
-      messageBus.$on('update', ()=>this.getTxs())
+      messageBus.$on('update', (showloading)=>this.getTxs(showloading))
     },
     methods: {
-      getTxs() {
+      getTxs(showloading) {
         this.$walletService.getTransactions(true, null, null)
           .then((res) => {
             let data = res.data.result.Ok[1].reverse()
@@ -135,7 +135,9 @@
           }
           ).catch((error) => {
             this.$log.error('getTxs error:' + error)
-          })        
+          }).finally(()=> {
+           messageBus.$emit('loaded') 
+          })         
       },
       processTxs(txs) {
         let posted = this.$dbService.getPostedUnconfirmedTxs()
@@ -222,7 +224,7 @@
         this.$walletService.cancelTransactions(null, tx_slate_id)
           .then((res) => {
             if(res.data.result.Ok === null){
-              messageBus.$emit('update')
+              messageBus.$emit('update', true)
               this.openMsg = true
               this.$log.debug(`Cancel tx ${tx_slate_id} ok return:${res.data}`)
             }else{

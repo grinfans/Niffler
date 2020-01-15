@@ -33,6 +33,8 @@ const messages = {
 
     other: '其他',
 
+    loading: '从Grin节点更新状态中 ...',
+
     login: {
       walletExist: '发现已有Grin钱包存在；请用原有的密码登陆吧 :-)',
     },

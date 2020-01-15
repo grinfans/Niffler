@@ -128,7 +128,7 @@
     },
     
     created () {
-      messageBus.$on('update', ()=>this.getCommits())
+      messageBus.$on('update', (showloading)=>this.getCommits(showloading))
     },
 
     methods: {
@@ -148,7 +148,7 @@
         this.showCopy = -1
       },
       
-      getCommits() {
+      getCommits(showloading) {
         this.$walletService.getCommits(false, true, null)
           .then((res) => {
             this.total_commits = this.processCommits(res.data.result.Ok[1].reverse())
@@ -166,7 +166,10 @@
               let resp = error.response      
               this.$log.error(`resp.data:${resp.data}; status:${resp.status};headers:${resp.headers}`)
             }
-          })        
+          }).finally(()=> {
+            messageBus.$emit('loaded')
+          });
+        
       },
       
       processCommits(cts){

@@ -35,6 +35,7 @@ const messages = {
     localNode: 'Local node',
 
     other: 'Others',
+    loading: 'Updating status from Grin node ...',
 
     login: {
       walletExist: 'Данные grin кошелька найдены; Войти с оригинальным паролем :-)',
