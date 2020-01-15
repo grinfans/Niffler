@@ -79,7 +79,7 @@ const messages = {
       recover: 'Recover',
       reAdd: 'Re-enter seed phrase ',
       recovered: 'Wallet recovered, it is time to check balance from Grin blockchain',
-      restoring: 'It will take 10-30 minites to finish check. Be patient ......',
+      restoring: 'It will take 10-30 minutes to finish check. Be patient ......',
       restored: 'Wallet recovered and balance checked.',
       login: 'Login Wallet',
     },
@@ -206,7 +206,7 @@ const messages = {
       checking: 'Checking, be patient ...',
       stop: 'Stop Check',
 
-      tip:'It will take 10-30 minites to finish check',
+      tip:'It will take 10-30 minutes to finish check',
       introTitle: 'Introduction',
 
       intro1: 'Because of all of the possibilities listed in the cancel command, as well as the possibility of forks, it is quite possible for your wallet to end up in an inconsistent state',
@@ -231,7 +231,7 @@ const messages = {
       tabConfig: 'Settings',
       statusRunning: 'Running, Available',
       statusSyncing: 'Syncing ...',
-      statusToStart: 'not Runing',
+      statusToStart: 'not Running',
       status:'Status',
       localRemoteHeight: 'Local Height/Networking Height',
       nodeVersion: 'Node Version',
@@ -251,7 +251,7 @@ const messages = {
       localFirst:  '(Recommend)Local grin node is preferred when it is synced. Otherwise, use remote node.',
       remoteAllTime: 'Use remote all the time',
       localAllTime: 'Use local all the time',
-      background: '(Recommend)Runing grin node background when Niffler is closed.',
+      background: '(Recommend)Running grin node background when Niffler is closed.',
       restoreToDefault: 'Restore to default setting',
       saved: 'Settings was saved, Restart Niffler to take effect.'
     },

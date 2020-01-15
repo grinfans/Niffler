@@ -220,7 +220,7 @@ const messages = {
       tabConfig: 'Settings',
       statusRunning: 'Running, Available',
       statusSyncing: 'Syncing ...',
-      statusToStart: 'not Runing',
+      statusToStart: 'not Running',
       status:'Status',
       localRemoteHeight: 'Local Height/Networking Height',
       nodeVersion: 'Node Version',
@@ -240,7 +240,7 @@ const messages = {
       localFirst:  '(Recommend)Local grin node is preferred when it is synced. Otherwise, use remote node.',
       remoteAllTime: 'Use remote all the time',
       localAllTime: 'Use local all the time',
-      background: '(Recommend)Runing grin node background when Niffler is closed.',
+      background: '(Recommend)Running grin node background when Niffler is closed.',
       restoreToDefault: 'Restore to default setting',
       saved: 'Settings was saved, Restart Niffler to take effect.'
     },
