@@ -143,7 +143,22 @@ export const defaultGnodeOptions= {
   'localAddr': 'http://127.0.0.1:3413',
   'background': true
 }
-export const gnodeOption = getConfig()['gnode']?getConfig()['gnode']: defaultGnodeOptions
+
+let gnodeOption_
+function upgradeGnodeOption(){
+  let c = getConfig()
+  let remote = c.gnode.remoteAddr
+  if(remote && remote.search('grin2')!==-1){
+    gnodeOption_ = defaultGnodeOptions
+    c['gnode'] = defaultGnodeOptions
+    setConfig(c)
+  }
+}
+upgradeGnodeOption()
+if(!gnodeOption_){
+  gnodeOption_ = getConfig()['gnode']?getConfig()['gnode']: defaultGnodeOptions
+}
+export const gnodeOption = gnodeOption_
 
 export const grinNode = gnodeOption.remoteAddr
 export const grinNode2 = gnodeOption.remoteAddr

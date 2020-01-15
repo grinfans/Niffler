@@ -129,7 +129,7 @@ export default {
                   let peersCount = parseInt(res.data.connections)
                   this.$log.debug('local node height is ' + localHeight)
                   this.$log.debug('local node peers count is ' + peersCount)
-                  if(localHeight + 60 >= remoteHeight && peersCount >= 2){
+                  if(localHeight + 60 >= remoteHeight && peersCount >= 3){
                     this.$log.debug('use local grin node.')
                     this.$dbService.setGnodeLocation('local')
                     return this.$walletService.startOwnerApi(this.password, grinLocalNode)
