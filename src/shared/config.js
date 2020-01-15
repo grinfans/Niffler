@@ -141,7 +141,7 @@ export const defaultGnodeOptions= {
   'connectMethod':'localFirst',
   'remoteAddr': 'http://grin3-node.niffler.org:3413',
   'localAddr': 'http://127.0.0.1:3413',
-  'background': true
+  'background': false
 }
 
 let gnodeOption_

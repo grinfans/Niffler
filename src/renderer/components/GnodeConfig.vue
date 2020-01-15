@@ -81,7 +81,7 @@ export default {
 
    watch: {
     connectMethod:function(newVal, oldVal){
-      if(newVal=='localFirst' ||newVal=='localAllTime'){
+      if(newVal=='localAllTime'){
         this.background = true
       }
     },
