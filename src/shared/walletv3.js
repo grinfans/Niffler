@@ -86,7 +86,7 @@ class WalletServiceV3 {
             method: method,
             params: params,
         }
-        console.log('post body: ' + JSON.stringify(body))
+        //console.log('post body: ' + JSON.stringify(body))
         const nonce = crypto.randomBytes(12)
         const key = Buffer.from(sharedSecret,'hex')
         const bodyEncrypted = encrypt(key, JSON.stringify(body), nonce)
@@ -95,11 +95,11 @@ class WalletServiceV3 {
                 'nonce': nonce.toString('hex'),
                 'body_enc': bodyEncrypted
             }).then(res=>{
-                console.log('postEncrypted return: ' + JSON.stringify(res.data))
+                //console.log('postEncrypted return: ' + JSON.stringify(res.data))
                 const nonce2 = Buffer.from(res.data.result.Ok.nonce, 'hex')
                 const data = Buffer.from(res.data.result.Ok.body_enc, 'base64')
                 const decrypted = decrypt(key, data, nonce2)
-                console.log('decrypted:' + decrypted)
+                //console.log('decrypted:' + decrypted)
                 resolve(JSON.parse(decrypted))
             }).catch(err=>{
                 reject(err)        
@@ -110,7 +110,7 @@ class WalletServiceV3 {
         ecdh = crypto.createECDH('secp256k1')
         ecdh.generateKeys()
         publicKey = ecdh.getPublicKey('hex', 'compressed')
-        console.log('publickey: ' + publicKey)
+        //console.log('publickey: ' + publicKey)
         return WalletServiceV3.post('init_secure_api', {
             'ecdh_pubkey': publicKey
         })
@@ -119,10 +119,10 @@ class WalletServiceV3 {
     static initSharedSecret(){
         return new Promise((resolve, reject)=>{
                 WalletServiceV3.initSecureAPI().then((res)=>{
-                    console.log('initSharedSecret return: ' + JSON.stringify(res.data))
+                    //console.log('initSharedSecret return: ' + JSON.stringify(res.data))
                     const remotePublicKey = res.data.result.Ok
                     sharedSecret = ecdh.computeSecret(remotePublicKey, 'hex', 'hex')
-                    console.log('sharedSecret: ' + sharedSecret)
+                    //console.log('sharedSecret: ' + sharedSecret)
                     resolve(res)
                 }).catch((err)=>{
                     reject(err)

@@ -255,7 +255,7 @@
         messageBus.$emit('update', true)
       })
       messageBus.$on('update', (showloading)=>{
-        console.log('updating showloading: ' + showloading)
+        //console.log('updating showloading: ' + showloading)
 
         if(showloading){
           this.isloading=true
