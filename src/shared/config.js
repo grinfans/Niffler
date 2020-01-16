@@ -147,11 +147,13 @@ export const defaultGnodeOptions= {
 let gnodeOption_
 function upgradeGnodeOption(){
   let c = getConfig()
-  let remote = c.gnode.remoteAddr
-  if(remote && remote.search('grin2')!==-1){
-    gnodeOption_ = defaultGnodeOptions
-    c['gnode'] = defaultGnodeOptions
-    setConfig(c)
+  if(c && c.gnode){
+    let remote = c.gnode.remoteAddr
+    if(remote && remote.search('grin2')!==-1){
+      gnodeOption_ = defaultGnodeOptions
+      c['gnode'] = defaultGnodeOptions
+      setConfig(c)
+    }
   }
 }
 upgradeGnodeOption()
