@@ -335,7 +335,7 @@
         if(!ret){return false}
         ret.then(
           (res) =>{
-            this.$log.debug('getAccounts return:' + JSON.stringify(res.data))
+            //this.$log.debug('getAccounts return:' + JSON.stringify(res.data))
             if(res.data.result.OK){
               this.ownerApiRunning = true
             }

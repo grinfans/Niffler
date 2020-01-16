@@ -253,7 +253,7 @@ class WalletService {
                 wordSeedWithoutLog = wordSeedWithoutLog.trim();
                 wordSeedWithoutLog = wordSeedWithoutLog.replace("= ","").trim();
                 //log.debug(`wordSeed: ${wordSeed}; wordSeedWithoutLog: ${wordSeedWithoutLog}`)
-                log.debug(`function new: walletCreated with seed of length ${wordSeedWithoutLog.length}.`)
+                //log.debug(`function new: walletCreated with seed of length ${wordSeedWithoutLog.length}.`)
                 return messageBus.$emit('walletCreated', wordSeedWithoutLog)
             }
         })
