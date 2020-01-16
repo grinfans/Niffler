@@ -369,7 +369,7 @@
       
       autoRefresh(interval){
         setInterval(()=>{
-          if(this.ownerApiRunning){
+          if((this.ownerApiRunning) && (!this.isloading)){
             messageBus.$emit('update')
           }
         }, interval)
