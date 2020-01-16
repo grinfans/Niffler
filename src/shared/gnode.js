@@ -49,6 +49,8 @@ class GnodeService {
                     password: fs.readFileSync(nodeApiSecretPath).toString()
                 },
             })
+        }else{
+            return axios.create({baseURL: gnodeHost})
         }
     }
     static getStatus(){
