@@ -300,6 +300,8 @@ class WalletService {
         let ck = checkProcess
         processes['check'] = checkProcess
         localStorage.setItem('checkProcessPID', checkProcess.pid)
+        
+        messageBus.$emit('scaning')
 
         ck.stdout.on('data', function(data){
             let output = data.toString()
@@ -310,6 +312,7 @@ class WalletService {
             cb(output)
         })
         ck.on('close', function(code){
+            messageBus.$emit('scaned')
             log.debug('grin wallet check exists with code: ' + code);
             if(code==0){return messageBus.$emit('walletCheckFinished')}
         });

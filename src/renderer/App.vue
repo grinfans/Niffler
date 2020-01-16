@@ -191,7 +191,8 @@
 
         isGnodeLocal: false,
         isRu: false,
-        isloading: false
+        isloading: false,
+        isScaning: false
     }},
     mounted() {
       this.checkNewVersion()
@@ -285,6 +286,14 @@
       messageBus.$on('loaded', ()=>{
         this.isloading = false
       })
+
+      messageBus.$on('scaning', ()=>{
+        this.isScaning = true
+      })
+
+      messageBus.$on('scaned', ()=>{
+        this.isScaning = false
+      })
       
     },
     
@@ -369,7 +378,7 @@
       
       autoRefresh(interval){
         setInterval(()=>{
-          if((this.ownerApiRunning) && (!this.isloading)){
+          if((this.ownerApiRunning) && (!this.isloading) &&(!this.isScaning)){
             messageBus.$emit('update')
           }
         }, interval)
