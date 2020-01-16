@@ -144,7 +144,7 @@ export default {
           this.$log.debug('check use grin local node')
           gnode = grinLocalNode
         }
-        this.$walletService.check(this.updateOutput, gnode, this.password)
+        this.$walletService.info(this.updateOutput, gnode, this.password)
       }else if(ret === 'invalidSeeds'){
         this.page = 'recoverError'
         this.recoverErrorInfo = this.$t('msg.restore.invalid')
@@ -153,8 +153,21 @@ export default {
         this.recoverErrorInfo = this.$t('msg.restore.failed')
       }
     })
-    messageBus.$on('walletCheckFinished', (ret)=>{
+    
+    messageBus.$on('walletInfoFinished', (ret)=>{
       this.page = 'restored'
+    })
+
+    messageBus.$on('walletInfoFailed', (ret)=>{
+      let gnode = grinNode2
+      let localGnodeStatus = this.$dbService.getLocalGnodeStatus()
+      this.$log.debug('check grin local nodes tatus before restore balance: ' + localGnodeStatus)
+      if(localGnodeStatus == 'running'){
+        this.$log.debug('grin-wallet info use grin local node')
+        gnode = grinLocalNode
+      }
+      this.$log.debug('Try to grin-wallet info again')
+      this.$walletService.info(this.updateOutput, gnode, this.password)
     })
   },
   watch: {

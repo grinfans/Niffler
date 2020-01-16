@@ -17,6 +17,7 @@ import dbService from '../renderer/db'
 let ownerAPI
 let listenProcess
 let checkProcess
+let infoProcess
 //let initRProcess
 let processes = {}
 let client
@@ -311,6 +312,38 @@ class WalletService {
         ck.on('close', function(code){
             log.debug('grin wallet check exists with code: ' + code);
             if(code==0){return messageBus.$emit('walletCheckFinished')}
+        });
+    }
+
+    static info(cb, gnode, password){
+        let grin = grinWalletPath
+        if(platform==='win'){
+            grin = grinWalletPath.slice(1,-1)
+        }
+        if(password){
+            infoProcess = spawn(grin, ['-r', gnode, '-p', password, 'info'])
+        }else{
+            infoProcess = spawn(grin, ['-r', gnode, '-p', password_, 'info'])
+        }
+        log.debug('grin wallet using grin node: ' + gnode );
+        let info = infoProcess
+        processes['info'] = infoProcess
+        localStorage.setItem('infoProcessPID', infoProcess.pid)
+
+        info.stdout.on('data', function(data){
+            let output = data.toString()
+            cb(output)
+        })
+        info.stderr.on('data', function(data){
+            let output = data.toString()
+            log.debug('error for grin-wallet info:' + data)
+            cb(output)
+        })
+        info.on('close', function(code){
+            log.debug('grin wallet info exits with code: ' + code);
+            if(code==0){messageBus.$emit('walletInfoFinished')}else{
+                messageBus.$emit('walletInfoFailed')
+            }
         });
     }
     //https://github.com/mimblewimble/grin-wallet/issues/110

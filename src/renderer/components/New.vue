@@ -54,8 +54,12 @@ export default {
     if(!this.$walletService.isExist()){
       walletServiceV3.startOwnerApi()
       setTimeout(
-        ()=>{walletServiceV3.initSharedSecret()},
-        1000
+        ()=>{
+          this.$walletService.initClient()
+          walletServiceV3.initClient()
+          walletServiceV3.initSharedSecret()
+        },
+        1500
       )
     }
   }
