@@ -5,13 +5,13 @@ English | [简体中文](./README.zh-CN.md)
 Niffler is a out-of-the box user-friendly gui [Grin](https://github.com/mimblewimble/grin) wallet.
 The name 'Niffler' comes from ["harry potter"](https://harrypotter.fandom.com/wiki/Niffler).
 
-### Latest Version: 0.4.2
+### Latest Version: 0.5.0
 
-v0.4.2 add a local grin full node.
+v0.5.0 support Grin3
 
-It's use the official [grin-wallet v2.0.0](https://github.com/mimblewimble/grin/releases/tag/v2.0.0) and [grin v2.0.0](https://github.com/mimblewimble/grin/releases/tag/v2.0.0) as backend. 
+It's use the official [grin-wallet v3.0.0](https://github.com/mimblewimble/grin/releases/tag/v3.0.0) and [grin v3.0.0](https://github.com/mimblewimble/grin/releases/tag/v3.0.0) as backend. 
 
-Windows/Mac/linux version:[https://github.com/grinfans/niffler/releases/tag/v0.4.2](https://github.com/grinfans/niffler/releases/tag/v0.4.2)
+Mac version:[https://github.com/grinfans/niffler/releases/tag/v0.5.0](https://github.com/grinfans/niffler/releases/tag/v0.5.0)
 
 Niffler wallet has a **hedwig v1 relay service**, which enable User without public ip receive grin really easy :)
 
@@ -52,7 +52,7 @@ Gitter room: https://gitter.im/niffler-wallet/community
 
 ## Build Setup
 
-*The current release is built on branch [gw2](https://github.com/grinfans/Niffler/tree/gw2)*
+*The current release is built on branch [gw3](https://github.com/grinfans/Niffler/tree/gw3)*
 
 ``` bash
 # clone
@@ -66,11 +66,6 @@ npm run dev
 
 # build electron application for production
 npm run build
-
-#Build restore node (grinRs) (install latest rustc)
-npm run build-rs
-mv index.node from /target to /grinRs
-
 ```
 
 ---
