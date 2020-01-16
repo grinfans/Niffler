@@ -50,7 +50,7 @@ class GnodeService {
                 },
             })
         }else{
-            return axios.create({baseURL: gnodeHost})
+            client = axios.create({baseURL: gnodeHost})
         }
     }
     static getStatus(){

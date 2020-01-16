@@ -163,7 +163,7 @@ export default {
       this.$log.debug('check owner api process after try to login')
       this.$walletService.getAccounts().then(
         (res) =>{
-          this.$log.debug('getAccounts return:' + JSON.stringify(res.data))
+          //this.$log.debug('getAccounts return:' + JSON.stringify(res.data))
           if(res.data.result.Ok){
             this.$log.debug('owner api process started')
             this.$walletService.setPassword(this.password)
