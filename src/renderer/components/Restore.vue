@@ -96,7 +96,7 @@
                 style="animation-iteration-count:2;margin-bottom:40px">
                 {{ $t('msg.restore.restored') }}
             </p>
-            <a class="button is-link is-inverted is-outlined" @click="toLogin">{{ $t('msg.restore.login') }}</a>
+            <a class="button is-link is-inverted is-outlined" @click="quit">{{ $t('msg.restore.login') }}</a>
           </div>
           </div>
         </div>
@@ -106,6 +106,7 @@
 </template>
 
 <script>
+const {ipcRenderer} = require('electron')
 import { messageBus } from '@/messagebus'
 const { exec } = require('child_process')
 import walletServiceV3 from '../../shared/walletv3'
@@ -289,7 +290,10 @@ export default {
     toLogin(){
       this.clearup()
       messageBus.$emit('restoredThenLogin')
-    }
+    },
+    quit(){
+      ipcRenderer.send('quit')
+    },
   }
 }
 </script>
