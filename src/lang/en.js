@@ -54,7 +54,7 @@ const messages = {
       toNewMsg: 'No wallet exists Found. Create a New One.',
       newWallet: 'Create new wallet',
       backupNote: 'Import！Please backup your seed phrase to restore your wallet',
-      backupFinish: 'Ok, I backed up my seed phrase. Login my wallet',
+      backupFinish: 'Ok, I backed up my seed phrase. Close wallet, then open it again',
       errorPasswdEmpty: 'Password cannot be empty',
       errorPasswdConsistency: 'Please enter the same password',
       errorCreateFailed: 'Error when try to create new wallet. Maybe restart wallet and Try it later.',
@@ -81,7 +81,7 @@ const messages = {
       recovered: 'Wallet recovered, it is time to check balance from Grin blockchain',
       restoring: 'It will take 10-30 minutes to finish check. Be patient ......',
       restored: 'Wallet recovered and balance checked.',
-      login: 'Login Wallet',
+      login: 'Close Wallet, then Open it again to Login',
     },
 
     app:{

@@ -59,7 +59,7 @@ const messages = {
       seedPhrase: '助记词',
       newWallet: '新建钱包',
       backupNote: '重要！请务必备份助记词，用于恢复钱包',
-      backupFinish: '备份完成，登录钱包',
+      backupFinish: '备份完成，关闭钱包；请再次打开钱包，并登录。',
       errorPasswdEmpty: '密码不能为空',
       errorPasswdConsistency: '请输入相同的密码',
       errorCreateFailed: '新建钱包时发生错误，你可以试试重启下钱包，过一会儿再试试',
@@ -80,7 +80,7 @@ const messages = {
       recovered: '钱包恢复成功, 开始从Grin区块链同步钱包余额；',
       restoring: '预计需要15-30分钟，不要关闭钱包，请耐心等待 ......',
       restored: '钱包恢复成功并且余额同步完成',
-      login: '登陆钱包',
+      login: '关闭钱包， 然后再次打开并登录',
     },
 
     app:{

@@ -46,7 +46,7 @@ const messages = {
       toNewMsg: '지갑이 없습니다. 새 것을 만드십시오.',
       newWallet: '새 지갑 만들기',
       backupNote: '지갑을 복구하기 위해 니모닉를 저장해 주십시오',
-      backupFinish: '니모닉를 저장하였습니다. 지갑에 로그인 해 주십시오',
+      backupFinish: 'Ok, I backed up my seed phrase. Close wallet, then open it again',
       errorPasswdEmpty: '비밀번호는 비워 둘 수 없습니다',
       errorPasswdConsistency: '같은 암호를 입력하십시오',
       errorCreateFailed: 'Error when try to create new wallet. Maybe restart wallet and Try it later.',
@@ -73,7 +73,7 @@ const messages = {
       recovered: 'Wallet recovered, it is time to check balance from Grin blockchain',
       restoring: 'It will take 10-30 minutes to finish check. Be patient ......',
       restored: 'Wallet recovered and balance checked.',
-      login: 'Login Wallet',
+      login: 'Close Wallet, then Open it again to Login',
     },
     
     app:{

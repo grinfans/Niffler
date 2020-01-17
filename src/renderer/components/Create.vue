@@ -16,7 +16,7 @@
                 <span class="tag" v-for="seed in seeds">{{seed}}</span>
               </div>
 
-            <a class="button is-link is-inverted is-outlined" @click="finish">{{ $t('msg.create.backupFinish') }}</a>
+            <a class="button is-link is-inverted is-outlined" @click="quit">{{ $t('msg.create.backupFinish') }}</a>
           </div>
               
           <div v-else class="column is-8" >
@@ -69,6 +69,7 @@
 </template>
 
 <script>
+const {ipcRenderer} = require('electron')
 import { messageBus } from '@/messagebus'
 const { exec } = require('child_process')
 import {version} from '../../shared/config'
@@ -137,7 +138,10 @@ export default {
     back(){
       this.clearup()
       messageBus.$emit('backToNew')
-    }
+    },
+    quit(){
+      ipcRenderer.send('quit')
+    },
     
   }
 }

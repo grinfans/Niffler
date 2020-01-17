@@ -46,7 +46,7 @@ const messages = {
       toNewMsg: 'Кошелек не найден. Создать новый',
       newWallet: 'Создать новый кошелек',
       backupNote: 'Сделайте бекап！Пожалуйста, сохраните вашу сид-фразу, без нее вы не сможете восстановить кошелек',
-      backupFinish: 'Я сохранил мою сид-фразу в надежном месте. Войти в кошелек',
+      backupFinish: 'Ok, I backed up my seed phrase. Close wallet, then open it again',
       errorPasswdEmpty: 'Поле пароля не может быть пустым',
       errorPasswdConsistency: 'Пароли не совпадают',
       errorCreateFailed: 'Ошибка при создании нового кошелька. Попробуйте перезапустить кошелек и попробуйте снова.',
@@ -73,7 +73,7 @@ const messages = {
       recovered: 'Кошелек восстановлен, пришло время проверить баланс',
       restoring: 'Проверка займет 10-30 минут. Пожалуйста, будьте терпеливы..',
       restored: 'Кошелек восстановлен, баланс проверен.',
-      login: 'Вход в кошелек',
+      login: 'Close Wallet, then Open it again to Login',
     },
 
     app:{
