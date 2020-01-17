@@ -111,7 +111,7 @@ class GnodeService {
 
     static restartGnode(){
         GnodeService.stopGnode2()
-        setTimeout(()=>GnodeService.startGnode(), 3000)
+        setTimeout(()=>GnodeService.startGnode(), 2000)
     }
 }
 GnodeService.initClient()

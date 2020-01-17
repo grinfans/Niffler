@@ -33,7 +33,7 @@
                 </div>
             
                 <div class="field">
-                  <button class="button is-link" @click.prevent="tryLogin">
+                  <button class="button is-link" @click.prevent="tryLogin" :class="{'is-loading': logining }">
                     {{ $t("msg.login_") }}
                   </button>
                 </div>
@@ -74,7 +74,8 @@ export default {
       error: false,
       openRemove: false,
       openGnodeConfig:false,
-      version: version
+      version: version,
+      logining: false
     }
   },
   created(){
@@ -87,8 +88,9 @@ export default {
   },
   methods: {
     tryLogin(){
-      
-      this.$walletService.killGrinWallet()
+      if(this.logining)return
+      this.logining = true
+      //this.$walletService.killGrinWallet()
 
       let password = this.password
 
@@ -97,7 +99,7 @@ export default {
       
       let selectGnodeAndLogin = async function(){
         
-        setTimeout(()=>this.checkLogin(), 1500)
+        setTimeout(()=>this.checkLogin(), 2200)
 
         let localHeight
         let remoteHeight
@@ -151,7 +153,7 @@ export default {
           })
         }
       }
-      setTimeout(()=>selectGnodeAndLogin.call(this), 250)
+      setTimeout(()=>selectGnodeAndLogin.call(this), 500)
       this.resetErrors()
       },
     
@@ -174,6 +176,8 @@ export default {
         }).catch((error) => {
           this.$log.error('check owner api process got error:', error)
           return this.error = true
+      }).finally(()=>{
+            this.logining = false
       })
     }
   }
