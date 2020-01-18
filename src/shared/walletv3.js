@@ -4,7 +4,7 @@ const crypto = require('crypto')
 import fs from 'fs'
 import {ownerApiSecretPath, grinWalletPath, platform} from './config'
 import log from './logger'
-import {exec} from 'child_process'
+import {exec, execFile} from 'child_process'
 
 let client
 let ecdh
