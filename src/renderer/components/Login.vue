@@ -99,7 +99,7 @@ export default {
       
       let selectGnodeAndLogin = async function(){
         
-        setTimeout(()=>this.checkLogin(), 2200)
+        setTimeout(()=>this.checkLogin(), 2500)
 
         let localHeight
         let remoteHeight
@@ -153,7 +153,7 @@ export default {
           })
         }
       }
-      setTimeout(()=>selectGnodeAndLogin.call(this), 500)
+      setTimeout(()=>selectGnodeAndLogin.call(this), 1000)
       this.resetErrors()
       },
     
