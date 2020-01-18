@@ -8,21 +8,30 @@ Niffler 是一个开箱即用、用户友好的 [Grin](https://github.com/mimble
 
 #### 最新版本 V0.5.5
 
-v0.4.2 支持Grin3
+v0.5.0 支持Grin3
 
-Mac 版本:
+Mac/Windows/Linux 版本:
 [https://github.com/grinfans/niffler/releases/tag/v0.5.0](https://github.com/grinfans/niffler/releases/tag/v0.5.0)
 
-Niffler钱包 新加了 **hedwig** v1 代理服务; 现在，没有公共ip的用户也可以很简单容易地接收grin了 :)
+Niffler钱包 加了 **hedwig** v1 代理服务; 现在，没有公共ip的用户也可以很简单容易地接收grin了 :)
 
 也就是说，**你现在可以非常容易从各大交易所或矿池 提取grin到你的本地钱包** 。
 
+[A great video tutorial of how to withdraw grin from any exchanges using Niffler wallet.](https://www.youtube.com/watch?v=rufKWEv64o8)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/rufKWEv64o8/0.jpg)](https://www.youtube.com/watch?v=rufKWEv64o8)
+
 #### 中国大陆用户快速下载
 
-中国大陆用户快速下载地址:
-
->Mac
+中国大陆快速下载地址
+>Mac:
 https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-mac-0.5.0.dmg
+
+>Windows:
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-win-0.5.0.exe
+
+>Linux:
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-0.5.0-linux-amd64.deb
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-0.5.0-linux-amd64.AppImage
 
 
 ## 联系

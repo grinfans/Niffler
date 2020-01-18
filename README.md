@@ -11,7 +11,7 @@ v0.5.0 support Grin3
 
 It's use the official [grin-wallet v3.0.0](https://github.com/mimblewimble/grin/releases/tag/v3.0.0) and [grin v3.0.0](https://github.com/mimblewimble/grin/releases/tag/v3.0.0) as backend. 
 
-Mac version:[https://github.com/grinfans/niffler/releases/tag/v0.5.0](https://github.com/grinfans/niffler/releases/tag/v0.5.0)
+Mac/Windows/Linux version:[https://github.com/grinfans/niffler/releases/tag/v0.5.0](https://github.com/grinfans/niffler/releases/tag/v0.5.0)
 
 Niffler wallet has a **hedwig v1 relay service**, which enable User without public ip receive grin really easy :)
 
