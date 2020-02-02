@@ -174,14 +174,24 @@ class WalletService {
         }, 500)
     }
     
-    static startListen(gnode, password=password_){
+    static startListen(gnode, password=password_, no_tor=true){
         WalletService.stopProcess('listen')
         if(platform==='linux'){
-            listenProcess =  execFile(grinWalletPath, ['-r', gnode, '-e', 'listen']) 
+            if(no_tor){
+                listenProcess =  execFile(grinWalletPath, ['-r', gnode, '-e', 'listen', '-n'])
+            }else{
+                listenProcess =  execFile(grinWalletPath, ['-r', gnode, '-e', 'listen'])
+            }
         }else{
-            const cmd = platform==='win'? `${grinWalletPath} -r ${gnode} -e --pass ${addQuotations(password)} listen`:
-                                        `${grinWalletPath} -r ${gnode} -e listen`
+            let cmd
+            if(no_tor){
+                cmd = platform==='win'? `${grinWalletPath} -r ${gnode} -e --pass ${addQuotations(password)} listen -n`:
+                                        `${grinWalletPath} -r ${gnode} -e listen -n`
             //log.debug(`platform: ${platform}; start listen cmd: ${cmd}`)
+            }else{
+                cmd = platform==='win'? `${grinWalletPath} -r ${gnode} -e --pass ${addQuotations(password)} listen`:
+                                        `${grinWalletPath} -r ${gnode} -e listen`
+            }
             listenProcess =  exec(cmd)
         }
         processes['listen'] = listenProcess

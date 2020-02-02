@@ -8,6 +8,7 @@ import log from './logger'
 let torProcess
 
 const torrc = `
+SOCKSPort 19050
 DataDirectory ${torDataPath}
 HiddenServiceDir ${torHSDataPath}     
 HiddenServicePort 80 0.0.0.0:3415
@@ -23,13 +24,14 @@ function ensureTorDir(){
     if(fse.pathExistsSync(torDir))return
 
     fse.ensureDirSync(torDir)
-    fse.ensureDirSync(torDataPath)
     fse.ensureFileSync(torLogPath)
 
     if(platform !=='win'){
         fse.ensureDirSync(torHSDataPath, {mode:0o700})
+        fse.ensureDirSync(torDataPath, {mode:0o700})
     }else{
         fse.ensureDirSync(torHSDataPath)
+        fse.ensureDirSync(torDataPath)
     }
     fs.writeFileSync(torConfigPath, torrc)
 }
