@@ -5,6 +5,8 @@ const {ipcMain} = require('electron')
 import pkg from '../../package.json'
 import checkUpdate from '../shared/updateChecker'
 import {checkFirstTime} from '../shared/first'
+import {startTor }from '../shared/tor'
+
 checkFirstTime()
 
 import log from '../shared/logger'
@@ -39,6 +41,8 @@ if(!gnodeOption.useLocalGnode){
     exec('taskkill -f /im grin.exe')
   }
 }
+
+startTor()
 
 let mainWindow
 let firstQuit = true

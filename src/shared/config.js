@@ -34,9 +34,11 @@ const binariesPath =
 
 const grinWalletBinaries = platform==='win'?'grin-wallet.exe':'grin-wallet'
 const grinBinaries = platform==='win'?'grin.exe':'grin'
+const torBinaries = platform==='win'?'tor.exe':'tor'
 
 export let grinWalletPath = path.join(binariesPath, grinWalletBinaries)
 export let grinPath = path.join(binariesPath, grinBinaries)
+export let torPath = path.join(binariesPath, torBinaries)
 
 if(platform=='win'){
   grinWalletPath = '"' + path.resolve(grinWalletPath) + '"' 
@@ -81,8 +83,12 @@ export const chainDataPath = path.join(APP.getPath('home'), '.grin', chainType, 
 export const nifflerPath = path.join(APP.getPath('home'), '.niffler')
 export const logDir = path.join(nifflerPath, 'log')
 export const tempTxDir = path.join(nifflerPath, 'temp_tx')
-
 export const configPath = path.join(nifflerPath, 'config.json')
+export const torDir = path.join(nifflerPath, 'tor')
+export const torConfigPath = path.join(nifflerPath, 'tor', 'torrc')
+export const torDataPath = path.join(nifflerPath, 'tor', 'data')
+export const torHSDataPath = path.join(nifflerPath, 'tor', 'hs_data')
+export const torLogPath = path.join(nifflerPath, 'tor', 'tor.log')
 
 export const releaseUrl = 'https://api.github.com/repos/grinfans/niffler/releases/latest'
 export const downloadUrl = 'https://github.com/grinfans/niffler/releases/latest'
