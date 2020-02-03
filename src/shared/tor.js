@@ -17,6 +17,7 @@ HiddenServicePort 80 0.0.0.0:3415
 #CookieAuthentication 1
 
 HTTPSProxy 127.0.0.1:9009
+Log notice stdout
 Log notice file ${torLogPath}
 `
 
@@ -36,18 +37,43 @@ function ensureTorDir(){
     fs.writeFileSync(torConfigPath, torrc)
 }
 
-export function startTor(){
+export function startTor(cb=null){
     log.debug('try to start tor')
+
     ensureTorDir()
     if(platform === 'linux'){
         torProcess = execFile(torPath, ['-f', torConfigPath]) 
     }else{
         torProcess =  exec(`${torPath} -f ${torConfigPath}`)
     }
+    localStorage.setItem('torProcessPID', torProcess.pid)
+
     torProcess.stdout.on('data', (data)=>{
         log.debug('tor process: ' + data)
+        if(cb)cb(data)
     })
     torProcess.stderr.on('data', (data) => {
         log.error('tor process (error): ' + data)
+        if(cb)cb(data)
     })
+}
+
+export function stopTor(){
+
+    const pid = localStorage.getItem('torProcessPID')
+    log.debug(`try to kill tor : ${pid}`)
+
+    if(platform==='win'&&pid){
+        return exec(`taskkill /pid ${pid} /f /t`)
+    }
+    if(pid){
+        try{
+            process.kill(pid, 'SIGKILL')
+        }catch(e){
+            log.error(`error when kill ${processName} ${pid}: ${e}` )
+        }
+    }
+
+    torProcess.kill('SIGKILL')
+
 }

@@ -5,7 +5,6 @@ const {ipcMain} = require('electron')
 import pkg from '../../package.json'
 import checkUpdate from '../shared/updateChecker'
 import {checkFirstTime} from '../shared/first'
-import {startTor }from '../shared/tor'
 
 checkFirstTime()
 
@@ -41,8 +40,6 @@ if(!gnodeOption.useLocalGnode){
     exec('taskkill -f /im grin.exe')
   }
 }
-
-startTor()
 
 let mainWindow
 let firstQuit = true
@@ -111,7 +108,6 @@ async function launch(){
       }})
   }
 } 
-
 
 var shouldQuit = app.makeSingleInstance(function (commandLine, workingDirectory) {
   // Someone tried to run a second instance, we should focus our window.

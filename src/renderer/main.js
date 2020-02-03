@@ -14,6 +14,7 @@ import gnodeService from '../shared/gnode'
 import {RemoteGnodeService} from '../shared/gnode'
 import log from '../shared/logger'
 import dbService from '@/db'
+import {startTor, stopTor }from '../shared/tor'
 
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
@@ -85,3 +86,5 @@ if(gnodeOption.useLocalGnode){
     log.debug('Try to start local grin node.')
     gnodeService.startGnode()})
 }
+
+startTor()

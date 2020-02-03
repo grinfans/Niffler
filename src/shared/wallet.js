@@ -13,6 +13,7 @@ import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType,
 import { messageBus } from '../renderer/messagebus'
 import GnodeService from './gnode'
 import dbService from '../renderer/db'
+import {stopTor} from './tor'
 
 let ownerAPI
 let listenProcess
@@ -211,6 +212,8 @@ class WalletService {
     }
 
     static stopAll(){
+        stopTor()
+
         for(var ps in processes){
             log.debug('stopall ps: '+ ps)
             if(processes[ps]){
