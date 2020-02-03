@@ -1,5 +1,5 @@
 var fs = require('fs');
-import {defaultGnodeOptions, nifflerPath, logDir, getConfig, setConfig, updateConfig, tempTxDir} from './config';
+import {defaultGnodeOptions, nifflerPath, logDir, getConfig, updateConfig, tempTxDir} from './config';
 
 export function checkFirstTime(){
     console.log(nifflerPath)
@@ -8,8 +8,8 @@ export function checkFirstTime(){
         fs.mkdirSync(nifflerPath)
         fs.mkdirSync(logDir)
         fs.mkdirSync(tempTxDir)
-        setConfig({'firstTime':true})
-        setConfig({'gnode': defaultGnodeOptions})
+        updateConfig({'firstTime':true})
+        updateConfig({'gnode': defaultGnodeOptions})
     }
     else{
         updateConfig({'firstTime':false})

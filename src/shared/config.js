@@ -101,7 +101,7 @@ export function getConfig(){
   }
 }
 
-export function setConfig(options){
+function setConfig(options){
   return fs.writeFileSync(configPath, JSON.stringify(options))
 }
 

@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import {gnodeOption, defaultGnodeOptions, setConfig} from '../../shared/config'
+import {gnodeOption, defaultGnodeOptions, updateConfig} from '../../shared/config'
 import Message from '@/components/Message'
 
 export default {
@@ -107,7 +107,7 @@ export default {
         'localAddr': this.localAddr,
         'background': this.background,
       }
-      setConfig({'gnode': options})
+      updateConfig({'gnode': options})
       this.openMsg = true
     },
     restore(){
@@ -116,7 +116,7 @@ export default {
       this.remoteAddr = defaultGnodeOptions.remoteAddr
       this.connectMethod = defaultGnodeOptions.connectMethod
       this.background = defaultGnodeOptions.background
-      setConfig({'gnode': defaultGnodeOptions})
+      updateConfig({'gnode': defaultGnodeOptions})
     },
     closeConfig(){
       this.openMsg = false
