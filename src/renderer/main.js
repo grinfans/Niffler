@@ -87,4 +87,4 @@ if(gnodeOption.useLocalGnode){
     gnodeService.startGnode()})
 }
 
-startTor()
+//startTor()

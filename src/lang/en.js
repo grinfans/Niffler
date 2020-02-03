@@ -95,7 +95,8 @@ const messages = {
       updateMsg: 'Found new version of Niffler wallet. Please update Right NOW.',
       yes: 'yes',
       no: 'no',
-      hedwig: 'Receive via Hedwig'
+      hedwig: 'Receive via Hedwig',
+      tor: 'Receive via Tor Network'
     },
 
     info: {
@@ -259,7 +260,18 @@ const messages = {
     gnodeConfigModal:{
       config: 'Grin Local Node Settings',
       title: 'Grin node settings'
-    }
+    },
+
+    tor:{
+      title: 'Tor',
+      tabStatus: 'Status',
+      tabLog: 'Log',
+      tabConfig: 'Settings',
+      statusSyncing: 'Syncing ...',
+      statusToStart: 'not Running',
+      status:'Status',
+      restart: 'Restart Tor',
+    },
 
   }
 }

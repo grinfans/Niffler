@@ -52,21 +52,25 @@
                 <a class="dropdown-item" @click="openHttpReceive = true">
                   {{ $t("msg.app.httpReceive") }}
                 </a>
+                
+                <hr class="dropdown-divider">
+                <a class="dropdown-item" @click="openTor = true">
+                  {{ $t("msg.app.tor") }}
+                </a>
               </div>
             </div>
+            
           </div>
 
           <div class="column column is-1" style="margin-top: auto; margin-left:25px;">
-           
             <button class="button is-link is-outlined" v-bind:class="{'is-small2':isRu}" @click="openHedwigV1 = true">
                <span class="icon-running icon-status animated infinite pulse delay-2s" v-if="hedwigRunning"></span>
                <span class="icon-failed icon-status animated infinite pulse delay-2s" v-if="hedwigFailed"></span>
                {{ $t("msg.app.hedwig") }}
             </button>
-
           </div>
 
-          <div class="column is-offset-1 is-2" style="margin-left:40px;">
+          <div class="column is-2" style="margin-left:40px;">
             <div class="level">
               <p class="is-size-7 tag is-warning animated" v-bind:class="{headShake: isAnimate}" style="animation-iteration-count:3">
                 {{ $t("msg.app.height") }} ({{getGnodeLocationDisplay()}}):{{height}}</p>
@@ -122,6 +126,8 @@
       <check :showModal="openCheck"></check>
       <lang :showModal="openLang"></lang>
       <gnode :showModal="openGnode"></gnode>
+      <tor :showModal="openTor"></tor>
+
     </div>
     <landing v-bind:walletExist="walletExist" v-else></landing>
   </div>
@@ -144,6 +150,8 @@
   import Lang from '@/components/Lang'
   import Gnode from '@/components/Gnode'
   import Landing from '@/components/Landing'
+  import Tor from '@/components/Tor'
+
   import checkUpdate from '../shared/updateChecker'
   import {downloadUrl, locale, gnodeOption} from '../shared/config'
 
@@ -165,7 +173,8 @@
       Check,
       Landing,
       Lang,
-      Gnode
+      Gnode,
+      Tor
     },
     data(){
       return {
@@ -178,6 +187,7 @@
         openCheck: false,
         openLang:false,
         openGnode:false,
+        openTor:false,
 
         isDroppingDown: false,
         isDroppingDown2: false,
@@ -242,6 +252,9 @@
         }
         if(window =='windowGnode'){
           this.openGnode = false
+        }
+        if(window =='windowTor'){
+          this.openTor = false
         }
       })
       messageBus.$on('restoredThenLogin', ()=>{

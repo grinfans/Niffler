@@ -95,7 +95,9 @@ const messages = {
       yes: '好的',
       no: '暂时不更新',
 
-      hedwig: '用Hedwig收币'
+      hedwig: '用Hedwig收币',
+      tor: '用洋葱网络Tor收币'
+
     },
 
     info:{
@@ -260,7 +262,20 @@ const messages = {
     gnodeConfigModal:{
       config: '设置Grin本地节点',
       title: '设置Grin节点'
-    }
+    },
+
+    tor:{
+      title: 'Tor',
+      tabStatus: '运行状态',
+      tabLog: '运行日志',
+      tabConfig: '设置',
+      statusRunning: '运行中,可用',
+      statusSyncing: '正在同步区块 ... 不可用',
+      statusToStart: '没有启动',
+      status:'状态',
+      restart: '重启Tor',
+    },
+
   }
 }
 export default messages
