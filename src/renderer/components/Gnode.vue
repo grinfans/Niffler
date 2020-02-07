@@ -164,6 +164,7 @@ export default {
         this.autoCheck(10 * 1000)
       }).catch((error)=>{
         this.status = 'toStart'
+        this.$dbService.setLocalGnodeStatus('toStart')
       })
     },
 
