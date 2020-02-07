@@ -61,8 +61,7 @@ export function startTor(cb=null){
 export function stopTor(){
 
     const pid = localStorage.getItem('torProcessPID')
-    log.debug(`try to kill tor : ${pid}`)
-
+    localStorage.removeItem('torProcessPID')
     if(platform==='win'&&pid){
         return exec(`taskkill /pid ${pid} /f /t`)
     }
