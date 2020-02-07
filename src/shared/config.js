@@ -1,4 +1,4 @@
-var fs = require('fs');
+const fs = require('fs');
 import path from 'path';
 import { app, remote } from 'electron';
 import os from 'os'
