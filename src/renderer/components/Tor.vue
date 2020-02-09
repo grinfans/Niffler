@@ -2,9 +2,9 @@
 
 <div class="modal" :class="{'is-active': showModal}">
   <div class="modal-background"></div>
-  <div class="modal-card" style="width:500px">
+  <div class="modal-card" style="width:600px">
     <header class="modal-card-head">
-      <p class="modal-card-title is-size-4 has-text-link has-text-weight-semibold">Tor</p>
+      <p class="modal-card-title is-size-4 has-text-link has-text-weight-semibold">{{ $t("msg.tor.title") }}</p>
       <button class="delete" aria-label="close" @click="closeModal"></button>
     </header>
 
@@ -22,13 +22,19 @@
                 </div>
                 <div class="tab-is-link">
                     <div v-if="tab ==='status'">
-                      <p>{{ $t("msg.tor.status") }}&nbsp;: 
-                        <span class="has-text-centered has-text-weight-semibold">{{getStatusDisplay()}}</span>
-                      </p>
-                      <p v-if="status==='running'">{{torAddress}}</p>
-                      
-                      <a class="button is-link" @click="restart">{{ $t("msg.tor.restart") }} </a>
+                      <p><span class="has-text-centered has-text-weight-semibold">{{getStatusDisplay()}}</span></p>
+                      <div v-if="status==='running'">
+                        <p>{{ $t("msg.tor.address") }}:</p>
+                        <p  class="has-text-weight-semibold is-size-5" style="margin-top:15px;margin-bottom:15px"> 
+                          {{torAddress}}
+                        </p>
+                      </div>
+                      <br/><br/>
+                      <button v-if="status==='toStart'" class="button is-link" @click="start" :class="{'is-loading': status==='starting'}">
+                        {{ $t("msg.tor.start") }}
+                      </button>
                     </div>
+
                     <div v-if="tab ==='log'">
                         <p class="is-size-7" v-for="log in torLog" :key="log.id">{{ log }}</p>
                     </div>
@@ -47,13 +53,13 @@
 <script>
 import axios from 'axios'
 import path from 'path'
-const fs = require('fs')
-//const curl = new (require( '../../shared/curl-request' ))();
-const curl = new (require( 'curl-request' ))();
 
+const fs = require('fs')
 const Tail = require('tail').Tail
 
-import {torHSDataPath, torLogPath} from '../../shared/config'
+import {execPromise} from '../../shared/utils'
+import {startTor, restartTor} from '../../shared/tor'
+import {torHSDataPath, torLogPath, grinNode, grinLocalNode} from '../../shared/config'
 import { messageBus } from '@/messagebus'
 
 export default {
@@ -67,9 +73,10 @@ export default {
   data() {
     return {
       tab: 'status', //status, log, config
-      status: 'toStart',//'toStart','starting','running'
+      status: 'toStart',//'toStart','starting','running','failed'
       torAddress: '',
       torLog: [],
+      checkTimes: 0
     }
   },
   watch: {
@@ -78,43 +85,34 @@ export default {
   },
   
   mounted() {
-    this.checkStatus()
-    //this.autoCheck(10*1000)
+    //this.checkStatus()
   },
   methods: {
-    checkStarted(){
-    },
-
     getAdrress(){
       const hostnameFile = path.join(torHSDataPath, 'hostname')
       const address = fs.readFileSync(hostnameFile).toString().trim()
       this.torAddress = address.split('.')[0]
       return address
     },
-
-    checkStatus(){
+    checkRunning(){
+      console.log('checkRunning')
       axios.get('http://localhost:19050')
         .then(res=>{})
         .catch(error=>{
           if(error.message==='Network Error'){
-            this.$log.debug('checkStatus: port 19050 refuse connect, toStart')
-            this.status = 'toStart'
+            this.$log.debug('checkRunning: port 19050 refuse connect, toStart')
             return
           }else{
-            if(this.status==='toStart')this.status = 'starting'
-            curl.default.useProxy = true;
-            curl.default.proxy =  'localhost:19050'
-            curl.default.proxyType = curl.libcurl.proxy.SOCKS5_HOSTNAME
             const address = this.getAdrress()
-            curl.get('http://'+address).then(({statusCode, body, headers})=>{
-              this.$log.debug('checkStatus(from tor) return:', statusCode, body, headers)
-              if(statusCode===404){
-                this.status = 'running'
-              }
-            }).catch((e) => {
-              console.log(e);
-            })
-          }
+            const cmd= `/usr/bin/curl -I --socks5-hostname localhost:19050 ${address}`
+            execPromise(cmd)
+              .then((res)=>{
+                console.log('checkRunning return: ' + res)
+                if(res.indexOf('404')!==-1){
+                  this.status = 'running'
+                }
+              }).catch(error=>console.log(error))
+            }
         })
       },
     
@@ -134,16 +132,40 @@ export default {
       let s = {
         'running': this.$t('msg.tor.statusRunning'),
         'starting': this.$t('msg.tor.statusStarting'),
-        'toStart': this.$t('msg.tor.statusToStart')
+        'toStart': this.$t('msg.tor.statusToStart'),
+        'failed': this.$t('msg.tor.statusFailed')
       }
       return s[this.status]
     },
 
     autoCheck(interval){
         setInterval(()=>{
-         this.checkStatus()
+          if(this.checkTimes <= 10){
+            if(this.status==='starting'){
+              this.checkRunning()
+              this.checkTimes += 1
+            }
+          }else{
+            this.status = 'failed'
+          }
         }, interval)
     },
+
+    start(){
+      if(this.status==='starting')return
+      let gnode = grinNode
+      if(this.$dbService.getGnodeLocation() == 'local'){
+        gnode=grinLocalNode
+      }
+      this.$walletService.startListen(gnode)
+
+      startTor()
+
+      this.checkTimes = 0
+      this.status = 'starting'
+      this.autoCheck(6*1000)
+    },
+
     restart(){
       this.status = 'toStart'
       this.torLog = []

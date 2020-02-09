@@ -265,15 +265,18 @@ const messages = {
     },
 
     tor:{
-      title: 'Tor',
+      title: '洋葱网络(TOR)',
       tabStatus: '运行状态',
       tabLog: '运行日志',
       tabConfig: '设置',
-      statusRunning: 'Tor地址可用',
-      statusStarting: '正在启动 ... 不可用',
-      statusToStart: '没有启动',
+      statusRunning: '洋葱网络已经启动',
+      statusFailed: '洋葱网络启动失败',
+      statusStarting: '洋葱网络正在启动 ... 不可用',
+      statusToStart: '洋葱网络没有启动',
       status:'状态',
-      restart: '重启Tor',
+      start: '启动洋葱网络',
+      restart: '重启洋葱网络',
+      address: '洋葱网络(TOR)收币地址'
     },
 
   }

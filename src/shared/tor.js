@@ -16,8 +16,7 @@ HiddenServicePort 80 0.0.0.0:3415
 #ControlPort 19051
 #CookieAuthentication 1
 
-HTTPSProxy 127.0.0.1:9009
-Log notice stdout
+#HTTPSProxy 127.0.0.1:9009
 Log notice file ${torLogPath}
 `
 
@@ -74,5 +73,9 @@ export function stopTor(){
     }
 
     torProcess.kill('SIGKILL')
+}
 
+export function restartTor(){
+    stopTor
+    setTimeout(()=>startTor(), 2.5*1000)
 }
