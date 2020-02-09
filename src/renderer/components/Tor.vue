@@ -2,45 +2,93 @@
 
 <div class="modal" :class="{'is-active': showModal}">
   <div class="modal-background"></div>
-  <div class="modal-card" style="width:600px">
+  <div class="modal-card" style="width:500px">
     <header class="modal-card-head">
       <p class="modal-card-title is-size-4 has-text-link has-text-weight-semibold">{{ $t("msg.tor.title") }}</p>
       <button class="delete" aria-label="close" @click="closeModal"></button>
     </header>
 
-    <section class="modal-card-body" style="height:400px;background-color: whitesmoke;">
-      
+    <section class="modal-card-body" style="height:400px;background-color: whitesmoke;">     
        <div class="container">
         <div class="columns">
             <div class="column is-12">
                 <div class="tabs">
                     <ul>
-                        <li :class="[ tab === 'status' ? 'is-active' : '']"><a @click="tab='status'">{{ $t("msg.tor.tabStatus") }}</a></li> 
+                        <li :class="[ tab === 'status' ? 'is-active' : '']">
+                          <a @click="tab='status'">
+                            <span v-if="status==='toStart'">{{ $t("msg.tor.introTitle") }}</span>
+                            <span v-if="status==='starting'">{{ $t("msg.tor.statusStarting") }}</span>
+                            <span v-if="status==='running'">{{ $t("msg.tor.statusRunning")}}</span>
+                            <span v-if="status==='failed'">{{ $t("msg.tor.failedTitle") }}</span>
+                          </a>
+                        </li> 
                         <li :class="[ tab === 'log' ? 'is-active' : '']"><a @click="tab='log'">{{ $t("msg.tor.tabLog") }}</a></li>
                         <li :class="[ tab === 'config' ? 'is-active' : '']"><a @click="tab='config'">{{ $t("msg.tor.tabConfig") }}</a></li>
                     </ul>
                 </div>
                 <div class="tab-is-link">
                     <div v-if="tab ==='status'">
-                      <p><span class="has-text-centered has-text-weight-semibold">{{getStatusDisplay()}}</span></p>
                       <div v-if="status==='running'">
-                        <p>{{ $t("msg.tor.address") }}:</p>
-                        <p  class="has-text-weight-semibold is-size-5" style="margin-top:15px;margin-bottom:15px"> 
-                          {{torAddress}}
-                        </p>
+                            <p>{{ $t("msg.tor.address") }} :</p>
+                            <p class="has-text-weight-semibold is-size-5" style="margin-top:15px;margin-bottom:15px;word-wrap: break-word;"> 
+                              {{this.torAddress}}
+                            </p>
+                            <p class="is-size-7 tag is-warning animated is-pulled-right bounce" v-if="copied" style="animation-iteration-count:3">
+                              {{ $t("msg.tor.copied") }}
+                            </p>
+                            <button v-else class="button is-small is-link is-outlined is-pulled-right" @click="copy" >
+                              {{ $t("msg.tor.copy") }}
+                            </button>
+                            <br/>
+                            <p class="is-italic is-size-7">{{ $t("msg.tor.tip") }}</p>
+                          <br/>
+                        
+                        <button class="button is-link is-outlined center"  @click="closeModal" >ok</button>            
                       </div>
-                      <br/><br/>
-                      <button v-if="status==='toStart'" class="button is-link" @click="start" :class="{'is-loading': status==='starting'}">
-                        {{ $t("msg.tor.start") }}
-                      </button>
-                    </div>
 
+                      <div v-if="status==='toStart'||status==='starting'">
+                          
+                        <p>{{ $t("msg.tor.intro1") }}</p><br/>
+                        <p>{{ $t("msg.tor.intro2") }}</p><br/>
+                        <p class="is-italic is-size-7">{{ $t("msg.tor.intro3") }}</p><br/>
+                        <br/>
+                          <div class="field is-grouped " >
+                            <div class="control">
+                              <button class="button is-link" v-bind:class="{'is-loading':status==='starting'}" @click="start">
+                                {{ $t("msg.tor.start") }}
+                              </button>
+                            </div>
+                          <div class="control">
+                            <button class="button is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
+                          </div>
+                      </div>
+
+                    <div v-if="status==='failed'">
+                          <div class="message is-warning">
+                            <div class="message-body">
+                              <p>{{ $t("msg.tor.error") }}</p><br/>
+                            </div>
+                          </div>
+                          <div class="center">
+                            <div class="field is-grouped " >
+                              <div class="control">
+                                <button class="button is-link" v-bind:class="{'is-loading':starting}" @click="start">
+                                  {{ $t("msg.tor.retry") }}
+                                </button>
+                              </div>
+                              <div class="control">
+                                <button class="button is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    </div>
                     <div v-if="tab ==='log'">
                         <p class="is-size-7" v-for="log in torLog" :key="log.id">{{ log }}</p>
                     </div>
                     <div v-if="tab ==='config'">
-                    </div>
-                    
+                    </div>                   
                 </div>
               </div>
             </div>
@@ -61,6 +109,7 @@ import {execPromise} from '../../shared/utils'
 import {startTor, restartTor} from '../../shared/tor'
 import {torHSDataPath, torLogPath, grinNode, grinLocalNode} from '../../shared/config'
 import { messageBus } from '@/messagebus'
+const clipboard = require('electron').clipboard
 
 export default {
   name: "tor",
@@ -76,6 +125,7 @@ export default {
       status: 'toStart',//'toStart','starting','running','failed'
       torAddress: '',
       torLog: [],
+      copied: false,
       checkTimes: 0
     }
   },
@@ -104,7 +154,7 @@ export default {
             return
           }else{
             const address = this.getAdrress()
-            const cmd= `/usr/bin/curl -I --socks5-hostname localhost:19050 ${address}`
+            const cmd= `curl -I --socks5-hostname localhost:19050 ${address}`
             execPromise(cmd)
               .then((res)=>{
                 console.log('checkRunning return: ' + res)
@@ -128,19 +178,9 @@ export default {
       });
     },
 
-    getStatusDisplay(){
-      let s = {
-        'running': this.$t('msg.tor.statusRunning'),
-        'starting': this.$t('msg.tor.statusStarting'),
-        'toStart': this.$t('msg.tor.statusToStart'),
-        'failed': this.$t('msg.tor.statusFailed')
-      }
-      return s[this.status]
-    },
-
     autoCheck(interval){
         setInterval(()=>{
-          if(this.checkTimes <= 10){
+          if(this.checkTimes <= 6){
             if(this.status==='starting'){
               this.checkRunning()
               this.checkTimes += 1
@@ -149,6 +189,12 @@ export default {
             this.status = 'failed'
           }
         }, interval)
+    },
+    copy(){
+      clipboard.writeText(this.torAddress)
+      this.copied = true
+
+      setTimeout(()=>{this.copied = false}, 4000)
     },
 
     start(){
@@ -163,7 +209,7 @@ export default {
 
       this.checkTimes = 0
       this.status = 'starting'
-      this.autoCheck(6*1000)
+      this.autoCheck(10*1000)
     },
 
     restart(){

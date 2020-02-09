@@ -265,18 +265,28 @@ const messages = {
     },
 
     tor:{
-      title: '洋葱网络(TOR)',
+      title: '洋葱网络(Tor)',
       tabStatus: '运行状态',
       tabLog: '运行日志',
       tabConfig: '设置',
-      statusRunning: '洋葱网络已经启动',
-      statusFailed: '洋葱网络启动失败',
-      statusStarting: '洋葱网络正在启动 ... 不可用',
-      statusToStart: '洋葱网络没有启动',
+      statusRunning: '洋葱网络运行中',
+      statusFailed: '启动失败',
+      statusStarting: '正在启动',
+      statusToStart: '没有启动',
       status:'状态',
       start: '启动洋葱网络',
       restart: '重启洋葱网络',
-      address: '洋葱网络(TOR)收币地址'
+      address: '洋葱网络(TOR)收币地址',
+      
+      tip:'收币时，请保持钱包在线.',
+      introTitle: '介绍',
+      intro1: '洋葱网络(Tor)是一个自由开放的匿名通信网络。',
+      intro2: '通过洋葱网络接收/发送 grin， 安全/匿名/去中心化。',
+      intro3: '(如果你所在地区网络禁止了Tor，那么你需要设置HTTPS/SOCKS5代理来连接Tor。)',
+
+      start: '启动洋葱网络',
+      copy: '复制地址',
+      copied: '地址已经复制到剪贴板'
     },
 
   }
