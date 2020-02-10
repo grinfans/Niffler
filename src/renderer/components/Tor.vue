@@ -43,7 +43,7 @@
                             <p class="is-italic is-size-7">{{ $t("msg.tor.tip") }}</p>
                           <br/>
                         
-                        <button class="button is-link is-outlined center"  @click="closeModal" >ok</button>            
+                        <button class="button is-link is-outlined center"  @click="closeModal" style='width:65px'>OK</button>            
                       </div>
 
                       <div v-if="status==='toStart'||status==='starting'">
@@ -51,6 +51,9 @@
                         <p>{{ $t("msg.tor.intro1") }}</p><br/>
                         <p>{{ $t("msg.tor.intro2") }}</p><br/>
                         <p class="is-italic is-size-7">{{ $t("msg.tor.intro3") }}</p><br/>
+                        <p class="is-italic is-size-7 has-text-warning" v-show="status==='starting'">
+                          {{ $t("msg.tor.tip2") }}</p><br/>
+
                         <br/>
                           <div class="field is-grouped " >
                             <div class="control">
@@ -135,7 +138,7 @@ export default {
   },
   
   mounted() {
-    //this.checkStatus()
+    this.startTailLog(this.torLog)
   },
   methods: {
     getAdrress(){
@@ -157,7 +160,7 @@ export default {
             const cmd= `curl -I --socks5-hostname localhost:19050 ${address}`
             execPromise(cmd)
               .then((res)=>{
-                console.log('checkRunning return: ' + res)
+                //console.log('checkRunning return: ' + res)
                 if(res.indexOf('404')!==-1){
                   this.status = 'running'
                 }

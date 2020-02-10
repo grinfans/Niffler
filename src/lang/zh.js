@@ -96,7 +96,7 @@ const messages = {
       no: '暂时不更新',
 
       hedwig: '用Hedwig收币',
-      tor: '用洋葱网络Tor收币'
+      tor: '洋葱网络(Tor)'
 
     },
 
@@ -278,7 +278,8 @@ const messages = {
       restart: '重启洋葱网络',
       address: '洋葱网络(TOR)收币地址',
       
-      tip:'收币时，请保持钱包在线.',
+      tip: '收币时，请保持钱包在线.',
+      tip2: '启动中...可能需要30-60秒.....',
       introTitle: '介绍',
       intro1: '洋葱网络(Tor)是一个自由开放的匿名通信网络。',
       intro2: '通过洋葱网络接收/发送 grin， 安全/匿名/去中心化。',
