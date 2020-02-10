@@ -233,7 +233,7 @@ const messages = {
       tabLog: '运行日志',
       tabConfig: '设置',
       statusRunning: '运行中,可用',
-      statusSyncing: '正在同步区块 ... 不可用',
+      statusSyncing: '正在同步区块',
       statusToStart: '没有启动',
       status:'状态',
       localRemoteHeight: '本地节点高度/全网高度',
@@ -287,7 +287,11 @@ const messages = {
 
       start: '启动洋葱网络',
       copy: '复制地址',
-      copied: '地址已经复制到剪贴板'
+      copied: '地址已经复制到剪贴板',
+      startWhenLaunch: '(推荐) 打开钱包，自动启动洋葱网络',
+      proxy: '代理',
+      proxyHelp: '通过代理连接Tor',
+      proxyHelp2: '代理示例: https://127.0.0.1:9009 或者 socks5://127.0.0.1:1080'
     },
 
   }

@@ -25,6 +25,8 @@
                     <div v-if="tab ==='status'">
                       <p>{{ $t("msg.gnode.status") }}&nbsp;: 
                         <span class="has-text-centered has-text-weight-semibold">{{getStatusDisplay()}}</span>
+                        <span v-if="status==='syncing'" class="animated flash" style="animation-iteration-count:infinite;animation-duration: 3s">
+                        ......</span>
                       </p>
                       <div v-if="status!='toStart'">
                         <p>{{ $t("msg.gnode.localRemoteHeight") }}&nbsp;: 

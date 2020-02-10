@@ -51,10 +51,8 @@
                         <p>{{ $t("msg.tor.intro1") }}</p><br/>
                         <p>{{ $t("msg.tor.intro2") }}</p><br/>
                         <p class="is-italic is-size-7">{{ $t("msg.tor.intro3") }}</p><br/>
-                        <p class="is-italic is-size-7 has-text-warning" v-show="status==='starting'">
+                        <p class="is-italic is-size-7" v-show="status==='starting'">
                           {{ $t("msg.tor.tip2") }}</p><br/>
-
-                        <br/>
                           <div class="field is-grouped " >
                             <div class="control">
                               <button class="button is-link" v-bind:class="{'is-loading':status==='starting'}" @click="start">
@@ -91,6 +89,31 @@
                         <p class="is-size-7" v-for="log in torLog" :key="log.id">{{ log }}</p>
                     </div>
                     <div v-if="tab ==='config'">
+                      <label class="checkbox" style="color:#22509a;font-size:0.95rem;margin:25px">
+                        <input type="checkbox" v-model="startTorWhenLauch">
+                        {{ $t("msg.tor.startWhenLaunch") }}
+                      </label>
+                      <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            {{ $t("msg.tor.proxy") }}:
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input is-small" type="text" v-model="proxy">
+                                </div>
+                                <p class="help">
+                                  {{ $t("msg.tor.proxyHelp") }}
+                                </p>
+                                <p class="help">
+                                  {{ $t("msg.tor.proxyHelp2") }}
+                                </p>
+                            </div>
+                        </div>
+                      </div>
+                      <br/>
+                      <a class="button is-link is-small is-pulled-right	" @click="save">{{ $t("msg.save") }}</a>
+                      <br/>
                     </div>                   
                 </div>
               </div>
@@ -129,7 +152,9 @@ export default {
       torAddress: '',
       torLog: [],
       copied: false,
-      checkTimes: 0
+      checkTimes: 0,
+      startTorWhenLauch:true,
+      proxy:''
     }
   },
   watch: {
