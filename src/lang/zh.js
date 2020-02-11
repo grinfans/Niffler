@@ -35,6 +35,8 @@ const messages = {
 
     loading: '从Grin节点更新状态中 ...',
 
+    error: '错误',
+
     login: {
       walletExist: '发现已有Grin钱包存在；请用原有的密码登陆吧 :-)',
     },
@@ -291,7 +293,10 @@ const messages = {
       startWhenLaunch: '(推荐) 打开钱包，自动启动洋葱网络',
       proxy: '代理',
       proxyHelp: '通过代理连接Tor',
-      proxyHelp2: '代理示例: https://127.0.0.1:9009 或者 socks5://127.0.0.1:1080'
+      proxyHelp2: '代理示例: https://127.0.0.1:9009 或者 socks5://127.0.0.1:1080',
+
+      error: '洋葱网络启动失败',
+      errorNoCurl: '没有找到curl命令, 请先安装curl.'
     },
 
   }

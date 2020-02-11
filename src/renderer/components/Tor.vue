@@ -19,7 +19,7 @@
                             <span v-if="status==='toStart'">{{ $t("msg.tor.introTitle") }}</span>
                             <span v-if="status==='starting'">{{ $t("msg.tor.statusStarting") }}</span>
                             <span v-if="status==='running'">{{ $t("msg.tor.statusRunning")}}</span>
-                            <span v-if="status==='failed'">{{ $t("msg.tor.failedTitle") }}</span>
+                            <span v-if="status==='failed'">{{ $t("msg.tor.statusFailed") }}</span>
                           </a>
                         </li> 
                         <li :class="[ tab === 'log' ? 'is-active' : '']"><a @click="tab='log'">{{ $t("msg.tor.tabLog") }}</a></li>
@@ -62,29 +62,18 @@
                           <div class="control">
                             <button class="button is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
                           </div>
+                          </div>
                       </div>
 
-                    <div v-if="status==='failed'">
-                          <div class="message is-warning">
-                            <div class="message-body">
-                              <p>{{ $t("msg.tor.error") }}</p><br/>
-                            </div>
-                          </div>
-                          <div class="center">
-                            <div class="field is-grouped " >
-                              <div class="control">
-                                <button class="button is-link" v-bind:class="{'is-loading':starting}" @click="start">
-                                  {{ $t("msg.tor.retry") }}
-                                </button>
-                              </div>
-                              <div class="control">
-                                <button class="button is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
-                              </div>
-                            </div>
-                          </div>
+                      <div v-if="status==='failed'">
+                        <br/>
+                        <p class="tag is-warning is-size-6">{{$t("msg.error")}}: {{ error }}</p>
+                        <br/><br/><br/>
+                        <button class="button is-link is-outlined" @click="acknowledge">OK&nbsp;</button>
                       </div>
+
                     </div>
-                    </div>
+
                     <div v-if="tab ==='log'">
                         <p class="is-size-7" v-for="log in torLog" :key="log.id">{{ log }}</p>
                     </div>
@@ -189,7 +178,13 @@ export default {
                 if(res.indexOf('404')!==-1){
                   this.status = 'running'
                 }
-              }).catch(error=>console.log(error))
+              }).catch(error=>{
+                console.log(error)
+                if(error.indexOf('command not found')!==-1){
+                  this.status = 'failed'
+                  this.error = this.$t('msg.tor.errorNoCurl')
+                }
+              })
             }
         })
       },
@@ -208,13 +203,14 @@ export default {
 
     autoCheck(interval){
         setInterval(()=>{
-          if(this.checkTimes <= 6){
+          if(this.checkTimes <= 5){
             if(this.status==='starting'){
               this.checkRunning()
               this.checkTimes += 1
             }
           }else{
             this.status = 'failed'
+            this.error = this.$t('msg.tor.error')
           }
         }, interval)
     },
@@ -247,6 +243,10 @@ export default {
     closeModal() {
       messageBus.$emit('close', 'windowTor');
     },
+    acknowledge(){
+      this.status = 'toStart'
+      this.error = ''
+    }
   }
 }
 </script>

@@ -4,10 +4,9 @@ export function execPromise(command) {
     return new Promise(function(resolve, reject) {
         exec(command, (error, stdout, stderr) => {
             if (error) {
-                reject(error);
+                reject(error.toString());
                 return;
             }
-
             resolve(stdout.trim());
         });
     });
