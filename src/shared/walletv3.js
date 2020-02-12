@@ -47,7 +47,7 @@ class WalletServiceV3 {
             log.debug('start owner_api got: ' + data)
         })
         ownerAPI.stderr.on('data', (data) => {
-            log.error('start owner_api got stderr: ' + data)
+            log.error('start owner_api v3 got stderr: ' + data)
         })
     }
 

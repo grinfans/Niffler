@@ -78,18 +78,21 @@
                         <p class="is-size-7" v-for="log in torLog" :key="log.id">{{ log }}</p>
                     </div>
                     <div v-if="tab ==='config'">
-                      <label class="checkbox" style="color:#22509a;font-size:0.95rem;margin:25px">
+                      <label class="checkbox" style="color:#22509a;font-size:0.95rem;margin:5px 25px 25px 20px">
                         <input type="checkbox" v-model="startTorWhenLauch">
                         {{ $t("msg.tor.startWhenLaunch") }}
                       </label>
+                      
+                      <p v-if="errorConfig" class="tag is-warning is-size-7" style="margin-left:25px;margin-bottom:20px">{{$t("msg.error")}}: {{ errorConfig }}</p>
                       <div class="field is-horizontal">
+
                         <div class="field-label is-normal">
                             {{ $t("msg.tor.proxy") }}:
                         </div>
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <input class="input is-small" type="text" v-model="proxy">
+                                    <input class="input is-small" type="text" v-model="proxy" v-bind:class="{'is-warning':errorConfig}">
                                 </div>
                                 <p class="help">
                                   {{ $t("msg.tor.proxyHelp") }}
@@ -100,6 +103,35 @@
                             </div>
                         </div>
                       </div>
+
+                      <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                           <span class="is-size-7">{{$t("msg.tor.proxyUser")}}: </span>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input is-small" type="text" v-model="proxyUser" 
+                                      v-bind:placeholder="$t('msg.tor.optional')">
+                                </div>
+                            </div>
+                        </div>    
+                      </div>
+
+                      <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                           <span class="is-size-7">{{$t("msg.tor.proxyPassword")}}: </span>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input is-small" type="password" v-model="proxyPassword" 
+                                      v-bind:placeholder="$t('msg.tor.optional')">
+                                </div>   
+                            </div>
+                        </div>
+                      </div>
+
                       <br/>
                       <a class="button is-link is-small is-pulled-right	" @click="save">{{ $t("msg.save") }}</a>
                       <br/>
@@ -110,6 +142,10 @@
         </div>
     </section>
   </div>
+
+  <message :showMsg="openMsg" v-on:close="closeConfig" 
+    v-bind:msg=msg v-bind:showTime="5" msgType="link">
+  </message>
 </div>
 
 </template>
@@ -122,12 +158,17 @@ const Tail = require('tail').Tail
 
 import {execPromise} from '../../shared/utils'
 import {startTor, restartTor} from '../../shared/tor'
-import {torHSDataPath, torLogPath, grinNode, grinLocalNode} from '../../shared/config'
+import {torHSDataPath, torLogPath, grinNode, grinLocalNode, torOptions, updateConfig} from '../../shared/config'
 import { messageBus } from '@/messagebus'
+import Message from '@/components/Message'
+
 const clipboard = require('electron').clipboard
 
 export default {
   name: "tor",
+  components: {
+      Message
+  },
   props: {
     showModal: {
       type: Boolean,
@@ -142,17 +183,43 @@ export default {
       torLog: [],
       copied: false,
       checkTimes: 0,
-      startTorWhenLauch:true,
-      proxy:''
+      startTorWhenLauch:  torOptions.startWhenLaunch,
+      proxy: this.getProxy(),
+      proxyType: torOptions.proxyType,
+      proxyHost: torOptions.proxyHost,
+      proxyUser: torOptions.proxyUser,
+      proxyPassword: torOptions.proxyPassword,
+      connectedOnce: torOptions.connectedOnce,
+      error: '',
+      errorConfig: '',
+      msg: this.$t('msg.tor.saved'),
+      openMsg: false
     }
   },
   watch: {
     status:function(newVal, oldVal){
+      if(newVal==='running'){
+        this.$dbService.setTorRunning(true)
+        if(!torOptions['connectedOnce']){
+          torOptions['connectedOnce'] = true
+          this.connectedOnce = true
+          updateConfig({'tor': torOptions})
+        }
+      }
+    },
+    errorConfig:function(newVal, oldVal){
+      if(newVal){
+        setTimeout(()=>{this.errorConfig=''}, 2.5*1000)
+      }
     }
   },
   
   mounted() {
     this.startTailLog(this.torLog)
+    this.$dbService.setTorRunning(false)
+    if(this.connectedOnce && this.startTorWhenLauch){
+      this.start()
+    }
   },
   methods: {
     getAdrress(){
@@ -209,8 +276,10 @@ export default {
               this.checkTimes += 1
             }
           }else{
-            this.status = 'failed'
-            this.error = this.$t('msg.tor.error')
+            if(this.status==='starting'){
+              this.status = 'failed'
+              this.error = this.$t('msg.tor.error')
+            }
           }
         }, interval)
     },
@@ -229,7 +298,7 @@ export default {
       }
       this.$walletService.startListen(gnode)
 
-      startTor()
+      startTor(this.proxyHost, this.proxyType, this.proxyUser, this.proxyPassword)
 
       this.checkTimes = 0
       this.status = 'starting'
@@ -246,6 +315,50 @@ export default {
     acknowledge(){
       this.status = 'toStart'
       this.error = ''
+    },
+
+    prepareSave(toSave){
+      var re = new RegExp("^(https|socks5):\/\/(.+?:\\d+)")
+      const result = re.exec(toSave)
+      if(result && result.length > 2){
+        return {'type':result[1], 'host':result[2]}
+      }
+    },
+
+    save(){
+      if(this.proxy){
+        const result = this.prepareSave(this.proxy)
+        console.log('proxy:' + JSON.stringify(result))
+        if(!result){
+          this.errorConfig = this.$t('msg.tor.errorInvalidProxy')
+          return
+        }else{
+          this.proxyHost = result.host
+          this.proxyType = result.type
+        }
+      }
+      const torOptions_ = {
+        'startWhenLaunch': this.startTorWhenLauch,
+        'proxyHost': this.proxyHost,
+        'proxyType': this.proxyType,
+        'proxyUser': this.proxyUser,
+        'proxyPassword': this.proxyPassword,
+        'connectedOnce': this.connectedOnce
+      }
+      updateConfig({'tor': torOptions_})
+      this.openMsg = true
+    },
+
+    getProxy(){
+      const host = torOptions.proxyHost
+      const type_ = torOptions.proxyType
+      if(host && type_){
+        return `${type_}://${host}`
+      }
+      return '' 
+    },
+    closeConfig(){
+      this.openMsg = false
     }
   }
 }

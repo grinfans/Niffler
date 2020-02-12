@@ -4,6 +4,7 @@ let keyLocalGnodeStatus = 'local_gnode_status'
 let keyGnodeLocation = 'local_gnode_location'
 let keySpendable = 'spendable'
 let keyLocalGnodeCheckable = 'local_gnode_checkable'
+let keyTorRunning = 'tor_running'
 
 class DBService{
     static getPostedUnconfirmedTxs(){
@@ -64,6 +65,14 @@ class DBService{
 
     static getLocalGnodeCheckable(){
         return JSON.parse(localStorage.getItem(keyLocalGnodeCheckable))
+    }
+
+    static setTorRunning(running){
+        return localStorage.setItem(keyTorRunning, running)
+    }
+
+    static getTorRunning(){
+        return localStorage.getItem(keyTorRunning)
     }
 
 }

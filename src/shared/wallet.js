@@ -142,7 +142,7 @@ class WalletService {
  
     static startOwnerApi(password, grinNodeToConnect){
         //WalletService.stopProcess('ownerAPI')
-        console.log('grinNodeToConnect:' + grinNodeToConnect)
+        log.debug('grinNodeToConnect:' + grinNodeToConnect)
         enableForeignApi()
         
         if(platform === 'linux'){
@@ -150,7 +150,7 @@ class WalletService {
         }else{
             const cmd = platform==='win'? `${grinWalletPath} -r ${grinNodeToConnect} --pass ${addQuotations(password)} owner_api`:
                                         `${grinWalletPath} -r ${grinNodeToConnect} owner_api`
-            //log.debug(`platform: ${platform}; start owner api cmd: ${cmd}`)
+            log.debug(`platform: ${platform}; start owner api cmd: ${cmd}`)
             ownerAPI =  exec(cmd)
         }
         processes['ownerAPI'] = ownerAPI

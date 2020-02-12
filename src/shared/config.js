@@ -172,5 +172,14 @@ export const grinNode = gnodeOption.remoteAddr
 export const grinNode2 = gnodeOption.remoteAddr
 export const grinLocalNode = gnodeOption.localAddr
 
-export const torConfig = getConfig()['tor']
+export const defaultTorOptions= {
+  'startWhenLaunch': true,
+  'proxyHost':'',
+  'proxyType': '',
+  'proxyUser': '',
+  'proxyPassword': '',
+  'connectedOnce': false
+}
+export const torOptions = getConfig()['tor']?getConfig()['tor']: defaultTorOptions
+
 export const darkMode = getConfig()['darkMode']?getConfig()['darkMode']: false

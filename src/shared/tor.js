@@ -7,18 +7,29 @@ import log from './logger'
 
 let torProcess
 
-const torrc = `
-SOCKSPort 19050
+let torrc = `SOCKSPort 19050
 DataDirectory ${torDataPath}
 HiddenServiceDir ${torHSDataPath}     
 HiddenServicePort 80 0.0.0.0:3415
-
-#ControlPort 19051
-#CookieAuthentication 1
-
-#HTTPSProxy 127.0.0.1:9009
 Log notice file ${torLogPath}
 `
+function configureTor(proxyHost, proxyType, proxyUser, proxyPassword){
+    let torrc_ = torrc
+    if(proxyType==='https'){
+        torrc_ = torrc + '\nHTTPSProxy ' + proxyHost
+        if(proxyUser && proxyPassowrd){
+            torrc_ = torrc_ + '\nHTTPSProxyAuthenticator ' + proxyUser + ':' + proxyPassword
+        }
+    }
+    if(proxyType==='socks5'){
+        torrc_ = torrc + '\nSocks5Proxy ' + proxyHost
+        if(proxyUser && proxyPassowrd){
+            torrc_ = torrc_ + '\nSocks5ProxyUsername ' + proxyUser
+            torrc_ = torrc_ + '\nSocks5ProxyPassword ' + proxyPassword
+        }
+    }
+    fs.writeFileSync(torConfigPath, torrc_)
+}
 
 function ensureTorDir(){
     if(fse.pathExistsSync(torDir))return
@@ -33,13 +44,14 @@ function ensureTorDir(){
         fse.ensureDirSync(torHSDataPath)
         fse.ensureDirSync(torDataPath)
     }
-    fs.writeFileSync(torConfigPath, torrc)
 }
 
-export function startTor(cb=null){
-    log.debug('try to start tor')
+export function startTor(proxyHost='', proxyType='', proxyUser='', proxyPassword=''){
+    log.debug('try to start tor:' + proxyHost + proxyType + proxyUser + proxyPassword) 
 
     ensureTorDir()
+    configureTor(proxyHost, proxyType, proxyUser, proxyPassword)
+    
     if(platform === 'linux'){
         torProcess = execFile(torPath, ['-f', torConfigPath]) 
     }else{
@@ -49,11 +61,9 @@ export function startTor(cb=null){
 
     torProcess.stdout.on('data', (data)=>{
         log.debug('tor process: ' + data)
-        if(cb)cb(data)
     })
     torProcess.stderr.on('data', (data) => {
-        log.error('tor process (error): ' + data)
-        if(cb)cb(data)
+        log.error('tor process (error): ' + data) 
     })
 }
 

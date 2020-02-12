@@ -292,11 +292,16 @@ const messages = {
       copied: '地址已经复制到剪贴板',
       startWhenLaunch: '(推荐) 打开钱包，自动启动洋葱网络',
       proxy: '代理',
+      proxyUser: '用户名',
+      proxyPassword: '密码',
       proxyHelp: '通过代理连接Tor',
+      optional: '可选',
       proxyHelp2: '代理示例: https://127.0.0.1:9009 或者 socks5://127.0.0.1:1080',
 
       error: '洋葱网络启动失败',
-      errorNoCurl: '没有找到curl命令, 请先安装curl.'
+      errorNoCurl: '没有找到curl命令, 请先安装curl.',
+      errorInvalidProxy: '无效代理',
+      saved: '设置已经保存, 下次启动洋葱网络时生效.'
     },
 
   }
