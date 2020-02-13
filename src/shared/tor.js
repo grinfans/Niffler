@@ -17,13 +17,13 @@ function configureTor(proxyHost, proxyType, proxyUser, proxyPassword){
     let torrc_ = torrc
     if(proxyType==='https'){
         torrc_ = torrc + '\nHTTPSProxy ' + proxyHost
-        if(proxyUser && proxyPassowrd){
+        if(proxyUser && proxyPassword){
             torrc_ = torrc_ + '\nHTTPSProxyAuthenticator ' + proxyUser + ':' + proxyPassword
         }
     }
     if(proxyType==='socks5'){
         torrc_ = torrc + '\nSocks5Proxy ' + proxyHost
-        if(proxyUser && proxyPassowrd){
+        if(proxyUser && proxyPassword){
             torrc_ = torrc_ + '\nSocks5ProxyUsername ' + proxyUser
             torrc_ = torrc_ + '\nSocks5ProxyPassword ' + proxyPassword
         }
@@ -82,10 +82,10 @@ export function stopTor(){
         }
     }
 
-    torProcess.kill('SIGKILL')
+    if(torProcess)torProcess.kill('SIGKILL')
 }
 
-export function restartTor(){
-    stopTor
-    setTimeout(()=>startTor(), 2.5*1000)
+export function restartTor(proxyHost='', proxyType='', proxyUser='', proxyPassword=''){
+    stopTor()
+    setTimeout(()=>startTor(proxyHost, proxyType, proxyUser, proxyPassword), 2.5*1000)
 }

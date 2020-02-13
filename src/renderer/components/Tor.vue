@@ -50,19 +50,21 @@
                           
                         <p>{{ $t("msg.tor.intro1") }}</p><br/>
                         <p>{{ $t("msg.tor.intro2") }}</p><br/>
-                        <p class="is-italic is-size-7">{{ $t("msg.tor.intro3") }}</p><br/>
+                        <p class="is-size-7">{{ $t("msg.tor.intro3") }}</p><br/>
                         <p class="is-italic is-size-7" v-show="status==='starting'">
-                          {{ $t("msg.tor.tip2") }}</p><br/>
-                          <div class="field is-grouped " >
-                            <div class="control">
-                              <button class="button is-link" v-bind:class="{'is-loading':status==='starting'}" @click="start">
-                                {{ $t("msg.tor.start") }}
-                              </button>
-                            </div>
+                          {{ $t("msg.tor.tip2") }}
+                          <span class="animated flash" style="animation-iteration-count:infinite;animation-duration: 3s">......</span>
+                        </p><br/>
+                        <div class="field is-grouped " >
                           <div class="control">
-                            <button class="button is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
+                            <button class="button is-link" v-bind:class="{'is-loading':status==='starting'}" @click="start">
+                              {{ $t("msg.tor.start") }}
+                            </button>
                           </div>
-                          </div>
+                        <div class="control">
+                          <button class="button is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
+                        </div>
+                        </div>
                       </div>
 
                       <div v-if="status==='failed'">
@@ -92,7 +94,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <input class="input is-small" type="text" v-model="proxy" v-bind:class="{'is-warning':errorConfig}">
+                                    <input class="input" type="text" v-model="proxy" v-bind:class="{'is-warning':errorConfig}">
                                 </div>
                                 <p class="help">
                                   {{ $t("msg.tor.proxyHelp") }}
@@ -222,7 +224,7 @@ export default {
     }
   },
   methods: {
-    getAdrress(){
+    getAddress(){
       const hostnameFile = path.join(torHSDataPath, 'hostname')
       const address = fs.readFileSync(hostnameFile).toString().trim()
       this.torAddress = address.split('.')[0]
@@ -237,7 +239,7 @@ export default {
             this.$log.debug('checkRunning: port 19050 refuse connect, toStart')
             return
           }else{
-            const address = this.getAdrress()
+            const address = this.getAddress()
             const cmd= `curl -I --socks5-hostname localhost:19050 ${address}`
             execPromise(cmd)
               .then((res)=>{
@@ -257,8 +259,10 @@ export default {
       },
     
     startTailLog(log){
+      if(!fs.existsSync(torLogPath))return
       let tail = new Tail(torLogPath, {'useWatchFile':true})
       tail.on("line", function(data) {
+        if(data.indexOf('71')!==-1)return
         if(log.length >= 30){log.shift()}
         log.push(data)
       });
@@ -298,7 +302,8 @@ export default {
       }
       this.$walletService.startListen(gnode)
 
-      startTor(this.proxyHost, this.proxyType, this.proxyUser, this.proxyPassword)
+
+      restartTor(this.proxyHost, this.proxyType, this.proxyUser, this.proxyPassword)
 
       this.checkTimes = 0
       this.status = 'starting'
@@ -327,6 +332,7 @@ export default {
 
     save(){
       if(this.proxy){
+        this.proxy = this.proxy.trim()
         const result = this.prepareSave(this.proxy)
         console.log('proxy:' + JSON.stringify(result))
         if(!result){
