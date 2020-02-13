@@ -88,7 +88,7 @@ const messages = {
     app:{
       create: '生成交易文件',
       finalize: '确认交易文件并完结交易',
-      httpSend: '通过 https/http 发送',
+      httpSend: '通过 https/http/Tor 发送',
       createRespFile: '生成回应交易文件',
       httpReceive: '开启http端口接收',
       height:'同步高度',
@@ -148,7 +148,8 @@ const messages = {
       TxResponseFailed: '接收者回应失败',
       TxCreateFailed: '发起交易失败',
       salteVersion: '交易文件版本',
-      salteVersionHelp: '如果发送交易失败，可以试下改变交易文件版本'
+      salteVersionHelp: '如果发送交易失败，可以试下改变交易文件版本',
+      noTor: '洋葱网络没有启动，需要先启动洋葱网络'
     },
 
     fileReceive: {

@@ -40,11 +40,15 @@
         <p>{{ $t("msg.httpSend.success") }}</p>
       </div>
     </section>
+    <message :showMsg="openMsg" v-on:close="closeMsg" 
+      v-bind:msg=msg v-bind:showTime="5" msgType="link">
+    </message>
   </div>
 </div>
 
 </template>
 <script>
+import Message from '@/components/Message'
 import { messageBus } from '@/messagebus'
 const urllib = require('urllib');
 const fs = require('fs');
@@ -53,6 +57,9 @@ import { constants } from 'fs';
 
 export default {
   name: "http-send",
+  components: {
+      Message
+  },
   props: {
     showModal: {
       type: Boolean,
@@ -66,7 +73,9 @@ export default {
       address: '',
       slateVersion: 0,
       sending: false,
-      sent: false
+      sent: false,
+      msg: this.$t('msg.httpSend.noTor'),
+      openMsg:false
     }
   },
   watch: {
@@ -108,7 +117,9 @@ export default {
     checkForm(){
       this.errors = []
       if (!this.address || !this.validAddress(this.address)) {
-        this.errors.push(this.$t('msg.httpSend.WrongAddress'));
+        if(!this.checkIfTor(this.address)){
+          this.errors.push(this.$t('msg.httpSend.WrongAddress'))
+        }
       }
       if (!this.amount || !this.validAmount(this.amount)) {
         this.errors.push(this.$t('msg.httpSend.WrongAmount'));
@@ -124,7 +135,6 @@ export default {
       if(this.checkForm()&&!this.sending){
         let tx_id
         this.sending = true
-          
         let tx_data = {
           "src_acct_name": null,
           "amount": this.amount * 1000000000, 
@@ -205,11 +215,23 @@ export default {
         sendAsync.call(this)
       }
     },
+    checkIfTor(address){
+      if (address.indexOf('_') !== -1){return false}
+      if (address.indexOf('_') !== -1){return false}
+      let re = new RegExp('^\\w{56}$')
+      return re.test(address)
+    },
     send2(){
+      this.address = this.address.trim()
+
       if(this.checkForm()&&!this.sending){
+        if(this.checkIfTor(this.address)){
+          console.log('it is a tor address')
+          return this.sendViaTor()
+        }
+
         let tx_id
         this.sending = true
-
         let tx_data = {
           "src_acct_name": null,
           "amount": this.amount * 1000000000, 
@@ -251,11 +273,22 @@ export default {
           })
         }
     },
+    sendViaTor(){
+      console.log(this.$dbService.getTorRunning)
+      if(!this.$dbService.getTorRunning){
+        this.openMsg = true
+        return
+      }
+      this.sending = true
+
+    },
     closeModal() {
       this.clearup()
       messageBus.$emit('close', 'windowHttpSend');
     },
-    
+    closeMsg(){
+      this.openMsg = false
+    },
     clearup(){
       this.errors = []
       this.amount = null
