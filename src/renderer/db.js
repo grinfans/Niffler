@@ -68,11 +68,11 @@ class DBService{
     }
 
     static setTorRunning(running){
-        return localStorage.setItem(keyTorRunning, running)
+        return localStorage.setItem(keyTorRunning, JSON.stringify(running))
     }
 
     static getTorRunning(){
-        return localStorage.getItem(keyTorRunning)
+        return JSON.parse(localStorage.getItem(keyTorRunning))
     }
 
 }

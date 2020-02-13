@@ -274,8 +274,8 @@ export default {
         }
     },
     sendViaTor(){
-      console.log(this.$dbService.getTorRunning)
-      if(!this.$dbService.getTorRunning){
+      console.log(this.$dbService.getTorRunning())
+      if(!this.$dbService.getTorRunning()){
         this.openMsg = true
         return
       }
