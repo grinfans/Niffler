@@ -36,6 +36,8 @@ const messages = {
 
     loading: 'Updating status from Grin node ...',
     
+    error: 'Error',
+
     login: {
       walletExist: 'Found grin wallet data exists; login with original password :-)',
     },
@@ -87,7 +89,7 @@ const messages = {
     app:{
       create: 'Create transaction file',
       finalize: 'Finalize',
-      httpSend: 'Send via http/https',
+      httpSend: 'Send via http/https/Tor',
       createRespFile: 'Create response transaction file',
       httpReceive: 'Open http listener to receive',
       height:'Height',
@@ -96,7 +98,7 @@ const messages = {
       yes: 'yes',
       no: 'no',
       hedwig: 'Receive via Hedwig',
-      tor: 'Receive via Tor Network'
+      tor: 'Tor Network'
     },
 
     info: {
@@ -266,13 +268,39 @@ const messages = {
       title: 'Tor',
       tabStatus: 'Status',
       tabLog: 'Log',
-      tabConfig: 'Settings',
-      statusSyncing: 'Syncing ...',
-      statusToStart: 'not Running',
+      tabConfig: 'Setting',
+      statusRunning: 'Tor Running',
+      statusFailed: 'Tor Start Failed',
+      statusStarting: 'Tor Starting',
+      statusToStart: 'Not Running',
       status:'Status',
-      restart: 'Restart Tor',
-    },
+      start: 'start',
+      restart: 'restart',
+      address: 'Tor address to receive grn',
+      
+      tip: 'Please keep wallet online When receving grin',
+      tip2: 'Starting ... it may take 10-60 seconds',
+      introTitle: 'Introduction',
+      intro1: 'Tor is free and open-source software for enabling anonymous communication.',
+      intro2: 'Receive/send grin via tor is more anonymous/sercurity/decentralized',
+      intro3: '(If Tor is blocked by network in your location, Configure a https/socks proxy first.)',
 
+      start: 'start',
+      copy: 'Copy Address',
+      copied: 'copied',
+      startWhenLaunch: '(Recommend) Auto start Tor after open wallet',
+      proxy: 'proxy',
+      proxyUser: 'user',
+      proxyPassword: 'password',
+      proxyHelp: 'Connect Tor network via proxy',
+      optional: 'optional',
+      proxyHelp2: 'Proxy example: https://127.0.0.1:9009 or socks5://127.0.0.1:1080',
+
+      error: 'Start Tor network failed.',
+      errorNoCurl: 'No curl found. Install curl first.',
+      errorInvalidProxy: 'Invalid proxy',
+      saved: 'Setting saved. will use this setting when start Tor next time.'
+    },
   }
 }
 export default messages

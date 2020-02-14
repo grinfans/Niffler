@@ -36,7 +36,7 @@ const messages = {
 
     other: 'Others',
     loading: 'Updating status from Grin node ...',
-
+    error: 'Error',
     login: {
       walletExist: 'grin 지갑이 존재합니다; 원래 비밀번호로 로그인 해 주십시오:-)',
     },
@@ -79,7 +79,7 @@ const messages = {
     app:{
       create: '트랜잭션 파일 생성',
       finalize: '완료',
-      httpSend: 'http / https를 통해 전송',
+      httpSend: 'http/https/Tor 를 통해 전송',
       createRespFile: '응답 트랜잭션 파일 작성',
       httpReceive: '수신 할 http 리스너 열기',
       height:'높이',
@@ -87,7 +87,8 @@ const messages = {
       updateMsg: '새로운 버전의 Niffler 지갑이 존재합니다. 지금 업데이트 해 주시기 바랍니다.',
       yes: '예',
       no: '아니오',
-      hedwig: 'Receive via Hedwig'
+      hedwig: 'Receive via Hedwig',
+      tor: 'Tor Network'
     },
 
     info: {
@@ -252,6 +253,44 @@ const messages = {
       help: 'Enter "remove" into the input box below to confirm',
       remove: 'Remove',
       success: 'Current wallet was removed. Click "OK" to restart Niffler.'
+    },
+    
+    tor:{
+      title: 'Tor',
+      tabStatus: 'Status',
+      tabLog: 'Log',
+      tabConfig: 'Setting',
+      statusRunning: 'Tor Running',
+      statusFailed: 'Tor Start Failed',
+      statusStarting: 'Tor Starting',
+      statusToStart: 'Not Running',
+      status:'Status',
+      start: 'start',
+      restart: 'restart',
+      address: 'Tor address to receive grn',
+      
+      tip: 'Please keep wallet online When receving grin',
+      tip2: 'Starting ... it may take 10-60 seconds',
+      introTitle: 'Introduction',
+      intro1: 'Tor is free and open-source software for enabling anonymous communication.',
+      intro2: 'Receive/send grin via tor is more anonymous/sercurity/decentralized',
+      intro3: '(If Tor is blocked by network in your location, Configure a https/socks proxy first.)',
+
+      start: 'start',
+      copy: 'Copy Address',
+      copied: 'copied',
+      startWhenLaunch: '(Recommend) Auto start Tor after open wallet',
+      proxy: 'proxy',
+      proxyUser: 'user',
+      proxyPassword: 'password',
+      proxyHelp: 'Connect Tor network via proxy',
+      optional: 'optional',
+      proxyHelp2: 'Proxy example: https://127.0.0.1:9009 or socks5://127.0.0.1:1080',
+
+      error: 'Start Tor network failed.',
+      errorNoCurl: 'No curl found. Install curl first.',
+      errorInvalidProxy: 'Invalid proxy',
+      saved: 'Setting saved. will use this setting when start Tor next time.s'
     },
 
   }

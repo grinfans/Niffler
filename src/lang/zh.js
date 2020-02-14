@@ -304,7 +304,7 @@ const messages = {
       errorInvalidProxy: '无效代理',
       saved: '设置已经保存, 下次启动洋葱网络时生效.'
     },
-
+    
   }
 }
 export default messages
