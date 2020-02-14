@@ -138,7 +138,7 @@ const messages = {
 
     httpSend:{
       sendAmount: '发送数量',
-      address:'发送数量地址',
+      address:'发送地址',
       WrongAmount: '发送数量错误',
       NotEnough: '没有足够的余额，请至少留下0.01作为手续费',
       WrongAddress: '发送地址错误',

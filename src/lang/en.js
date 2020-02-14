@@ -276,7 +276,7 @@ const messages = {
       status:'Status',
       start: 'start',
       restart: 'restart',
-      address: 'Tor address to receive grn',
+      address: 'Tor address to receive grin',
       
       tip: 'Please keep wallet online When receving grin',
       tip2: 'Starting ... it may take 10-60 seconds',

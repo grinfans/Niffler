@@ -4,7 +4,7 @@
   <div class="modal-background" @click="closeModal"></div>
   <div class="modal-card" style="width:480px">
     <header class="modal-card-head">
-      <p class="modal-card-title is-size-4 has-text-link has-text-weight-semibold">{{ $t("msg.send") }}(HTTP/HTTPS)</p>
+      <p class="modal-card-title is-size-4 has-text-link has-text-weight-semibold">{{ $t("msg.send") }}(HTTP/HTTPS/Tor)</p>
       <button class="delete" aria-label="close" @click="closeModal"></button>
     </header>
     <section class="modal-card-body" style="height:380px;background-color: whitesmoke;">
@@ -14,7 +14,7 @@
       </div>
       <div v-if="!sent">
         <div class="field">
-          <label class="label">{{ $t("msg.httpSend.address") }}(HTTP/HTTPS)</label>
+          <label class="label">{{ $t("msg.httpSend.address") }}(HTTP/HTTPS/Tor)</label>
           <div class="control">
             <input class="input" type="text" v-model="address" placeholder="eg: https://donation.niffler.org:3415">
           </div>
