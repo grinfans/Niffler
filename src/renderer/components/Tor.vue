@@ -160,7 +160,8 @@ const Tail = require('tail').Tail
 
 import {execPromise} from '../../shared/utils'
 import {startTor, restartTor} from '../../shared/tor'
-import {torHSDataPath, torLogPath, grinNode, grinLocalNode, torOptions, updateConfig} from '../../shared/config'
+import {torHSDataPath, torLogPath, grinNode, grinLocalNode, torOptions, updateConfig} 
+  from '../../shared/config'
 import { messageBus } from '@/messagebus'
 import Message from '@/components/Message'
 
@@ -307,7 +308,7 @@ export default {
 
       this.checkTimes = 0
       this.status = 'starting'
-      this.autoCheck(10*1000)
+      this.autoCheck(15*1000)
     },
 
     restart(){

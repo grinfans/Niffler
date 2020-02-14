@@ -54,6 +54,7 @@ const urllib = require('urllib');
 const fs = require('fs');
 const urljoin = require('url-join');
 import { constants } from 'fs';
+import {execPromise} from '../../shared/utils'
 
 export default {
   name: "http-send",
@@ -217,8 +218,7 @@ export default {
     },
     checkIfTor(address){
       if (address.indexOf('_') !== -1){return false}
-      if (address.indexOf('_') !== -1){return false}
-      let re = new RegExp('^\\w{56}$')
+      let re = new RegExp('^\\w{50,60}$')
       return re.test(address)
     },
     send2(){
@@ -279,9 +279,81 @@ export default {
         this.openMsg = true
         return
       }
+      let tx_id 
       this.sending = true
 
+      let tx_data = {
+          "src_acct_name": null,
+          "amount": this.amount * 1000000000, 
+          "minimum_confirmations": 10,
+          "max_outputs": 500,
+          "num_change_outputs": 1,
+          "selection_strategy_is_use_all": true,
+          "message": null,
+          "target_slate_version": null,
+          "payment_proof_recipient_address": null,
+          "ttl_blocks": null,
+          "send_args": null
+        }
+
+        let sendAsync = async function(){
+          try{
+            let res = await this.$walletService.issueSendTransaction(tx_data)
+            let slate = res.data.result.Ok
+            tx_id = slate.id
+            if(!tx_id){
+              this.errors.push(this.$t('msg.httpSend.TxCreateFailed'))
+            }else{
+              this.$log.debug('Generate slate file: ' + tx_id)
+              let payload = {
+                "jsonrpc": "2.0",
+                "method": "receive_tx",
+                "id": 1,
+                "params":[slate, null, null]
+              }
+              payload = JSON.stringify(payload)
+              const url = `http://${this.address}.onion/v2/foreign`
+              const cmd = `curl --socks5-hostname 127.0.0.1:19050 -X POST -d '${payload}' ${url}`
+              //console.log(cmd)
+              const res = await execPromise(cmd)
+              //this.$log.debug('post slate return res: ' + res)
+              let slate2 = JSON.parse(res).result.Ok
+              //console.log(slate2)
+              if(slate2){
+                this.$log.debug('Got slate2 file from receiver')
+
+                let res = await this.$walletService.lock_outputs(slate, 0)
+                this.$log.debug('output locked.')
+
+                res = await this.$walletService.finalizeTransaction(slate2)
+                //console.log(JSON.stringify(res))
+                let tx = res.data.result.Ok.tx
+                this.$log.debug('finalized.')
+
+                res = await this.$walletService.postTransaction(tx, true)
+                console.log(JSON.stringify(res))
+                this.$log.debug('posted.')
+
+                this.sent = true
+                this.$dbService.addPostedUnconfirmedTx(tx_id)
+              }
+            }
+          }catch(error){
+            this.$log.error('http send error:' + error)  
+            this.$log.error(error.stack)
+            if (error.response) {   
+              let resp = error.response      
+              this.$log.error(`resp.data:${resp.data}; status:${resp.status};headers:${resp.headers}`)
+            }
+            this.errors.push(this.$t('msg.httpSend.TxFailed'))
+          }finally{
+            this.sending = false
+            messageBus.$emit('update', true)
+          }
+        }
+        sendAsync.call(this)
     },
+
     closeModal() {
       this.clearup()
       messageBus.$emit('close', 'windowHttpSend');
