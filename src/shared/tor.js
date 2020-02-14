@@ -2,7 +2,7 @@ const fs = require('fs')
 const fse = require('fs-extra')
 import {exec, execFile, spawn, fork} from 'child_process'
 
-import {platform, torPath, torDir, torConfigPath, torDataPath, torHSDataPath, torLogPath} from './config'
+import {platform, torDir, torConfigPath, torDataPath, torHSDataPath, torLogPath} from './config'
 import log from './logger'
 
 let torProcess
@@ -53,9 +53,9 @@ export function startTor(proxyHost='', proxyType='', proxyUser='', proxyPassword
     configureTor(proxyHost, proxyType, proxyUser, proxyPassword)
     
     if(platform === 'linux'){
-        torProcess = execFile(torPath, ['-f', torConfigPath]) 
+        torProcess = execFile('tor', ['-f', torConfigPath]) 
     }else{
-        torProcess =  exec(`${torPath} -f ${torConfigPath}`)
+        torProcess =  exec(`tor -f ${torConfigPath}`)
     }
     localStorage.setItem('torProcessPID', torProcess.pid)
 
@@ -78,7 +78,7 @@ export function stopTor(){
         try{
             process.kill(pid, 'SIGKILL')
         }catch(e){
-            log.error(`error when kill ${processName} ${pid}: ${e}` )
+            log.error(`error when kill tor ${pid}: ${e}` )
         }
     }
 

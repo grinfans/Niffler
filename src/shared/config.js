@@ -34,11 +34,11 @@ const binariesPath =
 
 const grinWalletBinaries = platform==='win'?'grin-wallet.exe':'grin-wallet'
 const grinBinaries = platform==='win'?'grin.exe':'grin'
-const torBinaries = platform==='win'?'tor.exe':'tor'
+//const torBinaries = platform==='win'?'tor.exe':'tor'
 
 export let grinWalletPath = path.join(binariesPath, grinWalletBinaries)
 export let grinPath = path.join(binariesPath, grinBinaries)
-export let torPath = path.join(binariesPath, torBinaries)
+//export let torPath = path.join(binariesPath, torBinaries)
 
 if(platform=='win'){
   grinWalletPath = '"' + path.resolve(grinWalletPath) + '"' 

@@ -3,5 +3,3 @@ Downloaded from (https://github.com/mimblewimble/grin/releases/download/v3.0.0/g
 
 The Mac version of grin-wallet binaries is grin-wallet v3.0.0(https://github.com/mimblewimble/grin-wallet/releases/tag/v3.0.0).
 Downloaded from (https://github.com/mimblewimble/grin-wallet/releases/download/v3.0.0/grin-wallet-v3.0.0-macos.tar.gz).s
-
-The Mac version of tor binaries is compiled from tor 0.4.2.6 (https://dist.torproject.org/tor-0.4.2.6.tar.gz)
