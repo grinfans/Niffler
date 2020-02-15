@@ -19,6 +19,9 @@ import {startTor, stopTor }from '../shared/tor'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 
+//https://github.com/electron-userland/electron-builder/issues/880#issuecomment-258602436
+process.env.PATH = process.env.PATH + ':/usr/local/bin';
+
 Vue.component('icon', Icon)
 
 Vue.gnodeService = Vue.prototype.$gnodeService = gnodeService
@@ -32,7 +35,6 @@ import en from '../lang/en'
 import zh from '../lang/zh'
 import ru from '../lang/ru'
 import ko from '../lang/ko'
-
 
 Vue.use(VueI18n)
 const messages = {
