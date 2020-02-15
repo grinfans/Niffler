@@ -298,6 +298,7 @@ const messages = {
 
       error: 'Start Tor network failed.',
       errorNoCurl: 'No curl found. Install curl first.',
+      errorNoTor: 'No tor found. Install tor first.',
       errorInvalidProxy: 'Invalid proxy',
       saved: 'Setting saved. will use this setting when start Tor next time.'
     },

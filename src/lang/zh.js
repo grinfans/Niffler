@@ -301,6 +301,7 @@ const messages = {
 
       error: '洋葱网络启动失败',
       errorNoCurl: '没有找到curl命令, 请先安装curl.',
+      errorNoTor: '没有找到tor, 请先安装tor.',
       errorInvalidProxy: '无效代理',
       saved: '设置已经保存, 下次启动洋葱网络时生效.'
     },

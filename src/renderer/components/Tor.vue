@@ -297,6 +297,14 @@ export default {
 
     start(){
       if(this.status==='starting')return
+      execPromise('which tor4')
+        .then((res)=>this.$log.debug('check tor path return: ' + res ))
+        .catch(err=>{
+          this.$log.error('check tor path failed: ' + err )
+          this.status = 'failed'
+          this.error = this.$t('msg.tor.errorNoTor')
+          return
+        })
       let gnode = grinNode
       if(this.$dbService.getGnodeLocation() == 'local'){
         gnode=grinLocalNode
