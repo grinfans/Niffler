@@ -297,7 +297,7 @@ export default {
 
     start(){
       if(this.status==='starting')return
-      execPromise('which tor4')
+      execPromise('which tor')
         .then((res)=>this.$log.debug('check tor path return: ' + res ))
         .catch(err=>{
           this.$log.error('check tor path failed: ' + err )
@@ -332,9 +332,13 @@ export default {
     },
 
     prepareSave(toSave){
-      var re = new RegExp("^(https|socks5):\/\/(.+?:\\d+)")
+      var re = new RegExp("^(https{0,1}|socks5):\/\/(.+?:\\d+)")
       const result = re.exec(toSave)
+      console.log(result)
       if(result && result.length > 2){
+        if(result[1]==='http'||result[1]==='https'){
+          return {'type':'https', 'host':result[2]}
+        }
         return {'type':result[1], 'host':result[2]}
       }
     },
