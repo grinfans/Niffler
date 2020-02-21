@@ -94,7 +94,7 @@ const messages = {
     info: {
       spendable: '지출 가능',
       total: '합계',
-      unfinalization: 'Unfinalization',
+      unfinalization: 'Unfinalized',
       immature: 'Immature'
     },
 
@@ -164,7 +164,7 @@ const messages = {
       failed: '시작 실패, 비밀번호를 확인 해 주십시오',
       failed2: 'HTTP listen failed, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
       failed3: 'Failed to get your public ip; try it later',
-      failed4: 'Localhost http listen is running(http://127.0.0.1:3415). Howerver, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
+      failed4: 'Localhost http listen is running(http://127.0.0.1:3415). However, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
       ip: '귀하의 공개 IP'
     },
 

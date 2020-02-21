@@ -104,7 +104,7 @@ const messages = {
     info: {
       spendable: 'Spendable',
       total: 'Total',
-      unfinalization: 'Unfinalization',
+      unfinalization: 'Unfinalized',
       immature: 'Immature'
     },
 
@@ -128,10 +128,10 @@ const messages = {
 
     fileSend:{
       sendAmount: 'Amount to send',
-      createTxFile: 'Create new transcation file',
+      createTxFile: 'Create new transaction file',
       WrongAmount: 'Wrong amount',
-      saveMsg: 'Save transcation file created',
-      CreateFailed: 'Failed to create new transcation file',
+      saveMsg: 'Save transaction file created',
+      CreateFailed: 'Failed to create new transaction file',
       NotEnough: 'Not enough amount. Keep 0.01 as fee'
     },
 
@@ -142,10 +142,10 @@ const messages = {
       NotEnough: 'Not enough amount. Keep 0.01 as fee',
       WrongAddress: 'Wrong address',
       WrongTxData: 'Failed to build transaction',
-      success: 'Transcation success',
-      TxFailed: 'Send transcation failed',
+      success: 'transaction success',
+      TxFailed: 'Send transaction failed',
       TxResponseFailed: 'Failed to get right respose from receiver',
-      TxCreateFailed: 'Create transcation failed',
+      TxCreateFailed: 'Create transaction failed',
       salteVersion: 'Slate file version',
       salteVersionHelp: 'If you failed to send grin, try change the Slate file version then resend'
     },
@@ -154,18 +154,18 @@ const messages = {
       dropMsg: 'Drop transaction file received',
       WrongFileType: 'Wrong transaction file type',
       saveMsg: 'Save response transaction file created',
-      CreateFailed: 'Failed to create new response transcation file',
+      CreateFailed: 'Failed to create new response transaction file',
       NoSavePlace: 'Please choose the location to save',
     },
 
     finalize: {
       finalize: 'Finalize',
-      success: 'Transcation success',
+      success: 'transaction success',
       ok:'OK',
       sending: 'Sending',
       dropMsg: 'Drop response transaction file to finalize',
       WrongFileType: 'Wrong transaction file type',
-      TxFailed: 'transcation failed',
+      TxFailed: 'transaction failed',
     },
 
     httpReceive: {
@@ -182,7 +182,7 @@ const messages = {
       failed: 'Start Failed, Maybe wrong password',
       failed2: 'HTTP listen failed, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
       failed3: 'Failed to get your public ip; try it later',
-      failed4: 'Localhost http listen is running(http://127.0.0.1:3415). Howerver, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
+      failed4: 'Localhost http listen is running(http://127.0.0.1:3415). However, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
       ip: 'your public ip'
     },
 

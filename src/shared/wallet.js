@@ -175,17 +175,17 @@ class WalletService {
         }, 500)
     }
     
-    static startListen(gnode, password=password_, no_tor=true){
+    static startListen(gnode, password=password_, noTor=true){
         WalletService.stopProcess('listen')
         if(platform==='linux'){
-            if(no_tor){
+            if(noTor){
                 listenProcess =  execFile(grinWalletPath, ['-r', gnode, '-e', 'listen', '-n'])
             }else{
                 listenProcess =  execFile(grinWalletPath, ['-r', gnode, '-e', 'listen'])
             }
         }else{
             let cmd
-            if(no_tor){
+            if(noTor){
                 cmd = platform==='win'? `${grinWalletPath} -r ${gnode} -e --pass ${addQuotations(password)} listen -n`:
                                         `${grinWalletPath} -r ${gnode} -e listen -n`
             //log.debug(`platform: ${platform}; start listen cmd: ${cmd}`)

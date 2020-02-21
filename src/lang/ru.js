@@ -172,7 +172,7 @@ const messages = {
       failed: 'Не удалось запустить, возможно введен неверный пароль',
       failed2: 'Сбой при прослушивании HTTP, ваш публичный IP недоступен для других пользователей. Попробуйте использовать отправку файла транзакции или Hedwig.',
       failed3: 'Не удалось получить ваш публичный IP; попробуйте позже',
-      failed4: 'Localhost http listen is running(http://127.0.0.1:3415). Howerver, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
+      failed4: 'Localhost http listen is running(http://127.0.0.1:3415). However, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
       ip: 'Ваш публичный IP'
     },
 
