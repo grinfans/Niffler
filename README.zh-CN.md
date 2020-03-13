@@ -78,6 +78,9 @@ git clone https://github.com/grinfans/niffler.git && cd niffler
 
 # 安装依赖
 npm install
+cd hedwig
+npm install
+
 
 # 开发者模式
 npm run dev
