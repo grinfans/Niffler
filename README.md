@@ -60,6 +60,8 @@ git clone https://github.com/grinfans/niffler.git && cd niffler
 
 # install dependencies
 npm install
+cd hedwig
+npm install
 
 # serve with hot reload at localhost:9080
 npm run dev
