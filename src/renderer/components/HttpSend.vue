@@ -26,6 +26,13 @@
           </div>
         </div>
 
+         <div class="field">
+          <label class="label">{{ $t("msg.httpSend.sendMessage") }} ({{ $t('msg.httpSend.optional') }})</label>
+          <div class="control">
+            <input class="input" type="text" v-model="message">
+          </div>
+        </div>
+
         <br/>
         <div class="field is-grouped">
           <div class="control">
@@ -71,6 +78,7 @@ export default {
     return {
       errors: [],
       amount: null,
+      message: '',
       address: '',
       slateVersion: 0,
       sending: false,
@@ -235,11 +243,11 @@ export default {
         let tx_data = {
           "src_acct_name": null,
           "amount": this.amount * 1000000000, 
+          "message": this.message,
           "minimum_confirmations": 10,
           "max_outputs": 500,
           "num_change_outputs": 1,
           "selection_strategy_is_use_all": true,
-          "message": null,
           "target_slate_version": null,
           "payment_proof_recipient_address": null,
           "ttl_blocks": null,
@@ -254,7 +262,7 @@ export default {
 
         this.$walletService.issueSendTransaction(tx_data).then(
           (res) => {
-            this.$log.debug('send2 issueSendTransaction return: '+ res)
+            this.$log.debug('send2 issueSendTransaction return: '+ JSON.stringify(res))
             let slate = res.data.result.Ok
             tx_id = slate.id
             this.sent = true

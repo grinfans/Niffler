@@ -106,7 +106,6 @@
   "dependencies": {
     "animate.css": "^3.7.0",
     "app-root-dir": "^1.0.2",
-    "axios": "^0.19.0",
     "bufferutil": "^4.0.1",
     "bulma": "^0.7.4",
     "bulma-pageloader": "^0.3.0",
@@ -137,12 +136,13 @@
     "vue": "^2.5.16",
     "vue-awesome": "^3.5.3",
     "vue-electron": "^1.0.6",
-    "vue-i18n": "^8.10.0",
+    "vue-i18n": "^8.16.0",
     "vue-moment": "^4.1.0",
     "vue-truncate-filter": "^1.1.7"
   },
   "devDependencies": {
     "ajv": "^6.5.0",
+    "axios": "^0.19.2",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-runtime": "^6.23.0",

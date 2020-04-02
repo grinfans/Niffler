@@ -138,6 +138,8 @@ const messages = {
 
     httpSend:{
       sendAmount: '发送数量',
+      sendMessage: '消息',
+      optional: '可选',
       address:'发送地址',
       WrongAmount: '发送数量错误',
       NotEnough: '没有足够的余额，请至少留下0.01作为手续费',
@@ -149,7 +151,7 @@ const messages = {
       TxCreateFailed: '发起交易失败',
       salteVersion: '交易文件版本',
       salteVersionHelp: '如果发送交易失败，可以试下改变交易文件版本',
-      noTor: '洋葱网络没有启动，需要先启动洋葱网络'
+      noTor: '洋葱网络没有启动，需要先启动洋葱网络',   
     },
 
     fileReceive: {

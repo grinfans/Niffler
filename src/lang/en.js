@@ -137,6 +137,8 @@ const messages = {
 
     httpSend:{
       sendAmount: 'Amount to send',
+      sendMessage: 'Message',
+      optional: 'optional',
       address:'Address',
       WrongAmount: 'Wrong amount',
       NotEnough: 'Not enough amount. Keep 0.01 as fee',
@@ -147,7 +149,8 @@ const messages = {
       TxResponseFailed: 'Failed to get right respose from receiver',
       TxCreateFailed: 'Create transaction failed',
       salteVersion: 'Slate file version',
-      salteVersionHelp: 'If you failed to send grin, try change the Slate file version then resend'
+      salteVersionHelp: 'If you failed to send grin, try change the Slate file version then resend',
+      noTor: 'Lauch Tor first.',   
     },
 
     fileReceive: {
