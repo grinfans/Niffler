@@ -24,7 +24,7 @@ In other words，**You could withdraw grin from any exchanges and miner pool eff
 
 Contact me: xiaojay@gmail.com
 
-Gitter room: https://gitter.im/niffler-wallet/community
+Telegram group: https://t.me/nifflerwallet
 
 
 <img src="/src/renderer/assets/logo.png" width="256"> Logo made by [@Duoasa](https://weibo.com/u/3197271025)
