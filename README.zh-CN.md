@@ -38,7 +38,7 @@ https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-0.5.0-linux-amd64.AppImag
 
 联系我: xiaojay@gmail.com
 
-用户讨论室 https://gitter.im/niffler-wallet/community
+Telegram group: https://t.me/nifflerwallet
 
 客服qq： 1573479696
 
