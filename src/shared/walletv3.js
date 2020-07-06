@@ -154,6 +154,104 @@ class WalletServiceV3 {
             'password': password
         })
     }
+
+    static openWallet(name, password){
+        WalletServiceV3.postEncrypted('open_wallet', {
+            'name': name,
+            'password': password
+        }).then((res)=>{
+            console.log('open_wallet return: ' + JSON.stringify(res.data))
+            token = res.data.result.Ok
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
+    
+    static getNodeHeight(){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('node_height', {
+            'token': token
+        })
+    }
+
+    static getAccounts(){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('accounts', {
+            'token': token
+        })
+    }
+
+    static getSummaryInfo(refresh_from_node, minimum_confirmations){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('retrieve_summary_info', {
+            'token': token,
+            'refresh_from_node': refresh_from_node,
+            'minimum_confirmations': minimum_confirmations
+        })
+    }
+
+    static getTransactions(refresh_from_node, tx_id, tx_slate_id){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('retrieve_txs', {
+            'token': token,
+            'refresh_from_node': refresh_from_node,
+            "tx_id": tx_id,
+			"tx_slate_id": tx_slate_id,
+        })
+    }
+
+    static getCommits(refresh_from_node, include_spent, tx_id){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('retrieve_outputs', {
+            'token': token,
+            'refresh_from_node': refresh_from_node,
+            'include_spent': include_spent,
+            'tx_id': tx_id
+        })
+    }
+
+    static cancelTransactions(refresh_from_node, tx_id, tx_salte_id){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('cancel_tx', {
+            'token': token,
+            'refresh_from_node': refresh_from_node,
+            'tx_id': tx_id,
+            'tx_salte_id': tx_salte_id
+        })
+    }
+
+    static issueSendTransaction(tx_data){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('init_send_tx', {
+            'token': token,
+            'args': tx_data
+        })
+    }
+
+    static lockOutputs(slate, participant_id){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('tx_lock_outputs', {
+            'slate': slate,
+            'participant_id': participant_id
+        })
+    }
+
+    static finalizeTransaction(slate){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('finalize_tx', {
+            'token': token,
+            'slate': slate
+        })
+    }
+
+    static postTransaction(tx, is_fluff){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('post_tx', {
+            'token': token,
+            'tx': tx,
+            'fluff': is_fluff
+        })
+    }
 }
 
 WalletServiceV3.initClient()
