@@ -362,34 +362,6 @@ class WalletService {
             }
         });
     }
-    //https://github.com/mimblewimble/grin-wallet/issues/110
-    //static initR(seeds, newPassword){
-    //    log.debug(grinWalletPath)
-    //    initRProcess = spawn(grinWalletPath, ['init', '-r']);
-    //    localStorage.setItem('initRProcessPID', initRProcess.pid)
-    //    initRProcess.stdout.on('data', (data) => {
-    //        let output = data.toString()
-    //        log.debug('Wallet initR process return: ' + output)
-    //        if (output.includes("Please enter your recovery phrase:")){
-    //            log.debug('function initR: time to entry seeds.')
-    //            initRProcess.stdin.write(seeds + "\n");
-    //        }
-    //        if (output.includes("Recovery word phrase is invalid")){
-    //            log.debug('function initR: invalid seeds.')
-    //            stopProcess('initR')
-    //            return messageBus.$emit('invalidSeeds')
-    //        }
-    //        if (output.startsWith("Password:")){
-    //            log.debug('function initR: time to entry password.')
-    //            initRProcess.stdin.write(newPassword + "\n");
-    //            initRProcess.stdin.write(newPassword + "\n");
-    //        }
-    //        if(output.includes("Command 'init' completed successfully")){
-    //            log.debug('function initR: wallet initRed.')
-    //            return messageBus.$emit('walletInitRed')
-    //        }
-    //    })
-    //}
     
     static stopProcess(processName){
         let pidName = `${processName}ProcessPID`

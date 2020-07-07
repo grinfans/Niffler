@@ -12,6 +12,8 @@ let publicKey
 let sharedSecret //hex string
 let token
 
+//https://docs.rs/grin_wallet_api/4.0.0/grin_wallet_api/trait.OwnerRpc.html
+
 const walletHost = 'http://localhost:3420'
 const jsonRPCUrl = 'http://localhost:3420/v3/owner'
 
@@ -136,7 +138,6 @@ class WalletServiceV3 {
     }
 
     static createConfig(chainType, walletConfig, loggingConfig, torConfig){
-        //https://docs.rs/grin_wallet_api/3.0.0/grin_wallet_api/trait.OwnerRpcS.html#tymethod.create_config
         return WalletServiceV3.postEncrypted('create_config', {
             'chain_type': chainType,
             'wallet_config': walletConfig,
@@ -146,7 +147,6 @@ class WalletServiceV3 {
     }
 
     static createWallet(name, mnemonic, mnemonicLength, password){
-        //https://docs.rs/grin_wallet_api/3.0.0/grin_wallet_api/trait.OwnerRpcS.html#tymethod.create_wallet
         return WalletServiceV3.postEncrypted('create_wallet', {
             'name': name,
             'mnemonic': mnemonic,
@@ -250,6 +250,14 @@ class WalletServiceV3 {
             'token': token,
             'tx': tx,
             'fluff': is_fluff
+        })
+    }
+
+    static startUpdater(freq){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('start_updater', {
+            'token': token,
+            'frequency': freq,
         })
     }
 }
