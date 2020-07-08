@@ -34,7 +34,7 @@ const messages = {
     other: '其他',
 
     loading: '从Grin节点更新状态中 ...',
-
+    waitForLocalGnode: '等待本地Grin节点启动中',
     error: '错误',
 
     login: {

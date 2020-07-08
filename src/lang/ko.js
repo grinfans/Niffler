@@ -36,6 +36,8 @@ const messages = {
 
     other: 'Others',
     loading: 'Updating status from Grin node ...',
+    waitForLocalGnode: 'Wait for local grin node to start',
+
     error: 'Error',
     login: {
       walletExist: 'grin 지갑이 존재합니다; 원래 비밀번호로 로그인 해 주십시오:-)',

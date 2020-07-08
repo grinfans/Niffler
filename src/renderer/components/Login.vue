@@ -25,17 +25,28 @@
             <form class="box">
               <div class="field">
                 <label class="label">{{ $t("msg.password") }}</label>
-                <div class="control">
-                  <input class="input" type="password" placeholder="********" required
-                      :class="{'is-warning': error}" v-model="password">
+                  <div class="control">
+                    <input class="input" type="password" placeholder="********" required disabled v-if="disabled">
+                    <input class="input" type="password" placeholder="********" required
+                        :class="{'is-warning': error}" v-model="password" v-else>
                   </div>
+
                   <p class="help is-warning" v-if="error">{{ $t("msg.wrongPassword") }}</p>
+                  <p class="help is-warning" v-if="disabled">{{ $t("msg.waitForLocalGnode") }}
+                     <span class="animated flash" style="animation-iteration-count:infinite;animation-duration: 3s">.....</span>
+                  </p>
                 </div>
             
                 <div class="field">
-                  <button class="button is-link" @click.prevent="tryLogin" :class="{'is-loading': logining }">
+                 
+                  <button class="button is-link" disabled v-if="disabled">
                     {{ $t("msg.login_") }}
                   </button>
+                  
+                  <button class="button is-link" @click.prevent="tryLogin" :class="{'is-loading': logining }" v-else>
+                    {{ $t("msg.login_") }}
+                  </button>
+
                 </div>
             </form>
 
@@ -75,12 +86,23 @@ export default {
       openRemove: false,
       openGnodeConfig:false,
       version: version,
-      logining: false
+      logining: false,
+
+      disabled: true
     }
   },
   created(){
     messageBus.$on('closeWindowRemove',()=>{this.openRemove = false})
     messageBus.$on('closeWindowGnodeConfig',()=>{this.openGnodeConfig = false})
+   
+    setTimeout(()=>{
+       this.$gnodeService.getStatus().then(
+         this.disabled = false
+       ).catch((err)=>console.log(err))
+    }, 4000)
+    setTimeout(()=>{
+       if(this.disabled)this.disabled=false
+    }, 6000)
   },
   mounted(){
     this.$log.info('isfirst(login.vue)? '+isFirstTime())
@@ -179,7 +201,7 @@ export default {
       }).finally(()=>{
             this.logining = false
       })
-    }
+    },
   }
 }
 </script>

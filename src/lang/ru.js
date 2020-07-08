@@ -36,6 +36,7 @@ const messages = {
 
     other: 'Others',
     loading: 'Updating status from Grin node ...',
+    waitForLocalGnode: 'Wait for local grin node to start',
 
     error: 'Error',
     
