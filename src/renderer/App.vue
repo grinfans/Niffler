@@ -364,12 +364,14 @@
           })
       },
       getHeight(){
-        this.$walletServiceV3.getNodeHeight().then(
-          (res) =>{
-            this.height = parseInt(res.data.result.Ok.height)
-          }).catch((error)=>{
-            this.$log.error('getHeight failed:' + error)
-          })
+        if(this.$walletServiceV3.isWalletOpened()){
+          this.$walletServiceV3.getNodeHeight().then(
+            (res) =>{
+              this.height = parseInt(res.data.result.Ok.height)
+            }).catch((error)=>{
+              this.$log.error('getHeight failed:' + error)
+            })
+        }
       },
 
       updateIsLocalGnode(){

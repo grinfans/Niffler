@@ -96,10 +96,21 @@ export default {
     messageBus.$on('closeWindowGnodeConfig',()=>{this.openGnodeConfig = false})
    
     setTimeout(()=>{
-       this.$gnodeService.getStatus().then(
-         this.disabled = false
-       ).catch((err)=>console.log(err))
+      if(!this.disabled)return
+      this.$gnodeService.getStatus().then((res)=>{
+          this.$log.debug('Local gnode runningafter 4s.')
+          this.disabled = false
+        }).catch((err)=>console.log(err))
     }, 4000)
+
+     setTimeout(()=>{
+      if(!this.disabled)return
+      this.$gnodeService.getStatus().then((res)=>{
+          this.$log.debug('Local gnode running after 2s.')
+          this.disabled = false
+        }).catch((err)=>console.log(err))
+    }, 2000)
+
     setTimeout(()=>{
        if(this.disabled)this.disabled=false
     }, 6000)
@@ -121,7 +132,7 @@ export default {
       
       let selectGnodeAndLogin = async function(){
         
-        setTimeout(()=>this.checkLogin(), 2500)
+        setTimeout(()=>this.checkLogin(), 3000)
 
         let localHeight
         let remoteHeight
@@ -132,7 +143,7 @@ export default {
           this.$dbService.setGnodeLocation('remote')
           this.$log.debug('use remote grin node.')
           return this.$walletService.startOwnerApi(this.password, grinNode)
-        }  
+        }
         if(gnodeOption.connectMethod ==='localAllTime'){
           this.$dbService.setGnodeLocation('local')
           this.$log.debug('use local grin node.')
@@ -185,22 +196,42 @@ export default {
 
     checkLogin(){
       this.$log.debug('check owner api process after try to login')
-      this.$walletService.getAccounts().then(
-        (res) =>{
-          //this.$log.debug('getAccounts return:' + JSON.stringify(res.data))
-          if(res.data.result.Ok){
-            this.$log.debug('owner api process started')
-            this.$walletService.setPassword(this.password)
-            messageBus.$emit('logined')
-          }else{
-            return this.error = true
-          }
-        }).catch((error) => {
-          this.$log.error('check owner api process got error:', error)
-          return this.error = true
-      }).finally(()=>{
-            this.logining = false
+
+      this.$walletServiceV3.initSharedSecret().then(
+        (res)=>{
+          this.$walletServiceV3.openWallet(null, this.password).then(
+            (res)=>{
+              this.$walletServiceV3.getAccounts().then(
+              (res) =>{
+                this.$log.debug('getAccounts return:' + JSON.stringify(res))
+                if(res.result.Ok){
+                  this.$log.debug('owner api process started')
+                  this.$walletService.setPassword(this.password)
+                  messageBus.$emit('logined')
+                }else{
+                  return this.error = true
+                }
+              }).catch((error) => {
+                this.$log.error('check owner api process got error:', error)
+                return this.error = true
+            }).finally(()=>{
+                this.logining = false
+            })
+          }).catch(
+            error=>{
+              this.$log.error('v3 api openWallet got error:', error)
+              this.logining = false
+              return this.error = true
+            }
+          )
+      }
+      ).catch(error=>{
+        this.$log.error('v3 api initSharedSecret got error:', error)
+        this.logining = false
+        return this.error = true
       })
+
+ 
     },
   }
 }

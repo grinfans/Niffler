@@ -120,17 +120,16 @@ class WalletServiceV3 {
 
     static initSharedSecret(){
         return new Promise((resolve, reject)=>{
-                WalletServiceV3.initSecureAPI().then((res)=>{
-                    //console.log('initSharedSecret return: ' + JSON.stringify(res.data))
-                    const remotePublicKey = res.data.result.Ok
-                    sharedSecret = ecdh.computeSecret(remotePublicKey, 'hex', 'hex')
-                    //console.log('sharedSecret: ' + sharedSecret)
-                    resolve(res)
-                }).catch((err)=>{
-                    reject(err)
-                })
-            }
-        )
+            WalletServiceV3.initSecureAPI().then((res)=>{
+                log.debug('initSharedSecret return: ' + JSON.stringify(res))
+                const remotePublicKey = res.data.result.Ok
+                sharedSecret = ecdh.computeSecret(remotePublicKey, 'hex', 'hex')
+                //console.log('sharedSecret: ' + sharedSecret)
+                resolve(res)
+            }).catch((err)=>{
+                reject(err)
+            })
+        })
     }
 
     static getTopLevelDirectory(){
@@ -156,15 +155,24 @@ class WalletServiceV3 {
     }
 
     static openWallet(name, password){
-        WalletServiceV3.postEncrypted('open_wallet', {
-            'name': name,
-            'password': password
-        }).then((res)=>{
-            console.log('open_wallet return: ' + JSON.stringify(res.data))
-            token = res.data.result.Ok
-        }).catch(err=>{
-            console.log(err)
+        log.debug(name, password)
+        return new Promise((resolve, reject)=>{
+            WalletServiceV3.postEncrypted('open_wallet', {
+                'name': name,
+                'password': password
+            }).then((res)=>{
+                log.debug('open_wallet return: ' + JSON.stringify(res))
+                token = res.result.Ok
+                resolve(res)
+            }).catch(err=>{
+                reject(err)
+            })
         })
+    }
+
+    static isWalletOpened(){
+        if(token)return true
+        return false
     }
     
     static getNodeHeight(){
