@@ -268,8 +268,6 @@
         messageBus.$emit('update', true)
       })
       messageBus.$on('update', (showloading)=>{
-        //console.log('updating showloading: ' + showloading)
-
         if(showloading){
           this.isloading=true
         }
@@ -352,7 +350,7 @@
         this.$i18n.locale = 'en'
       },
       checkOwnerApi(){
-        let ret = this.$walletService.getAccounts()
+        let ret = this.$walletServiceV3.getAccounts()
         if(!ret){return false}
         ret.then(
           (res) =>{
@@ -366,7 +364,7 @@
           })
       },
       getHeight(){
-        this.$walletService.getNodeHeight().then(
+        this.$walletServiceV3.getNodeHeight().then(
           (res) =>{
             this.height = parseInt(res.data.result.Ok.height)
           }).catch((error)=>{
@@ -424,12 +422,6 @@
     },
   }
 </script>
-
-<!--
-<style>
-  @import "~bulmaswatch/superhero/bulmaswatch.min.css";
-</style>
--->
 
 <style>
 .icon-running{

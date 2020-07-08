@@ -10,6 +10,7 @@ import 'bulma-pageloader/dist/css/bulma-pageloader.min.css'
 import { remote, ipcRenderer} from 'electron'
 
 import walletService from '../shared/wallet'
+import WalletServiceV3 from '../shared/walletv3'
 import gnodeService from '../shared/gnode'
 import {RemoteGnodeService} from '../shared/gnode'
 import log from '../shared/logger'
@@ -28,6 +29,8 @@ Vue.gnodeService = Vue.prototype.$gnodeService = gnodeService
 Vue.remoteGnodeService = Vue.prototype.$remoteGnodeService = RemoteGnodeService
 
 Vue.walletService = Vue.prototype.$walletService = walletService
+Vue.walletServiceV3 = Vue.prototype.$walletServiceV3 = WalletServiceV3
+
 Vue.dbService = Vue.prototype.$dbService = dbService
 Vue.log = Vue.prototype.$log = log
 
