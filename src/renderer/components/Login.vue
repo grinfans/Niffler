@@ -132,7 +132,7 @@ export default {
       
       let selectGnodeAndLogin = async function(){
         
-        setTimeout(()=>this.checkLogin(), 3000)
+        setTimeout(()=>this.checkLogin(), 4000)
 
         let localHeight
         let remoteHeight
@@ -201,16 +201,13 @@ export default {
         (res)=>{
           this.$walletServiceV3.openWallet(null, this.password).then(
             (res)=>{
-              this.$walletServiceV3.getAccounts().then(
+              this.$walletServiceV3.startUpdater(5000).then(
               (res) =>{
-                this.$log.debug('getAccounts return:' + JSON.stringify(res))
-                if(res.result.Ok){
-                  this.$log.debug('owner api process started')
-                  this.$walletService.setPassword(this.password)
-                  messageBus.$emit('logined')
-                }else{
-                  return this.error = true
-                }
+                this.$log.debug('startUpdater return:' + JSON.stringify(res))
+
+                this.$log.debug('owner api process started')
+                this.$walletService.setPassword(this.password)
+                messageBus.$emit('logined')
               }).catch((error) => {
                 this.$log.error('check owner api process got error:', error)
                 return this.error = true
