@@ -122,9 +122,9 @@
     },
     methods: {
       getTxs(showloading) {
-        this.$walletService.getTransactions(true, null, null)
+        this.$walletServiceV3.getTransactions(false, null, null)
           .then((res) => {
-            let data = res.data.result.Ok[1].reverse()
+            let data = res.result.Ok[1].reverse()
             this.total_txs = this.processTxs(data)
             this.current_txs = this.total_txs.slice(0, this.count_per_page)
             if (this.total_txs.length%this.count_per_page ==0){
@@ -221,9 +221,9 @@
       },
 
       cancel(tx_slate_id){
-        this.$walletService.cancelTransactions(null, tx_slate_id)
+        this.$walletServiceV3.cancelTransactions(false, null, tx_slate_id)
           .then((res) => {
-            if(res.data.result.Ok === null){
+            if(res.result.Ok === null){
               messageBus.$emit('update', true)
               this.openMsg = true
               this.$log.debug(`Cancel tx ${tx_slate_id} ok return:${res.data}`)

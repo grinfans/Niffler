@@ -35,9 +35,11 @@
     },
     methods: {
       getSummaryinfo: function(showloading) {
-        this.$walletService.getSummaryInfo(10)
+        this.$walletServiceV3.getSummaryInfo(false, 10)
           .then( (res) => {
-            let data = res.data.result.Ok
+            //console.log('getSummaryInfo return:' + JSON.stringify(res))
+
+            let data = res.result.Ok
             this.spendable = data[1]['amount_currently_spendable']/1000000000
             this.total = data[1]['total']/1000000000
             this.unconfirmed = data[1]['amount_awaiting_confirmation']/1000000000

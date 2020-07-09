@@ -145,17 +145,17 @@ export const defaultGnodeOptions= {
   'useLocalGnode': true,
   //connnectMethod: localFirst, remoteFirst, localAllTime, remoteAllTime
   'connectMethod':'localFirst',
-  'remoteAddr': 'http://grin3-node.niffler.org:3413',
+  'remoteAddr': 'http://47.114.177.69:3413',
   'localAddr': 'http://127.0.0.1:3413',
   'background': false
 }
-
+3415 
 let gnodeOption_
 function upgradeGnodeOption(){
   let c = getConfig()
   if(c && c.gnode){
     let remote = c.gnode.remoteAddr
-    if(remote && remote.search('grin2')!==-1){
+    if(remote && remote.search('grin3')!==-1){
       gnodeOption_ = defaultGnodeOptions
       c['gnode'] = defaultGnodeOptions
       setConfig(c)

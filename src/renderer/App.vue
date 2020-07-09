@@ -354,8 +354,8 @@
         if(!ret){return false}
         ret.then(
           (res) =>{
-            //this.$log.debug('getAccounts return:' + JSON.stringify(res.data))
-            if(res.data.result.OK){
+            console.log('getAccounts return:' + JSON.stringify(res))
+            if(res.result.OK){
               this.ownerApiRunning = true
             }
           }).catch((error)=>{
@@ -367,7 +367,8 @@
         if(this.$walletServiceV3.isWalletOpened()){
           this.$walletServiceV3.getNodeHeight().then(
             (res) =>{
-              this.height = parseInt(res.data.result.Ok.height)
+              console.log('getNodeHeight return' +JSON.stringify(res))
+              this.height = parseInt(res.result.Ok.height)
             }).catch((error)=>{
               this.$log.error('getHeight failed:' + error)
             })
