@@ -201,7 +201,9 @@
         isGnodeLocal: false,
         isRu: false,
         isloading: false,
-        isScaning: false
+        isScaning: false,
+
+        grinAddress: ''
     }},
     mounted() {
       this.checkNewVersion()
@@ -265,9 +267,10 @@
         this.$walletService.initClient()
         this.ownerApiRunning = true
         this.getHeight()
+        this.getGrinAddress()
         messageBus.$emit('update', true)
       })
-      messageBus.$on('update', (showloading)=>{
+      messageBus.$on('update', (showloading=true)=>{
         if(showloading){
           this.isloading=true
         }
@@ -335,7 +338,7 @@
       ownerApiRunning:function(newVal, old){
         if(newVal){
           ipcRenderer.send('resize', 800, 880)
-          this.autoRefresh(60*2.5*1000)
+          this.autoRefresh(60*1000)
         }else{
           ipcRenderer.send('resize', 600, 480)
         }
@@ -392,7 +395,13 @@
       autoRefresh(interval){
         setInterval(()=>{
           if((this.ownerApiRunning) && (!this.isloading) &&(!this.isScaning)){
-            messageBus.$emit('update')
+            //this.$walletServiceV3.getUpdaterMessages(10).then(res=>{
+            //  console.log('getUpdaterMessages return:' + JSON.stringify(res))
+            //}).catch(err=>{
+            //  console.log('getUpdaterMessages error:' + err)
+            //})
+            ///getUpdaterMessages return:{"id":1,"jsonrpc":"2.0","result":{"Ok":[{"ScanningComplete":"Scanning Complete"},{"Scanning":["Identified 0 wallet_outputs as belonging to this wallet",99]},{"Scanning":["Checking 313 outputs, up to index 7737260. (Highest index: 7737260)",99]},{"Scanning":["Starting UTXO scan",0]},{"UpdatingTransactions":"Updating transactions"},{"UpdatingOutputs":"Updating outputs from node"},{"ScanningComplete":"Scanning Complete"},{"Scanning":["Identified 0 wallet_outputs as belonging to this wallet",99]},{"Scanning":["Checking 319 outputs, up to index 7737260. (Highest index: 7737260)",99]},{"Scanning":["Starting UTXO scan",0]}]}}
+            messageBus.$emit('update', false)
           }
         }, interval)
       },
@@ -402,6 +411,15 @@
         }
         return this.$t('msg.remote')
         
+      },
+
+      getGrinAddress(){
+        this.$walletServiceV3.getSlatepackAddress(0).then(res=>{
+          console.log('getGrinAddress return:' + JSON.stringify(res))
+          this.grinAddress = res.result.Ok
+        }).catch(err=>{
+              console.log('getGrinAddress error:' + err)
+        })
       },
 
       async checkNewVersion(){

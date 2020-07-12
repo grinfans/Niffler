@@ -128,7 +128,7 @@
     },
     
     created () {
-      messageBus.$on('update', (showloading)=>this.getCommits(showloading))
+      messageBus.$on('update', (showloading=true)=>this.getCommits(showloading))
     },
 
     methods: {
@@ -148,11 +148,10 @@
         this.showCopy = -1
       },
       
-      getCommits(showloading) {
-        this.$walletServiceV3.getCommits(false, false, null)
+      getCommits(showloading=true) {
+        this.$walletServiceV3.getCommits(showloading, false, null)
           .then((res) => {
             this.total_commits = this.processCommits(res.result.Ok[1].reverse())
-           
             this.current_commits = this.total_commits.slice(0, this.count_per_page)
             if (this.total_commits.length%this.count_per_page ==0){
               this.pages_count = parseInt(this.total_commits.length/this.count_per_page)

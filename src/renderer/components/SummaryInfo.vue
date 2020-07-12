@@ -31,14 +31,14 @@
       this.getSummaryinfo()
     },
     created () {
-      messageBus.$on('update', (showloading)=>this.getSummaryinfo(showloading))
+      messageBus.$on('update', (showloading=true)=>this.getSummaryinfo(showloading))
     },
     methods: {
-      getSummaryinfo: function(showloading) {
-        this.$walletServiceV3.getSummaryInfo(false, 10)
+      getSummaryinfo: function(showloading=true) {
+        //console.log('getSummaryinfo showloading:', showloading)
+        this.$walletServiceV3.getSummaryInfo(showloading, 10)
           .then( (res) => {
             //console.log('getSummaryInfo return:' + JSON.stringify(res))
-
             let data = res.result.Ok
             this.spendable = data[1]['amount_currently_spendable']/1000000000
             this.total = data[1]['total']/1000000000

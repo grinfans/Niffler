@@ -218,13 +218,12 @@ class WalletServiceV3 {
         })
     }
 
-    static cancelTransactions(refresh_from_node, tx_id, tx_salte_id){
+    static cancelTransactions(tx_id, tx_slate_id){
         if(!token)return
         return WalletServiceV3.postEncrypted('cancel_tx', {
             'token': token,
-            'refresh_from_node': refresh_from_node,
             'tx_id': tx_id,
-            'tx_salte_id': tx_salte_id
+            'tx_slate_id': tx_slate_id
         })
     }
 
@@ -268,6 +267,22 @@ class WalletServiceV3 {
             'frequency': freq,
         })
     }
+
+    static getUpdaterMessages(count){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('get_updater_messages', {
+            'count': count,
+        })
+    }
+
+    static getSlatepackAddress(derivation_index){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('get_slatepack_address', {
+            'token': token,
+            'derivation_index': derivation_index,
+        })
+    }
+
 }
 
 WalletServiceV3.initClient()

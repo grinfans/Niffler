@@ -45,7 +45,7 @@
               <span v-if="tx.status=='confirmed'" class="tag is-link">{{ $t("msg.confirmed") }}</span>
               <div v-if="tx.status=='unconfirmed'" > 
                 <span class="tag is-warning">{{ $t("msg.unconfirmed") }}</span>
-                <button v-if="tx.cancelable" class="button is-small is-link is-outlined" @click="cancel(`${tx.tx_slate_id}`)">
+                <button v-if="tx.cancelable" class="button is-small is-link is-outlined" :class="{'is-loading':tx.tx_slate_id===canceling}" @click="cancel(`${tx.tx_slate_id}`)">
                   {{ $t("msg.cancel") }}
                 </button>
               </div>
@@ -111,19 +111,21 @@
         keyword: "",
         searched: false,
         openMsg: false,
-        msg: this.$t("msg.txs.cancelSuccess")
+        msg: this.$t("msg.txs.cancelSuccess"),
+        canceling: null
       }
     },
     mounted () {
       this.getTxs()
     },
     created () {
-      messageBus.$on('update', (showloading)=>this.getTxs(showloading))
+      messageBus.$on('update', (showloading=true)=>this.getTxs(showloading))
     },
     methods: {
-      getTxs(showloading) {
-        this.$walletServiceV3.getTransactions(false, null, null)
+      getTxs(showloading=true) {
+        this.$walletServiceV3.getTransactions(showloading, null, null)
           .then((res) => {
+            //console.log('getTxs:', JSON.stringify(res))
             let data = res.result.Ok[1].reverse()
             this.total_txs = this.processTxs(data)
             this.current_txs = this.total_txs.slice(0, this.count_per_page)
@@ -221,12 +223,15 @@
       },
 
       cancel(tx_slate_id){
-        this.$walletServiceV3.cancelTransactions(false, null, tx_slate_id)
+        console.log('tx_slate_id', tx_slate_id)
+        this.canceling = tx_slate_id
+        this.$walletServiceV3.cancelTransactions(null, tx_slate_id)
           .then((res) => {
+            console.log('cancelTransactions return:', JSON.stringify(res))
             if(res.result.Ok === null){
               messageBus.$emit('update', true)
               this.openMsg = true
-              this.$log.debug(`Cancel tx ${tx_slate_id} ok return:${res.data}`)
+              this.$log.debug('Cancel tx ${tx_slate_id} ok return:', JSON.stringify(res))
             }else{
               this.$log.error('cancelTransactions ' + tx_slate_id + ' error:' + JSON.stringify(res))
             }
@@ -237,7 +242,10 @@
               let resp = error.response      
               this.$log.error(`resp.data:${resp.data}; status:${resp.status};headers:${resp.headers}`)
             }
-          })        
+          })
+          .finally(()=>{
+            this.canceling = null
+          })       
       },
     }
   }
