@@ -36,6 +36,7 @@ const messages = {
     loading: '从Grin节点更新状态中 ...',
     waitForLocalGnode: '等待本地Grin节点启动中',
     error: '错误',
+    optional: '可选',
 
     login: {
       walletExist: '发现已有Grin钱包存在；请用原有的密码登陆吧 :-)',
@@ -129,11 +130,23 @@ const messages = {
 
     fileSend:{
       sendAmount: '发送数量',
-      createTxFile: '生成交易文件',
+      createTxFile: '生成 Slatepack',
       WrongAmount: '发送数量错误',
+      WrongSlatepackAddress: 'Slatepack 地址不对',
       saveMsg: '保存新生成的交易文件',
       CreateFailed: '生成交易文件错误',
       NotEnough: '没有足够的余额，请至少留下0.01作为手续费',
+
+      slatepack: 'SLATEPACK',
+      slatepackAddress: '接收方的 Slatepack 地址',
+      slatepackAddressTips: 'Slatepack 地址 用于加密slatepack信息 以及 生成付款证明.',
+      slatepackCreated: 'Slatepack 已经生成 !',
+
+      slatepackEncryptedTips: '此slatepack已加密，可以在非加密通道发送',
+      slatepackUnEncryptedTips: '此slatepack没有加密， 请通过安全信道发送',
+      copySlatepack: '复制slatepack',
+      fileSlatepack: '导出slatepack至文件',
+      copied: '已复制slatepack'
     },
 
     httpSend:{

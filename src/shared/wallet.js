@@ -9,7 +9,7 @@ require('promise.prototype.finally').shim();
 import log from './logger'
 import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, 
     nodeApiSecretPath, ownerApiSecretPath, walletTOMLPath, walletPath, walletConfigPath,
-    tempTxDir, gnodeOption} from './config'
+    tempTxDir, gnodeOption, slatepackDir} from './config'
 import { messageBus } from '../renderer/messagebus'
 import GnodeService from './gnode'
 import dbService from '../renderer/db'
@@ -69,6 +69,10 @@ class WalletService {
         }
     }
     
+    static ensureDir(){
+        fse.ensureDirSync(slatepackDir)
+
+    }
     static setPassword(password){
         password_ = password
     }
@@ -174,6 +178,7 @@ class WalletService {
             WalletService.startOwnerApi(password, grinNodeToConnect)
         }, 500)
     }
+    
     
     static startListen(gnode, password=password_, noTor=true){
         WalletService.stopProcess('listen')
@@ -286,7 +291,7 @@ class WalletService {
                 fs.readFile(fn, function(err, buffer) {
                     if (err) return reject(err)
                     //fse.remove(fn)
-                    return resolve(JSON.parse(buffer.toString()))
+                    return resolve(JSON.parse(bffer.toString()))
                 });
             }).catch((err)=>{
                 return reject(err)
@@ -298,6 +303,22 @@ class WalletService {
         let fn = path.join(tempTxDir, String(Math.random()).slice(2) + '.temp.tx.resp')
         fs.writeFileSync(fn, JSON.stringify(slate))
         return WalletService.finalize(fn)
+    }
+
+    static ouputFinalizedSlate(tx_id, slate){
+        let fn = path.join(slatepackDir, tx_id + '.finalized.slatepack')
+        fs.writeFileSync(fn, JSON.stringify(slate))
+    }
+
+    static finalizeByCli(fn, gnode){
+        let grin = grinWalletPath
+        if(platform==='win'){
+            grin = grinWalletPath.slice(1,-1)
+        }
+        let cmd = `${grin} -r ${gnode} -p ${password_} finalize -i ${fn}`
+        log.debug('finalize by cli cmd is : ' + cmd)
+
+        return execPromise(cmd)
     }
 
     static check(cb, gnode, password){
@@ -395,4 +416,5 @@ class WalletService {
     }
 }
 WalletService.initClient()
+WalletService.ensureDir()
 export default WalletService

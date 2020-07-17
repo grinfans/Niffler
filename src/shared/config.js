@@ -89,6 +89,7 @@ export const torConfigPath = path.join(nifflerPath, 'tor', 'torrc')
 export const torDataPath = path.join(nifflerPath, 'tor', 'data')
 export const torHSDataPath = path.join(nifflerPath, 'tor', 'hs_data')
 export const torLogPath = path.join(nifflerPath, 'tor', 'tor.log')
+export const slatepackDir = path.join(nifflerPath, 'slatepack')
 
 export const releaseUrl = 'https://api.github.com/repos/grinfans/niffler/releases/latest'
 export const downloadUrl = 'https://github.com/grinfans/niffler/releases/latest'

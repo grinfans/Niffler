@@ -235,11 +235,11 @@ class WalletServiceV3 {
         })
     }
 
-    static lockOutputs(slate, participant_id){
+    static lockOutputs(slate){
         if(!token)return
         return WalletServiceV3.postEncrypted('tx_lock_outputs', {
-            'slate': slate,
-            'participant_id': participant_id
+            'token': token,
+            'slate': slate
         })
     }
 
@@ -251,11 +251,11 @@ class WalletServiceV3 {
         })
     }
 
-    static postTransaction(tx, is_fluff){
+    static postTransaction(slate, is_fluff){
         if(!token)return
         return WalletServiceV3.postEncrypted('post_tx', {
             'token': token,
-            'tx': tx,
+            'slate': slate,
             'fluff': is_fluff
         })
     }
@@ -283,6 +283,34 @@ class WalletServiceV3 {
         })
     }
 
+    static createSlatepackMessage(slate, sender_index, recipients){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('create_slatepack_message', {
+            'token': token,
+            'sender_index': sender_index,
+            'recipients': recipients,
+            'slate': slate
+        })
+    }
+
+    static decodeSlatepackMessage(message, secret_indices){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('decode_slatepack_message', {
+            'token': token,
+            'message':message,
+            'secret_indices': secret_indices
+        })
+    }
+
+    static getSlateFromSlatepackMessage(message, secret_indices){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('slate_from_slatepack_message', {
+            'token': token,
+            'message':message,
+            'secret_indices': secret_indices
+        })
+    }
+    
 }
 
 WalletServiceV3.initClient()
