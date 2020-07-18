@@ -2,38 +2,61 @@
 
 <div class="modal" :class="{'is-active': showModal}">
   <div class="modal-background" @click="closeModal"></div>
-  <div class="modal-card" style="width:480px">
+  <div class="modal-card" style="width:520px">
     <header class="modal-card-head">
       <p class="modal-card-title is-size-4 has-text-link has-text-weight-semibold">{{ $t("msg.finalize.finalize") }}</p>
       <button class="delete" aria-label="close" @click="closeModal"></button>
     </header>
-    <section class="modal-card-body" style="height:320px;background-color: whitesmoke;">
+    <section class="modal-card-body" style="height:450px;background-color: whitesmoke;">
       
       <div class="notification is-warning" v-if="errors.length">
-        <p v-for="error in errors" :key="error.id">{{ error }}</p>
+        <p v-for="error in errors" :key="error.id" class="is-size-6">{{ error }}</p>
       </div>
-      <div class="center">
-        <a class="button is-link is-outlined" v-if="errors.length" @click="clearup">{{ $t("msg.clearup") }}</a>
-      </div>
-
-      <div class="notification is-link" v-show="isSent">
+      
+      <div v-if="status==='sent'">
+      <div class="notification is-link" >
         {{ $t("msg.finalize.success") }}
       </div>
       <div class="center">
-        <a class="button is-link is-outlined" v-show="isSent" @click="closeModal">
+        <a class="button is-link is-outlined" @click="closeModal">
           {{ $t("msg.finalize.ok") }}
         </a>
       </div>
+      </div>
 
-      <div v-show="isSending">
+      <div v-if="status==='sending'">
         <p class="is-size-5">{{ $t("msg.finalize.sending") }}</p>
         <br/>
         <progress class="progress is-link" max="100"></progress>
       </div>
 
-      <div class="center" v-show="toDrag" id="filebox2" v-bind:class="{'drag-over':isDragOver}"
-         @dragover.prevent="isDragOver=true" @dragleave.prevent="isDragOver=false" @drop.prevent="drop">
-        <p class="is-size-5 has-text-link has-text-weight-semibold">{{ $t("msg.finalize.dropMsg") }}</p>
+      <div v-if="status==='toSend'">
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-link is-small" @click="open">{{ $t("msg.finalize.toOpen") }}</button>
+          </div>
+          <div class="control">
+            <p class="has-text-link is-size-7" style="margin-top:8px">{{ $t("msg.finalize.toPaste") }} </p>
+          </div>
+        </div>
+        <div id="slatepack_box" contenteditable="true" @paste.prevent="paste">
+          <div style="padding:10px">
+            <p v-for="line in slatepackToDispaly" :key="line.id" class="is-family-monospace is-size-7 has-text-link">
+              {{line}}
+            </p>
+          </div>
+        </div>
+        <br/>
+        <div class="field is-grouped">
+          <div class="control">
+            <button v-if="slatepack" class="button is-link is-small" @click="send">{{ $t("msg.finalize.send") }}</button>
+            <button v-else class="button is-link is-small"  disabled>{{ $t("msg.finalize.send") }}</button>
+          </div>
+          <div class="control">
+            <button class="button is-small is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
+          </div>
+        </div>
+
       </div>
 
     </section>
@@ -44,6 +67,8 @@
 </template>
 <script>
 import { messageBus } from '@/messagebus'
+import {grinNode, grinLocalNode} from '../../shared/config'
+
 const fs = require('fs');
 
 export default {
@@ -51,94 +76,125 @@ export default {
   props: {
     showModal: {
       type: Boolean,
-      default: false
+      default: false,
     }
   },
   data() {
     return {
       errors: [],
-      toDrag:true,
-      isDragOver:false,
-      isSent:false,
-      isSending:false
+      status: 'toSend',
+      slatepack: null
+    }
+  },
+  watch: {
+    errors:function(newVal, oldVal){
+      if(newVal.length > 0){
+        setTimeout(()=>this.errors = [], 
+        6*1000)
+      }
+    }
+  },
+  computed: {
+    slatepackToDispaly: function() {
+      if(this.slatepack){
+        let res = this.slatepack.split(' ')
+        let head = res.shift()
+        let end = res.pop()
+        let result = [head, ]
+        let line = []
+        for (let i = 0; i < res.length; i++) {
+          if(i%4 === 0){
+            if(line.length>0)result.push(line.join(' '))
+            line = [res[i]]
+          }else{
+            line.push(res[i])
+          }
+        }
+        result.push(end)
+        return result
+      }else{
+        return null
+      }
     }
   },
   methods: {
+    validSlatepack(slatepack){
+      if(!slatepack.startsWith('BEGINSLATEPACK'))return false
+      return true
+    },
     closeModal() {
       this.clearup()
       messageBus.$emit('close', 'windowFinalize');
     },
-
-    drop(event){
-      let fn = event.dataTransfer.files[0]
-      this.toDrag = false
-
-      if(this.fileTypeIsSupported(fn)){
-        let tx_id
-        let content
-        
-        try{
-          content = fs.readFileSync(fn.path).toString();
-          let data = JSON.parse(content)
-          tx_id = data.id
-          this.$log.debug('tx to finalize is ' + tx_id)
-        }catch(e){
-          this.$log.error('read tx file error:' + e)
-          this.errors.push(this.$t('msg.finalize.WrongFileType'))
-          return
-        }
-
-        this.isSending = true
-        let send = async function(){
-          try{
-            let res = await this.$walletService.finalizeTransaction(JSON.parse(content))
-            tx_id = res.data.result.Ok.id
-            let tx = res.data.result.Ok.tx
-            let res2 = await this.$walletService.postTransaction(tx, true)
-            this.isSent = true
-            this.$dbService.addPostedUnconfirmedTx(tx_id)
-            this.$log.debug(`finalize tx ${tx_id} ok; return:${res.data}`)
-            this.$log.debug(`post tx ok; return:${res2.data}`)
-          }catch(error){
-            this.$log.error('finalize or post error:' + error)   
-            if (error.response) {   
-              let resp = error.response      
-              this.$log.error(`resp.data:${resp.data}; status:${resp.status};headers:${resp.headers}`)
-            }
-            this.errors.push(this.$t('msg.finalize.TxFailed'))
-          }finally{
-            this.isSending = false
-            messageBus.$emit('update', true)
-          }
-        }
-        send.call(this)
-        //let finalize = async function(){
-        //  try{
-        //    let res = await this.$walletService.finalize(fn.path)
-        //    this.isSent = true
-        //    if(tx_id)this.$dbService.addPostedUnconfirmedTx(tx_id)
-        //    this.$log.debug(`finalize tx ${tx_id} ok; return:${res}`)
-        //  }catch(error){
-        //    this.$log.error('finalize or post error:' + error)        
-        //    this.errors.push(this.$t('msg.finalize.TxFailed'))
-        //  }finally{
-        //    this.isSending = false
-        //    messageBus.$emit('update')
-        //  }
-        //}
-        //finalize.call(this)
+    paste(evt){
+      let sp = evt.clipboardData.getData('text')
+      if(this.validSlatepack(sp)){
+        this.slatepack = evt.clipboardData.getData('text')
       }else{
-        this.errors.push(this.$t('msg.finalize.WrongFileType'))
+        this.errors.push(this.$t('msg.finalize.WrongSlatepack'))
       }
     },
+
+    open(){
+      let filePaths = this.$electron.remote.dialog.showOpenDialog({
+          title: this.$t('msg.open'),
+          message: this.$t('msg.finalize.openMsg'),
+        })
+      if(filePaths.length > 0){
+        let fn = filePaths[0]
+        let content = fs.readFileSync(fn).toString().trim()
+        if(this.validSlatepack(content)){
+          this.slatepack = content
+        }else{
+          this.errors.push(this.$t('msg.finalize.WrongSlatepack'))
+        }
+      }
+    },
+
+    send(){
+      let tx_id
+      this.status = 'sending'
+
+      let fn = this.$walletService.createSlatepackFile(this.slatepack)
+
+      let finalize = async function(){
+        let gnode = grinNode
+        let localGnodeStatus = this.$dbService.getLocalGnodeStatus()
+        this.$log.debug('check grin local status before finalize: ' + localGnodeStatus)
+        if(localGnodeStatus == 'running'){
+          gnode = grinLocalNode
+        }
+        this.$log.debug('finalize use grin node:' + gnode)
+        await new Promise(r => setTimeout(r, 1000))
+        try{
+          let res = await this.$walletService.finalizeByCli(fn, gnode)
+          this.status = 'sent'
+          if(tx_id)this.$dbService.addPostedUnconfirmedTx(tx_id)
+          this.$log.debug(`finalize tx ${tx_id} ok; return:${res}`)
+        }catch(error){
+          this.$log.error('finalize or post error:' + error)        
+          this.errors.push(this.$t('msg.finalize.TxFailed'))
+
+          await new Promise(r => setTimeout(r, 4000))
+
+          this.status = 'toSend'
+        }finally{
+          messageBus.$emit('update')
+        }
+      }
+
+      finalize.call(this)
+    },
+
+    
+   
     clearup(){
       this.errors = []
-      this.toDrag = true
-      this.isDragOver = false
-      this.isSent = false
-      this.isSending= false
+      this.status = 'toSend'
+      this.slatepack = null
     },
     fileTypeIsSupported(file){
+      return true
       if( !file.type || file.type.search('text')!=-1 ||	file.type.search('json')!=-1){
         return true
       }else{
@@ -149,17 +205,12 @@ export default {
 }
 </script>
 <style>
-#filebox2 {
+#slatepack_box {
   height:280px;
+  overflow-y: scroll;
   border-style:dashed; 
   border-width:2px;
-  color:#dbdbdb;/*#3273dc;*/
-  background-color: white;
-
-}
-
-#filebox2.drag-over{
-  border-color:#22509a;
+  border-color:#dbdbdb;
   background-color:#f6f9fe;
 }
 

@@ -310,6 +310,12 @@ class WalletService {
         fs.writeFileSync(fn, JSON.stringify(slate))
     }
 
+    static createSlatepackFile(slatepack){
+        let fn = path.join(slatepackDir, String(Math.random()).slice(2) + '.slatepack')
+        fs.writeFileSync(fn, slatepack)
+        return fn
+    }
+
     static finalizeByCli(fn, gnode){
         let grin = grinWalletPath
         if(platform==='win'){

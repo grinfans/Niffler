@@ -259,7 +259,7 @@ export default {
   border-width:2px;
   border-color:#dbdbdb;
   background-color:#f6f9fe;
-
+  outline: none;
 }
 
 </style>

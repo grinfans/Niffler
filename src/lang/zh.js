@@ -37,6 +37,7 @@ const messages = {
     waitForLocalGnode: '等待本地Grin节点启动中',
     error: '错误',
     optional: '可选',
+    open: '打开',
 
     login: {
       walletExist: '发现已有Grin钱包存在；请用原有的密码登陆吧 :-)',
@@ -146,7 +147,7 @@ const messages = {
       slatepackUnEncryptedTips: '此slatepack没有加密， 请通过安全信道发送',
       copySlatepack: '复制slatepack',
       fileSlatepack: '导出slatepack至文件',
-      copied: '已复制slatepack'
+      copied: '已复制'
     },
 
     httpSend:{
@@ -182,7 +183,12 @@ const messages = {
       sending: '发送中',
       dropMsg: '拖入需要确认的交易文件',
       WrongFileType: '交易文件类型错误',
+      WrongSlatepack: 'Slatepack 内容不对',
       TxFailed: '交易失败',
+      toPaste: 'or 直接复制slatepack, 并黏贴到下面输入框',
+      toOpen: '读取slatepack文件',
+      send: '完结并发送交易',
+      openMsg: '打开 slatepack 文件'
     },
 
     httpReceive: {
