@@ -260,6 +260,16 @@ class WalletServiceV3 {
         })
     }
 
+    static receiveTransaction(slate, account, dest){
+        if(!token)return
+        return WalletServiceV3.postEncrypted('receive_tx', {
+            'token': token,
+            'slate': slate,
+            'dest_acct_name': account,
+            'dest': dest
+        })
+    }
+
     static startUpdater(freq){
         if(!token)return
         return WalletServiceV3.postEncrypted('start_updater', {
@@ -310,7 +320,7 @@ class WalletServiceV3 {
             'secret_indices': secret_indices
         })
     }
-    
+
 }
 
 WalletServiceV3.initClient()

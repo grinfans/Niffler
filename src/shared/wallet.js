@@ -128,6 +128,10 @@ class WalletService {
         return WalletService.jsonRPC('receive_tx', [slate, account, message], true)
     }
 
+    static receiveTransaction2(slate, account, dest){
+        return WalletService.jsonRPC('receive_tx', [slate, account, dest], true)
+    }
+
     static issueSendTransaction(tx_data){
         return WalletService.jsonRPC('init_send_tx',  {'args': tx_data})
     }

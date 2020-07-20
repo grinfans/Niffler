@@ -38,6 +38,7 @@ const messages = {
     error: '错误',
     optional: '可选',
     open: '打开',
+    close: '关闭',
 
     login: {
       walletExist: '发现已有Grin钱包存在；请用原有的密码登陆吧 :-)',
@@ -131,10 +132,10 @@ const messages = {
 
     fileSend:{
       sendAmount: '发送数量',
-      createTxFile: '生成 Slatepack',
+      createTxFile: '生成 slatepack',
       WrongAmount: '发送数量错误',
       WrongSlatepackAddress: 'Slatepack 地址不对',
-      saveMsg: '保存新生成的交易文件',
+      saveMsg: '保存新生成的slatepack文件',
       CreateFailed: '生成交易文件错误',
       NotEnough: '没有足够的余额，请至少留下0.01作为手续费',
 
@@ -171,9 +172,20 @@ const messages = {
     fileReceive: {
       dropMsg: '拖入收到的交易文件',
       saveMsg: '保存新生成的回应交易文件',
-      CreateFailed: '生成回应交易文件错误',
+      CreateFailed: '生成回应slatepack错误',
       NoSavePlace: '请选择生成交易文件的位置',
       WrongFileType: '交易文件类型错误',
+      toOpen: '读取slatepack文件',
+      toPaste: 'or 直接复制slatepack, 并黏贴到下面输入框',
+      create: '生成回应 slatepack',
+      WrongSlatepack: 'Slatepack 内容不对',
+      openMsg: '打开 slatepack 文件',
+      sender: '发送方',
+      slatepackCreated: '回应Slatepack 已经生成 !',
+      copySlatepack: '复制 回应slatepack',
+      fileSlatepack: '导出 回应slatepack至文件',
+      copied: '已复制',
+      saveMsg: '保存新生成的 回应slatepack',
     },
     
     finalize: {

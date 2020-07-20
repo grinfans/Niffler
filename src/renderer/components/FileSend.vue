@@ -39,7 +39,7 @@
             <button class="button is-link is-small" @click="save">{{ $t("msg.fileSend.fileSlatepack") }}</button>
           </div>
           <div class="control">
-            <button class="button is-small is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
+            <button class="button is-small is-text" @click="closeModal">{{ $t("msg.close") }}</button>
           </div>
         </div>
 
@@ -68,7 +68,7 @@
             <button class="button is-small is-link" v-bind:class="{'is-loading':creating}" @click="send">{{ $t("msg.fileSend.createTxFile") }}</button>
           </div>
           <div class="control">
-            <button class="button is-small is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
+            <button class="button is-small is-text" @click="closeModal">{{ $t("msg.close") }}</button>
           </div>
         </div>
       </div>
@@ -241,7 +241,7 @@ export default {
           message: this.$t('msg.fileSend.saveMsg'),
         })
         if(fn_output){
-          fn_output = fn_output + '.slatepack'
+          fn_output = fn_output + '.S1.slatepack'
           fs.writeFileSync(fn_output, this.slatepack)
           this.closeModal()
         }
