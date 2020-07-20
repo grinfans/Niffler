@@ -40,6 +40,8 @@ const messages = {
     open: '打开',
     close: '关闭',
 
+    address: 'Slatepack 地址',
+
     login: {
       walletExist: '发现已有Grin钱包存在；请用原有的密码登陆吧 :-)',
     },
@@ -101,7 +103,8 @@ const messages = {
       no: '暂时不更新',
 
       hedwig: '用Hedwig收币',
-      tor: '洋葱网络(Tor)'
+      tor: '洋葱网络(Tor)',
+      address: 'Slatepack 地址',
 
     },
 
@@ -338,6 +341,14 @@ const messages = {
       errorInvalidProxy: '无效代理',
       saved: '设置已经保存, 下次启动洋葱网络时生效.'
     },
+
+    gaddress:{
+      address: '你的 slatepack地址',
+      copied: '已复制',
+      copy: '复制 slatepack地址', 
+      tips: 'slatepack 地址 用于加密slatepack信息以及付款证明，并不会存储在Grin区块链上.'
+      
+    }
     
   }
 }

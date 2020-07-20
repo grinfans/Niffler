@@ -54,6 +54,11 @@
                 </a>
                 
                 <hr class="dropdown-divider">
+                <a class="dropdown-item" @click="openAddress = true">
+                  {{ $t("msg.app.address") }}
+                </a>
+
+                <hr class="dropdown-divider">
                 <a class="dropdown-item" @click="openHedwigV1 = true">
                   <span class="icon-running icon-status animated infinite pulse delay-2s" v-if="hedwigRunning"></span>
                   <span class="icon-failed icon-status animated infinite pulse delay-2s" v-if="hedwigFailed"></span>
@@ -126,7 +131,7 @@
       <lang :showModal="openLang"></lang>
       <gnode :showModal="openGnode"></gnode>
       <tor :showModal="openTor"></tor>
-
+      <gaddress :showModal="openAddress"></gaddress>
     </div>
     <landing v-bind:walletExist="walletExist" v-else></landing>
   </div>
@@ -150,6 +155,7 @@
   import Gnode from '@/components/Gnode'
   import Landing from '@/components/Landing'
   import Tor from '@/components/Tor'
+  import Gaddress from '@/components/Address'
 
   import checkUpdate from '../shared/updateChecker'
   import {downloadUrl, locale, gnodeOption} from '../shared/config'
@@ -173,7 +179,8 @@
       Landing,
       Lang,
       Gnode,
-      Tor
+      Tor,
+      Gaddress
     },
     data(){
       return {
@@ -187,6 +194,7 @@
         openLang:false,
         openGnode:false,
         openTor:false,
+        openAddress:false,
 
         isDroppingDown: false,
         isDroppingDown2: false,
@@ -202,8 +210,6 @@
         isRu: false,
         isloading: false,
         isScaning: false,
-
-        grinAddress: ''
     }},
     mounted() {
       this.checkNewVersion()
@@ -257,6 +263,9 @@
         if(window =='windowTor'){
           this.openTor = false
         }
+        if(window =='windowAddress'){
+          this.openAddress = false
+        }
       })
       messageBus.$on('restoredThenLogin', ()=>{
         this.$log.info('wallet restored and now to login')
@@ -267,7 +276,6 @@
         this.$walletService.initClient()
         this.ownerApiRunning = true
         this.getHeight()
-        this.getGrinAddress()
         messageBus.$emit('update', true)
       })
       messageBus.$on('update', (showloading=true)=>{
@@ -413,14 +421,7 @@
         
       },
 
-      getGrinAddress(){
-        this.$walletServiceV3.getSlatepackAddress(0).then(res=>{
-          console.log('getGrinAddress return:' + JSON.stringify(res))
-          this.grinAddress = res.result.Ok
-        }).catch(err=>{
-              console.log('getGrinAddress error:' + err)
-        })
-      },
+      
 
       async checkNewVersion(){
         let toUpdate = await checkUpdate()
