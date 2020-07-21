@@ -128,7 +128,7 @@ class WalletService {
         return WalletService.jsonRPC('receive_tx', [slate, account, message], true)
     }
 
-    static receiveTransaction2(slate, account, dest){
+    static receiveTransaction(slate, account, dest){
         return WalletService.jsonRPC('receive_tx', [slate, account, dest], true)
     }
 
@@ -136,7 +136,7 @@ class WalletService {
         return WalletService.jsonRPC('init_send_tx',  {'args': tx_data})
     }
 
-    static lock_outputs(slate, participant_id){
+    static lockOutputs(slate, participant_id){
         return WalletService.jsonRPC('tx_lock_outputs',  [slate, participant_id])
     }
 

@@ -196,7 +196,7 @@ export default {
           this.$log.debug('getSlateFromSlatepackMessag return:', JSON.stringify(res))
           let slate = res.result.Ok
 
-          res = await this.$walletService.receiveTransaction(slate, null, null)
+          res = await this.$walletService.receiveTransaction2(slate, null, null)
           this.$log.debug('receiveTransaction return:', JSON.stringify(res))
 
           console.log(JSON.stringify(res))

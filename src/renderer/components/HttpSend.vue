@@ -26,17 +26,10 @@
           </div>
         </div>
 
-         <div class="field">
-          <label class="label">{{ $t("msg.httpSend.sendMessage") }} ({{ $t('msg.httpSend.optional') }})</label>
-          <div class="control">
-            <input class="input" type="text" v-model="message">
-          </div>
-        </div>
-
         <br/>
         <div class="field is-grouped">
           <div class="control">
-            <button class="button is-link" v-bind:class="{'is-loading':sending}" @click="send2">{{ $t("msg.send") }}</button>
+            <button class="button is-link" v-bind:class="{'is-loading':sending}" @click="send">{{ $t("msg.send") }}</button>
           </div>
           <div class="control">
             <button class="button is-text" @click="closeModal">{{ $t("msg.cancel") }}</button>
@@ -78,8 +71,7 @@ export default {
     return {
       errors: [],
       amount: null,
-      message: '',
-      address: '',
+      address: 'http://47.114.177.69:3415',
       slateVersion: 0,
       sending: false,
       sent: false,
@@ -150,29 +142,27 @@ export default {
           "minimum_confirmations": 10,
           "max_outputs": 500,
           "num_change_outputs": 1,
-          "selection_strategy_is_use_all": true,
-          "message": null,
+          "selection_strategy_is_use_all": false,
           "target_slate_version": null,
           "payment_proof_recipient_address": null,
           "ttl_blocks": null,
-          "send_args": {
-            "method": "http",
-            "dest": this.address,
-            "finalize": true,
-            "post_tx": true,
-            "fluff": true
-          }
+          "send_args": null
         }
 
         let sendAsync = async function(){
           try{
-            let res = await this.$walletService.issueSendTransaction(tx_data)
-            let slate = res.data.result.Ok
+            let res = await this.$walletServiceV3.issueSendTransaction(tx_data)
+            this.$log.debug('issueSendTransaction return: '+ JSON.stringify(res))
+            let slate = res.result.Ok
             tx_id = slate.id
             if(!tx_id){
               this.errors.push(this.$t('msg.httpSend.TxCreateFailed'))
             }else{
               this.$log.debug('Generate slate file: ' + tx_id)
+
+              let res = await this.$walletServiceV3.createSlatepackMessage(slate, 0, [])
+              this.$log.debug('createSlatepackMessage return: '+ JSON.stringify(res))
+              let slatepack = res.result.Ok
 
               let url = urljoin(this.address, '/v2/foreign')
               const payload = {
@@ -181,7 +171,7 @@ export default {
                 method: 'receive_tx',
                 params: [slate, null, null],
               }
-              const res = await urllib.request(url, {
+              res = await urllib.request(url, {
                 method: 'post',
                 contentType: "application/json",
                 dataType: 'json',
@@ -193,14 +183,18 @@ export default {
               if(slate2){
                 this.$log.debug('Got slate2 file from receiver')
 
-                let res = await this.$walletService.lock_outputs(slate, 0)
+                let res = await this.$walletServiceV3.lockOutputs(slate)
+                this.$log.debug('lockOutputs return res: ' + JSON.stringify(res))
                 this.$log.debug('output locked.')
 
-                res = await this.$walletService.finalizeTransaction(slate2)
-                let tx = res.data.result.Ok.tx
+                res = await this.$walletServiceV3.finalizeTransaction(slate2)
+                this.$log.debug('finalizeTransaction return res: ' + JSON.stringify(res))
+
+                let slate3 = res.result.Ok
                 this.$log.debug('finalized.')
 
-                res = await this.$walletService.postTransaction(tx, true)
+                res = await this.$walletServiceV3.postTransaction(slate3, true)
+                this.$log.debug('postTransaction return res: ' + JSON.stringify(res))
                 this.$log.debug('posted.')
 
                 this.sent = true
@@ -243,27 +237,25 @@ export default {
         let tx_data = {
           "src_acct_name": null,
           "amount": this.amount * 1000000000, 
-          "message": this.message,
           "minimum_confirmations": 10,
           "max_outputs": 500,
           "num_change_outputs": 1,
-          "selection_strategy_is_use_all": true,
+          "selection_strategy_is_use_all": false,
           "target_slate_version": null,
           "payment_proof_recipient_address": null,
           "ttl_blocks": null,
           "send_args": {
-            "method": "http",
             "dest": this.address,
-            "finalize": true,
             "post_tx": true,
-            "fluff": true
+            "fluff": true,
+            "skip_tor":true
           }
         }
 
-        this.$walletService.issueSendTransaction(tx_data).then(
+        this.$walletServiceV3.issueSendTransaction(tx_data).then(
           (res) => {
             this.$log.debug('send2 issueSendTransaction return: '+ JSON.stringify(res))
-            let slate = res.data.result.Ok
+            let slate = res.result.Ok
             tx_id = slate.id
             this.sent = true
             this.$dbService.addPostedUnconfirmedTx(tx_id)
