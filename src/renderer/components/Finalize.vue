@@ -49,7 +49,7 @@
         <br/>
         <div class="field is-grouped">
           <div class="control">
-            <button v-if="slatepack" class="button is-link is-small" @click="send">{{ $t("msg.finalize.send") }}</button>
+            <button v-if="slatepack" class="button is-link is-small" @click="send2">{{ $t("msg.finalize.send") }}</button>
             <button v-else class="button is-link is-small"  disabled>{{ $t("msg.finalize.send") }}</button>
           </div>
           <div class="control">
@@ -186,7 +186,41 @@ export default {
       finalize.call(this)
     },
 
-    
+    send2(){
+      let tx_id
+      this.status = 'sending'
+
+      let finalize = async function(){
+        try{
+          let res = await this.$walletServiceV3.getSlateFromSlatepackMessage(this.slatepack, [0])
+          this.$log.debug('getSlateFromSlatepackMessage return:', JSON.stringify(res))
+          let slate = res.result.Ok
+          
+          res = await this.$walletServiceV3.finalizeTransaction(slate)
+          this.$log.debug('finalizeTransaction return res: ' + JSON.stringify(res))
+          let slate2 = res.result.Ok
+          
+          res = await this.$walletServiceV3.postTransaction(slate2, true)
+          this.$log.debug('postTransaction return res: ' + JSON.stringify(res))
+
+          this.status = 'sent'
+          tx_id = slate2.id
+          if(tx_id)this.$dbService.addPostedUnconfirmedTx(tx_id)
+          this.$log.debug(`finalize tx ${tx_id} ok; return:${res}`)
+        }catch(error){
+          this.$log.error('finalize or post error:' + error)        
+          this.errors.push(this.$t('msg.finalize.TxFailed'))
+
+          await new Promise(r => setTimeout(r, 4000))
+
+          this.status = 'toSend'
+        }finally{
+          messageBus.$emit('update')
+        }
+      }
+
+      finalize.call(this)
+    },
    
     clearup(){
       this.errors = []

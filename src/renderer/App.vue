@@ -278,9 +278,11 @@
         this.getHeight()
         messageBus.$emit('update', true)
       })
-      messageBus.$on('update', (showloading=true)=>{
+      messageBus.$on('update', (showloading=false)=>{
         if(showloading){
           this.isloading=true
+        }else{
+          this.isloading=false
         }
         this.getHeight()
         this.updateIsLocalGnode()
