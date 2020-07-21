@@ -57,20 +57,15 @@
                 <a class="dropdown-item" @click="openAddress = true">
                   {{ $t("msg.app.address") }}
                 </a>
-
-                <hr class="dropdown-divider">
-                <a class="dropdown-item" @click="openHedwigV1 = true">
-                  <span class="icon-running icon-status animated infinite pulse delay-2s" v-if="hedwigRunning"></span>
-                  <span class="icon-failed icon-status animated infinite pulse delay-2s" v-if="hedwigFailed"></span>
-                  {{ $t("msg.app.hedwig") }}
-                </a>
               </div>
             </div>            
           </div>
 
           <div class="column column is-1" style="margin-top: auto; margin-left:25px;">
-            <button class="button is-link is-outlined" v-bind:class="{'is-small2':isRu}" @click="openTor = true">
-                {{ $t("msg.app.tor") }}
+            <button class="button is-link is-outlined" v-bind:class="{'is-small2':isRu}" @click="openHedwigV1 = true">
+               <span class="icon-running icon-status animated infinite pulse delay-2s" v-if="hedwigRunning"></span>
+               <span class="icon-failed icon-status animated infinite pulse delay-2s" v-if="hedwigFailed"></span>
+               {{ $t("msg.app.hedwig") }}
             </button>
           </div>
 
