@@ -31,7 +31,7 @@
             <div>
               <p class="title is-6 is-marginless" @mouseover="(event)=>mouseover(index)" @mouseleave="mouseLeave" >
                 <span v-if="ct.status=='Unconfirmed'" >{{ct.commit| truncate(35)}}</span>
-                <a v-else @click="open(`https://grin-fans.org/commit/${ct.commit}`)">{{ct.commit| truncate(35)}}</a>
+                <a v-else @click="open(`https://grin.blockscan.com//commit/${ct.commit}`)">{{ct.commit| truncate(35)}}</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <span v-if="showCopy===index" @click="copy(index)">
                   <icon name="copy" scale="0.85" ></icon>
@@ -44,7 +44,7 @@
               </p>
               <small>{{ $t("msg.commit.heightCreated") }}: 
                 <span  v-if="ct.status=='Unconfirmed'">{{ct.height}}</span>
-                <a v-else @click="open(`https://grin-fans.org/block/${ct.height}`)">{{ct.height}}</a>
+                <a v-else @click="open(`https://grin.blockscan.com/block/${ct.height}`)">{{ct.height}}</a>
               </small>
             </div>
           </div>
