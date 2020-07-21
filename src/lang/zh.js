@@ -91,10 +91,10 @@ const messages = {
     },
 
     app:{
-      create: '生成交易文件',
-      finalize: '确认交易文件并完结交易',
-      httpSend: '通过 https/http/Tor 发送',
-      createRespFile: '生成回应交易文件',
+      create: '生成 slatepack',
+      finalize: '确认slatepack并完结交易',
+      httpSend: '通过 https/http 发送',
+      createRespFile: '生成回应slatepack',
       httpReceive: '开启http端口接收',
       height:'同步高度',
       updateTitle: '发现新版本',
@@ -104,8 +104,7 @@ const messages = {
 
       hedwig: '用Hedwig收币',
       tor: '洋葱网络(Tor)',
-      address: 'Slatepack 地址',
-
+      address: 'Slatepack地址',
     },
 
     info:{
@@ -149,8 +148,8 @@ const messages = {
 
       slatepackEncryptedTips: '此slatepack已加密，可以在非加密通道发送',
       slatepackUnEncryptedTips: '此slatepack没有加密， 请通过安全信道发送',
-      copySlatepack: '复制slatepack',
-      fileSlatepack: '导出slatepack至文件',
+      copySlatepack: '复制',
+      fileSlatepack: '导出至文件',
       copied: '已复制'
     },
 
@@ -185,8 +184,8 @@ const messages = {
       openMsg: '打开 slatepack 文件',
       sender: '发送方',
       slatepackCreated: '回应Slatepack 已经生成 !',
-      copySlatepack: '复制 回应slatepack',
-      fileSlatepack: '导出 回应slatepack至文件',
+      copySlatepack: '复制',
+      fileSlatepack: '导出至文件',
       copied: '已复制',
       saveMsg: '保存新生成的 回应slatepack',
     },

@@ -87,7 +87,7 @@ function createWindow () {
     log.debug('mainWidnows closed')
     mainWindow = null
   })
-  log.debug('Mainwindows created')
+  //log.debug('Mainwindows created')
 }
 
 async function launch(){
@@ -181,7 +181,7 @@ app.on('ready', () => {
 ipcMain.on('resize', (event, width, height) => {
   mainWindow.setSize(width, height)
   mainWindow.center()
-  log.debug(`mainWindow resized to ${width}:${height}`)
+  //log.debug(`mainWindow resized to ${width}:${height}`)
 })
 
 ipcMain.on('quit', (event) => {

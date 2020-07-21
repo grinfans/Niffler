@@ -4,7 +4,7 @@
   <div class="modal-background" @click="closeModal"></div>
   <div class="modal-card" style="width:480px">
     <header class="modal-card-head">
-      <p class="modal-card-title is-size-4 has-text-link has-text-weight-semibold">{{ $t("msg.send") }}(HTTP/HTTPS/Tor)</p>
+      <p class="modal-card-title is-size-4 has-text-link has-text-weight-semibold">{{ $t("msg.send") }}(HTTP/HTTPS)</p>
       <button class="delete" aria-label="close" @click="closeModal"></button>
     </header>
     <section class="modal-card-body" style="height:380px;background-color: whitesmoke;">
@@ -14,15 +14,15 @@
       </div>
       <div v-if="!sent">
         <div class="field">
-          <label class="label">{{ $t("msg.httpSend.address") }}(HTTP/HTTPS/Tor)</label>
+          <label class="label">{{ $t("msg.httpSend.address") }}(HTTP/HTTPS)</label>
           <div class="control">
-            <input class="input" type="text" v-model="address" placeholder="eg: https://donation.niffler.org:3415">
+            <input class="input" type="text" v-model="address">
           </div>
         </div>
         <div class="field">
           <label class="label">{{ $t("msg.httpSend.sendAmount") }}</label>
           <div class="control">
-            <input class="input" type="text" v-model="amount" placeholder="1 ツ">
+            <input class="input" type="text" v-model="amount">
           </div>
         </div>
 
@@ -71,7 +71,7 @@ export default {
     return {
       errors: [],
       amount: null,
-      address: 'http://47.114.177.69:3415',
+      address: '',
       slateVersion: 0,
       sending: false,
       sent: false,
@@ -152,7 +152,7 @@ export default {
         let sendAsync = async function(){
           try{
             let res = await this.$walletServiceV3.issueSendTransaction(tx_data)
-            this.$log.debug('issueSendTransaction return: '+ JSON.stringify(res))
+            //this.$log.debug('issueSendTransaction return: '+ JSON.stringify(res))
             let slate = res.result.Ok
             tx_id = slate.id
             if(!tx_id){
@@ -161,7 +161,7 @@ export default {
               this.$log.debug('Generate slate file: ' + tx_id)
 
               let res = await this.$walletServiceV3.createSlatepackMessage(slate, 0, [])
-              this.$log.debug('createSlatepackMessage return: '+ JSON.stringify(res))
+              //this.$log.debug('createSlatepackMessage return: '+ JSON.stringify(res))
               let slatepack = res.result.Ok
 
               let url = urljoin(this.address, '/v2/foreign')
@@ -184,17 +184,17 @@ export default {
                 this.$log.debug('Got slate2 file from receiver')
 
                 let res = await this.$walletServiceV3.lockOutputs(slate)
-                this.$log.debug('lockOutputs return res: ' + JSON.stringify(res))
+                //this.$log.debug('lockOutputs return res: ' + JSON.stringify(res))
                 this.$log.debug('output locked.')
 
                 res = await this.$walletServiceV3.finalizeTransaction(slate2)
-                this.$log.debug('finalizeTransaction return res: ' + JSON.stringify(res))
+                //this.$log.debug('finalizeTransaction return res: ' + JSON.stringify(res))
 
                 let slate3 = res.result.Ok
                 this.$log.debug('finalized.')
 
                 res = await this.$walletServiceV3.postTransaction(slate3, true)
-                this.$log.debug('postTransaction return res: ' + JSON.stringify(res))
+                //this.$log.debug('postTransaction return res: ' + JSON.stringify(res))
                 this.$log.debug('posted.')
 
                 this.sent = true
@@ -254,7 +254,7 @@ export default {
 
         this.$walletServiceV3.issueSendTransaction(tx_data).then(
           (res) => {
-            this.$log.debug('send2 issueSendTransaction return: '+ JSON.stringify(res))
+            //this.$log.debug('send2 issueSendTransaction return: '+ JSON.stringify(res))
             let slate = res.result.Ok
             tx_id = slate.id
             this.sent = true

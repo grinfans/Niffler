@@ -121,7 +121,7 @@ class WalletServiceV3 {
     static initSharedSecret(){
         return new Promise((resolve, reject)=>{
             WalletServiceV3.initSecureAPI().then((res)=>{
-                log.debug('initSharedSecret return: ' + JSON.stringify(res))
+                //log.debug('initSharedSecret return: ' + JSON.stringify(res))
                 const remotePublicKey = res.data.result.Ok
                 sharedSecret = ecdh.computeSecret(remotePublicKey, 'hex', 'hex')
                 //console.log('sharedSecret: ' + sharedSecret)
@@ -155,13 +155,12 @@ class WalletServiceV3 {
     }
 
     static openWallet(name, password){
-        log.debug(name, password)
         return new Promise((resolve, reject)=>{
             WalletServiceV3.postEncrypted('open_wallet', {
                 'name': name,
                 'password': password
             }).then((res)=>{
-                log.debug('open_wallet return: ' + JSON.stringify(res))
+                //log.debug('open_wallet return: ' + JSON.stringify(res))
                 token = res.result.Ok
                 resolve(res)
             }).catch(err=>{
@@ -257,16 +256,6 @@ class WalletServiceV3 {
             'token': token,
             'slate': slate,
             'fluff': is_fluff
-        })
-    }
-
-    static receiveTransaction(slate, account, dest){
-        if(!token)return
-        return WalletServiceV3.postEncrypted('receive_tx', {
-            'token': token,
-            'slate': slate,
-            'dest_acct_name': account,
-            'dest': dest
         })
     }
 

@@ -193,15 +193,15 @@ export default {
       let finalize = async function(){
         try{
           let res = await this.$walletServiceV3.getSlateFromSlatepackMessage(this.slatepack, [0])
-          this.$log.debug('getSlateFromSlatepackMessage return:', JSON.stringify(res))
+          //this.$log.debug('getSlateFromSlatepackMessage return:', JSON.stringify(res))
           let slate = res.result.Ok
           
           res = await this.$walletServiceV3.finalizeTransaction(slate)
-          this.$log.debug('finalizeTransaction return res: ' + JSON.stringify(res))
+          //this.$log.debug('finalizeTransaction return res: ' + JSON.stringify(res))
           let slate2 = res.result.Ok
           
           res = await this.$walletServiceV3.postTransaction(slate2, true)
-          this.$log.debug('postTransaction return res: ' + JSON.stringify(res))
+          //this.$log.debug('postTransaction return res: ' + JSON.stringify(res))
 
           this.status = 'sent'
           tx_id = slate2.id

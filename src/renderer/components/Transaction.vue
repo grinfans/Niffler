@@ -143,7 +143,7 @@
       },
       processTxs(txs) {
         let posted = this.$dbService.getPostedUnconfirmedTxs()
-        this.$log.debug('Posted txs in processTxs: ' + posted.size)
+        //this.$log.debug('Posted txs in processTxs: ' + posted.size)
         let log = this.$log
         let txs_processed = txs.map(function(x){
           x.status = 'unconfirmed'
@@ -158,7 +158,7 @@
           }
           if(x.status === 'unconfirmed'&&posted.size>0){
             if(posted.has(x.tx_slate_id)){
-              log.debug(`${x.tx_slate_id} posted so uncanceled`)
+              //log.debug(`${x.tx_slate_id} posted so uncanceled`)
               x.cancelable = false
             }
           }

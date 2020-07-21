@@ -94,26 +94,48 @@ export default {
   created(){
     messageBus.$on('closeWindowRemove',()=>{this.openRemove = false})
     messageBus.$on('closeWindowGnodeConfig',()=>{this.openGnodeConfig = false})
-   
+
     setTimeout(()=>{
       if(!this.disabled)return
       this.$gnodeService.getStatus().then((res)=>{
-          this.$log.debug('Local gnode runningafter 4s.')
+          this.$log.debug('Local gnode running after 12s.')
           this.disabled = false
         }).catch((err)=>console.log(err))
-    }, 4000)
+    }, 12000)
 
+    setTimeout(()=>{
+      if(!this.disabled)return
+      this.$gnodeService.getStatus().then((res)=>{
+          this.$log.debug('Local gnode running after 9s.')
+          this.disabled = false
+        }).catch((err)=>console.log(err))
+    }, 9000)
+
+    setTimeout(()=>{
+      if(!this.disabled)return
+      this.$gnodeService.getStatus().then((res)=>{
+          this.$log.debug('Local gnode running after 6s.')
+          this.disabled = false
+        }).catch((err)=>console.log(err))
+    }, 6000)
+
+   
      setTimeout(()=>{
       if(!this.disabled)return
       this.$gnodeService.getStatus().then((res)=>{
-          this.$log.debug('Local gnode running after 2s.')
+          this.$log.debug('Local gnode running after 3s.')
           this.disabled = false
         }).catch((err)=>console.log(err))
-    }, 2000)
+    }, 3000)
 
     setTimeout(()=>{
-       if(this.disabled)this.disabled=false
-    }, 6000)
+      if(this.disabled){
+        this.$gnodeService.getStatus().then((res)=>{
+          this.$log.debug('Local gnode running after 15s.')
+        }).catch((err)=>this.$log.debug('No wait for local gnode'))
+        .finally(this.disabled = false) 
+      }
+    }, 15000)
   },
   mounted(){
     this.$log.info('isfirst(login.vue)? '+isFirstTime())
@@ -203,7 +225,7 @@ export default {
             (res)=>{
               this.$walletServiceV3.startUpdater(5000).then(
               (res) =>{
-                this.$log.debug('startUpdater return:' + JSON.stringify(res))
+                //this.$log.debug('startUpdater return:' + JSON.stringify(res))
 
                 this.$log.debug('owner api process started')
                 this.$walletService.setPassword(this.password)

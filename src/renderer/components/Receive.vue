@@ -17,9 +17,8 @@
         <p class="animated bounce has-text-link has-text-weight-semibold is-size-5" style="animation-iteration-count:3">
           {{ $t("msg.fileReceive.slatepackCreated") }}
         </p>
-        <p v-if="sender" class="help is-success" style="margin-bottom:5px">{{ $t("msg.fileReceive.sender") }}: {{sender}}</p>
-
-        <div id="slatepack_box" contenteditable="true" @paste.prevent="paste">
+        
+        <div id="slatepack_box" contenteditable="true" @paste.prevent="paste" style="border-color:#22509a;">
           <div style="padding:10px">
             <p v-for="line in slatepackToDispaly2" :key="line.id" class="is-family-monospace is-size-7 has-text-link">
               {{line}}
@@ -192,20 +191,20 @@ export default {
       let create_ = async function(){
         try{
           let res = await this.$walletServiceV3.getSlateFromSlatepackMessage(this.slatepack, [0])
-          console.log(JSON.stringify(res))
-          this.$log.debug('getSlateFromSlatepackMessag return:', JSON.stringify(res))
+          //console.log(JSON.stringify(res))
+          //this.$log.debug('getSlateFromSlatepackMessag return:', JSON.stringify(res))
           let slate = res.result.Ok
 
           res = await this.$walletService.receiveTransaction2(slate, null, null)
-          this.$log.debug('receiveTransaction return:', JSON.stringify(res))
+          //this.$log.debug('receiveTransaction return:', JSON.stringify(res))
 
-          console.log(JSON.stringify(res))
+          //console.log(JSON.stringify(res))
           let slate2 = res.data.result.Ok
-          console.log(JSON.stringify(slate2))
+          //console.log(JSON.stringify(slate2))
           
           res = await this.$walletServiceV3.createSlatepackMessage(slate2, 0, [this.sender])
-          this.$log.debug('createSlatepackMessage return:', JSON.stringify(res))
-          console.log(JSON.stringify(res))
+          //this.$log.debug('createSlatepackMessage return:', JSON.stringify(res))
+          //console.log(JSON.stringify(res))
 
           this.slatepackCreated = res.result.Ok
 
