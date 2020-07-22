@@ -48,9 +48,10 @@ class GnodeService {
                     username: 'grin',
                     password: fs.readFileSync(nodeApiSecretPath).toString()
                 },
+                timeout: 2500,
             })
         }else{
-            client = axios.create({baseURL: gnodeHost})
+            client = axios.create({baseURL: gnodeHost, timeout: 2500})
         }
     }
     static getStatus(){
