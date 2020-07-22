@@ -141,6 +141,7 @@ export default {
           line.push(res[i])
         }
       }
+      result.push(line.join(' '))
       result.push(end)
       return result
     },
@@ -224,7 +225,6 @@ export default {
     clearup(){
       this.errors = []
       this.slatepack = null
-      errors: [],
       this.sender = null,
       this.slatepack = null,
       this.slatepackCreated = null,

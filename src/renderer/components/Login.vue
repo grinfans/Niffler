@@ -203,6 +203,7 @@ export default {
             }
           ).catch((err)=>{
             this.$dbService.setGnodeLocation('local')
+            this.$log.error('getStatus from remote got error:', err)
             this.$log.debug('use local grin node.')
             return this.$walletService.startOwnerApi(this.password, grinLocalNode)
           })

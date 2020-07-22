@@ -35,7 +35,7 @@
           </div>
 
           &nbsp; &nbsp; 
-          <div class="dropdown column column is-1" style="margin-left:-5px;margin-top:auto;" 
+          <div class="dropdown column column is-1" style="margin-left:-2px;margin-top:auto;" 
             v-bind:class="{'is-active':isDroppingDown2}" >
             <div class="dropdown-trigger" >
               <button class="button is-link is-outlined" v-bind:class="{'is-small2':isRu}"
@@ -61,7 +61,7 @@
             </div>            
           </div>
 
-          <div class="column column is-1" style="margin-top: auto; margin-left:25px;">
+          <div class="column column is-1" style="margin-top: auto; margin-left:40px;">
             <button class="button is-link is-outlined" v-bind:class="{'is-small2':isRu}" @click="openHedwigV1 = true">
                <span class="icon-running icon-status animated infinite pulse delay-2s" v-if="hedwigRunning"></span>
                <span class="icon-failed icon-status animated infinite pulse delay-2s" v-if="hedwigFailed"></span>
@@ -150,7 +150,7 @@
   import Gnode from '@/components/Gnode'
   import Landing from '@/components/Landing'
   import Tor from '@/components/Tor'
-  import Gaddress from '@/components/Address'
+  import Gaddress from '@/components/Gaddress'
 
   import checkUpdate from '../shared/updateChecker'
   import {downloadUrl, locale, gnodeOption} from '../shared/config'
@@ -375,7 +375,7 @@
         if(this.$walletServiceV3.isWalletOpened()){
           this.$walletServiceV3.getNodeHeight().then(
             (res) =>{
-              console.log('getNodeHeight return' +JSON.stringify(res))
+              //console.log('getNodeHeight return' +JSON.stringify(res))
               this.height = parseInt(res.result.Ok.height)
             }).catch((error)=>{
               this.$log.error('getHeight failed:' + error)
@@ -400,11 +400,11 @@
       autoRefresh(interval){
         setInterval(()=>{
           if((this.ownerApiRunning) && (!this.isloading) &&(!this.isScaning)){
-            //this.$walletServiceV3.getUpdaterMessages(10).then(res=>{
-            //  console.log('getUpdaterMessages return:' + JSON.stringify(res))
-            //}).catch(err=>{
-            //  console.log('getUpdaterMessages error:' + err)
-            //})
+            this.$walletServiceV3.getUpdaterMessages(10).then(res=>{
+              console.log('getUpdaterMessages return:' + JSON.stringify(res))
+            }).catch(err=>{
+              console.log('getUpdaterMessages error:' + err)
+            })
             ///getUpdaterMessages return:{"id":1,"jsonrpc":"2.0","result":{"Ok":[{"ScanningComplete":"Scanning Complete"},{"Scanning":["Identified 0 wallet_outputs as belonging to this wallet",99]},{"Scanning":["Checking 313 outputs, up to index 7737260. (Highest index: 7737260)",99]},{"Scanning":["Starting UTXO scan",0]},{"UpdatingTransactions":"Updating transactions"},{"UpdatingOutputs":"Updating outputs from node"},{"ScanningComplete":"Scanning Complete"},{"Scanning":["Identified 0 wallet_outputs as belonging to this wallet",99]},{"Scanning":["Checking 319 outputs, up to index 7737260. (Highest index: 7737260)",99]},{"Scanning":["Starting UTXO scan",0]}]}}
             messageBus.$emit('update', false)
           }

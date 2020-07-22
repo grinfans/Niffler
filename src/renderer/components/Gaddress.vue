@@ -36,7 +36,7 @@ import { messageBus } from '@/messagebus'
 const clipboard = require('electron').clipboard
 
 export default {
-  name: "address",
+  name: "gaddress",
   props: {
     showModal: {
       type: Boolean,
@@ -55,13 +55,13 @@ export default {
   },
   methods: {
     getGrinAddress(){
-        this.$walletServiceV3.getSlatepackAddress(0).then(res=>{
-          console.log('getGrinAddress return:' + JSON.stringify(res))
-          this.grinAddress = res.result.Ok
-        }).catch(err=>{
-              console.log('getGrinAddress error:' + err)
-        })
-      },
+      this.$walletServiceV3.getSlatepackAddress(0).then(res=>{
+        //console.log('getGrinAddress return:' + JSON.stringify(res))
+        this.grinAddress = res.result.Ok
+      }).catch(err=>{
+            console.log('getGrinAddress error:' + err)
+      })
+    },
    
     copy(){
       clipboard.writeText(this.grinAddress)
@@ -71,7 +71,6 @@ export default {
     },
 
     closeModal() {
-      this.grinAddress = ''
       this.copied = false
       messageBus.$emit('close', 'windowAddress');
     },

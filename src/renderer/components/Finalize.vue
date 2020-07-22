@@ -110,6 +110,7 @@ export default {
             line.push(res[i])
           }
         }
+        result.push(line.join(' '))
         result.push(end)
         return result
       }else{

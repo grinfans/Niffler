@@ -106,7 +106,8 @@ const messages = {
       yes: 'yes',
       no: 'no',
       hedwig: 'Receive via Hedwig',
-      tor: 'Tor Network'
+      tor: 'Tor Network',
+      address: 'Slatepack address',
     },
 
     info: {
@@ -147,7 +148,7 @@ const messages = {
       slatepackAddressTips: 'Slatepack address is used to encrypt transaction and create payment proof.',
       slatepackCreated: 'Slatepack is created !',
 
-      slatepackEncryptedTips: 'This slatepack is encrypted.',
+      slatepackEncryptedTips: 'This slatepack is encrypted. It is safe to transfer in any channels.',
       slatepackUnEncryptedTips: 'This slatepack is unencrypted, please send over security channels.',
       copySlatepack: 'Copy',
       fileSlatepack: 'Save slatepack as file',
@@ -178,8 +179,6 @@ const messages = {
       saveMsg: 'Save the new response slatpack',
       CreateFailed: 'Failed to create response slatpack',
       NoSavePlace: 'Please choose the location to save',
-
-     
       toOpen: 'Open slatepack file',
       toPaste: 'or copy slatepack, and paste it into the inputbox below',
       create: 'Create response slatepack',
@@ -194,14 +193,12 @@ const messages = {
 
     finalize: {
       finalize: 'Finalize',
-      success: 'transaction success',
+      success: 'Transaction success',
       ok:'OK',
       sending: 'Sending',
       dropMsg: 'Drop response transaction file to finalize',
       WrongFileType: 'Wrong transaction file type',
-      TxFailed: 'transaction failed',
-
-     
+      TxFailed: 'Transaction failed',     
       WrongSlatepack: 'Wrong Slatepack',
       toOpen: 'Open slatepack file',
       toPaste: 'or copy slatepack, and paste it into the inputbox below',
@@ -345,10 +342,10 @@ const messages = {
     },
 
     gaddress:{
-      address: 'Your slatepack address.',
+      address: 'Your slatepack address',
       copied: 'Copied',
       copy: 'Copy slatepack address', 
-      tips: 'Slatepack address is used to encrypt transaction and create payment proof. It will not be stored on the grin blockchain.'
+      tips: 'Slatepack address is used to encrypt transaction and create payment proof. It is not stored on the grin blockchain.'
     }
   }
 }
