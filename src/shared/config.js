@@ -137,7 +137,7 @@ export function setLocale(locale){
   updateConfig({'locale':locale})
 }
 export const locale = getLocale()
-export const langs = {'zh':'简体中文', 'en':'English', 'ru': 'русский', 'ko': '한국어'}
+export const langs = {'zh':'简体中文', 'en':'English'}
 
 import pkg from '../../package.json'
 export const version = pkg.version
