@@ -39,6 +39,12 @@ const messages = {
     waitForLocalGnode: 'Wait for local grin node to start',
 
     error: 'Error',
+   
+    optional: 'Optional',
+    open: 'Open',
+    close: 'Close',
+
+    address: 'Slatepack address',
 
     login: {
       walletExist: 'Found grin wallet data exists; login with original password :-)',
@@ -89,10 +95,10 @@ const messages = {
     },
 
     app:{
-      create: 'Create transaction file',
+      create: 'Create slatepack',
       finalize: 'Finalize',
-      httpSend: 'Send via http/https/Tor',
-      createRespFile: 'Create response transaction file',
+      httpSend: 'Send via http/https',
+      createRespFile: 'Create response slatepack',
       httpReceive: 'Open http listener to receive',
       height:'Height',
       updateTitle: 'Found new version',
@@ -130,11 +136,22 @@ const messages = {
 
     fileSend:{
       sendAmount: 'Amount to send',
-      createTxFile: 'Create new transaction file',
+      createTxFile: 'Create slatepack',
       WrongAmount: 'Wrong amount',
-      saveMsg: 'Save transaction file created',
-      CreateFailed: 'Failed to create new transaction file',
-      NotEnough: 'Not enough amount. Keep 0.01 as fee'
+      saveMsg: 'Save slatepack as file',
+      CreateFailed: 'Failed to create new slatepack',
+      NotEnough: 'Not enough amount. Keep 0.01 as fee',
+
+      slatepack: 'SLATEPACK',
+      slatepackAddress: 'Slatepack Address to send',
+      slatepackAddressTips: 'Slatepack address is used to encrypt transaction and create payment proof.',
+      slatepackCreated: 'Slatepack is created !',
+
+      slatepackEncryptedTips: 'This slatepack is encrypted.',
+      slatepackUnEncryptedTips: 'This slatepack is unencrypted, please send over security channels.',
+      copySlatepack: 'Copy',
+      fileSlatepack: 'Save slatepack as file',
+      copied: 'Copied'
     },
 
     httpSend:{
@@ -158,9 +175,21 @@ const messages = {
     fileReceive: {
       dropMsg: 'Drop transaction file received',
       WrongFileType: 'Wrong transaction file type',
-      saveMsg: 'Save response transaction file created',
-      CreateFailed: 'Failed to create new response transaction file',
+      saveMsg: 'Save the new response slatpack',
+      CreateFailed: 'Failed to create response slatpack',
       NoSavePlace: 'Please choose the location to save',
+
+     
+      toOpen: 'Open slatepack file',
+      toPaste: 'or copy slatepack, and paste it into the inputbox below',
+      create: 'Create response slatepack',
+      WrongSlatepack: 'Wrong Slatepack',
+      openMsg: 'Open slatepack file',
+      sender: 'Sender',
+      slatepackCreated: 'Response slatepack is created!',
+      copySlatepack: 'Copy',
+      fileSlatepack: 'Save as file',
+      copied: 'Copied',
     },
 
     finalize: {
@@ -171,6 +200,13 @@ const messages = {
       dropMsg: 'Drop response transaction file to finalize',
       WrongFileType: 'Wrong transaction file type',
       TxFailed: 'transaction failed',
+
+     
+      WrongSlatepack: 'Wrong Slatepack',
+      toOpen: 'Open slatepack file',
+      toPaste: 'or copy slatepack, and paste it into the inputbox below',
+      send: 'Finalize and post transcation',
+      openMsg: 'Open slatepack file'
     },
 
     httpReceive: {
@@ -307,6 +343,13 @@ const messages = {
       errorInvalidProxy: 'Invalid proxy',
       saved: 'Setting saved. will use this setting when start Tor next time.'
     },
+
+    gaddress:{
+      address: 'Your slatepack address.',
+      copied: 'Copied',
+      copy: 'Copy slatepack address', 
+      tips: 'Slatepack address is used to encrypt transaction and create payment proof. It will not be stored on the grin blockchain.'
+    }
   }
 }
 export default messages

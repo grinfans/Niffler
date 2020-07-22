@@ -257,11 +257,11 @@ export default {
       }else{
         walletServiceV3.createConfig(chain, null, null, null).then(
           (res) =>{
-            this.$log.debug('createConfig return: '+ JSON.stringify(res))
+            //this.$log.debug('createConfig return: '+ JSON.stringify(res))
             if(res.result.hasOwnProperty('Ok')){
               walletServiceV3.createWallet(null, seeds_, len, this.password).then(
                 (res)=>{
-                  this.$log.debug('createWallet return: '+ JSON.stringify(res))
+                  //this.$log.debug('createWallet return: '+ JSON.stringify(res))
                   if(res.result.hasOwnProperty('Ok')){
                     if(this.$walletService.isExist()){messageBus.$emit('walletRecoverReturn', 'ok')}
                     else{

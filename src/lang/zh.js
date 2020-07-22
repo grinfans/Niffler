@@ -138,7 +138,7 @@ const messages = {
       WrongAmount: '发送数量错误',
       WrongSlatepackAddress: 'Slatepack 地址不对',
       saveMsg: '保存新生成的slatepack文件',
-      CreateFailed: '生成交易文件错误',
+      CreateFailed: '生成slatepack错误',
       NotEnough: '没有足够的余额，请至少留下0.01作为手续费',
 
       slatepack: 'SLATEPACK',
@@ -346,7 +346,6 @@ const messages = {
       copied: '已复制',
       copy: '复制 slatepack地址', 
       tips: 'slatepack 地址 用于加密slatepack信息以及付款证明，并不会存储在Grin区块链上.'
-      
     }
     
   }
