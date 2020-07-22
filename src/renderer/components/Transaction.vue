@@ -125,7 +125,7 @@
       getTxs(showloading=true) {
         this.$walletServiceV3.getTransactions(true, null, null)
           .then((res) => {
-            console.log('getTxs:', JSON.stringify(res))
+            //console.log('getTxs:', JSON.stringify(res))
             let data = res.result.Ok[1].reverse()
             this.total_txs = this.processTxs(data)
             this.current_txs = this.total_txs.slice(0, this.count_per_page)

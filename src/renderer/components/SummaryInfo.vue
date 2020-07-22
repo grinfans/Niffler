@@ -35,10 +35,9 @@
     },
     methods: {
       getSummaryinfo: function(showloading=true) {
-        //console.log('getSummaryinfo showloading:', showloading)
         this.$walletServiceV3.getSummaryInfo(true, 10)
           .then( (res) => {
-            console.log('getSummaryInfo return:' + JSON.stringify(res))
+            //console.log('getSummaryInfo return:' + JSON.stringify(res))
             let data = res.result.Ok
             this.spendable = data[1]['amount_currently_spendable']/1000000000
             this.total = data[1]['total']/1000000000

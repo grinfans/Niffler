@@ -224,7 +224,7 @@ export default {
         (res)=>{
           this.$walletServiceV3.openWallet(null, this.password).then(
             (res)=>{
-              this.$walletServiceV3.startUpdater(5000).then(
+              this.$walletServiceV3.startUpdater(60000 * 5).then(
               (res) =>{
                 //this.$log.debug('startUpdater return:' + JSON.stringify(res))
 

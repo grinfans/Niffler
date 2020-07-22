@@ -393,6 +393,16 @@ class WalletService {
             }
         });
     }
+
+    static info2(gnode){
+        let grin = grinWalletPath
+        if(platform==='win'){
+            grin = grinWalletPath.slice(1,-1)
+        }
+        if(password_){
+            spawn(grin, ['-r', gnode, '-p', password_, 'info'])
+        }
+    }
     
     static stopProcess(processName){
         let pidName = `${processName}ProcessPID`
