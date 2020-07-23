@@ -114,7 +114,6 @@
     "external-ip": "^2.1.1",
     "externalip": "^1.0.2",
     "fs-extra": "^7.0.1",
-    "fsevents": "^2.1.2",
     "fstream": "^1.0.12",
     "get-folder-size": "^2.0.1",
     "is-valid-domain": "0.0.5",
