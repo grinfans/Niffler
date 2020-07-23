@@ -2,7 +2,7 @@
 
 <div class="modal" :class="{'is-active': showModal}">
   <div class="modal-background" @click="closeModal"></div>
-  <div class="modal-card" style="width:520px">
+  <div class="modal-card" style="width:545px">
     <header class="modal-card-head">
       <p class="modal-card-title is-size-4 has-text-link has-text-weight-semibold">{{ $t("msg.receive") }}</p>
       <button class="delete" aria-label="close" @click="closeModal"></button>

@@ -8,7 +8,7 @@
             <summary-info></summary-info>
           </div>
           
-          <div class="dropdown column is-1" style="margin-left:25px;margin-top: auto;" 
+          <div class="dropdown column is-1" style="margin-left:25px;margin-top:auto;" 
             v-bind:class="{'is-active':isDroppingDown}" >
             <div class="dropdown-trigger" >
               <button class="button is-link is-outlined" v-bind:class="{'is-small2':isRu}"
@@ -61,7 +61,7 @@
             </div>            
           </div>
 
-          <div class="column column is-1" style="margin-top: auto; margin-left:40px;">
+          <div class="column column is-1" style="margin-top: auto; margin-left:30px;">
             <button class="button is-link is-outlined" v-bind:class="{'is-small2':isRu}" @click="openHedwigV1 = true">
                <span class="icon-running icon-status animated infinite pulse delay-2s" v-if="hedwigRunning"></span>
                <span class="icon-failed icon-status animated infinite pulse delay-2s" v-if="hedwigFailed"></span>
