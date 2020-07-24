@@ -120,9 +120,9 @@ export default {
       currentSeed: '',
       currentSeedInvalid: false,
       enoughSeeds: false,
-      seeds:'motion solve horror wrong sport spring drill input exist hamster panic coast just author hybrid right car faith village excite entry piano rack observe'.split(' '),
-      password: '123',
-      password2: '123',
+      seeds:'',
+      password: '',
+      password2: '',
       page: 'addSeeds',
       
       errorPassword: false,
