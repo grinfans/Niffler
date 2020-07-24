@@ -19,7 +19,7 @@ let ownerAPI
 let listenProcess
 let checkProcess
 let infoProcess
-//let initRProcess
+let initProcess
 let processes = {}
 let client
 let password_
@@ -150,17 +150,30 @@ class WalletService {
  
     static startOwnerApi(password, grinNodeToConnect){
         //WalletService.stopProcess('ownerAPI')
-        log.debug('grinNodeToConnect:' + grinNodeToConnect)
-        enableForeignApi()
         
-        if(platform === 'linux'){
-            ownerAPI = execFile(grinWalletPath, ['-r', grinNodeToConnect, 'owner_api']) 
+        let cmd
+
+        if(!password){
+            if(platform === 'linux'){
+                ownerAPI = execFile(grinWalletPath, ['owner_api']) 
+            }else{
+                cmd = `${grinWalletPath}  owner_api`
+                ownerAPI =  exec(cmd)
+            }
         }else{
-            const cmd = platform==='win'? `${grinWalletPath} -r ${grinNodeToConnect} --pass ${addQuotations(password)} owner_api`:
-                                        `${grinWalletPath} -r ${grinNodeToConnect} owner_api`
-            //log.debug(`platform: ${platform}; start owner api cmd: ${cmd}`)
-            ownerAPI =  exec(cmd)
+            log.debug('grinNodeToConnect:' + grinNodeToConnect)
+            enableForeignApi()
+            
+            if(platform === 'linux'){
+                ownerAPI = execFile(grinWalletPath, ['-r', grinNodeToConnect, 'owner_api']) 
+            }else{
+                cmd = platform==='win'? `${grinWalletPath} -r ${grinNodeToConnect} --pass ${addQuotations(password)} owner_api`:
+                                            `${grinWalletPath} -r ${grinNodeToConnect} owner_api`
+                //log.debug(`platform: ${platform}; start owner api cmd: ${cmd}`)
+                ownerAPI =  exec(cmd)
+            }
         }
+        
         processes['ownerAPI'] = ownerAPI
         log.debug('ownerAPIProcessPID: ' + ownerAPI.pid)
         if(platform==='win'){
@@ -433,6 +446,12 @@ class WalletService {
         }else{
             exec('taskkill -f /im grin-wallet.exe')
         }
+    }
+    static init(){
+        const cmd = `${grinWalletPath} init`
+        initProcess = exec(cmd)
+        processes['init'] = initProcess
+        localStorage.setItem('initProcessPID', initProcess.pid)
     }
 }
 WalletService.initClient()

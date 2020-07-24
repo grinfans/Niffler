@@ -51,6 +51,7 @@
 import Message from '@/components/Message'
 import { messageBus } from '@/messagebus'
 const urllib = require('urllib');
+const axios = require('axios')
 const fs = require('fs');
 const urljoin = require('url-join');
 import { constants } from 'fs';
@@ -117,6 +118,8 @@ export default {
     },
     checkForm(){
       this.errors = []
+      this.address = this.address.trim()
+      this.amount = this.amount.trim()
       if (!this.address || !this.validAddress(this.address)) {
         if(!this.checkIfTor(this.address)){
           this.errors.push(this.$t('msg.httpSend.WrongAddress'))
@@ -171,6 +174,8 @@ export default {
                 method: 'receive_tx',
                 params: [slate, null, null],
               }
+              //const res = await axios.post(url, payload)
+
               res = await urllib.request(url, {
                 method: 'post',
                 contentType: "application/json",
@@ -178,7 +183,7 @@ export default {
                 timeout: '25s',
                 content: JSON.stringify(payload)
               });
-              this.$log.debug('post slate return res: ' + JSON.stringify(res))
+              //this.$log.debug('post slate return res: ' + JSON.stringify(res))
               let slate2 = res.data.result.Ok
               if(slate2){
                 this.$log.debug('Got slate2 file from receiver')

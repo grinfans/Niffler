@@ -180,7 +180,7 @@ export default {
           this.userAgent = res.data.user_agent
           this.protocolVersion = res.data.protocol_version
           //console.log(`remote ${remoteHeight}; local ${this.localHeight}`)
-        if( this.localHeight+10 > this.remoteHeight){
+        if( this.localHeight + 60 > this.remoteHeight){
           this.status = 'running'
         }else{
           this.status = 'syncing'

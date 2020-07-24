@@ -34,6 +34,7 @@ import Create from '@/components/Create'
 import Restore from '@/components/Restore'
 import {version} from '../../shared/config'
 import walletServiceV3 from '../../shared/walletv3'
+import walletService from '../../shared/wallet'
 
 export default {
   name: "new",
@@ -52,7 +53,15 @@ export default {
       this.current = 'new'
     })
     if(!this.$walletService.isExist()){
-      walletServiceV3.startOwnerApi()
+      
+      if(!walletService.isWalletConfigExist()){
+        walletService.init()
+      }
+
+      setTimeout(()=>{
+        walletService.startOwnerApi(null, null)
+      }, 500)
+
       setTimeout(
         ()=>{
           this.$walletService.initClient()

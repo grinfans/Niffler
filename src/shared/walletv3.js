@@ -38,21 +38,6 @@ function decrypt(key, data, nonce){
 }
 
 class WalletServiceV3 {
-    static startOwnerApi(){
-        let ownerAPI
-        if(platform === 'linux'){
-            ownerAPI = execFile(grinWalletPath, ['owner_api']) 
-        }else{
-            ownerAPI =  exec(`${grinWalletPath} owner_api`)
-        }
-        ownerAPI.stdout.on('data', (data)=>{
-            log.debug('start owner_api got: ' + data)
-        })
-        ownerAPI.stderr.on('data', (data) => {
-            log.error('start owner_api v3 got stderr: ' + data)
-        })
-    }
-
     static initClient() {
         if(fs.existsSync(ownerApiSecretPath)){
             client = axios.create({

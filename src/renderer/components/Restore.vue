@@ -58,8 +58,9 @@
                 </div>
             
                 <div class="field">
-                  <button class="button is-link" @click="initR" >
-                    {{ $t('msg.restore.recover') }}</button>
+                  <button class="button is-link" @click="initR" v-bind:class="{'is-loading':restoring}">
+                    {{ $t('msg.restore.recover') }}
+                  </button>
                   <button class="button is-text" @click="page='addSeeds'">
                     {{ $t("msg.back") }}</button>
                 </div>
@@ -119,9 +120,9 @@ export default {
       currentSeed: '',
       currentSeedInvalid: false,
       enoughSeeds: false,
-      seeds:[],
-      password: '',
-      password2: '',
+      seeds:'motion solve horror wrong sport spring drill input exist hamster panic coast just author hybrid right car faith village excite entry piano rack observe'.split(' '),
+      password: '123',
+      password2: '123',
       page: 'addSeeds',
       
       errorPassword: false,
@@ -130,18 +131,22 @@ export default {
       recoverErrorInfo: '',
 
       restoreOutputs: [],
+
+      localGnodeStatus: '',
+
+      restoring: false
     }
   },
   
   created(){
     messageBus.$on('walletRecoverReturn', (ret)=>{
+      this.restoring = false
       if(ret === 'ok'){
         let gnode = grinNode2
 
         this.page = 'recovered'
-        let localGnodeStatus = this.$dbService.getLocalGnodeStatus()
-        this.$log.debug('check grin local status before restore balance: ' + localGnodeStatus)
-        if(localGnodeStatus == 'running'){
+        this.$log.debug('check grin local status before restore balance: ' + this.localGnodeStatus)
+        if(this.localGnodeStatus == 'running'){
           this.$log.debug('check use grin local node')
           gnode = grinLocalNode
         }
@@ -159,17 +164,9 @@ export default {
       this.page = 'restored'
     })
 
-    messageBus.$on('walletInfoFailed', (ret)=>{
-      let gnode = grinNode2
-      let localGnodeStatus = this.$dbService.getLocalGnodeStatus()
-      this.$log.debug('check grin local nodes tatus before restore balance: ' + localGnodeStatus)
-      if(localGnodeStatus == 'running'){
-        this.$log.debug('grin-wallet info use grin local node')
-        gnode = grinLocalNode
-      }
-      this.$log.debug('Try to grin-wallet info again')
-      this.$walletService.info(this.updateOutput, gnode, this.password)
-    })
+    setTimeout(()=>{
+      this.getLocalGnodeStatus()
+    }, 2000)
   },
   watch: {
     seeds:function(newVal, oldVal){
@@ -221,64 +218,48 @@ export default {
       this.errorPassword = false;
     },
     initR(){
+      this.restoring = true
+
       this.resetErrors()
       if(this.password.length == 0 ){
         this.errorPassword = true
         this.errorInfoPassword = this.$t('msg.create.errorPasswdEmpty')
+        this.restoring = false
         return
       }
       if(this.password != this.password2 ){
         this.errorPassword = true
         this.errorInfoPassword = this.$t('msg.create.errorPasswdConsistency')
+        this.restoring = false
+
         return
       }
-      const seeds_ = this.seeds.join(' ')
-      let len = 32
-      if(this.seeds.length==12){
-        len = 16
+
+      let initRAsync = async function(){        
+        const seeds_ = this.seeds.join(' ')
+        let len = 32
+        if(this.seeds.length==12){
+          len = 16
+        }
+        
+        let chain
+        if(chainType==='main')chain='Mainnet'
+
+        let res
+        try{
+          res = await walletServiceV3.createWallet(null, seeds_, len, this.password)
+          this.$log.debug('createWallet return: '+ JSON.stringify(res))
+          
+          messageBus.$emit('walletRecoverReturn', 'ok')
+        }catch(error){
+          this.$log.error('createWallet failed: '+ error)
+          messageBus.$emit('walletRecoverReturn', 'invalidSeeds')
+        } 
       }
-      let chain
-      if(chainType==='main')chain='Mainnet'
-      if(this.$walletService.isWalletConfigExist()){
-        walletServiceV3.createWallet(null, seeds_, len, this.password).then(
-          (res)=>{
-            this.$log.debug('createWallet return: '+ JSON.stringify(res))
-            if(res.result.hasOwnProperty('Ok')){
-              if(this.$walletService.isExist()){
-                messageBus.$emit('walletRecoverReturn', 'ok')
-              }else{
-                messageBus.$emit('walletRecoverReturn', 'invalidSeeds')
-              }
-            }
-          }).catch((err)=>{
-            this.$log.error('createWallet failed: '+ err)
-            messageBus.$emit('walletRecoverReturn', 'failed')
-          })
-      }else{
-        walletServiceV3.createConfig(chain, null, null, null).then(
-          (res) =>{
-            //this.$log.debug('createConfig return: '+ JSON.stringify(res))
-            if(res.result.hasOwnProperty('Ok')){
-              walletServiceV3.createWallet(null, seeds_, len, this.password).then(
-                (res)=>{
-                  //this.$log.debug('createWallet return: '+ JSON.stringify(res))
-                  if(res.result.hasOwnProperty('Ok')){
-                    if(this.$walletService.isExist()){messageBus.$emit('walletRecoverReturn', 'ok')}
-                    else{
-                      messageBus.$emit('walletRecoverReturn', 'invalidSeeds')
-                    }
-                  }
-                }).catch((err)=>{
-                  this.$log.error('createWallet failed: '+ err)
-                  messageBus.$emit('walletRecoverReturn', 'failed')
-                })
-            }
-          }).catch((err)=>{
-            this.$log.error('createConfig failed: '+ err)
-            messageBus.$emit('walletRecoverReturn', 'failed')
-          })
-      }
+
+      initRAsync.call(this)
     },
+
     delete_(){
       if(this.seeds.length>0)this.seeds.pop()
     },
@@ -294,6 +275,29 @@ export default {
     quit(){
       ipcRenderer.send('quit')
     },
+
+    getLocalGnodeStatus(){
+      let checkStatusAsync = async function(){
+        try{
+          let res = await this.$gnodeService.getStatus()
+          this.localHeight = parseInt(res.data.tip.height)
+          res = await this.$remoteGnodeService.getStatus()
+          this.remoteHeight = parseInt(res.data.tip.height)
+          this.userAgent = res.data.user_agent
+          this.protocolVersion = res.data.protocol_version
+          this.$log.debug(`checkGnodeStatus on restore: remote ${remoteHeight}; local ${this.localHeight}`)
+        if( this.localHeight+10 > this.remoteHeight){
+          this.localGnodeStatus = 'running'
+        }else{
+          this.localGnodeStatus = 'syncing'
+        }}catch(error){
+          this.$log.debug('checkGnodeStatus on restore got error:' + error)
+          this.localGnodeStatus = 'toStart'
+        }
+      }
+      checkStatusAsync.call(this)
+    },
+    
   }
 }
 </script>
