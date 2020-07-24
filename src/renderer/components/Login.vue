@@ -32,7 +32,7 @@
                   </div>
 
                   <p class="help is-warning" v-if="error">{{ $t("msg.wrongPassword") }}</p>
-                  <p class="help is-warning" v-if="disabled">{{ $t("msg.waitForLocalGnode") }}
+                  <p class="help is-success" v-if="info">{{ this.info }}
                      <span class="animated flash" style="animation-iteration-count:infinite;animation-duration: 3s">.....</span>
                   </p>
                 </div>
@@ -88,130 +88,136 @@ export default {
       version: version,
       logining: false,
 
-      disabled: true
+      disabled: true,
+      info: this.$t('msg.login.waitForLocalGnode'),
+      gnode: ''
     }
   },
   created(){
     messageBus.$on('closeWindowRemove',()=>{this.openRemove = false})
     messageBus.$on('closeWindowGnodeConfig',()=>{this.openGnodeConfig = false})
+    
+    messageBus.$on('toSelectGnode',()=>{
+      this.selectGnode()
+    })
 
-    setTimeout(()=>{
-      if(!this.disabled)return
-      this.$gnodeService.getStatus().then((res)=>{
-          this.$log.debug('Local gnode running after 12s.')
-          this.disabled = false
-        }).catch((err)=>console.log(err))
-    }, 12000)
+    messageBus.$on('toLogin',()=>{
+      this.disabled = false
+      this.info = ''
+    })
 
-    setTimeout(()=>{
-      if(!this.disabled)return
-      this.$gnodeService.getStatus().then((res)=>{
-          this.$log.debug('Local gnode running after 9s.')
-          this.disabled = false
-        }).catch((err)=>console.log(err))
-    }, 9000)
+    if(gnodeOption.connectMethod !== 'remoteAllTime'){
+      let t
+      for (var i = 1; i < 5; i++) {
+        t = i * 4000
 
-    setTimeout(()=>{
-      if(!this.disabled)return
-      this.$gnodeService.getStatus().then((res)=>{
-          this.$log.debug('Local gnode running after 6s.')
-          this.disabled = false
-        }).catch((err)=>console.log(err))
-    }, 6000)
-
-   
-     setTimeout(()=>{
-      if(!this.disabled)return
-      this.$gnodeService.getStatus().then((res)=>{
-          this.$log.debug('Local gnode running after 3s.')
-          this.disabled = false
-        }).catch((err)=>console.log(err))
-    }, 3000)
-
-    setTimeout(()=>{
-      if(this.disabled){
-        this.$gnodeService.getStatus().then((res)=>{
-          this.$log.debug('Local gnode running after 15s.')
-        }).catch((err)=>this.$log.debug('No wait for local gnode'))
-        .finally(this.disabled = false) 
+        setTimeout((i)=>{
+          if(!this.disabled)return
+          let t2 = i * 4
+          this.$gnodeService.getStatus().then((res)=>{
+              this.$log.debug(`Local gnode running after ${t2}s`)
+              messageBus.$emit('toSelectGnode')
+            }).catch((err)=>{
+              console.log(err)
+              if(i==4){
+                this.$log.debug(`Local gnode still not running after ${t2}s`)
+                messageBus.$emit('toSelectGnode')
+              }
+            })
+        }, t, i)
       }
-    }, 15000)
+    }else{
+      messageBus.$emit('toSelectGnode')
+    }
   },
+  
   mounted(){
     this.$log.info('isfirst(login.vue)? '+isFirstTime())
     this.firstTime = isFirstTime()
   },
+
   methods: {
+    selectGnode(){
+      this.info = this.$t('msg.login.selectingGnode')
+      let localHeight
+      let remoteHeight
+      this.$log.debug('Time to select gnode.')
+      this.$log.debug('Use local gnode? ' + gnodeOption.useLocalGnode)  
+      this.$log.debug('Connect method is ' + gnodeOption.connectMethod)  
+      
+      if(!gnodeOption.useLocalGnode){
+        this.$dbService.setGnodeLocation('remote')
+        this.$log.debug('use remote grin node.')
+        this.gnode = grinNode
+        messageBus.$emit('toLogin')
+        return
+      }
+      
+      if(gnodeOption.connectMethod ==='localAllTime'){
+        this.$dbService.setGnodeLocation('local')
+        this.$log.debug('use local grin node.')
+        this.gnode = grinLocalNode
+        messageBus.$emit('toLogin')
+        return
+      }
+
+      this.$remoteGnodeService.getStatus().then((res)=>{
+        remoteHeight = parseInt(res.data.tip.height)
+        this.$log.debug('Remote node height is ' + remoteHeight)
+        if(gnodeOption.connectMethod ==='remoteAllTime' || gnodeOption.connectMethod ==='remoteFirst'){
+          this.$dbService.setGnodeLocation('remote')
+          this.$log.debug('use remote grin node.')
+          this.gnode = grinNode
+          messageBus.$emit('toLogin')
+          return
+        }
+          
+        this.$gnodeService.getStatus().then((res)=>{
+          localHeight = parseInt(res.data.tip.height)
+          let peersCount = parseInt(res.data.connections)
+          this.$log.debug('local node height is ' + localHeight)
+          this.$log.debug('local node peers count is ' + peersCount)
+          if(localHeight + 60 >= remoteHeight && peersCount >= 3){
+            this.$log.debug('use local grin node.')
+            this.$dbService.setGnodeLocation('local')
+            this.gnode = grinLocalNode
+            messageBus.$emit('toLogin')
+            return
+          }else{
+            this.$log.debug('local node height is too low or peers too small. use remote grin node.')
+            this.$dbService.setGnodeLocation('remote')
+            this.gnode = grinNode
+            messageBus.$emit('toLogin')
+            return
+          }}).catch((err)=>{
+            this.$log.error('local gnode failed. Use remote grin node: ' + err)
+              this.$dbService.setGnodeLocation('remote')
+              this.gnode = grinNode
+              messageBus.$emit('toLogin')
+              return
+            })
+          }).catch((err)=>{
+            this.$dbService.setGnodeLocation('local')
+            this.$log.error('getStatus from remote got error:', err)
+            this.$log.debug('use local grin node.')
+            this.gnode = grinLocalNode
+            messageBus.$emit('toLogin')
+            return
+          })
+    },
+
     tryLogin(){
       if(this.logining)return
       this.logining = true
       //this.$walletService.killGrinWallet()
+      setTimeout(()=>this.checkLogin(), 5000)
 
       let password = this.password
 
       this.resetErrors()
       this.$walletService.initClient()
-      
-      let selectGnodeAndLogin = async function(){
-        
-        setTimeout(()=>this.checkLogin(), 6000)
-
-        let localHeight
-        let remoteHeight
-        this.$log.debug('Time to select gnode.')
-        this.$log.debug('Use local gnode? ' + gnodeOption.useLocalGnode)  
-        this.$log.debug('Connect method is ' + gnodeOption.connectMethod)  
-        if(!gnodeOption.useLocalGnode){
-          this.$dbService.setGnodeLocation('remote')
-          this.$log.debug('use remote grin node.')
-          return this.$walletService.startOwnerApi(this.password, grinNode)
-        }
-        if(gnodeOption.connectMethod ==='localAllTime'){
-          this.$dbService.setGnodeLocation('local')
-          this.$log.debug('use local grin node.')
-          return this.$walletService.startOwnerApi(this.password, grinLocalNode)
-        }else{
-          this.$remoteGnodeService.getStatus().then(
-            (res)=>{
-              remoteHeight = parseInt(res.data.tip.height)
-              this.$log.debug('Remote node height is ' + remoteHeight)
-              if(gnodeOption.connectMethod ==='remoteAllTime' || gnodeOption.connectMethod ==='remoteFirst'){
-                this.$dbService.setGnodeLocation('remote')
-                this.$log.debug('use remote grin node.')
-                return this.$walletService.startOwnerApi(this.password, grinNode)
-              }
-              this.$gnodeService.getStatus().then(
-                (res)=>{
-                  localHeight = parseInt(res.data.tip.height)
-                  let peersCount = parseInt(res.data.connections)
-                  this.$log.debug('local node height is ' + localHeight)
-                  this.$log.debug('local node peers count is ' + peersCount)
-                  if(localHeight + 60 >= remoteHeight && peersCount >= 3){
-                    this.$log.debug('use local grin node.')
-                    this.$dbService.setGnodeLocation('local')
-                    return this.$walletService.startOwnerApi(this.password, grinLocalNode)
-                  }else{
-                    this.$log.debug('local node height is too low or peers too small. use remote grin node.')
-                    this.$dbService.setGnodeLocation('remote')
-                    return this.$walletService.startOwnerApi(this.password, grinNode)
-                  }
-              }).catch((err)=>{
-                this.$log.error('local gnode failed. Use remote grin node: ' + err)
-                this.$dbService.setGnodeLocation('remote')
-                return this.$walletService.startOwnerApi(this.password, grinNode)
-              })
-            }
-          ).catch((err)=>{
-            this.$dbService.setGnodeLocation('local')
-            this.$log.error('getStatus from remote got error:', err)
-            this.$log.debug('use local grin node.')
-            return this.$walletService.startOwnerApi(this.password, grinLocalNode)
-          })
-        }
-      }
-      setTimeout(()=>selectGnodeAndLogin.call(this), 1000)
-      this.resetErrors()
-      },
+      this.$walletService.startOwnerApi(this.password, this.gnode)
+    },
     
     resetErrors(){
       this.error = false;

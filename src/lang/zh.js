@@ -34,7 +34,6 @@ const messages = {
     other: '其他',
 
     loading: '从Grin节点更新状态中 ...',
-    waitForLocalGnode: '等待本地Grin节点启动中',
     error: '错误',
     optional: '可选',
     open: '打开',
@@ -44,6 +43,8 @@ const messages = {
 
     login: {
       walletExist: '发现已有Grin钱包存在；请用原有的密码登陆吧 :-)',
+      waitForLocalGnode: '等待本地Grin节点启动中',
+      selectingGnode: '正在选择Grin节点'
     },
 
     remove:{
