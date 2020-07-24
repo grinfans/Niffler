@@ -50,7 +50,7 @@
 <script>
 import Message from '@/components/Message'
 import { messageBus } from '@/messagebus'
-const urllib = require('urllib');
+//const urllib = require('urllib');
 const axios = require('axios')
 const fs = require('fs');
 const urljoin = require('url-join');
@@ -174,15 +174,15 @@ export default {
                 method: 'receive_tx',
                 params: [slate, null, null],
               }
-              //const res = await axios.post(url, payload)
-
-              res = await urllib.request(url, {
-                method: 'post',
-                contentType: "application/json",
-                dataType: 'json',
-                timeout: '25s',
-                content: JSON.stringify(payload)
-              });
+              res = await axios.post(url, payload)
+              //console.log('payload', JSON.stringify(payload))
+              //res = await urllib.request(url, {
+              //  method: 'post',
+              //  contentType: "application/json",
+              //  dataType: 'json',
+              //  timeout: '25s',
+              //  content: JSON.stringify(payload)
+              //});
               //this.$log.debug('post slate return res: ' + JSON.stringify(res))
               let slate2 = res.data.result.Ok
               if(slate2){
