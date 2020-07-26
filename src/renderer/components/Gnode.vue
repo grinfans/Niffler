@@ -51,8 +51,17 @@
                           <span class="has-text-centered has-text-weight-semibold">{{chainDataSize}}</span>
                         </p>
 
-                        <br/>
-                        <a class="button is-link" @click="restart">{{ $t("msg.gnode.restart") }} </a>
+                        <br/><br/>
+                        
+                        <div class="field is-grouped">
+                          <div class="control">
+                            <button class="button is-link is-small" @click="restart">{{ $t("msg.gnode.restart") }}</button>
+                          </div>
+                          <div class="control">
+                            <button class="button is-small is-text" @click="remove">{{ $t("msg.gnode.remove") }}</button>
+                          </div>
+                        </div>
+
                       </div>
                     </div>
                     <div v-if="tab ==='peers'">
@@ -199,7 +208,8 @@ export default {
       }).catch(
         (error)=>{
           this.$log.debug('Failed to get peers: ' + error)
-          }
+          this.peers = []
+        }
       )
     },
 
@@ -248,6 +258,22 @@ export default {
     closeModal() {
       messageBus.$emit('close', 'windowGnode');
     },
+    remove(){
+      let result = this.$electron.remote.dialog.showMessageBox(null, {
+        type: 'question',
+        buttons: ['Yes', 'No'],
+        title: 'Question',
+        message: this.$t('msg.gnode.removeConfirm')
+      })
+      if(result===0){
+        this.$gnodeService.stopGnode2()
+        setTimeout(() => {
+          this.$walletService.removeChainData()
+          this.$log.debug('ChainData removed.')
+          this.restart() 
+        }, 4000);
+      }
+    }
   }
 }
 </script>

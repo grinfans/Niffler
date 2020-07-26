@@ -5,7 +5,7 @@ import axios from 'axios'
 require('promise.prototype.finally').shim();
 
 import log from './logger'
-import {gnodeOption, grinPath, nodeApiSecretPath, nodeTOMLPath, platform, grinNode} from './config'
+import {gnodeOption, grinPath, nodeApiSecretPath, nodeTOMLPath, platform, grinNode, chainDataPath} from './config'
 import { messageBus } from '../renderer/messagebus'
 
 let client
@@ -112,7 +112,11 @@ class GnodeService {
 
     static restartGnode(){
         GnodeService.stopGnode2()
-        setTimeout(()=>GnodeService.startGnode(), 2000)
+        setTimeout(()=>GnodeService.startGnode(), 2500)
+    }
+
+    static removeChainData(){
+        fse.removeSync(chainDataPath)
     }
 }
 GnodeService.initClient()

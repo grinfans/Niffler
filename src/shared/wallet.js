@@ -7,7 +7,7 @@ import axios from 'axios'
 require('promise.prototype.finally').shim();
 
 import log from './logger'
-import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, 
+import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, chainDataPath,
     nodeApiSecretPath, ownerApiSecretPath, walletTOMLPath, walletPath, walletConfigPath,
     tempTxDir, gnodeOption, slatepackDir} from './config'
 import { messageBus } from '../renderer/messagebus'
@@ -447,11 +447,16 @@ class WalletService {
             exec('taskkill -f /im grin-wallet.exe')
         }
     }
+    
     static init(){
         const cmd = `${grinWalletPath} init`
         initProcess = exec(cmd)
         processes['init'] = initProcess
         localStorage.setItem('initProcessPID', initProcess.pid)
+    }
+
+    static removeChainData(){
+        fse.removeSync(chainDataPath)
     }
 }
 WalletService.initClient()

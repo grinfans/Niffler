@@ -283,7 +283,9 @@ const messages = {
       location: 'Location where grin blockchain data store',
       size: 'Size of grin blockchain data',
       restart: 'Restart grin node',
-      height: 'height'
+      height: 'height',
+      remove: 'Remove current chain data, and sync from scratch',
+      removeConfirm: 'Are you sure to Remove current grin chain data?'
     },
 
     gnodeConfig:{

@@ -282,7 +282,9 @@ const messages = {
       location: '区块数据存储的位置',
       size: '全节点区块数据大小',
       restart: '重启本地节点',
-      height: '最新高度'
+      height: '最新高度',
+      remove: '移除区块数据，重头开始同步',
+      removeConfirm: '确认移除目前的Grin区块数据吗？'
     },
 
     gnodeConfig:{
