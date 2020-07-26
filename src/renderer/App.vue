@@ -69,7 +69,7 @@
             </button>
           </div>
 
-          <div class="column is-2" style="margin-left:40px;">
+          <div class="column is-2" style="margin-left:36px;">
             <div class="level">
               <p class="is-size-7 tag is-warning animated" v-bind:class="{headShake: isAnimate}" style="animation-iteration-count:3">
                 {{ $t("msg.app.height") }} ({{getGnodeLocationDisplay()}}):{{height}}</p>

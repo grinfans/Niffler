@@ -97,15 +97,6 @@ export default {
     messageBus.$on('closeWindowRemove',()=>{this.openRemove = false})
     messageBus.$on('closeWindowGnodeConfig',()=>{this.openGnodeConfig = false})
     
-    messageBus.$on('toSelectGnode',()=>{
-      this.selectGnode()
-    })
-
-    messageBus.$on('toLogin',()=>{
-      this.disabled = false
-      this.info = ''
-    })
-
     if(gnodeOption.connectMethod !== 'remoteAllTime'){
       let t
       for (var i = 1; i < 5; i++) {
@@ -116,18 +107,18 @@ export default {
           let t2 = i * 4
           this.$gnodeService.getStatus().then((res)=>{
               this.$log.debug(`Local gnode running after ${t2}s`)
-              messageBus.$emit('toSelectGnode')
+              this.selectGnode()
             }).catch((err)=>{
               console.log(err)
               if(i==4){
-                this.$log.debug(`Local gnode still not running after ${t2}s`)
-                messageBus.$emit('toSelectGnode')
+                this.$log.debug(`Local gnode still not running after ${t2}s. select node anyway.`)
+                this.selectGnode()
               }
             })
         }, t, i)
       }
     }else{
-      messageBus.$emit('toSelectGnode')
+      this.selectGnode()
     }
   },
   
@@ -149,7 +140,7 @@ export default {
         this.$dbService.setGnodeLocation('remote')
         this.$log.debug('use remote grin node.')
         this.gnode = grinNode
-        messageBus.$emit('toLogin')
+        this.readyToLogin()
         return
       }
       
@@ -157,7 +148,7 @@ export default {
         this.$dbService.setGnodeLocation('local')
         this.$log.debug('use local grin node.')
         this.gnode = grinLocalNode
-        messageBus.$emit('toLogin')
+        this.readyToLogin()
         return
       }
 
@@ -168,7 +159,7 @@ export default {
           this.$dbService.setGnodeLocation('remote')
           this.$log.debug('use remote grin node.')
           this.gnode = grinNode
-          messageBus.$emit('toLogin')
+          this.readyToLogin()
           return
         }
           
@@ -181,19 +172,19 @@ export default {
             this.$log.debug('use local grin node.')
             this.$dbService.setGnodeLocation('local')
             this.gnode = grinLocalNode
-            messageBus.$emit('toLogin')
+            this.readyToLogin()
             return
           }else{
             this.$log.debug('local node height is too low or peers too small. use remote grin node.')
             this.$dbService.setGnodeLocation('remote')
             this.gnode = grinNode
-            messageBus.$emit('toLogin')
+            this.readyToLogin()
             return
           }}).catch((err)=>{
             this.$log.error('local gnode failed. Use remote grin node: ' + err)
               this.$dbService.setGnodeLocation('remote')
               this.gnode = grinNode
-              messageBus.$emit('toLogin')
+              this.readyToLogin()
               return
             })
           }).catch((err)=>{
@@ -201,9 +192,14 @@ export default {
             this.$log.error('getStatus from remote got error:', err)
             this.$log.debug('use local grin node.')
             this.gnode = grinLocalNode
-            messageBus.$emit('toLogin')
+            this.readyToLogin()
             return
           })
+    },
+    
+    readyToLogin(){
+      this.disabled = false
+      this.info = ''
     },
 
     tryLogin(){
@@ -256,8 +252,6 @@ export default {
         this.logining = false
         return this.error = true
       })
-
- 
     },
   }
 }
