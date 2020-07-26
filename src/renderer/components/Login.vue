@@ -88,7 +88,8 @@ export default {
       version: version,
       logining: false,
 
-      disabled: true,
+      localNodeChecked: false,
+      disabled:true,
       info: this.$t('msg.login.waitForLocalGnode'),
       gnode: ''
     }
@@ -99,19 +100,31 @@ export default {
     
     if(gnodeOption.connectMethod !== 'remoteAllTime'){
       let t
+      
+      setTimeout(()=>{
+          if(this.localNodeChecked)return
+          this.$gnodeService.getStatus().then((res)=>{
+              this.localNodeChecked = true
+              this.$log.debug(`Local gnode running after 2s`)
+              this.selectGnode()
+             
+          })}, 2000)
+
       for (var i = 1; i < 5; i++) {
         t = i * 4000
 
         setTimeout((i)=>{
-          if(!this.disabled)return
+          if(!this.localNodeChecked)return
           let t2 = i * 4
           this.$gnodeService.getStatus().then((res)=>{
+              this.localNodeChecked = true
               this.$log.debug(`Local gnode running after ${t2}s`)
               this.selectGnode()
             }).catch((err)=>{
               console.log(err)
               if(i==4){
-                this.$log.debug(`Local gnode still not running after ${t2}s. select node anyway.`)
+                this.localNodeChecked = true
+                this.$log.debug(`Local gnode still not running after ${t2}s. select node`)
                 this.selectGnode()
               }
             })
