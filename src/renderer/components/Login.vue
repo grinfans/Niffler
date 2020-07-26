@@ -32,8 +32,8 @@
                   </div>
 
                   <p class="help is-warning" v-if="error">{{ $t("msg.wrongPassword") }}</p>
-                  <p class="help is-success" v-if="info">{{ this.info }}
-                     <span class="animated flash" style="animation-iteration-count:infinite;animation-duration: 3s">.....</span>
+                  <p class="help is-link" v-if="info">{{ this.info }}
+                     <span class="animated flash" style="animation-iteration-count:infinite;animation-duration: 3s" v-if="disabled">.....</span>
                   </p>
                 </div>
             
@@ -210,7 +210,7 @@ export default {
     
     readyToLogin(){
       this.disabled = false
-      this.info = ''
+      this.info = this.$t('msg.login.gnode') + ':' + this.gnode
     },
 
     tryLogin(){

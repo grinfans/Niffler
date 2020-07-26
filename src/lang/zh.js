@@ -44,7 +44,8 @@ const messages = {
     login: {
       walletExist: '发现已有Grin钱包存在；请用原有的密码登陆吧 :-)',
       waitForLocalGnode: '等待本地Grin节点启动中',
-      selectingGnode: '正在选择Grin节点'
+      selectingGnode: '正在选择Grin节点',
+      gnode: 'Grin节点'
     },
 
     remove:{

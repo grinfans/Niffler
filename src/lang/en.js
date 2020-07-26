@@ -49,7 +49,8 @@ const messages = {
     login: {
       walletExist: 'Found grin wallet data exists; login with original password :-)',
       waitForLocalGnode: 'Wait for local grin node to start',
-      selectingGnode: 'Selecting grin node'
+      selectingGnode: 'Selecting grin node',
+      gnode: 'Grin node'
     },
 
     remove:{
