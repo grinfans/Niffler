@@ -120,7 +120,7 @@ export default {
       currentSeed: '',
       currentSeedInvalid: false,
       enoughSeeds: false,
-      seeds:'',
+      seeds: [],
       password: '',
       password2: '',
       page: 'addSeeds',
