@@ -104,13 +104,13 @@ export default {
           if(this.localNodeChecked)return
           this.$gnodeService.getStatus().then((res)=>{
               this.localNodeChecked = true
-              this.$log.debug(`Local gnode running after 1.5 s`)
+              this.$log.debug(`Local gnode running after 2 s`)
               this.selectGnode()
-          })}, 1500)
+          })}, 2000)
       //bind: https://www.jianshu.com/p/5b20bc2d1a32
       for (var i = 1; i < 5; i++) {
         t = i * 4000
-        setTimeout(this.checklocalNode(i).bind(this), t, i)
+        setTimeout(this.checklocalNode.bind(this), t, i)
       }
     }else{
       this.selectGnode()
@@ -124,7 +124,7 @@ export default {
 
   methods: {
     checklocalNode(i){
-      if(!this.localNodeChecked)return
+      if(this.localNodeChecked)return
       let t2 = i * 4
       this.$gnodeService.getStatus().then((res)=>{
         this.localNodeChecked = true
