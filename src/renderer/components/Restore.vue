@@ -166,7 +166,7 @@ export default {
 
     setTimeout(()=>{
       this.getLocalGnodeStatus()
-    }, 2000)
+    }, 5000)
   },
   watch: {
     seeds:function(newVal, oldVal){
