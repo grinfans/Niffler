@@ -35,7 +35,6 @@ https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-v0.6.0-win-x64.exe
 
 >Linux:
 https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-v0.6.0-linux-amd64.deb
-
 https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-v0.6.0-linux-amd64.AppImage
 
 
