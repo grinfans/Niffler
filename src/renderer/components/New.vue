@@ -54,9 +54,9 @@ export default {
     })
     if(!this.$walletService.isExist()){
       
-      if(!walletService.isWalletConfigExist()){
-        walletService.init()
-      }
+     // if(!walletService.isWalletConfigExist()){
+       // walletService.init()
+      //}
 
       setTimeout(()=>{
         walletService.startOwnerApi(null, null)

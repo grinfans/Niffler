@@ -7,7 +7,7 @@ import axios from 'axios'
 require('promise.prototype.finally').shim();
 
 import log from './logger'
-import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, chainDataPath,
+import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, chainDataPath, 
     nodeApiSecretPath, ownerApiSecretPath, walletTOMLPath, walletPath, walletConfigPath,
     tempTxDir, gnodeOption, slatepackDir} from './config'
 import { messageBus } from '../renderer/messagebus'
@@ -70,6 +70,8 @@ class WalletService {
     }
     
     static ensureDir(){
+        log.debug('it is time to ensuredir.')
+        fse.ensureDir(walletPath)
         fse.ensureDirSync(slatepackDir)
 
     }

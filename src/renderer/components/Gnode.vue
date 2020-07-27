@@ -188,7 +188,7 @@ export default {
           this.remoteHeight = parseInt(res.data.tip.height)
           this.userAgent = res.data.user_agent
           this.protocolVersion = res.data.protocol_version
-          //console.log(`remote ${remoteHeight}; local ${this.localHeight}`)
+          //console.log(`remote ${thiis.remoteHeight}; local ${this.localHeight}`)
         if( this.localHeight + 60 > this.remoteHeight){
           this.status = 'running'
         }else{

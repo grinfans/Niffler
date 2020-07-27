@@ -249,8 +249,12 @@ export default {
         try{
           res = await walletServiceV3.createWallet(null, seeds_, len, this.password)
           this.$log.debug('createWallet return: '+ JSON.stringify(res))
-          
-          messageBus.$emit('walletRecoverReturn', 'ok')
+          if(res.result.hasOwnProperty('Ok')){
+            messageBus.$emit('walletRecoverReturn', 'ok')
+          }else{
+             this.$log.error('createWallet failed: '+ error)
+              messageBus.$emit('walletRecoverReturn', 'invalidSeeds')
+          }
         }catch(error){
           this.$log.error('createWallet failed: '+ error)
           messageBus.$emit('walletRecoverReturn', 'invalidSeeds')
@@ -285,7 +289,7 @@ export default {
           this.remoteHeight = parseInt(res.data.tip.height)
           this.userAgent = res.data.user_agent
           this.protocolVersion = res.data.protocol_version
-          this.$log.debug(`checkGnodeStatus on restore: remote ${remoteHeight}; local ${this.localHeight}`)
+          this.$log.debug(`checkGnodeStatus on restore: remote ${this.remoteHeight}; local ${this.localHeight}`)
         if( this.localHeight+10 > this.remoteHeight){
           this.localGnodeStatus = 'running'
         }else{
