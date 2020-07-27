@@ -3,16 +3,16 @@
     <div class="hero-body">
       <div class="container">
         <div class="columns is-mobile is-centered">
-          <div class="column is-6" >
+          <div class="column is-7" >
             <img src="../assets/logo.png" style="width:64px" class="is-pulled-left">
             <h2 class="title" style="margin-top:24px; margin-left:70px;font-size:1.6rem" >{{ $t("msg.title") }}
-              <span class="is-pulled-right" style="font-size:0.75rem">v{{version}}</span>
+              <span class="is-pulled-right" style="font-size:0.75rem" >v{{version}}</span>
             </h2>
           </div>
         </div>
 
         <div class="columns is-mobile is-centered">
-          <div class="column"  v-bind:class="{'is-8': firstTime, 'is-6': !firstTime }">
+          <div class="column"  v-bind:class="{'is-8': firstTime, 'is-7': !firstTime }">
             <div class="message is-warning is-small" v-show="firstTime" >
               <div class="message-header">
                 <p>{{ $t("msg.welcome") }}</p>
@@ -104,7 +104,7 @@ export default {
           if(this.localNodeChecked)return
           this.$gnodeService.getStatus().then((res)=>{
               this.localNodeChecked = true
-              this.$log.debug(`Local gnode running after 2 s`)
+              this.$log.debug(`Local gnode running after 2s`)
               this.selectGnode()
           })}, 2000)
       //bind: https://www.jianshu.com/p/5b20bc2d1a32
