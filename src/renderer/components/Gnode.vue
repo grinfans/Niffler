@@ -28,6 +28,7 @@
                         <span v-if="status==='syncing'" class="animated flash" style="animation-iteration-count:infinite;animation-duration: 3s">
                         ......</span>
                       </p>
+                      
                       <div v-if="status!='toStart'">
                         <p>{{ $t("msg.gnode.localRemoteHeight") }}&nbsp;: 
                           <span class="has-text-centered has-text-weight-semibold">{{localHeight}}/({{remoteHeight}})</span>
@@ -58,11 +59,18 @@
                             <button class="button is-link is-small" @click="restart">{{ $t("msg.gnode.restart") }}</button>
                           </div>
                           <div class="control">
-                            <button class="button is-small is-text" @click="remove">{{ $t("msg.gnode.remove") }}</button>
+                            <button class="button is-small is-text" v-if="removed" disabled>{{ $t("msg.gnode.remove") }}</button>
+                            <button class="button is-small is-text" @click="remove" v-else>{{ $t("msg.gnode.remove") }}</button>
                           </div>
                         </div>
 
                       </div>
+                      <div class="control" v-else>
+                        <br/>
+                        <button class="button is-small is-warning" v-if="removed" disabled>{{ $t("msg.gnode.remove") }}</button>
+                        <button class="button is-small is-warning" @click="remove" v-else>{{ $t("msg.gnode.remove") }}</button>
+                      </div>
+                      
                     </div>
                     <div v-if="tab ==='peers'">
                       <p class="tag is-warning">{{ $t("msg.gnode.connectedCount") }}:{{peers.length}}</p>
@@ -136,7 +144,8 @@ export default {
       peers: [],
       nodeLog: [],
       chainDataPath: chainDataPath,
-      chainDataSize: 0 
+      chainDataSize: 0,
+      removed: false
     }
   },
   watch: {
@@ -265,7 +274,10 @@ export default {
         title: 'Question',
         message: this.$t('msg.gnode.removeConfirm')
       })
+
+
       if(result===0){
+        this.removed = true
         this.$gnodeService.stopGnode2()
         setTimeout(() => {
           this.$walletService.removeChainData()
