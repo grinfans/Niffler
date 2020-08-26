@@ -247,6 +247,10 @@ export default {
 
         let res
         try{
+          if(!this.$walletService.isWalletConfigExist()){
+            res = await walletServiceV3.createConfig(chain, null, null, null)
+            this.$log.debug('createWalletConfig return: '+ JSON.stringify(res))
+          }
           res = await walletServiceV3.createWallet(null, seeds_, len, this.password)
           this.$log.debug('createWallet return: '+ JSON.stringify(res))
           if(res.result.hasOwnProperty('Ok')){

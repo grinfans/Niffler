@@ -240,7 +240,10 @@ export default {
               this.$walletServiceV3.startUpdater(60000 * 4).then(
               (res) =>{
                 //this.$log.debug('startUpdater return:' + JSON.stringify(res))
-
+                if(!this.$walletService.isWalletConfigExist()){
+                  this.$log.debug('no wallet config, create one.' )
+                  this.$walletServiceV3.createConfig(chain, null, null, null).then().catch()
+                }
                 this.$log.debug('owner api process started')
                 this.$walletService.setPassword(this.password)
                 messageBus.$emit('logined')
