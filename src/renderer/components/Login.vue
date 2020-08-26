@@ -68,7 +68,7 @@ import {isFirstTime} from '../../shared/first'
 import Remove from '@/components/Remove'
 import GnodeConfigModal from '@/components/GnodeConfigModal'
 
-import {version, grinNode, gnodeOption, grinNode2, grinLocalNode, platform} from '../../shared/config'
+import {version, grinNode, gnodeOption, grinNode2, grinLocalNode, platform, chain} from '../../shared/config'
 
 export default {
   name: "login",

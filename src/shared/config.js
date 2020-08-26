@@ -46,6 +46,7 @@ if(platform=='win'){
 }
 
 export const chainType = 'main'
+export const chain = 'Mainnet'
 export const walletTOMLPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-wallet.toml')
 export const nodeTOMLPath = path.join(APP.getPath('home'), '.grin', chainType, 'grin-server.toml')
 

@@ -111,7 +111,7 @@ const {ipcRenderer} = require('electron')
 import { messageBus } from '@/messagebus'
 const { exec } = require('child_process')
 import walletServiceV3 from '../../shared/walletv3'
-import {chainType, grinNode2, grinLocalNode} from '../../shared/config'
+import {chainType, grinNode2, grinLocalNode, chain} from '../../shared/config'
 
 export default {
   name: "restore",
@@ -242,9 +242,6 @@ export default {
           len = 16
         }
         
-        let chain
-        if(chainType==='main')chain='Mainnet'
-
         let res
         try{
           if(!this.$walletService.isWalletConfigExist()){
