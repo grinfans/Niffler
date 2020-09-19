@@ -114,6 +114,7 @@
 <script>
 import { messageBus } from '@/messagebus'
 import {gnodeOption, grinNodeLog, chainDataPath} from '../../shared/config'
+import GnodeService2 from '../../shared/gnode2'
 
 import GnodeConfig from '@/components/GnodeConfig'
 
@@ -198,6 +199,10 @@ export default {
           this.userAgent = res.data.user_agent
           this.protocolVersion = res.data.protocol_version
           //console.log(`remote ${thiis.remoteHeight}; local ${this.localHeight}`)
+
+          let res2 = await GnodeService2.getStatus()
+          this.userAgent = res2.data.result.Ok.user_agent
+
         if( this.localHeight + 60 > this.remoteHeight){
           this.status = 'running'
         }else{
