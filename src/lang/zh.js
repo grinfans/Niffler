@@ -350,6 +350,11 @@ const messages = {
       copied: '已复制',
       copy: '复制 slatepack地址', 
       tips: 'slatepack 地址 用于加密slatepack信息以及付款证明，并不会存储在Grin区块链上.'
+    },
+
+    log: {
+      title: '导出日志',
+      saveMsg: '导出当天的Niffler钱包的日志',
     }
     
   }

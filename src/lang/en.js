@@ -351,6 +351,11 @@ const messages = {
       copied: 'Copied',
       copy: 'Copy slatepack address', 
       tips: 'Slatepack address is used to encrypt transaction and create payment proof. It is not stored on the grin blockchain.'
+    },
+
+    log: {
+      title: 'Export Log',
+      saveMsg: "Export today's Niffler wallet log.",
     }
   }
 }

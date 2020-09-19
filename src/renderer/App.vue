@@ -98,6 +98,11 @@
                       @click="openLang=true">
                       {{ $t("msg.lang.title") }}
                     </a>
+                    
+                    <a href="#" class="dropdown-item" style="line-height: 1.2;font-size: 0.8rem;" 
+                      @click="exportLog">
+                      {{ $t("msg.log.title") }}
+                    </a>
 
                     <hr class="dropdown-divider">
                     <a href="#" class="dropdown-item" style="line-height: 1.2;font-size: 0.8rem;" 
@@ -154,6 +159,8 @@
 
   import checkUpdate from '../shared/updateChecker'
   import {downloadUrl, locale, gnodeOption} from '../shared/config'
+  import { logPath, logFile } from '../shared/logger'
+  const fs = require('fs');
 
   const {ipcRenderer} = require('electron')
 
@@ -354,6 +361,18 @@
       }
     },
     methods: {
+      exportLog(){
+        console.log(logFile)
+        let fn_output = this.$electron.remote.dialog.showSaveDialog({
+          title: this.$t('msg.log.title'),
+          message: this.$t('msg.log.saveMsg'),
+          defaultPath: logFile
+        })
+        if(fn_output){
+          fs.copyFileSync(logPath, fn_output)
+        }
+      },
+
       lang(){
         this.$i18n.locale = 'en'
       },
@@ -417,8 +436,6 @@
         return this.$t('msg.remote')
         
       },
-
-      
 
       async checkNewVersion(){
         let toUpdate = await checkUpdate()

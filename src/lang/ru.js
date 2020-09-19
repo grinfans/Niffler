@@ -39,7 +39,6 @@ const messages = {
     waitForLocalGnode: 'Wait for local grin node to start',
 
     error: 'Error',
-    
     login: {
       walletExist: 'Данные grin кошелька найдены; Войти с оригинальным паролем :-)',
     },
@@ -301,6 +300,10 @@ const messages = {
       errorInvalidProxy: 'Invalid proxy',
       saved: 'Setting saved. will use this setting when start Tor next time.s'
     },
+    log: {
+      title: 'Export Log',
+      saveMsg: "Export today's Niffler wallet log.",
+    }
   }
 }
 export default messages
