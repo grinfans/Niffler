@@ -139,6 +139,8 @@
     "vue-truncate-filter": "^1.1.7"
   },
   "devDependencies": {
+    "http-proxy": "^1.18.1",
+    "node-forge": "^0.10.0",
     "ajv": "^6.5.0",
     "axios": "^0.19.2",
     "babel-core": "^6.26.3",
@@ -164,7 +166,7 @@
     "husky": "^2.4.0",
     "js-yaml": "3.13.1",
     "lodash": "^4.17.19",
-    "lodash.merge": "^4.6.2",
+    "lodash.merge": ">=4.6.2",
     "mini-css-extract-plugin": "0.4.0",
     "multispinner": "^0.2.1",
     "node-loader": "^0.6.0",

@@ -67,8 +67,8 @@
                       </div>
                       <div class="control" v-else>
                         <br/>
-                        <button class="button is-small is-warning" v-if="removed" disabled>{{ $t("msg.gnode.remove") }}</button>
-                        <button class="button is-small is-warning" @click="remove" v-else>{{ $t("msg.gnode.remove") }}</button>
+                        <button class="button is-warning" v-if="removed" disabled>{{ $t("msg.gnode.remove") }}</button>
+                        <button class="button is-warning" @click="remove" v-else>{{ $t("msg.gnode.remove") }}</button>
                       </div>
                       
                     </div>
