@@ -275,7 +275,6 @@ export default {
         message: this.$t('msg.gnode.removeConfirm')
       })
 
-
       if(result===0){
         this.removed = true
         this.$gnodeService.stopGnode2()
