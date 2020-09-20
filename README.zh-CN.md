@@ -1,6 +1,6 @@
 # Niffler 钱包
 
-简体中文 | [English](./README.md)
+简体中文 | [English](./README.md) | [Français](./README.fr-FR.md)
 
 Niffler 是一个开箱即用、用户友好的 [Grin](https://github.com/mimblewimble/grin) 开源图形界面钱包.
 

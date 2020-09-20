@@ -7,8 +7,10 @@
           <div class="column is-4">
             <summary-info></summary-info>
           </div>
-          
-          <div class="dropdown column is-1" style="margin-left:25px;margin-top:auto;" 
+
+        <div class="column is-3 columns is-gapless" style="margin-left:25px; margin-top:auto; margin-bottom:0">
+
+          <div class="dropdown column"
             v-bind:class="{'is-active':isDroppingDown}" >
             <div class="dropdown-trigger" >
               <button class="button is-link is-outlined" v-bind:class="{'is-small2':isRu}"
@@ -34,8 +36,8 @@
             </div>
           </div>
 
-          &nbsp; &nbsp; 
-          <div class="dropdown column column is-1" style="margin-left:-2px;margin-top:auto;" 
+
+          <div class="dropdown column" style="margin-left:0.3em;"
             v-bind:class="{'is-active':isDroppingDown2}" >
             <div class="dropdown-trigger" >
               <button class="button is-link is-outlined" v-bind:class="{'is-small2':isRu}"
@@ -61,7 +63,7 @@
             </div>            
           </div>
 
-          <div class="column column is-1" style="margin-top: auto; margin-left:30px;">
+          <div class="column column" style="margin-left:0.3em">
             <button class="button is-link is-outlined" v-bind:class="{'is-small2':isRu}" @click="openHedwigV1 = true">
                <span class="icon-running icon-status animated infinite pulse delay-2s" v-if="hedwigRunning"></span>
                <span class="icon-failed icon-status animated infinite pulse delay-2s" v-if="hedwigFailed"></span>
@@ -69,13 +71,16 @@
             </button>
           </div>
 
-          <div class="column is-2" style="margin-left:36px;">
+        </div>
+
+          <div class="column is-4" style="margin-left:36px;">
             <div class="level">
-              <p class="is-size-7 tag is-warning animated" v-bind:class="{headShake: isAnimate}" style="animation-iteration-count:3">
-                {{ $t("msg.app.height") }} ({{getGnodeLocationDisplay()}}):{{height}}</p>
-              &nbsp;
+             <div class="level-left"></div>
+             <div class="level-right">
+              <p class="tag is-warning animated level-item" v-bind:class="{headShake: isAnimate}" style="animation-iteration-count:3; margin-right: 0.4em">
+                {{ $t("msg.app.height") }} ({{getGnodeLocationDisplay()}}): {{height}}</p>
               <!--<a class="button is-small is-link is-outlined" @click.prevent="logout">{{ $t("msg.logout") }}</a>-->
-              <div class="dropdown is-right" v-bind:class="{'is-active':isDroppingDown3}">
+              <div class="dropdown is-right level-item" v-bind:class="{'is-active':isDroppingDown3}">
                 <div class="dropdown-trigger">
                   <button class="button is-small is-link is-outlined" aria-haspopup="true" aria-controls="dropdown-menu"
                   @click="isDroppingDown3=!isDroppingDown3;isDroppingDown=false;isDroppingDown2=false" style="width:50px">
@@ -113,6 +118,7 @@
                 </div>
               </div>
 
+             </div>
             </div>
           </div>
       </div>

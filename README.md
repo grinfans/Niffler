@@ -1,6 +1,6 @@
 # Niffler Wallet
 
-English | [简体中文](./README.zh-CN.md)
+English | [简体中文](./README.zh-CN.md) | [Français](./README.fr-FR.md)
 
 Niffler is a out-of-the box user-friendly gui [Grin](https://github.com/mimblewimble/grin) wallet.
 The name 'Niffler' comes from ["harry potter"](https://harrypotter.fandom.com/wiki/Niffler).
