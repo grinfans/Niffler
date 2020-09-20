@@ -66,7 +66,7 @@ const messages = {
       seedPhrase: 'Seed Phrase',
       toNewMsg: 'No wallet exists Found. Create a New One.',
       newWallet: 'Create new wallet',
-      backupNote: 'Import！Please backup your seed phrase to restore your wallet',
+      backupNote: 'Important! Please backup your seed phrase to restore your wallet',
       backupFinish: 'Ok, I backed up my seed phrase. Close wallet, then open it again',
       errorPasswdEmpty: 'Password cannot be empty',
       errorPasswdConsistency: 'Please enter the same password',
@@ -173,7 +173,7 @@ const messages = {
       TxCreateFailed: 'Create transaction failed',
       salteVersion: 'Slate file version',
       salteVersionHelp: 'If you failed to send grin, try change the Slate file version then resend',
-      noTor: 'Lauch Tor first.',   
+      noTor: 'Launch Tor first.',   
     },
 
     fileReceive: {
@@ -221,9 +221,9 @@ const messages = {
       start: 'Start',
       error: 'No password.',
       failed: 'Start Failed, Maybe wrong password',
-      failed2: 'HTTP listen failed, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
+      failed2: 'HTTP listen failed, your public ip could not reachable by internet user. Try transaction file Or Hedwig.',
       failed3: 'Failed to get your public ip; try it later',
-      failed4: 'Localhost http listen is running(http://127.0.0.1:3415). However, your public ip could not reachable by internet user. Try trascation file Or Hedwig.',
+      failed4: 'Localhost http listen is running(http://127.0.0.1:3415). However, your public ip could not reachable by internet user. Try transaction file Or Hedwig.',
       ip: 'your public ip'
     },
 
@@ -276,7 +276,7 @@ const messages = {
       statusRunning: 'Running, Available',
       statusSyncing: 'Syncing ...',
       statusToStart: 'not Running',
-      status:'Status',
+      status: 'Status',
       localRemoteHeight: 'Local Height/Networking Height',
       nodeVersion: 'Node Version',
       protocolVersion: 'Protocol Version',
@@ -325,7 +325,7 @@ const messages = {
       tip2: 'Starting ... it may take 10-60 seconds',
       introTitle: 'Introduction',
       intro1: 'Tor is free and open-source software for enabling anonymous communication.',
-      intro2: 'Receive/send grin via tor is more anonymous/sercurity/decentralized',
+      intro2: 'Receive/send grin via tor is more anonymous/secure/decentralized',
       intro3: '(If Tor is blocked by network in your location, Configure a https/socks proxy first.)',
 
       start: 'start',
