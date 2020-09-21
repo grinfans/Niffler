@@ -1,6 +1,6 @@
-The Windows version of grin node binaries is grin v4.0.2(https://github.com/mimblewimble/grin/releases/tag/v4.0.2),
+The Windows version of grin node binaries is grin v4.1.0(https://github.com/mimblewimble/grin/releases/tag/v4.1.0),
 
-Downloaded from (https://github.com/mimblewimble/grin/releases/download/v4.0.2/grin-v4.0.2-win-x64.zip)
+Downloaded from (https://github.com/mimblewimble/grin/releases/download/v4.1.0/grin-v4.1.0-win-x64.zip)
                 
 The Windows version of grin-wallet binaries is grin-wallet v4.0.0(https://github.com/mimblewimble/grin-wallet/releases/tag/v4.0.0),
 
