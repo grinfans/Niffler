@@ -38,13 +38,15 @@ import en from '../lang/en'
 import zh from '../lang/zh'
 import ru from '../lang/ru'
 import ko from '../lang/ko'
+import fr from '../lang/fr'
 
 Vue.use(VueI18n)
 const messages = {
   en,
   ru,
   zh,
-  ko
+  ko,
+  fr
 }
 
 import {locale, gnodeOption} from '../shared/config'

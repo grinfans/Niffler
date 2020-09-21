@@ -132,13 +132,14 @@ function getLocale(){
   locale = APP.getLocale().toLowerCase()
   if(locale.startsWith('zh'))return 'zh'
   if(locale.startsWith('ru'))return 'ru'
+  if(locale.startsWith('fr'))return 'fr'
   return 'en'
 }
 export function setLocale(locale){
   updateConfig({'locale':locale})
 }
 export const locale = getLocale()
-export const langs = {'zh':'简体中文', 'en':'English'}
+export const langs = {'zh':'简体中文', 'en':'English', 'fr':'français'}
 
 import pkg from '../../package.json'
 export const version = pkg.version
