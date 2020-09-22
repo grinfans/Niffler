@@ -7,7 +7,7 @@ import axios from 'axios'
 require('promise.prototype.finally').shim();
 
 import log from './logger'
-import {platform, grinWalletPath, seedPath, grinNode, grinNode2, chainType, chainDataPath, 
+import {platform, grinWalletPath, grinPath, seedPath, grinNode, grinNode2, chainType, chainDataPath, 
     nodeApiSecretPath, ownerApiSecretPath, walletTOMLPath, walletPath, walletConfigPath,
     tempTxDir, gnodeOption, slatepackDir} from './config'
 import { messageBus } from '../renderer/messagebus'
@@ -55,6 +55,22 @@ function addQuotations(s){
     return '"' + s +'"'
 }
 class WalletService {
+    static checkVersion(){
+        let cmd = `${grinWalletPath} --version`
+        execPromise(cmd).then(
+            res=>{log.debug('check grin-wallet version:', res)}
+        ).catch(err=>{
+            log.debug('check grin-wallet version error:', err)
+        })
+
+        cmd = `${grinPath} --version`
+        execPromise(cmd).then(
+            res=>{log.debug('check grin node version:', res)}
+        ).catch(err=>{
+            log.debug('check grin node version error:', err)
+        })
+    }
+
     static initClient() {
         if(fs.existsSync(ownerApiSecretPath)){
             client = axios.create({
@@ -460,6 +476,7 @@ class WalletService {
         fse.removeSync(chainDataPath)
     }
 }
+WalletService.checkVersion()
 WalletService.initClient()
 WalletService.ensureDir()
 export default WalletService
