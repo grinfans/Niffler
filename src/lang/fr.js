@@ -42,7 +42,7 @@ const messages = {
     address: 'Adresse Slatepack',
 
     login: {
-      walletExist: 'Des données de portefeuilles Grin ont été trouvées. Veuillez vous avec le mot de passe d\'origine :-)',
+      walletExist: 'Des données de portefeuille Grin ont été trouvées. Veuillez vous connecter avec le mot de passe d\'origine :-)',
       waitForLocalGnode: 'En attente du démarrage du noeud Grin local',
       selectingGnode: 'Sélection du noeud Grin',
       gnode: 'Noeud Grin'
@@ -51,7 +51,7 @@ const messages = {
     remove:{
       title: 'Supprimer le portefeuille actuel',
       warning: 'Attention !',
-      info: 'Avant de supprimer le portefeuille, veuillez vous assurer qu\'il ne reste pas de Grin dans le portefeuille actuel ou que vous avez bien sauvegardé la phrase d\'initialisation !',
+      info: 'Avant de supprimer le portefeuille, veuillez vous assurer qu\'il ne reste pas de Grin dans le portefeuille actuel ou que vous avez bien sauvegardé la phrase de récupération !',
       help: 'Saisir "supprimer" dans la zone de saisie ci-dessous pour confirmer',
       remove: 'Supprimer le portefeuille',
       success: 'Le portefeuille actuel a été supprimé, veuillez redémarrer Niffler.'
@@ -59,30 +59,30 @@ const messages = {
 
     new_:{
       create: 'Créer un nouveau portefeuille',
-      restore: 'Restaurer un portefeuille avec sa la phrase d\'initialisation',
+      restore: 'Restaurer un portefeuille avec sa la phrase de récupération',
       import: 'Importer un fichier de sauvegarde de portefeuille'
     },
 
     create:{
       toNewMsg: 'Aucun portefeuille existant n\'a été trouvé. Créons-en un nouveau :-)',
-      seedPhrase: 'Phrase d\'initialisation',
+      seedPhrase: 'Phrase de récupération',
       newWallet: 'Créer un nouveau portefeuille',
-      backupNote: 'Important ! Sauvegardez et conservez précieusement la phrase de d\'initialisation pour pouvoir restaurer le portefeuille ultérieurement.',
-      backupFinish: 'Une fois la sauvegarde de la phrase d\'initialisation terminée, fermez le portefeuille, puis ouvrez le à nouveau afin de vous connecter.',
+      backupNote: 'Important ! Sauvegardez et conservez précieusement la phrase de récupération pour pouvoir restaurer le portefeuille ultérieurement.',
+      backupFinish: 'Une fois la sauvegarde de la phrase de récupération terminée, fermez le portefeuille, puis ouvrez le à nouveau afin de vous connecter.',
       errorPasswdEmpty: 'Le mot de passe ne peut pas être vide',
       errorPasswdConsistency: 'Veuillez saisir le même mot de passe',
-      errorCreateFailed: 'Une erreur s\'est produite lors de la création du nouveau portefeuille, tentez de redémarrer le portefeuille ou réessayer plus tard.',
+      errorCreateFailed: 'Une erreur s\'est produite lors de la création du nouveau portefeuille, tentez de redémarrer le portefeuille ou de réessayer plus tard.',
     },
 
     restore:{
-      seedPhrase: 'Phrase d\'initialisation',
-      title: 'Récupérer un portefeuille grâce à sa phrase d\'initialisation',
-      addSeedsInfo: 'Veuillez saisir les mots de la phrase d\'initialisation un par un',
+      seedPhrase: 'Phrase de récupération',
+      title: 'Récupérer un portefeuille grâce à sa phrase de récupération',
+      addSeedsInfo: 'Veuillez saisir les mots de la phrase de récupération un par un',
       add: 'Ajouter',
-      invalid: 'Phrase d\'initialisation incorrecte',
-      failed: 'Échec de récupération du portefeuille à partir de la phrase d\'initialisation',
+      invalid: 'Phrase de récupération incorrecte',
+      failed: 'Échec de récupération du portefeuille à partir de la phrase de récupération',
       delete: 'Supprimer',
-      added: 'Saisie de la phrase d\'initialisation terminée',
+      added: 'Saisie de la phrase de récupération terminée',
       newPassword: 'Définir un nouveau mot de passe',
       recover: 'Récupérer le portefeuille',
       reAdd: 'Ressaisir',
@@ -97,10 +97,10 @@ const messages = {
       finalize: 'Confirmer le Slatepack et clôturer la transaction',
       httpSend: 'Envoyer via https/http',
       createRespFile: 'Générer un Slatepack de réponse',
-      httpReceive: 'Activer la réception du port http',
+      httpReceive: 'Activer le port de réception http',
       height:'Taille',
       updateTitle: 'Nouvelle version détectée',
-      updateMsg: 'Une nouvelle version du portefeuille Niffler a été détectée. Veuillez le mettre à jour dès immédiatement ! (Téléchargez le et écrasez le programme d\'origine).',
+      updateMsg: 'Une nouvelle version du portefeuille Niffler a été détectée. Mettez le à jour dès maintenant ! (Téléchargez le et écrasez le programme d\'origine).',
       yes: 'Procéder à la mise à jour',
       no: 'Ne pas mettre à jour temporairement',
 
@@ -218,7 +218,7 @@ const messages = {
       start: 'Démarrer',
       error: 'Aucun mot de passe saisi.',
       failed: 'Échec du démarrage, le mot de passe est peut être incorrect',
-      failed2: 'L\'écoute HTTP a échouée, votre adresse IP publique n\'est pas accessible depuis Internet. Veuillez utiliser la méthode des fichiers de transaction ou Hedwig pour l\'envoi et la réception de Grin.',
+      failed2: 'L\'écoute HTTP a échoué, votre adresse IP publique n\'est pas accessible depuis Internet. Veuillez utiliser la méthode des fichiers de transaction ou Hedwig pour l\'envoi et la réception de Grin.',
       failed3: 'Impossible d\'obtenir votre adresse IP, veuillez réessayer plus tard',
       failed4: 'L\'écoute HTTP locale est en cours (http://127.0.0.1:3415). Cependant, votre adresse IP publique n\'est pas accessible depuis Internet. Veuillez utiliser la méthode des fichiers de transaction ou Hedwig pour l\'envoi et la réception de Grin.',
       ip: 'Votre IP publique'
