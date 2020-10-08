@@ -9,8 +9,8 @@
     <div v-if="useLocalGnode">
       <label class="label" style="color:#22509a;margin-top:17.5px">{{ $t("msg.node") }}:</label>
       <div class="field is-horizontal">
-          <div class="field-label is-normal">
-              <span style="font-size:0.88rem">{{ $t("msg.localNode") }}</span>:
+          <div class="field-label is-normal" style="flex-grow: 1.7;">
+              <span style="font-size:0.88rem">{{ $t("msg.localNode") }}:</span>
           </div>
           <div class="field-body">
               <div class="field">
@@ -21,8 +21,8 @@
           </div>
       </div>
       <div class="field is-horizontal">
-          <div class="field-label is-normal">
-              <span style="font-size:0.88rem">{{ $t("msg.remoteNode") }}</span>:
+          <div class="field-label is-normal" style="flex-grow: 1.7;">
+              <span style="font-size:0.88rem">{{ $t("msg.remoteNode") }}:</span>
           </div>
           <div class="field-body">
               <div class="field">
@@ -34,19 +34,19 @@
       </div>               
       <label class="label" style="color:#22509a; margin-top:17.5px">{{ $t("msg.gnodeConfig.connectMethod") }}:</label>
       <div class="control" style="font-size:0.8rem">
-        <label class="radio">
+        <label class="radio" style="margin-bottom: 1em;">
               <input type="radio" value="remoteFirst" v-model="connectMethod">&nbsp;{{ $t("msg.gnodeConfig.remoteFirst") }}
           </label>
           <br/>
-          <label class="radio">
+          <label class="radio" style="margin-bottom: 1em;">
               <input type="radio" value="localFirst" v-model="connectMethod">&nbsp;{{ $t("msg.gnodeConfig.localFirst") }}
           </label>
           <br/>
-          <label class="radio">
+          <label class="radio" style="margin-bottom: 1em;">
               <input type="radio" value="remoteAllTime" v-model="connectMethod">&nbsp;{{ $t("msg.gnodeConfig.remoteAllTime") }}
           </label>
           <br/>
-          <label class="radio">
+          <label class="radio" style="margin-bottom: 1em;">
               <input type="radio" value="localAllTime" v-model="connectMethod">&nbsp;{{ $t("msg.gnodeConfig.localAllTime") }}
           </label>
       </div>

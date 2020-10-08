@@ -49,7 +49,7 @@
                         <p><span class="has-text-centered has-text-weight-semibold">{{chainDataPath}}</span></p>
                         <br/>
                         <p v-if="chainDataSize != 0">{{ $t("msg.gnode.size") }} &nbsp;: 
-                          <span class="has-text-centered has-text-weight-semibold">{{chainDataSize}}</span>
+                          <span class="has-text-centered has-text-weight-semibold" style="white-space: nowrap">{{chainDataSize}}</span>
                         </p>
 
                         <br/><br/>
@@ -59,21 +59,21 @@
                             <button class="button is-link is-small" @click="restart">{{ $t("msg.gnode.restart") }}</button>
                           </div>
                           <div class="control">
-                            <button class="button is-small is-text" v-if="removed" disabled>{{ $t("msg.gnode.remove") }}</button>
-                            <button class="button is-small is-text" @click="remove" v-else>{{ $t("msg.gnode.remove") }}</button>
+                            <button class="button is-small is-text is-multiline" v-if="removed" disabled>{{ $t("msg.gnode.remove") }}</button>
+                            <button class="button is-small is-text is-multiline" @click="remove" v-else>{{ $t("msg.gnode.remove") }}</button>
                           </div>
                         </div>
 
                       </div>
                       <div class="control" v-else>
                         <br/>
-                        <button class="button is-warning" v-if="removed" disabled>{{ $t("msg.gnode.remove") }}</button>
-                        <button class="button is-warning" @click="remove" v-else>{{ $t("msg.gnode.remove") }}</button>
+                        <button class="button is-warning is-multiline" v-if="removed" disabled>{{ $t("msg.gnode.remove") }}</button>
+                        <button class="button is-warning is-multiline" @click="remove" v-else>{{ $t("msg.gnode.remove") }}</button>
                       </div>
                       
                     </div>
                     <div v-if="tab ==='peers'">
-                      <p class="tag is-warning">{{ $t("msg.gnode.connectedCount") }}:{{peers.length}}</p>
+                      <p class="tag is-warning">{{ $t("msg.gnode.connectedCount") }}: {{peers.length}}</p>
                       <br/>
                       <br/>
 
@@ -320,4 +320,12 @@ li.is-active{
 .is-size-7{
   font-size: 0.95rem
 }
+
+.button.is-multiline {
+  white-space: normal;
+  height: auto;
+  max-width: 250px;
+  flex-direction: column;
+}
+
 </style>

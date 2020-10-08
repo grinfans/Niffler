@@ -17,7 +17,7 @@ const messages = {
     send: '发送',
     receive: '接收',
 
-    cancel:'撤销',
+    cancel: '撤销',
     save: '保存',
     welcome: '欢迎使用Niffler钱包',
     msg: '消息',
@@ -98,7 +98,7 @@ const messages = {
       httpSend: '通过 https/http 发送',
       createRespFile: '生成回应slatepack',
       httpReceive: '开启http端口接收',
-      height:'同步高度',
+      height: '同步高度',
       updateTitle: '发现新版本',
       updateMsg: '发现Niffer钱包的新版本, 请立刻更新! (下载并覆盖原有程序即可).',
       yes: '好的',
@@ -118,10 +118,10 @@ const messages = {
 
     txs:{
       tx: '交易',
-      canceled:'已取消',
+      canceled: '已取消',
       noTxFound: '没有找到相关交易',
-      noTx:'没有交易',
-      cancelSuccess:'取消交易成功',
+      noTx: '没有交易',
+      cancelSuccess: '取消交易成功',
     },
 
     commit:{
@@ -130,7 +130,7 @@ const messages = {
       unspent: '可用',
       spent: '已用掉',
       noCmtFound: '没有找到相关未花费交易输出',
-      noCmt:'没有未花费的交易输出',
+      noCmt: '没有未花费的交易输出',
       copied: '已复制'
     },
 
@@ -159,7 +159,7 @@ const messages = {
       sendAmount: '发送数量',
       sendMessage: '消息',
       optional: '可选',
-      address:'发送地址',
+      address: '发送地址',
       WrongAmount: '发送数量错误',
       NotEnough: '没有足够的余额，请至少留下0.01作为手续费',
       WrongAddress: '发送地址错误',
@@ -175,7 +175,7 @@ const messages = {
 
     fileReceive: {
       dropMsg: '拖入收到的交易文件',
-      saveMsg: '保存新生成的回应交易文件',
+      saveMsg: '保存新生成的 回应slatepack',
       CreateFailed: '生成回应slatepack错误',
       NoSavePlace: '请选择生成交易文件的位置',
       WrongFileType: '交易文件类型错误',
@@ -189,13 +189,12 @@ const messages = {
       copySlatepack: '复制',
       fileSlatepack: '导出至文件',
       copied: '已复制',
-      saveMsg: '保存新生成的 回应slatepack',
     },
-    
+
     finalize: {
       finalize: '完结交易',
       success: '交易成功',
-      ok:'确定',
+      ok: '确定',
       sending: '发送中',
       dropMsg: '拖入需要确认的交易文件',
       WrongFileType: '交易文件类型错误',
@@ -230,7 +229,7 @@ const messages = {
       launchSucess: '启动成功',
       reachable: 'Hedwig临时地址正常可用',
       address: '提币地址',
-      tip:'收币时，请保持钱包在线.',
+      tip: '收币时，请保持钱包在线.',
       close: '关闭Hedwig',
       introTitle: '介绍',
       intro1: 'Hedwig(v1) 是一个 为没有公网IP的用户 定制的代理服务，它会提供一个临时的收币地址.',
@@ -248,8 +247,8 @@ const messages = {
       checking: '正在同步，请耐心等待 ...',
       stop: '停止同步',
 
-      
-      tip:'完成同步余额可能需要10-30分钟.',
+
+      tip: '完成同步余额可能需要10-30分钟.',
       introTitle: '介绍',
 
       intro1: '当你的本地钱包余额 和 Grin区块链上的余额不一致(可能是由于交易被取消或者发送失败等原因)时，可以使用 "同步余额" 功能.',
@@ -275,7 +274,7 @@ const messages = {
       statusRunning: '运行中,可用',
       statusSyncing: '正在同步区块',
       statusToStart: '没有启动',
-      status:'状态',
+      status: '状态',
       localRemoteHeight: '本地节点高度/全网高度',
       nodeVersion: '节点版本',
       protocolVersion: '协议版本',
@@ -315,7 +314,7 @@ const messages = {
       statusFailed: '启动失败',
       statusStarting: '正在启动',
       statusToStart: '没有启动',
-      status:'状态',
+      status: '状态',
       start: '启动洋葱网络',
       restart: '重启洋葱网络',
       address: '洋葱网络(TOR)收币地址',
@@ -327,7 +326,6 @@ const messages = {
       intro2: '通过洋葱网络接收/发送 grin， 安全/匿名/去中心化。',
       intro3: '(如果你所在地区网络禁止了Tor，那么你需要设置HTTPS/SOCKS5代理来连接Tor。)',
 
-      start: '启动洋葱网络',
       copy: '复制地址',
       copied: '地址已经复制到剪贴板',
       startWhenLaunch: '(推荐) 打开钱包，自动启动洋葱网络',
@@ -356,7 +354,7 @@ const messages = {
       title: '导出日志',
       saveMsg: '导出当天的Niffler钱包的日志',
     }
-    
+
   }
 }
 export default messages

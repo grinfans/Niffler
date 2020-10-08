@@ -210,7 +210,7 @@ export default {
     
     readyToLogin(){
       this.disabled = false
-      this.info = this.$t('msg.login.gnode') + ':' + this.gnode
+      this.info = this.$t('msg.login.gnode') + ': ' + this.gnode
     },
 
     tryLogin(){
