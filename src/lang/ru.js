@@ -283,7 +283,6 @@ const messages = {
       intro2: 'Receive/send grin via tor is more anonymous/sercurity/decentralized',
       intro3: '(If Tor is blocked by network in your location, Configure a https/socks proxy first.)',
 
-      start: 'start',
       copy: 'Copy Address',
       copied: 'copied',
       startWhenLaunch: '(Recommend) Auto start Tor after open wallet',
