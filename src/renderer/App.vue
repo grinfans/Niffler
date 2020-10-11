@@ -368,7 +368,6 @@
     },
     methods: {
       exportLog(){
-        console.log(logFile)
         let fn_output = this.$electron.remote.dialog.showSaveDialog({
           title: this.$t('msg.log.title'),
           message: this.$t('msg.log.saveMsg'),

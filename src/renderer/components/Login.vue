@@ -50,13 +50,14 @@
                 </div>
             </form>
 
-            <a class="button is-small is-text is-pulled-right" @click="openRemove=true">{{ $t("msg.remove.title") }}</a>
-            <a class="button is-small is-text is-pulled-right" @click="openGnodeConfig=true">{{ $t("msg.gnodeConfigModal.title") }}</a>
+                <a class="button is-small is-text" @click="openRemove=true">{{ $t("msg.remove.title") }}</a>
+                <a class="button is-small is-text" @click="openGnodeConfig=true">{{ $t("msg.gnodeConfigModal.title") }}</a>
+                <a class="button is-small is-text" @click="exportLog">{{ $t("msg.log.title") }}</a>
+
           </div>
         </div>
-      
-      <remove :showModal="openRemove"></remove>
-      <gnode-config-modal :showModal="openGnodeConfig"></gnode-config-modal>
+        <remove :showModal="openRemove"></remove>
+       <gnode-config-modal :showModal="openGnodeConfig"></gnode-config-modal>
       </div>
     </div>
   </section>
@@ -69,6 +70,8 @@ import Remove from '@/components/Remove'
 import GnodeConfigModal from '@/components/GnodeConfigModal'
 
 import {version, grinNode, gnodeOption, grinNode2, grinLocalNode, platform, chain} from '../../shared/config'
+import { logPath, logFile } from '../../shared/logger'
+const fs = require('fs');
 
 export default {
   name: "login",
@@ -123,6 +126,17 @@ export default {
   },
 
   methods: {
+    exportLog(){
+      let fn_output = this.$electron.remote.dialog.showSaveDialog({
+        title: this.$t('msg.log.title'),
+        message: this.$t('msg.log.saveMsg'),
+        defaultPath: logFile
+      })
+      if(fn_output){
+        fs.copyFileSync(logPath, fn_output)
+      }
+    },
+
     checklocalNode(i){
       if(this.localNodeChecked)return
       let t2 = i * 4
