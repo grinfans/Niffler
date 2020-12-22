@@ -43,7 +43,7 @@ Apache-2.0 License, see [LICENSE](LICENSE).
 The Nifler wallet is available in different languages.
 English, 简体中文, French, Russian, Dutch.
 
-Translation to other languages is welcome. Please check our [lang folder](https://github.com/grinfans/niffler/tree/master/src/lang).
+Translation to other languages is welcome. Please check our [lang folder](https://github.com/grinfans/Niffler/tree/gw4/src/lang).
 If you want to help translate it, then translate the next text file [en.js](https://github.com/grinfans/Niffler/blob/gw4/src/lang/en.js) to your local language.
 Or better, send a github pull request similar like [this](https://github.com/grinfans/Niffler/pull/66/files).
 
@@ -100,7 +100,7 @@ The following table summarizes the tools required to build. A few tools are incl
 | hedwig       | 1.0.0         | YES      |                      | public IP address relay service      | NO       | https relay service    |
 
 
-*The current release is built on branch [gw3](https://github.com/grinfans/Niffler/tree/gw3)*
+*The current release is built on branch [gw4](https://github.com/grinfans/Niffler/tree/gw4)*
 
 
 ### Build instructions
