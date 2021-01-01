@@ -94,7 +94,7 @@ The following table summarizes the tools required to build. A few tools are incl
 
 | Dep          | Min. version  | Vendored | Debian/Ubuntu pkg    | name                                 | Optional | Purpose                |
 | ------------ | ------------- | -------- | -------------------- | -------------------------------------| -------- | ---------------------- |
-| npm          | ?             | NO       | `nmp`                | javascript package manager           | NO       | compiler               |
+| npm          | ?             | NO       | `npm`                | javascript package manager           | NO       | compiler               |
 | grin         | current       | YES      |                      | grin node executable                 | NO       | grin node back-end     |
 | grin-wallet  | current       | YES      |                      | grin-wallet executable               | NO       | grin-wallet back-end   |
 | hedwig       | 1.0.0         | YES      |                      | public IP address relay service      | NO       | https relay service    |
