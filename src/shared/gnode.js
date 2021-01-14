@@ -11,7 +11,11 @@ import { messageBus } from '../renderer/messagebus'
 let client
 let clietForRemote
 let gnodeProcess
+
+// https://github.com/mimblewimble/grin-rfcs/blob/master/text/0007-node-api-v2.md
 const gnodeHost = 'http://localhost:3413'
+const jsonRPCUrl = 'http://localhost:3413/v2/owner'
+const jsonRPCForeignUrl = 'http://localhost:3413/v2/foreign'
 
 const gnodeRemoteHost = grinNode
 
@@ -54,11 +58,27 @@ class GnodeService {
             client = axios.create({baseURL: gnodeHost, timeout: 2500})
         }
     }
-    static getStatus(){
-        return client.get('/v1/status')
+
+    static jsonRPC(method, params, isForeign){
+        const headers = {
+            'Content-Type': 'application/json'
+        }
+        const body = {
+            jsonrpc: "2.0",
+            id: +new Date(),
+            method: method,
+            params: params,
+        }
+        const url = isForeign?jsonRPCForeignUrl:jsonRPCUrl
+        return client.post(url, body, headers)
     }
-    static getPeersConnected(){
-        return client.get('/v1/peers/connected')
+
+    static getStatus(){
+        return GnodeService.jsonRPC('get_status', [], false)
+    }
+
+    static getConnectedPeers(){
+        return GnodeService.jsonRPC('get_connected_peers', [], false)
     }
 
     static startGnode(){
@@ -136,8 +156,22 @@ export class RemoteGnodeService{
             clietForRemote = axios.create({baseURL: nodeURL})
         }
     }
+    static jsonRPC(method, params, isForeign){
+        const headers = {
+            'Content-Type': 'application/json'
+        }
+        const body = {
+            jsonrpc: "2.0",
+            id: +new Date(),
+            method: method,
+            params: params,
+        }
+        const url = isForeign?jsonRPCForeignUrl:jsonRPCUrl
+        return client.post(url, body, headers)
+    }
+
     static getStatus(){
-        return clietForRemote.get('/v1/status')
+        return GnodeService.jsonRPC('get_status', [], false)
     }
 }
 RemoteGnodeService.initClient(gnodeRemoteHost, null)

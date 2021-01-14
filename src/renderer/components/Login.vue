@@ -178,7 +178,7 @@ export default {
       }
 
       this.$remoteGnodeService.getStatus().then((res)=>{
-        remoteHeight = parseInt(res.data.tip.height)
+        remoteHeight = parseInt(res.data.result.Ok.tip.height)
         this.$log.debug('Remote node height is ' + remoteHeight)
         if(gnodeOption.connectMethod ==='remoteAllTime' || gnodeOption.connectMethod ==='remoteFirst'){
           this.$dbService.setGnodeLocation('remote')
@@ -189,8 +189,8 @@ export default {
         }
           
         this.$gnodeService.getStatus().then((res)=>{
-          localHeight = parseInt(res.data.tip.height)
-          let peersCount = parseInt(res.data.connections)
+          localHeight = parseInt(res.data.result.Ok.tip.height)
+          let peersCount = parseInt(res.data.result.Ok.connections)
           this.$log.debug('local node height is ' + localHeight)
           this.$log.debug('local node peers count is ' + peersCount)
           if(localHeight + 60 >= remoteHeight && peersCount >= 3){

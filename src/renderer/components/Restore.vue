@@ -285,9 +285,9 @@ export default {
       let checkStatusAsync = async function(){
         try{
           let res = await this.$gnodeService.getStatus()
-          this.localHeight = parseInt(res.data.tip.height)
+          this.localHeight = parseInt(res.data.result.Ok.tip.height)
           res = await this.$remoteGnodeService.getStatus()
-          this.remoteHeight = parseInt(res.data.tip.height)
+          this.remoteHeight = parseInt(res.data.result.Ok.tip.height)
           this.userAgent = res.data.user_agent
           this.protocolVersion = res.data.protocol_version
           this.$log.debug(`checkGnodeStatus on restore: remote ${this.remoteHeight}; local ${this.localHeight}`)

@@ -80,7 +80,6 @@
                       <table v-if="peers.length > 0" class="table is-striped is-narrow is-hoverable" style="font-size:0.8rem;background-color: #f6f9fe;color: #22509a;">
                         <thead>
                           <th>No.</th>
-
                           <th>IP</th>
                           <th>{{ $t("msg.node") }}</th>
                           <th>{{ $t("msg.gnode.height") }}</th>
@@ -114,7 +113,6 @@
 <script>
 import { messageBus } from '@/messagebus'
 import {gnodeOption, grinNodeLog, chainDataPath} from '../../shared/config'
-import GnodeService2 from '../../shared/gnode2'
 
 import GnodeConfig from '@/components/GnodeConfig'
 
@@ -193,15 +191,15 @@ export default {
       let checkStatusAsync = async function(){
         try{
           let res = await this.$gnodeService.getStatus()
-          this.localHeight = parseInt(res.data.tip.height)
-          res = await this.$remoteGnodeService.getStatus()
-          this.remoteHeight = parseInt(res.data.tip.height)
-          this.userAgent = res.data.user_agent
-          this.protocolVersion = res.data.protocol_version
-          //console.log(`remote ${thiis.remoteHeight}; local ${this.localHeight}`)
+          let data = res.data.result.Ok
+          this.localHeight = parseInt(data.tip.height)
+          this.userAgent = data.user_agent
+          this.protocolVersion = data.protocol_version
 
-          let res2 = await GnodeService2.getStatus()
-          this.userAgent = res2.data.result.Ok.user_agent
+          let res2 = await this.$remoteGnodeService.getStatus()
+          let data2 = res2.data.result.Ok
+          this.remoteHeight = parseInt(data2.tip.height)
+          //console.log(`remote ${thiis.remoteHeight}; local ${this.localHeight}`)
 
         if( this.localHeight + 60 > this.remoteHeight){
           this.status = 'running'
@@ -216,9 +214,9 @@ export default {
     },
 
     getPeers(){
-      this.$gnodeService.getPeersConnected().then(
+      this.$gnodeService.getConnectedPeers().then(
         (res)=>{
-         this.peers = res.data
+         this.peers = res.data.result.Ok
       }).catch(
         (error)=>{
           this.$log.debug('Failed to get peers: ' + error)

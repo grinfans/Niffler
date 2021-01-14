@@ -387,7 +387,7 @@
         ret.then(
           (res) =>{
             console.log('getAccounts return:' + JSON.stringify(res))
-            if(res.result.OK){
+            if(res.result.Ok){
               this.ownerApiRunning = true
             }
           }).catch((error)=>{
