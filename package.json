@@ -142,7 +142,7 @@
     "http-proxy": "^1.18.1",
     "node-forge": "^0.10.0",
     "ajv": "^6.5.0",
-    "axios": "^0.19.2",
+    "axios": ">=0.21.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-runtime": "^6.23.0",
