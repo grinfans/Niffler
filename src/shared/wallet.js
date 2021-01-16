@@ -219,19 +219,19 @@ class WalletService {
         WalletService.stopProcess('listen')
         if(platform==='linux'){
             if(noTor){
-                listenProcess =  execFile(grinWalletPath, ['-r', gnode, '-e', 'listen', '-n'])
+                listenProcess =  execFile(grinWalletPath, ['-r', gnode, 'listen', '-n'])
             }else{
-                listenProcess =  execFile(grinWalletPath, ['-r', gnode, '-e', 'listen'])
+                listenProcess =  execFile(grinWalletPath, ['-r', gnode, , 'listen'])
             }
         }else{
             let cmd
             if(noTor){
-                cmd = platform==='win'? `${grinWalletPath} -r ${gnode} -e --pass ${addQuotations(password)} listen -n`:
-                                        `${grinWalletPath} -r ${gnode} -e listen -n`
+                cmd = platform==='win'? `${grinWalletPath} -r ${gnode} --pass ${addQuotations(password)} listen -n`:
+                                        `${grinWalletPath} -r ${gnode} listen -n`
             //log.debug(`platform: ${platform}; start listen cmd: ${cmd}`)
             }else{
-                cmd = platform==='win'? `${grinWalletPath} -r ${gnode} -e --pass ${addQuotations(password)} listen`:
-                                        `${grinWalletPath} -r ${gnode} -e listen`
+                cmd = platform==='win'? `${grinWalletPath} -r ${gnode} --pass ${addQuotations(password)} listen`:
+                                        `${grinWalletPath} -r ${gnode} listen`
             }
             listenProcess =  exec(cmd)
         }
