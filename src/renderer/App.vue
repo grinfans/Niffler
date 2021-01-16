@@ -51,9 +51,12 @@
                 <a href="#" class="dropdown-item" @click="openReceive = true">
                   {{ $t("msg.app.createRespFile") }}
                 </a>
+                
+                <!--
                 <a class="dropdown-item" @click="openHttpReceive = true">
                   {{ $t("msg.app.httpReceive") }}
                 </a>
+                -->
                 
                 <hr class="dropdown-divider">
                 <a class="dropdown-item" @click="openAddress = true">
