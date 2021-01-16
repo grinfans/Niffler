@@ -141,21 +141,10 @@ class GnodeService {
 }
 GnodeService.initClient()
 export default GnodeService
+const remoteJsonRPCUrl = `${gnodeRemoteHost}/v2/owner`
+const retomteJsonRPCForeignUrl = `${gnodeRemoteHost}/v2/foreign`
 
 export class RemoteGnodeService{
-    static initClient(nodeURL, apiSecret) {
-        if(apiSecret){
-            clietForRemote = axios.create({
-                    baseURL: nodeURL,
-                    auth: {
-                        username: 'grin',
-                        password: apiSecret
-                    },
-                })
-        }else{
-            clietForRemote = axios.create({baseURL: nodeURL})
-        }
-    }
     static jsonRPC(method, params, isForeign){
         const headers = {
             'Content-Type': 'application/json'
@@ -166,12 +155,11 @@ export class RemoteGnodeService{
             method: method,
             params: params,
         }
-        const url = isForeign?jsonRPCForeignUrl:jsonRPCUrl
-        return client.post(url, body, headers)
+        const url = isForeign?retomteJsonRPCForeignUrl:remoteJsonRPCUrl
+        return axios.post(url, body, headers)
     }
 
     static getStatus(){
-        return GnodeService.jsonRPC('get_status', [], false)
+        return RemoteGnodeService.jsonRPC('get_status', [], false)
     }
 }
-RemoteGnodeService.initClient(gnodeRemoteHost, null)
