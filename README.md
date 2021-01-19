@@ -40,11 +40,11 @@ The name 'Niffler' comes from ["harry potter"](https://harrypotter.fandom.com/wi
 Apache-2.0 License, see [LICENSE](LICENSE).
 
 ## Translations
-The Nifler wallet is available in different languages.
+The Niffler wallet is available in different languages.
 English, 简体中文, French, Russian, Dutch.
 
-Translation to other languages is welcome. Please check our [lang folder](https://github.com/grinfans/Niffler/tree/gw4/src/lang).
-If you want to help translate it, then translate the next text file [en.js](https://github.com/grinfans/Niffler/blob/gw4/src/lang/en.js) to your local language.
+Translation to other languages is welcome. Please check our [lang folder](https://github.com/grinfans/Niffler/tree/gw5/src/lang).
+If you want to help translate it, then translate the next text file [en.js](https://github.com/grinfans/Niffler/blob/gw5/src/lang/en.js) to your local language.
 Or better, send a github pull request similar like [this](https://github.com/grinfans/Niffler/pull/66/files).
 
 ## Contributing
@@ -54,11 +54,11 @@ Code pull requests are always welcome. If you want to help out, please send [pul
 
 ### Latest Version
 
-v0.6.1 support Grin4 with slatepack
+v0.7.0.0 support Grin5
 
-Niffler Wallet uses the official [grin-wallet v4.0.0](https://github.com/mimblewimble/grin-wallet/releases/tag/v4.0.0) and [grin v4.1.0](https://github.com/mimblewimble/grin/releases/tag/v4.1.0) as backend. 
+Niffler Wallet uses the official [grin-wallet v5.0.3](https://github.com/mimblewimble/grin-wallet/releases/tag/v5.0.3) and [grin v5.0.1](https://github.com/mimblewimble/grin/releases/tag/v5.0.1) as backend. 
 
-Mac/Windows/Linux version:[https://github.com/grinfans/niffler/releases/tag/v0.6.1](https://github.com/grinfans/niffler/releases/tag/v0.6.1)
+Mac/Windows/Linux version:[https://github.com/grinfans/niffler/releases/tag/v0.7.0](https://github.com/grinfans/niffler/releases/tag/v0.7.0)
 
 Niffler wallet has a **hedwig v1 relay service**, which enable users without public ip receive grin really easy :)
 
@@ -100,7 +100,7 @@ The following table summarizes the tools required to build. A few tools are incl
 | hedwig       | 1.0.0         | YES      |                      | public IP address relay service      | NO       | https relay service    |
 
 
-*The current release is built on branch [gw4](https://github.com/grinfans/Niffler/tree/gw4)*
+*The current release is built on branch [gw5](https://github.com/grinfans/Niffler/tree/gw5)*
 
 
 ### Build instructions
@@ -166,3 +166,7 @@ We now have a wonderful logo <img src="/src/renderer/assets/logo.png" width="64"
 Logo made by [@Duoasa](https://weibo.com/u/3197271025), and also thanks [@机械师区块链](https://weibo.com/u/6318956004)
 
 Thanks to  [@yozx](https://github.com/yozx) for Russian version.
+
+Thanks to  [@Kinaou](https://github.com/Kinaou) for French version.
+
+Thanks to  [@frankcoderL](https://github.com/frankcoderL) for Nederlands version.

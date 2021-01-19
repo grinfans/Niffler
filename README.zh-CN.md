@@ -6,12 +6,12 @@ Niffler 是一个开箱即用、用户友好的 [Grin](https://github.com/mimble
 
 遵循Grin的命名传统，钱包的名字 **Niffler** 也是来自["哈利波特"](https://harrypotter.fandom.com/wiki/Niffler).
 
-#### 最新版本 V0.6.0
+#### 最新版本 V0.7.0
 
-v0.6.0 支持Grin4(slatepack)
+v0.7.0 支持Grin5
 
 Mac/Windows/Linux 版本:
-[https://github.com/grinfans/niffler/releases/tag/v0.6.0](https://github.com/grinfans/niffler/releases/tag/v0.6.0)
+[https://github.com/grinfans/niffler/releases/tag/v0.7.0](https://github.com/grinfans/niffler/releases/tag/v0.7.0)
 
 Niffler钱包 加了 **hedwig** v1 代理服务; 现在，没有公共ip的用户也可以很简单容易地接收grin了 :)
 
@@ -24,18 +24,18 @@ Niffler钱包 加了 **hedwig** v1 代理服务; 现在，没有公共ip的用�
 
 中国大陆快速下载地址
 >Mac:
-https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-v0.6.0-macos.dmg
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-v0.7.0-macos.dmg
 
 
 
 >Windows:
-https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-v0.6.0-win-x64.exe
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-v0.7.0-win-x64.exe
 
 
 
 >Linux:
-https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-v0.6.0-linux-amd64.deb
-https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-v0.6.0-linux-amd64.AppImage
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-v0.7.0-linux-amd64.deb
+https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-v0.7.0-linux-amd64.AppImage
 
 
 ## 联系
@@ -43,8 +43,6 @@ https://grin-fans.oss-cn-hangzhou.aliyuncs.com/Niffler-v0.6.0-linux-amd64.AppIma
 联系我: xiaojay@gmail.com
 
 Telegram group: https://t.me/nifflerwallet
-
-客服qq： 1573479696
 
 <img src="/src/renderer/assets/logo.png" width="256"> Logo 由[@Duoasa](https://weibo.com/u/3197271025)创建.
 
@@ -54,7 +52,7 @@ Telegram group: https://t.me/nifflerwallet
 
 * 会支持多个平台(mac/linux/windows)
 
-* 支持多个语言(目前支持[English](./README.md)和简体中文, 未来会更多)
+* 支持多个语言
 
 ## 运行
 
@@ -72,7 +70,7 @@ Telegram group: https://t.me/nifflerwallet
 
 ## 构建
 
-*目前最新发布版本的Niffler 构建于分支 [gw3](https://github.com/grinfans/Niffler/tree/gw3)*
+*目前最新发布版本的Niffler 构建于分支 [gw5](https://github.com/grinfans/Niffler/tree/gw5)*
 
 
 ``` bash
@@ -108,3 +106,7 @@ pull request 和 bug报告 当然非常欢迎.
 翻译到其他语言也是很需要的. 只要翻译下这个[语言文件夹](https://github.com/grinfans/niffler/tree/master/src/lang)里的文字即可.
 
 感谢  [@yozx](https://github.com/yozx) 翻译俄语版本.
+
+感谢 [@Kinaou](https://github.com/Kinaou) 翻译法语版本.
+
+感谢  [@frankcoderL](https://github.com/frankcoderL) 翻译荷兰语语版本.
