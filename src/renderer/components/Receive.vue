@@ -203,7 +203,11 @@ export default {
           let slate2 = res.data.result.Ok
           //console.log(JSON.stringify(slate2))
           
-          res = await this.$walletServiceV3.createSlatepackMessage(slate2, 0, [this.sender])
+          if(this.sender){
+            res = await this.$walletServiceV3.createSlatepackMessage(slate2, 0, [this.sender])
+          }else{
+            res = await this.$walletServiceV3.createSlatepackMessage(slate2, 0, [])
+          }
           //this.$log.debug('createSlatepackMessage return:', JSON.stringify(res))
           //console.log(JSON.stringify(res))
 
