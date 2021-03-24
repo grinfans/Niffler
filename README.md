@@ -54,11 +54,11 @@ Code pull requests are always welcome. If you want to help out, please send [pul
 
 ### Latest Version
 
-v0.7.0.0 support Grin5
+v0.7.1 support Grin5
 
-Niffler Wallet uses the official [grin-wallet v5.0.3](https://github.com/mimblewimble/grin-wallet/releases/tag/v5.0.3) and [grin v5.0.1](https://github.com/mimblewimble/grin/releases/tag/v5.0.1) as backend. 
+Niffler Wallet uses the official [grin-wallet v5.0.3](https://github.com/mimblewimble/grin-wallet/releases/tag/v5.0.3) and [grin v5.0.4](https://github.com/mimblewimble/grin/releases/tag/v5.0.4) as backend. 
 
-Mac/Windows/Linux version:[https://github.com/grinfans/niffler/releases/tag/v0.7.0](https://github.com/grinfans/niffler/releases/tag/v0.7.0)
+Mac/Windows/Linux version:[https://github.com/grinfans/niffler/releases/tag/v0.7.1](https://github.com/grinfans/niffler/releases/tag/v0.7.1)
 
 Niffler wallet has a **hedwig v1 relay service**, which enable users without public ip receive grin really easy :)
 
